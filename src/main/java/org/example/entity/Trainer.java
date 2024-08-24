@@ -26,4 +26,12 @@ public class Trainer extends User {
     public int hashCode() {
         return Objects.hash(specialization, userId);
     }
+
+    @Override
+    public String toString() {
+        return "Trainer{" +
+                "specialization='" + specialization + '\'' +
+                ", userId=" + userId +
+                '}';
+    }
 }

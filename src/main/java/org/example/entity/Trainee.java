@@ -28,4 +28,13 @@ public class Trainee extends User {
     public int hashCode() {
         return Objects.hash(dateOfBirth, address, userId);
     }
+
+    @Override
+    public String toString() {
+        return "Trainee{" +
+                "dateOfBirth=" + dateOfBirth +
+                ", address='" + address + '\'' +
+                ", userId=" + userId +
+                '}';
+    }
 }
