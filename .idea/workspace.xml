@@ -4,11 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Setting up the storage interfaces and classes">
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Implementing the Training entity class and adding toString method to all the entities">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Trainee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Trainee.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Trainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Trainer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/trainee.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/trainee.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +46,7 @@
         <option value="AnnotationType" />
         <option value="Class" />
         <option value="Interface" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -121,7 +125,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724517867287</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Implementing the Training entity class and adding toString method to all the entities">
+      <option name="closed" value="true" />
+      <created>1724529224458</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1724529224458</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -139,6 +151,7 @@
     <MESSAGE value="Setting up the implementation of the gym system. Adding domain entity classes, DAOs, services and storage" />
     <MESSAGE value="Autowiring storage to the DAO implementation classes" />
     <MESSAGE value="Setting up the storage interfaces and classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Setting up the storage interfaces and classes" />
+    <MESSAGE value="Implementing the Training entity class and adding toString method to all the entities" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implementing the Training entity class and adding toString method to all the entities" />
   </component>
 </project>
