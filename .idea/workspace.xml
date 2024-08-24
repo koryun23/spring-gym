@@ -4,18 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Autowiring storage to the DAO implementation classes">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/core/FileStorage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainerStorageImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainingStorageImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/trainee.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/trainer.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/training.txt" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Setting up the storage interfaces and classes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/core/Storage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/core/Storage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/StorageImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Trainee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Trainee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Trainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Trainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +113,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724439687206</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Setting up the storage interfaces and classes">
+      <option name="closed" value="true" />
+      <created>1724517867287</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1724517867287</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -137,6 +138,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Setting up the implementation of the gym system. Adding domain entity classes, DAOs, services and storage" />
     <MESSAGE value="Autowiring storage to the DAO implementation classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Autowiring storage to the DAO implementation classes" />
+    <MESSAGE value="Setting up the storage interfaces and classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Setting up the storage interfaces and classes" />
   </component>
 </project>
