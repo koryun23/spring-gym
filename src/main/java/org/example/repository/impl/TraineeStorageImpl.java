@@ -43,7 +43,7 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
     }
     @Override
     public Trainee get(Long id) {
-        return null;
+        return inMemoryStorage.get(id);
     }
 
     @Override
