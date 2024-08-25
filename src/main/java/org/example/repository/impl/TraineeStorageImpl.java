@@ -29,8 +29,8 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TraineeStorageImpl.class);
 
-    @Value("${storage.trainee.path}")
-    private String path;
+    @Value("classpath:trainee.txt")
+    private Resource resource;
 
     private Map<Long, Trainee> inMemoryStorage; // trainee id - trainee
 
@@ -65,12 +65,14 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
     @PostConstruct
     public void parseMemoryFile() {
         Scanner scanner;
+        File file = null;
         try {
-            System.out.println(path);
-            scanner = new Scanner(new File(path));
+            file = resource.getFile();
+            scanner = new Scanner(file);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
         while(scanner.hasNextLine()) {
             String currentTraineeString = scanner.nextLine();
             String[] currentTraineeSplit = currentTraineeString.split(",");
