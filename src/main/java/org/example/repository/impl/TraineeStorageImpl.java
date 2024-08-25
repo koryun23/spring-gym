@@ -48,17 +48,20 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
 
     @Override
     public Trainee add(Trainee trainee) {
-        return null;
+        inMemoryStorage.put(trainee.getUserId(), trainee);
+        return trainee;
     }
 
     @Override
     public Trainee remove(Trainee trainee) {
-        return null;
+        inMemoryStorage.remove(trainee.getUserId());
+        return trainee;
     }
 
     @Override
     public Trainee update(Trainee trainee) {
-        return null;
+        inMemoryStorage.put(trainee.getUserId(), trainee);
+        return trainee;
     }
 
     @Override
