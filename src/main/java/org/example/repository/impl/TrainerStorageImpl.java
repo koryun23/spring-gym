@@ -37,4 +37,9 @@ public class TrainerStorageImpl implements FileStorage<Trainer> {
     public void parseMemoryFile() {
 
     }
+
+    @Override
+    public void persist() {
+
+    }
 }

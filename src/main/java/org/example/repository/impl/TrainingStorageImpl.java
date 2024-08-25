@@ -37,4 +37,9 @@ public class TrainingStorageImpl implements FileStorage<Training> {
     public void parseMemoryFile() {
 
     }
+
+    @Override
+    public void persist() {
+
+    }
 }

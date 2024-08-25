@@ -5,17 +5,11 @@ import org.example.entity.Trainee;
 import org.example.repository.core.FileStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,7 +26,7 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
     @Value("classpath:trainee.txt")
     private Resource resource;
 
-    private Map<Long, Trainee> inMemoryStorage; // trainee id - trainee
+    private final Map<Long, Trainee> inMemoryStorage; // trainee id - trainee
 
     public TraineeStorageImpl(Map<Long, Trainee> map) {
         inMemoryStorage = map;
@@ -41,6 +35,7 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
     public TraineeStorageImpl() {
         inMemoryStorage = new HashMap<>();
     }
+
     @Override
     public Trainee get(Long id) {
         return inMemoryStorage.get(id);
@@ -49,23 +44,53 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
     @Override
     public Trainee add(Trainee trainee) {
         inMemoryStorage.put(trainee.getUserId(), trainee);
+        persist();
         return trainee;
     }
 
     @Override
     public Trainee remove(Trainee trainee) {
         inMemoryStorage.remove(trainee.getUserId());
+        persist();
         return trainee;
     }
 
     @Override
     public Trainee update(Trainee trainee) {
         inMemoryStorage.put(trainee.getUserId(), trainee);
+        persist();
         return trainee;
     }
 
     @Override
-    @PostConstruct
+    public void persist() {
+        BufferedWriter writer;
+        try {
+            writer = new BufferedWriter(new FileWriter(resource.getFilename()));
+            for (Map.Entry<Long, Trainee> entry : inMemoryStorage.entrySet()) {
+                Trainee currentTrainee = entry.getValue();
+                String stringRepresentationOfTrainee = String.format("%d,%s,%s,%s,%s,%s,%s,%s",
+                        currentTrainee.getUserId(),
+                        currentTrainee.getFirstName(),
+                        currentTrainee.getLastName(),
+                        currentTrainee.getUsername(),
+                        currentTrainee.getPassword(),
+                        currentTrainee.isActive(),
+                        formatDateToString(currentTrainee.getDateOfBirth()),
+                        currentTrainee.getAddress()
+                );
+                writer.write(stringRepresentationOfTrainee);
+                writer.newLine();
+                LOGGER.info("Current trainee - {}", stringRepresentationOfTrainee);
+            }
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public void parseMemoryFile() {
         Scanner scanner;
         File file = null;
@@ -76,7 +101,7 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
             throw new RuntimeException(e);
         }
 
-        while(scanner.hasNextLine()) {
+        while (scanner.hasNextLine()) {
             String currentTraineeString = scanner.nextLine();
             String[] currentTraineeSplit = currentTraineeString.split(",");
             Long userId = getUserIdFromArray(currentTraineeSplit);
@@ -94,6 +119,11 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
             inMemoryStorage.put(userId, currentTrainee);
         }
         LOGGER.info("In memory storage - {}", inMemoryStorage.toString());
+    }
+
+    @PostConstruct
+    public void init() {
+        parseMemoryFile();
     }
 
     private Long getUserIdFromArray(String[] array) {
@@ -121,7 +151,7 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
     }
 
     private Date getDateOfBirthFromArray(String[] array) {
-        DateFormat df = new SimpleDateFormat("yyyy-dd-mm");
+        DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
         try {
             return df.parse(array[6]);
         } catch (ParseException e) {
@@ -131,5 +161,10 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
 
     private String getAddressFromArray(String[] array) {
         return array[7];
+    }
+
+    private String formatDateToString(Date date) {
+        DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+        return df.format(date);
     }
 }
