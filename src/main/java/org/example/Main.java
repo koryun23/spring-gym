@@ -2,6 +2,7 @@ package org.example;
 
 
 import org.example.entity.Trainee;
+import org.example.helper.DateConverter;
 import org.example.repository.core.Storage;
 import org.example.repository.impl.TraineeStorageImpl;
 import org.springframework.boot.SpringApplication;
@@ -17,26 +18,19 @@ import java.util.Date;
 public class Main {
     public static void main(String[] args) {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-
         ApplicationContext context = SpringApplication.run(Main.class, args);
+        DateConverter dateConverter = (DateConverter) context.getBean("dateConverter");
         TraineeStorageImpl traineeStorage = context.getBean(TraineeStorageImpl.class);
-        Date bday1 = null;
-        try {
-            bday1 = formatter.parse("2024-10-22");
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
         traineeStorage.parseMemoryFile();
         traineeStorage.add(new Trainee(
-                2L,
-                "kevin",
-                "de bruyne",
-                "kevin17",
-                "assist",
+                1L,
+                "John",
+                "Sanchez",
+                "john3",
+                "pwd12",
                 true,
-                bday1,
-                "manchester"
+                dateConverter.stringToDate("1950-10-19"),
+                "nyc"
         ));
         System.out.println(traineeStorage.get(1L));
     }
