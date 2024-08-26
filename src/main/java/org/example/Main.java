@@ -16,15 +16,5 @@ public class Main {
         ApplicationContext context = SpringApplication.run(Main.class, args);
         TraineeStorageImpl traineeStorage = context.getBean(TraineeStorageImpl.class);
         TrainerStorageImpl trainerStorage = context.getBean(TrainerStorageImpl.class);
-
-        trainerStorage.add(new Trainer(
-                1L,
-                "John",
-                "Terry",
-                "john26",
-                "pwd34",
-                true,
-                "gym"
-        ));
     }
 }
