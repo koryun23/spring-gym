@@ -1,20 +1,11 @@
 package org.example;
 
-
 import org.example.entity.Trainee;
 import org.example.helper.DateConverter;
-import org.example.repository.core.Storage;
 import org.example.repository.impl.TraineeStorageImpl;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-
-@SpringBootApplication
 public class Main {
     public static void main(String[] args) {
 
