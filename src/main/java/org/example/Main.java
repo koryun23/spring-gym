@@ -32,6 +32,5 @@ public class Main {
                 dateConverter.stringToDate("1950-10-19"),
                 "nyc"
         ));
-        System.out.println(traineeStorage.get(1L));
     }
 }
