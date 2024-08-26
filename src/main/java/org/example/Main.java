@@ -29,7 +29,7 @@ public class Main {
         }
         traineeStorage.parseMemoryFile();
         traineeStorage.add(new Trainee(
-                1L,
+                2L,
                 "kevin",
                 "de bruyne",
                 "kevin17",

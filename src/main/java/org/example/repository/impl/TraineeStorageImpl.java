@@ -2,9 +2,11 @@ package org.example.repository.impl;
 
 import jakarta.annotation.PostConstruct;
 import org.example.entity.Trainee;
+import org.example.helper.DateConverter;
 import org.example.repository.core.FileStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -21,6 +23,9 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TraineeStorageImpl.class);
     private static final String PATH = "C:\\Users\\Koryun\\Desktop\\Koryun\\gym-spring\\src\\main\\java\\org\\example\\repository\\core\\trainee.txt";
+
+    @Autowired
+    private DateConverter dateConverter;
 
     private final Map<Long, Trainee> inMemoryStorage; // trainee id - trainee
 
@@ -72,7 +77,7 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
                         currentTrainee.getUsername(),
                         currentTrainee.getPassword(),
                         currentTrainee.isActive(),
-                        formatDateToString(currentTrainee.getDateOfBirth()),
+                        dateConverter.dateToString(currentTrainee.getDateOfBirth()),
                         currentTrainee.getAddress()
                 );
                 LOGGER.info("Current trainee - {}", stringRepresentationOfTrainee);
@@ -144,20 +149,10 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
     }
 
     private Date getDateOfBirthFromArray(String[] array) {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            return df.parse(array[6]);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        return dateConverter.stringToDate(array[6]);
     }
 
     private String getAddressFromArray(String[] array) {
         return array[7];
-    }
-
-    private String formatDateToString(Date date) {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        return df.format(date);
     }
 }
