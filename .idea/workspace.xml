@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding a method for persisting the map object to the file">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/trainee.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/trainee.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/trainee.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/trainer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/trainer.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/training.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/training.txt" afterDir="false" />
-    </list>
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding a DateConverter spring bean to convert a string to date and vice versa" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -44,9 +36,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="AnnotationType" />
-        <option value="Class" />
         <option value="Interface" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -78,6 +70,7 @@
       <recent name="C:\Users\Koryun\Desktop\Koryun\gym-spring\src\main\java\org\example\db" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Koryun\Desktop\Koryun\gym-spring\src\main\java\org\example\repository\core" />
       <recent name="C:\Users\Koryun\Desktop\Koryun\gym-spring\src\main\java\org\example\repository\impl" />
     </key>
   </component>
@@ -174,7 +167,23 @@
       <option name="project" value="LOCAL" />
       <updated>1724627148394</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Using an absolute path instead of relative, keeping the path to the file as a static constant inside storage class, instead of keeping it in application.properties">
+      <option name="closed" value="true" />
+      <created>1724677110353</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1724677110353</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Adding a DateConverter spring bean to convert a string to date and vice versa">
+      <option name="closed" value="true" />
+      <created>1724677534988</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1724677534989</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -197,6 +206,8 @@
     <MESSAGE value="Implementing the get method of TraineeStorageImpl" />
     <MESSAGE value="Implementing the add, remove and update methods of TraineeStorageImpl by updating only the hashmap without writing to the file." />
     <MESSAGE value="Adding a method for persisting the map object to the file" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding a method for persisting the map object to the file" />
+    <MESSAGE value="Using an absolute path instead of relative, keeping the path to the file as a static constant inside storage class, instead of keeping it in application.properties" />
+    <MESSAGE value="Adding a DateConverter spring bean to convert a string to date and vice versa" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding a DateConverter spring bean to convert a string to date and vice versa" />
   </component>
 </project>
