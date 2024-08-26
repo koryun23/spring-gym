@@ -23,8 +23,8 @@ public class TrainingStorageImpl implements FileStorage<Training> {
     }
 
     @Override
-    public Training remove(Training training) {
-        return null;
+    public boolean remove(Long id) {
+        return true;
     }
 
     @Override

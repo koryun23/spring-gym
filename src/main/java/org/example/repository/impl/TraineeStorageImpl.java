@@ -50,10 +50,10 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
     }
 
     @Override
-    public Trainee remove(Trainee trainee) {
-        inMemoryStorage.remove(trainee.getUserId());
+    public boolean remove(Long id) {
+        inMemoryStorage.remove(id);
         persist();
-        return trainee;
+        return true;
     }
 
     @Override
