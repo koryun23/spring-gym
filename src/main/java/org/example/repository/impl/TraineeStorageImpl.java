@@ -5,8 +5,6 @@ import org.example.entity.Trainee;
 import org.example.repository.core.FileStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -22,9 +20,7 @@ import java.util.Scanner;
 public class TraineeStorageImpl implements FileStorage<Trainee> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TraineeStorageImpl.class);
-
-    @Value("classpath:trainee.txt")
-    private Resource resource;
+    private static final String PATH = "C:\\Users\\Koryun\\Desktop\\Koryun\\gym-spring\\src\\main\\java\\org\\example\\repository\\core\\trainee.txt";
 
     private final Map<Long, Trainee> inMemoryStorage; // trainee id - trainee
 
@@ -66,7 +62,7 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
     public void persist() {
         BufferedWriter writer;
         try {
-            writer = new BufferedWriter(new FileWriter(resource.getFilename()));
+            writer = new BufferedWriter(new FileWriter(PATH));
             for (Map.Entry<Long, Trainee> entry : inMemoryStorage.entrySet()) {
                 Trainee currentTrainee = entry.getValue();
                 String stringRepresentationOfTrainee = String.format("%d,%s,%s,%s,%s,%s,%s,%s",
@@ -79,11 +75,10 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
                         formatDateToString(currentTrainee.getDateOfBirth()),
                         currentTrainee.getAddress()
                 );
+                LOGGER.info("Current trainee - {}", stringRepresentationOfTrainee);
                 writer.write(stringRepresentationOfTrainee);
                 writer.newLine();
-                LOGGER.info("Current trainee - {}", stringRepresentationOfTrainee);
             }
-            writer.flush();
             writer.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -93,10 +88,8 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
     @Override
     public void parseMemoryFile() {
         Scanner scanner;
-        File file = null;
         try {
-            file = resource.getFile();
-            scanner = new Scanner(file);
+            scanner = new Scanner(new File(PATH));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -151,7 +144,7 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
     }
 
     private Date getDateOfBirthFromArray(String[] array) {
-        DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         try {
             return df.parse(array[6]);
         } catch (ParseException e) {
@@ -164,7 +157,7 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
     }
 
     private String formatDateToString(Date date) {
-        DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         return df.format(date);
     }
 }

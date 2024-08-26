@@ -4,14 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Implementing the add, remove and update methods of TraineeStorageImpl by updating only the hashmap without writing to the file.">
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding a method for persisting the map object to the file">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/core/FileStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/core/FileStorage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainerStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainerStorageImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainingStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainingStorageImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/trainee.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/trainee.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/trainee.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/trainee.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/trainee.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/trainer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/trainer.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/training.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/training.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,16 +62,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.gym-spring [:Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;trainee__storage__impl&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.gym-spring [:Main.main()].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "trainee__storage__impl",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Koryun/Desktop/Koryun/gym-spring/src/main/java/org/example/db",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Koryun\Desktop\Koryun\gym-spring\src\main\java\org\example\db" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Koryun\Desktop\Koryun\gym-spring\src\main\java\org\example\repository\impl" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
@@ -157,7 +166,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724594288569</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Adding a method for persisting the map object to the file">
+      <option name="closed" value="true" />
+      <created>1724627148394</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1724627148394</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -179,6 +196,7 @@
     <MESSAGE value="Implementing the post construct method of parsing the file containing trainee data into an in-memory hash map." />
     <MESSAGE value="Implementing the get method of TraineeStorageImpl" />
     <MESSAGE value="Implementing the add, remove and update methods of TraineeStorageImpl by updating only the hashmap without writing to the file." />
-    <option name="LAST_COMMIT_MESSAGE" value="Implementing the add, remove and update methods of TraineeStorageImpl by updating only the hashmap without writing to the file." />
+    <MESSAGE value="Adding a method for persisting the map object to the file" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding a method for persisting the map object to the file" />
   </component>
 </project>
