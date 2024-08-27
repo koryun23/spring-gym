@@ -4,7 +4,9 @@ import org.example.dao.core.Dao;
 import org.example.entity.Trainer;
 import org.example.repository.impl.TrainerStorageImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TrainerDao implements Dao<Trainer> {
 
     @Autowired
