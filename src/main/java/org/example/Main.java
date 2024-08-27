@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.entity.SpecializationType;
 import org.example.entity.Trainee;
 import org.example.entity.Trainer;
 import org.example.helper.DateConverter;
@@ -16,5 +17,15 @@ public class Main {
         ApplicationContext context = SpringApplication.run(Main.class, args);
         TraineeStorageImpl traineeStorage = context.getBean(TraineeStorageImpl.class);
         TrainerStorageImpl trainerStorage = context.getBean(TrainerStorageImpl.class);
+
+        trainerStorage.add(new Trainer(
+                1L,
+                "Jack",
+                "Murray",
+                "jack7",
+                "pwd12",
+                true,
+                SpecializationType.FITNESS
+        ));
     }
 }

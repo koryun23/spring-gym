@@ -1,1 +1,1 @@
-2,Xavi,Hernandez,xavi6,pwd56,true,manager
+1,Jack,Murray,jack7,pwd12,true,FITNESS

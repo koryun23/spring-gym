@@ -1,6 +1,7 @@
 package org.example.repository.impl;
 
 import jakarta.annotation.PostConstruct;
+import org.example.entity.SpecializationType;
 import org.example.entity.Trainer;
 import org.example.repository.core.FileStorage;
 import org.slf4j.Logger;
@@ -138,7 +139,7 @@ public class TrainerStorageImpl implements FileStorage<Trainer> {
         return Boolean.parseBoolean(array[5]);
     }
 
-    private String getSpecializationFromArray(String[] array) {
-        return array[6];
+    private SpecializationType getSpecializationFromArray(String[] array) {
+        return SpecializationType.valueOf(array[6]);
     }
 }

@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Trainer extends User {
 
-    private String specialization;
+    private SpecializationType specialization;
     private Long userId;
 
     public Trainer(Long userId,
@@ -14,17 +14,17 @@ public class Trainer extends User {
                    String username,
                    String password,
                    boolean isActive,
-                   String specialization) {
+                   SpecializationType specialization) {
         super(firstName, lastName, username, password, isActive);
         this.specialization = specialization;
         this.userId = userId;
     }
 
-    public String getSpecialization() {
+    public SpecializationType getSpecialization() {
         return specialization;
     }
 
-    public void setSpecialization(String specialization) {
+    public void setSpecialization(SpecializationType specialization) {
         this.specialization = specialization;
     }
 
