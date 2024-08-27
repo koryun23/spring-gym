@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Implementing the TrainerStorage class">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/SpecializationType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Trainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Trainer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainerStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainerStorageImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Training.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Training.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainingStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainingStorageImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +48,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
@@ -60,17 +64,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.gym-spring [:Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;trainer__storage&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Koryun/Desktop/Koryun/gym-spring/src/main/java/org/example/db&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.gym-spring [:Main.main()].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "training__storage",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Koryun/Desktop/Koryun/gym-spring/src/main/java/org/example/db",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Koryun\Desktop\Koryun\gym-spring\src\main\java\org\example\db" />
