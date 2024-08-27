@@ -2,31 +2,31 @@ package org.example.dao.impl;
 
 import org.example.dao.core.Dao;
 import org.example.entity.Training;
-import org.example.repository.core.Storage;
+import org.example.repository.impl.TrainingStorageImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class TrainingDao implements Dao<Training> {
 
     @Autowired
-    private Storage storage;
+    private TrainingStorageImpl storage;
 
     @Override
     public Training get(Long id) {
-        return null;
+        return storage.get(id);
     }
 
     @Override
     public Training save(Training training) {
-        return null;
+        return storage.add(training);
     }
 
     @Override
     public Training update(Training training) {
-        return null;
+        return storage.update(training);
     }
 
     @Override
-    public Training delete(Training training) {
-        return null;
+    public boolean delete(Long id) {
+        return storage.remove(id);
     }
 }
