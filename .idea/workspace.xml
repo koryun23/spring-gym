@@ -4,13 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="implementing the TrainerFacade logic">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TrainingCreationRequestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TrainingRetrievalRequestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainingCreationResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainingRetrievalResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/core/TrainingFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/core/TrainingFacade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainingFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainingFacadeImpl.java" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Formatting Training entity class">
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Training.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/Training.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -324,7 +319,31 @@
       <option name="project" value="LOCAL" />
       <updated>1724849200229</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="implementing the TrainingFacade logic">
+      <option name="closed" value="true" />
+      <created>1724849737564</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1724849737564</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Adding Component annotation to the TrainerFacadeImpl class">
+      <option name="closed" value="true" />
+      <created>1724849778994</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1724849778994</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Formatting Training entity class">
+      <option name="closed" value="true" />
+      <created>1724849867742</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1724849867742</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -339,9 +358,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Autowiring storage to the DAO implementation classes" />
-    <MESSAGE value="Setting up the storage interfaces and classes" />
-    <MESSAGE value="Implementing the Training entity class and adding toString method to all the entities" />
     <MESSAGE value="Implementing the post construct method of parsing the file containing trainee data into an in-memory hash map." />
     <MESSAGE value="Implementing the get method of TraineeStorageImpl" />
     <MESSAGE value="Implementing the add, remove and update methods of TraineeStorageImpl by updating only the hashmap without writing to the file." />
@@ -364,6 +380,9 @@
     <MESSAGE value="Implementing the logic for TrainingService" />
     <MESSAGE value="Creating Facade interfaces and classes and implementing the TraineeFacade logic" />
     <MESSAGE value="implementing the TrainerFacade logic" />
-    <option name="LAST_COMMIT_MESSAGE" value="implementing the TrainerFacade logic" />
+    <MESSAGE value="implementing the TrainingFacade logic" />
+    <MESSAGE value="Adding Component annotation to the TrainerFacadeImpl class" />
+    <MESSAGE value="Formatting Training entity class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Formatting Training entity class" />
   </component>
 </project>
