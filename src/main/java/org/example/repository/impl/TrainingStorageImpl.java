@@ -37,26 +37,35 @@ public class TrainingStorageImpl implements FileStorage<Training> {
 
     @Override
     public Training get(Long id) {
-        return inMemoryStorage.get(id);
+        LOGGER.info("Retrieving a Training with an id of {}", id);
+        Training training = inMemoryStorage.get(id);
+        LOGGER.info("Successfully retrieved a Training with an id of {}, result - {}", id, training);
+        return training;
     }
 
     @Override
     public Training add(Training training) {
-        inMemoryStorage.put(training.getTrainingId(), training);
+        LOGGER.info("Adding a Training with an id of {} to the in-memory storage", training.getTrainingId());
+        Training addedTraining = inMemoryStorage.put(training.getTrainingId(), training);
+        LOGGER.info("Successfully added {} to the in-memory storage", addedTraining);
         persist();
         return training;
     }
 
     @Override
     public boolean remove(Long id) {
-        inMemoryStorage.remove(id);
+        LOGGER.info("Removing a Training with an id of {} from the in-memory storage", id);
+        Training removedTraining = inMemoryStorage.remove(id);
+        LOGGER.info("Successfully removed {} from the in-memory storage", removedTraining);
         persist();
         return true;
     }
 
     @Override
     public Training update(Training training) {
-        inMemoryStorage.put(training.getTrainingId(), training);
+        LOGGER.info("Updating a Training with an id of {}", training.getTrainingId());
+        Training updatedTraining = inMemoryStorage.put(training.getTrainingId(), training);
+        LOGGER.info("Successfully updated a Training with an id of {}, result - {}", training.getTrainingId(), updatedTraining);
         persist();
         return training;
     }
@@ -70,8 +79,9 @@ public class TrainingStorageImpl implements FileStorage<Training> {
             throw new RuntimeException(e);
         }
 
-        while(scanner.hasNextLine()) {
+        while (scanner.hasNextLine()) {
             String currentTrainingString = scanner.nextLine();
+            LOGGER.info("Storing the row '{}' to the in-memory storage", currentTrainingString);
             String[] currentTrainingArray = currentTrainingString.split(",");
             Long trainingId = getTrainingIdFromArray(currentTrainingArray);
             Training currentTraining = new Training(
@@ -83,8 +93,9 @@ public class TrainingStorageImpl implements FileStorage<Training> {
                     getTrainingDateFromArray(currentTrainingArray),
                     getTrainingDurationFromArray(currentTrainingArray)
             );
-            LOGGER.info(currentTrainingString.toString());
+            LOGGER.info("Converted the row '{}' to {}", currentTrainingString, currentTraining);
             inMemoryStorage.put(trainingId, currentTraining);
+            LOGGER.info("Successfully stored {} in the in-memory storage", currentTraining);
         }
         LOGGER.info("In memory storage - {}", inMemoryStorage);
     }
@@ -94,8 +105,9 @@ public class TrainingStorageImpl implements FileStorage<Training> {
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new FileWriter(PATH));
-            for(Map.Entry<Long, Training> entry : inMemoryStorage.entrySet()) {
+            for (Map.Entry<Long, Training> entry : inMemoryStorage.entrySet()) {
                 Training currentTraining = entry.getValue();
+                LOGGER.info("Persisting {} to the .txt file", currentTraining);
                 String stringRepresentationOfTraining = String.format("%d,%d,%d,%s,%s,%s,%d",
                         currentTraining.getTrainingId(),
                         currentTraining.getTraineeId(),
@@ -105,9 +117,11 @@ public class TrainingStorageImpl implements FileStorage<Training> {
                         dateConverter.dateToString(currentTraining.getTrainingDate()),
                         currentTraining.getDuration()
                 );
-                LOGGER.info("Current training - {}", stringRepresentationOfTraining);
+
+                LOGGER.info("The row being persisted to the .txt file - {}", stringRepresentationOfTraining);
                 writer.write(stringRepresentationOfTraining);
                 writer.newLine();
+                LOGGER.info("Successfully persisted {}, result - {}", currentTraining, stringRepresentationOfTraining);
             }
             writer.close();
         } catch (IOException e) {
@@ -147,6 +161,4 @@ public class TrainingStorageImpl implements FileStorage<Training> {
     private Long getTrainingDurationFromArray(String[] array) {
         return Long.valueOf(array[6]);
     }
-
-
 }
