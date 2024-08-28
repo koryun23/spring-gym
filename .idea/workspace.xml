@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Implementing the DAOs and changing the remove method's return type to boolean, and tha parameter to id of the object">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/params/TraineeCreateParams.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/params/TraineeUpdateParams.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/params/TrainerCreateParams.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/params/TrainerUpdateParams.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/params/TrainingCreateParams.java" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Implementing the logic for TraineeService">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/core/TrainerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/core/TrainerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainerServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,17 +63,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.gym-spring [:Main.main()].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Koryun/Desktop/Koryun/gym-spring/src/main/java/org/example/db",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.gym-spring [:Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Koryun/Desktop/Koryun/gym-spring/src/main/java/org/example/db&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Koryun\Desktop\Koryun\gym-spring\src\main\java\org\example\db" />
@@ -268,7 +265,31 @@
       <option name="project" value="LOCAL" />
       <updated>1724764270512</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Adding create and update params for the Trainee, Trainer and Training entity classes">
+      <option name="closed" value="true" />
+      <created>1724772300549</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1724772300549</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Adding Component annotation to the classes TraineeDao and TrainingDao">
+      <option name="closed" value="true" />
+      <created>1724772763475</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1724772763475</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Implementing the logic for TraineeService">
+      <option name="closed" value="true" />
+      <created>1724772792451</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1724772792451</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -302,6 +323,9 @@
     <MESSAGE value="Implementing the TrainerStorage class" />
     <MESSAGE value="Implementing the TrainingStorage logic" />
     <MESSAGE value="Implementing the DAOs and changing the remove method's return type to boolean, and tha parameter to id of the object" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implementing the DAOs and changing the remove method's return type to boolean, and tha parameter to id of the object" />
+    <MESSAGE value="Adding create and update params for the Trainee, Trainer and Training entity classes" />
+    <MESSAGE value="Adding Component annotation to the classes TraineeDao and TrainingDao" />
+    <MESSAGE value="Implementing the logic for TraineeService" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implementing the logic for TraineeService" />
   </component>
 </project>
