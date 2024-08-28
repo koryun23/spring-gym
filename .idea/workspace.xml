@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Added logs in the TraineeStorageImpl class">
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding logs for the TrainingServiceImpl class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainerStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainerStorageImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -361,7 +359,79 @@
       <option name="project" value="LOCAL" />
       <updated>1724859179983</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Added logs in the TrainerStorageImpl class">
+      <option name="closed" value="true" />
+      <created>1724862821908</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1724862821908</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Changing some of the log messages to match the pattern of the other logs(getting -&gt; retrieving, put -&gt; add)">
+      <option name="closed" value="true" />
+      <created>1724862885592</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1724862885593</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Adding logs for the TrainingStorageImpl class">
+      <option name="closed" value="true" />
+      <created>1724863254515</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1724863254515</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Adding logs for the TraineeDao class">
+      <option name="closed" value="true" />
+      <created>1724863568238</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1724863568238</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Adding logs for the TrainerDao class">
+      <option name="closed" value="true" />
+      <created>1724863779059</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1724863779059</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Adding logs for the TrainingDao class">
+      <option name="closed" value="true" />
+      <created>1724864005282</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1724864005282</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Adding logs for the TraineeServiceImpl class">
+      <option name="closed" value="true" />
+      <created>1724864289669</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1724864289669</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Adding logs for the TrainerServiceImpl class">
+      <option name="closed" value="true" />
+      <created>1724864452397</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1724864452397</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Adding logs for the TrainingServiceImpl class">
+      <option name="closed" value="true" />
+      <created>1724864588946</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1724864588946</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -376,15 +446,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Implementing the add, remove and update methods of TraineeStorageImpl by updating only the hashmap without writing to the file." />
-    <MESSAGE value="Adding a method for persisting the map object to the file" />
-    <MESSAGE value="Using an absolute path instead of relative, keeping the path to the file as a static constant inside storage class, instead of keeping it in application.properties" />
-    <MESSAGE value="Adding a DateConverter spring bean to convert a string to date and vice versa" />
-    <MESSAGE value="Removing data from the trainee.txt file" />
-    <MESSAGE value="Using the date converter bean in the main method" />
-    <MESSAGE value="Removing unnecessary print statements" />
-    <MESSAGE value="Changing the return type of the remove method from the object being removed to a boolean, and changing the parameter from the object to its id" />
-    <MESSAGE value="Removing unnecessary import statements and the SpringBootApplicaion annotation from the Main class" />
     <MESSAGE value="Adding the SpringBootApplication to the Main class" />
     <MESSAGE value="Implementing the TrainerStorage class" />
     <MESSAGE value="Implementing the TrainingStorage logic" />
@@ -401,6 +462,15 @@
     <MESSAGE value="Formatting Training entity class" />
     <MESSAGE value="Committing workspace.xml file" />
     <MESSAGE value="Added logs in the TraineeStorageImpl class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added logs in the TraineeStorageImpl class" />
+    <MESSAGE value="Added logs in the TrainerStorageImpl class" />
+    <MESSAGE value="Changing some of the log messages to match the pattern of the other logs(getting -&gt; retrieving, put -&gt; add)" />
+    <MESSAGE value="Adding logs for the TrainingStorageImpl class" />
+    <MESSAGE value="Adding logs for the TraineeDao class" />
+    <MESSAGE value="Adding logs for the TrainerDao class" />
+    <MESSAGE value="Adding logs for the TrainingDao class" />
+    <MESSAGE value="Adding logs for the TraineeServiceImpl class" />
+    <MESSAGE value="Adding logs for the TrainerServiceImpl class" />
+    <MESSAGE value="Adding logs for the TrainingServiceImpl class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding logs for the TrainingServiceImpl class" />
   </component>
 </project>
