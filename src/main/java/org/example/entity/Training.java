@@ -13,7 +13,13 @@ public class Training {
     private Date trainingDate;
     private Long duration;
 
-    public Training(Long trainingId, Long traineeId, Long trainerId, String name, TrainingType trainingType, Date trainingDate, Long duration) {
+    public Training(Long trainingId,
+                    Long traineeId,
+                    Long trainerId,
+                    String name,
+                    TrainingType trainingType,
+                    Date trainingDate,
+                    Long duration) {
         this.trainingId = trainingId;
         this.traineeId = traineeId;
         this.trainerId = trainerId;
