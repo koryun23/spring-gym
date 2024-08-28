@@ -11,7 +11,9 @@ import org.example.service.core.TrainerService;
 import org.example.service.params.TrainerCreateParams;
 import org.example.service.params.TrainerUpdateParams;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TrainerFacadeImpl implements TrainerFacade {
 
     @Autowired
