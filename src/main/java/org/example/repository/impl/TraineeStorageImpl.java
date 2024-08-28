@@ -38,9 +38,9 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
 
     @Override
     public Trainee get(Long id) {
-        LOGGER.info("Getting a Trainee with an id of {} from the in-memory storage", id);
+        LOGGER.info("Retrieving a Trainee with an id of {} from the in-memory storage", id);
         Trainee trainee = inMemoryStorage.get(id);
-        LOGGER.info("The trainee with an id of {}", trainee);
+        LOGGER.info("Successfully retrieved a Trainer with an id of {}, result - {}", id, trainee);
         return trainee;
     }
 
@@ -48,7 +48,7 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
     public Trainee add(Trainee trainee) {
         LOGGER.info("Adding {} to the in-memory storage", trainee);
         Trainee addedTrainee = inMemoryStorage.put(trainee.getUserId(), trainee);
-        LOGGER.info("Successfully put {} to the in-memory storage", addedTrainee);
+        LOGGER.info("Successfully added {} to the in-memory storage", addedTrainee);
         persist();
         return addedTrainee;
     }
