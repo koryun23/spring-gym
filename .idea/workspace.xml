@@ -4,15 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Creating Facade interfaces and classes and implementing the TraineeFacade logic">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TrainerCreationRequestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TrainerUpdateRequestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainerCreationResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainerRetrievalResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainerUpdateResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/core/TrainerFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/core/TrainerFacade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="implementing the TrainerFacade logic">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TrainingCreationRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TrainingRetrievalRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainingCreationResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainingRetrievalResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/core/TrainingFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/core/TrainingFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainingFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainingFacadeImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -318,7 +316,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724844963356</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="implementing the TrainerFacade logic">
+      <option name="closed" value="true" />
+      <created>1724849200229</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1724849200229</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -333,7 +339,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Setting up the implementation of the gym system. Adding domain entity classes, DAOs, services and storage" />
     <MESSAGE value="Autowiring storage to the DAO implementation classes" />
     <MESSAGE value="Setting up the storage interfaces and classes" />
     <MESSAGE value="Implementing the Training entity class and adding toString method to all the entities" />
@@ -358,6 +363,7 @@
     <MESSAGE value="Implementing the logic for TrainerService" />
     <MESSAGE value="Implementing the logic for TrainingService" />
     <MESSAGE value="Creating Facade interfaces and classes and implementing the TraineeFacade logic" />
-    <option name="LAST_COMMIT_MESSAGE" value="Creating Facade interfaces and classes and implementing the TraineeFacade logic" />
+    <MESSAGE value="implementing the TrainerFacade logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="implementing the TrainerFacade logic" />
   </component>
 </project>
