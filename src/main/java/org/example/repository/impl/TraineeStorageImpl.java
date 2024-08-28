@@ -8,11 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.io.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +28,7 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
     private final Map<Long, Trainee> inMemoryStorage; // trainee id - trainee
 
     public TraineeStorageImpl(Map<Long, Trainee> map) {
+        Assert.notNull(map, "In memory storage must not be null");
         inMemoryStorage = map;
     }
 
@@ -39,28 +38,37 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
 
     @Override
     public Trainee get(Long id) {
-        return inMemoryStorage.get(id);
-    }
-
-    @Override
-    public Trainee add(Trainee trainee) {
-        inMemoryStorage.put(trainee.getUserId(), trainee);
-        persist();
+        LOGGER.info("Getting a Trainee with an id of {} from the in-memory storage", id);
+        Trainee trainee = inMemoryStorage.get(id);
+        LOGGER.info("The trainee with an id of {}", trainee);
         return trainee;
     }
 
     @Override
+    public Trainee add(Trainee trainee) {
+        LOGGER.info("Adding {} to the in-memory storage", trainee);
+        Trainee addedTrainee = inMemoryStorage.put(trainee.getUserId(), trainee);
+        LOGGER.info("Successfully put {} to the in-memory storage", addedTrainee);
+        persist();
+        return addedTrainee;
+    }
+
+    @Override
     public boolean remove(Long id) {
-        inMemoryStorage.remove(id);
+        LOGGER.info("Removing a Trainee with an id of {} from the in-memory storage", id);
+        Trainee removedTrainee = inMemoryStorage.remove(id);
+        LOGGER.info("Successfully removed {} from the in-memory storage", removedTrainee);
         persist();
         return true;
     }
 
     @Override
     public Trainee update(Trainee trainee) {
-        inMemoryStorage.put(trainee.getUserId(), trainee);
+        LOGGER.info("Updating a Trainee with an id of {}", trainee.getUserId());
+        Trainee updatedTrainee = inMemoryStorage.put(trainee.getUserId(), trainee);
+        LOGGER.info("Successfully updated a Trainee with an id of {}, final result - {}", trainee.getUserId(), updatedTrainee);
         persist();
-        return trainee;
+        return updatedTrainee;
     }
 
     @Override
@@ -70,6 +78,7 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
             writer = new BufferedWriter(new FileWriter(PATH));
             for (Map.Entry<Long, Trainee> entry : inMemoryStorage.entrySet()) {
                 Trainee currentTrainee = entry.getValue();
+                LOGGER.info("Persisting {} to the .txt file", currentTrainee);
                 String stringRepresentationOfTrainee = String.format("%d,%s,%s,%s,%s,%s,%s,%s",
                         currentTrainee.getUserId(),
                         currentTrainee.getFirstName(),
@@ -80,9 +89,10 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
                         dateConverter.dateToString(currentTrainee.getDateOfBirth()),
                         currentTrainee.getAddress()
                 );
-                LOGGER.info("Current trainee - {}", stringRepresentationOfTrainee);
+                LOGGER.info("The row being persisted to the .txt file - {}", stringRepresentationOfTrainee);
                 writer.write(stringRepresentationOfTrainee);
                 writer.newLine();
+                LOGGER.info("Successfully persisted {}, result - {}", currentTrainee, stringRepresentationOfTrainee);
             }
             writer.close();
         } catch (IOException e) {
@@ -101,6 +111,7 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
 
         while (scanner.hasNextLine()) {
             String currentTraineeString = scanner.nextLine();
+            LOGGER.info("Storing the row '{}' in the in-memory storage", currentTraineeString);
             String[] currentTraineeSplit = currentTraineeString.split(",");
             Long userId = getUserIdFromArray(currentTraineeSplit);
             Trainee currentTrainee = new Trainee(
@@ -113,8 +124,9 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
                     getDateOfBirthFromArray(currentTraineeSplit),
                     getAddressFromArray(currentTraineeSplit)
             );
-            LOGGER.info(currentTrainee.toString());
+            LOGGER.info("Converted the row '{}' to {}", currentTraineeString, currentTrainee);
             inMemoryStorage.put(userId, currentTrainee);
+            LOGGER.info("Successfully stored {} in the in-memory storage", currentTrainee);
         }
         LOGGER.info("In memory storage - {}", inMemoryStorage.toString());
     }
