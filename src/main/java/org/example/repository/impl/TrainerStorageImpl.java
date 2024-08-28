@@ -7,6 +7,7 @@ import org.example.repository.core.FileStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.io.*;
 import java.util.HashMap;
@@ -22,6 +23,7 @@ public class TrainerStorageImpl implements FileStorage<Trainer> {
     private final Map<Long, Trainer> inMemoryStorage;
 
     public TrainerStorageImpl(Map<Long, Trainer> inMemoryStorage) {
+        Assert.notNull(inMemoryStorage, "In-memory storage must not be null");
         this.inMemoryStorage = inMemoryStorage;
     }
 
@@ -31,28 +33,37 @@ public class TrainerStorageImpl implements FileStorage<Trainer> {
 
     @Override
     public Trainer get(Long id) {
-        return inMemoryStorage.get(id);
+        LOGGER.info("Retrieving a Trainer with an id of {} from the in-memory storage", id);
+        Trainer trainer = inMemoryStorage.get(id);
+        LOGGER.info("Successfully retrieved a Trainer with an id of {}, result - {}", id, trainer);
+        return trainer;
     }
 
     @Override
     public Trainer add(Trainer trainer) {
-        inMemoryStorage.put(trainer.getUserId(), trainer);
+        LOGGER.info("Adding {} to the in-memory storage", trainer);
+        Trainer addedTrainer = inMemoryStorage.put(trainer.getUserId(), trainer);
+        LOGGER.info("Successfully added {} to the in-memory storage", addedTrainer);
         persist();
         return trainer;
     }
 
     @Override
     public boolean remove(Long id) {
-        inMemoryStorage.remove(id);
+        LOGGER.info("Removing a Trainer with an id of {} from the in-memory storage", id);
+        Trainer removedTrainer = inMemoryStorage.remove(id);
+        LOGGER.info("Successfully removed {} from the in-memory storage", removedTrainer);
         persist();
         return true;
     }
 
     @Override
     public Trainer update(Trainer trainer) {
-        inMemoryStorage.put(trainer.getUserId(), trainer);
+        LOGGER.info("Updating a Trainer with an id of {}", trainer.getUserId());
+        Trainer updatedTrainer = inMemoryStorage.put(trainer.getUserId(), trainer);
+        LOGGER.info("Successfully updated a Trainer with an id of {}, final result - {}", trainer.getUserId(), updatedTrainer);
         persist();
-        return trainer;
+        return updatedTrainer;
     }
 
     @Override
@@ -66,6 +77,7 @@ public class TrainerStorageImpl implements FileStorage<Trainer> {
 
         while (scanner.hasNextLine()) {
             String currentTrainerString = scanner.nextLine();
+            LOGGER.info("Storing the row '{}' in the in-memory storage", currentTrainerString);
             String[] currentTrainerArray = currentTrainerString.split(",");
             Trainer currentTrainer = new Trainer(
                     getUserIdFromArray(currentTrainerArray),
@@ -77,11 +89,12 @@ public class TrainerStorageImpl implements FileStorage<Trainer> {
                     getSpecializationFromArray(currentTrainerArray)
             );
 
-            LOGGER.info(currentTrainer.toString());
+            LOGGER.info("Converted the row '{}' to {}", currentTrainerString, currentTrainer);
             inMemoryStorage.put(currentTrainer.getUserId(), currentTrainer);
+            LOGGER.info("Successfully stored {} in the in-memory storage", currentTrainer);
         }
 
-        LOGGER.info("In memoty storage - {}", inMemoryStorage);
+        LOGGER.info("In memory storage - {}", inMemoryStorage);
     }
 
     @Override
@@ -91,6 +104,7 @@ public class TrainerStorageImpl implements FileStorage<Trainer> {
             writer = new BufferedWriter(new FileWriter(PATH));
             for (Map.Entry<Long, Trainer> entry : inMemoryStorage.entrySet()) {
                 Trainer currentTrainer = entry.getValue();
+                LOGGER.info("Persisting {} to the .txt file", currentTrainer);
                 String stringRepresentationOfTrainer = String.format("%d,%s,%s,%s,%s,%s,%s",
                         currentTrainer.getUserId(),
                         currentTrainer.getFirstName(),
@@ -100,9 +114,10 @@ public class TrainerStorageImpl implements FileStorage<Trainer> {
                         currentTrainer.isActive(),
                         currentTrainer.getSpecialization()
                 );
-                LOGGER.info("Current trainer - {}", stringRepresentationOfTrainer);
+                LOGGER.info("The row being persisted to the .txt file - {}", stringRepresentationOfTrainer);
                 writer.write(stringRepresentationOfTrainer);
                 writer.newLine();
+                LOGGER.info("Successfully persisted {}, result - {}", currentTrainer, stringRepresentationOfTrainer);
             }
             writer.close();
         } catch (IOException e) {
