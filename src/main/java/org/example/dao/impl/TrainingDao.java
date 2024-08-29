@@ -11,7 +11,6 @@ public class TrainingDao implements Dao<Training> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainingDao.class);
 
-    @Autowired
     private TrainingStorageImpl storage;
 
     @Override
@@ -45,5 +44,10 @@ public class TrainingDao implements Dao<Training> {
         if(success) LOGGER.info("Successfully deleted a Training with an id of {}", id);
         else LOGGER.error("Failed to delete a Training with an id of {}", id);
         return success;
+    }
+
+    @Autowired
+    public void setStorage(TrainingStorageImpl storage) {
+        this.storage = storage;
     }
 }

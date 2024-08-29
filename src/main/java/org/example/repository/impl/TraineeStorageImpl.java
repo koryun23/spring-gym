@@ -20,7 +20,6 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
     private static final Logger LOGGER = LoggerFactory.getLogger(TraineeStorageImpl.class);
     private static final String PATH = "C:\\Users\\Koryun\\Desktop\\Koryun\\gym-spring\\src\\main\\java\\org\\example\\repository\\core\\trainee.txt";
 
-    @Autowired
     private DateConverter dateConverter;
 
     private final Map<Long, Trainee> inMemoryStorage; // trainee id - trainee
@@ -132,6 +131,11 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
     @PostConstruct
     public void init() {
         parseMemoryFile();
+    }
+
+    @Autowired
+    public void setDateConverter(DateConverter dateConverter) {
+        this.dateConverter = dateConverter;
     }
 
     private Long getUserIdFromArray(String[] array) {

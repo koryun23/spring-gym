@@ -22,7 +22,6 @@ public class TrainingStorageImpl implements FileStorage<Training> {
 
     private final Map<Long, Training> inMemoryStorage;
 
-    @Autowired
     private DateConverter dateConverter;
 
     public TrainingStorageImpl() {
@@ -125,6 +124,11 @@ public class TrainingStorageImpl implements FileStorage<Training> {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Autowired
+    public void setDateConverter(DateConverter dateConverter) {
+        this.dateConverter = dateConverter;
     }
 
     @PostConstruct
