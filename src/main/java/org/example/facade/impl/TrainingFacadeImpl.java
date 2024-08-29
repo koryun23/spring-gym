@@ -10,15 +10,17 @@ import org.example.service.params.TrainingCreateParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
 public class TrainingFacadeImpl implements TrainingFacade {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainingFacadeImpl.class);
 
+    private final TrainingService trainingService;
+
     @Autowired
-    private TrainingService trainingService;
+    public TrainingFacadeImpl(TrainingService trainingService) {
+        this.trainingService = trainingService;
+    }
 
     @Override
     public TrainingCreationResponseDto createTraining(TrainingCreationRequestDto requestDto) {

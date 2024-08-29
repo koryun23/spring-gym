@@ -13,15 +13,19 @@ import org.example.service.params.TrainerUpdateParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
-@Component
 public class TrainerFacadeImpl implements TrainerFacade {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainerFacadeImpl.class);
 
+    private final TrainerService trainerService;
+
     @Autowired
-    private TrainerService trainerService;
+    public TrainerFacadeImpl(TrainerService trainerService) {
+        Assert.notNull(trainerService, "Trainer Service must not be null");
+        this.trainerService = trainerService;
+    }
 
     @Override
     public TrainerCreationResponseDto createTrainer(TrainerCreationRequestDto requestDto) {

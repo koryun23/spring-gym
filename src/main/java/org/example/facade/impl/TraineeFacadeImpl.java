@@ -14,15 +14,19 @@ import org.example.service.params.TraineeUpdateParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
-@Component
 public class TraineeFacadeImpl implements TraineeFacade {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TraineeFacadeImpl.class);
 
+    private final TraineeService traineeService;
+
     @Autowired
-    private TraineeService traineeService;
+    public TraineeFacadeImpl(TraineeService traineeService) {
+        Assert.notNull(traineeService, "Trainee Service must not be null");
+        this.traineeService = traineeService;
+    }
 
     @Override
     public TraineeCreationResponseDto createTrainee(TraineeCreationRequestDto requestDto) {

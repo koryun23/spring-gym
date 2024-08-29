@@ -6,7 +6,6 @@ import org.example.entity.Trainer;
 import org.example.repository.core.FileStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.io.*;
@@ -14,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-@Component
 public class TrainerStorageImpl implements FileStorage<Trainer> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainerStorageImpl.class);
