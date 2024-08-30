@@ -1,6 +1,6 @@
 package org.example.repository.core;
 
-public interface FileStorage<T> extends Storage<T> {
+public interface FileStorage<T> {
 
     void parseMemoryFile();
 

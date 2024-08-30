@@ -4,18 +4,16 @@ import jakarta.annotation.PostConstruct;
 import org.example.entity.Trainee;
 import org.example.helper.DateConverter;
 import org.example.repository.core.FileStorage;
+import org.example.repository.core.TraineeStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
 import java.io.*;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
-public class TraineeStorageImpl implements FileStorage<Trainee> {
+public class TraineeStorageImpl implements FileStorage<Trainee>, TraineeStorage {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TraineeStorageImpl.class);
     private static final String PATH = "C:\\Users\\Koryun\\Desktop\\Koryun\\gym-spring\\src\\main\\java\\org\\example\\repository\\core\\trainee.txt";
@@ -66,6 +64,21 @@ public class TraineeStorageImpl implements FileStorage<Trainee> {
         LOGGER.info("Successfully updated a Trainee with an id of {}, final result - {}", trainee.getUserId(), updatedTrainee);
         persist();
         return updatedTrainee;
+    }
+
+    @Override
+    public Trainee getByUsername(String username) {
+        return null;
+    }
+
+    @Override
+    public Optional<Trainee> findByUsername(String username) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Trainee> findById(Long id) {
+        return Optional.empty();
     }
 
     @Override

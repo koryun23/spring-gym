@@ -4,18 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Removing the SpringBootApplication annotation from the Main class and using AnnotationConfigApplicationContext instead of Application context">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/dao/core/TraineeDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/dao/core/TrainerDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/dao/core/TrainingDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/config/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/config/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/TraineeDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/TraineeDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/TrainerDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/TrainerDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/TrainingDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/TrainingDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TraineeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TraineeServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainerServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainingServiceImpl.java" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding intermediate interfaces that get implemented by their respective data access object classes">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/core/TraineeStorage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/core/TrainingStorage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/core/FileStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/core/FileStorage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -458,7 +451,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724962200693</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="Adding intermediate interfaces that get implemented by their respective data access object classes">
+      <option name="closed" value="true" />
+      <created>1725022546261</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1725022546261</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -473,7 +474,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Implementing the TrainingStorage logic" />
     <MESSAGE value="Implementing the DAOs and changing the remove method's return type to boolean, and tha parameter to id of the object" />
     <MESSAGE value="Adding create and update params for the Trainee, Trainer and Training entity classes" />
     <MESSAGE value="Adding Component annotation to the classes TraineeDao and TrainingDao" />
@@ -498,6 +498,7 @@
     <MESSAGE value="Adding logs for the TrainingServiceImpl class" />
     <MESSAGE value="Removing the annotations from the classes which make those beans and setting the bean configuration in the Config class. Injecting the Services to the Facades using constructor instead of autowiring" />
     <MESSAGE value="Using setter-based injections for injecting the DateConverter bean to the storages and for injecting the storages to the DAO classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Using setter-based injections for injecting the DateConverter bean to the storages and for injecting the storages to the DAO classes" />
+    <MESSAGE value="Adding intermediate interfaces that get implemented by their respective data access object classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding intermediate interfaces that get implemented by their respective data access object classes" />
   </component>
 </project>

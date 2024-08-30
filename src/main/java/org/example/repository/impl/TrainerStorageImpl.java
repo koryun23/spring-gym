@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import org.example.entity.SpecializationType;
 import org.example.entity.Trainer;
 import org.example.repository.core.FileStorage;
+import org.example.repository.core.TrainerStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
@@ -11,9 +12,10 @@ import org.springframework.util.Assert;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Scanner;
 
-public class TrainerStorageImpl implements FileStorage<Trainer> {
+public class TrainerStorageImpl implements FileStorage<Trainer>, TrainerStorage {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainerStorageImpl.class);
     private static final String PATH = "C:\\Users\\Koryun\\Desktop\\Koryun\\gym-spring\\src\\main\\java\\org\\example\\repository\\core\\trainer.txt";
@@ -62,6 +64,21 @@ public class TrainerStorageImpl implements FileStorage<Trainer> {
         LOGGER.info("Successfully updated a Trainer with an id of {}, final result - {}", trainer.getUserId(), updatedTrainer);
         persist();
         return updatedTrainer;
+    }
+
+    @Override
+    public Trainer getByUsername(String username) {
+        return null;
+    }
+
+    @Override
+    public Optional<Trainer> findByUsername(String username) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Trainer> findById(Long id) {
+        return Optional.empty();
     }
 
     @Override
