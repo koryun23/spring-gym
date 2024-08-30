@@ -5,6 +5,7 @@ import org.example.entity.Training;
 import org.example.entity.TrainingType;
 import org.example.helper.DateConverter;
 import org.example.repository.core.FileStorage;
+import org.example.repository.core.TrainingStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class TrainingStorageImpl implements FileStorage<Training> {
+public class TrainingStorageImpl implements FileStorage<Training>, TrainingStorage {
 
     private static final String PATH = "C:\\Users\\Koryun\\Desktop\\Koryun\\gym-spring\\src\\main\\java\\org\\example\\repository\\core\\training.txt";
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainerStorageImpl.class);
