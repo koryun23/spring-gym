@@ -2,6 +2,7 @@ package org.example.repository.impl;
 
 import jakarta.annotation.PostConstruct;
 import org.example.entity.Trainee;
+import org.example.exception.TraineeNotFoundException;
 import org.example.helper.DateConverter;
 import org.example.repository.core.FileStorage;
 import org.example.repository.core.TraineeStorage;
@@ -35,6 +36,7 @@ public class TraineeStorageImpl implements FileStorage<Trainee>, TraineeStorage 
     public Trainee get(Long id) {
         LOGGER.info("Retrieving a Trainee with an id of {} from the in-memory storage", id);
         Trainee trainee = inMemoryStorage.get(id);
+        if(trainee == null) throw new TraineeNotFoundException(id);
         LOGGER.info("Successfully retrieved a Trainer with an id of {}, result - {}", id, trainee);
         return trainee;
     }
@@ -51,6 +53,7 @@ public class TraineeStorageImpl implements FileStorage<Trainee>, TraineeStorage 
     @Override
     public boolean remove(Long id) {
         LOGGER.info("Removing a Trainee with an id of {} from the in-memory storage", id);
+        if(!inMemoryStorage.containsKey(id)) throw new TraineeNotFoundException(id);
         Trainee removedTrainee = inMemoryStorage.remove(id);
         LOGGER.info("Successfully removed {} from the in-memory storage", removedTrainee);
         persist();
@@ -68,17 +71,39 @@ public class TraineeStorageImpl implements FileStorage<Trainee>, TraineeStorage 
 
     @Override
     public Trainee getByUsername(String username) {
-        return null;
+        LOGGER.info("Retrieving a Trainee with a username of {}", username);
+        for (Map.Entry<Long, Trainee> pair : inMemoryStorage.entrySet()) {
+            Trainee trainee = pair.getValue();
+            if(trainee.getUsername().equals(username)) {
+                return trainee;
+            }
+        }
+        throw new TraineeNotFoundException(username);
     }
 
     @Override
     public Optional<Trainee> findByUsername(String username) {
-        return Optional.empty();
+        LOGGER.info("Retrieving an optional of a Trainee with a username of {}", username);
+        for(Map.Entry<Long, Trainee> pair : inMemoryStorage.entrySet()) {
+            Trainee trainee = pair.getValue();
+            if(trainee.getUsername().equals(username)) {
+                Optional<Trainee> optionalTrainee = Optional.of(trainee);
+                LOGGER.info("Successfully retrieved an optional of a Trainee with a username of {}, result - {}", username, optionalTrainee);
+                return optionalTrainee;
+            }
+        }
+        Optional<Trainee> optionalTrainee = Optional.empty();
+        LOGGER.info("Successfully retrieved an optional of a Trainee with a username of {}, result - {}", username, optionalTrainee);
+        return optionalTrainee;
     }
 
     @Override
     public Optional<Trainee> findById(Long id) {
-        return Optional.empty();
+        LOGGER.info("Retrieving an optional of a Trainee with an id of {}", id);
+        Trainee trainee = inMemoryStorage.get(id);
+        Optional<Trainee> optionalTrainee = Optional.of(trainee);
+        LOGGER.info("Successfully retrieved an optional of a Trainee with an id of {}, result - {}", id, optionalTrainee);
+        return optionalTrainee;
     }
 
     @Override

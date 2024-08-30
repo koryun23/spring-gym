@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding intermediate interfaces that get implemented by their respective data access object classes">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/core/TraineeStorage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/core/TrainingStorage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/core/FileStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/core/FileStorage.java" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding Exception classes if Trainee or Trainer is not found">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,8 +40,8 @@
       <list>
         <option value="AnnotationType" />
         <option value="Enum" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -64,17 +62,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.gym-spring [:Main.main()].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "adding__new__methods__to__beans",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Koryun/Desktop/Koryun/gym-spring/src/main/java/org/example/db",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.gym-spring [:Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;adding__new__methods__to__beans&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Koryun/Desktop/Koryun/gym-spring/src/main/java/org/example/db&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Koryun\Desktop\Koryun\gym-spring\src\main\java\org\example\db" />
@@ -459,7 +457,31 @@
       <option name="project" value="LOCAL" />
       <updated>1725022546261</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="Adding intermediate interfaces that get implemented by their respective data access object classes for the Storage classes(TraineeStorage, TrainerStorage)">
+      <option name="closed" value="true" />
+      <created>1725022948662</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1725022948663</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Adding TrainingStorage interface that extends Training and gets implemented by TrainingStorageImpl">
+      <option name="closed" value="true" />
+      <created>1725023082885</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1725023082885</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Adding Exception classes if Trainee or Trainer is not found">
+      <option name="closed" value="true" />
+      <created>1725049646168</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1725049646168</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -474,9 +496,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Implementing the DAOs and changing the remove method's return type to boolean, and tha parameter to id of the object" />
-    <MESSAGE value="Adding create and update params for the Trainee, Trainer and Training entity classes" />
-    <MESSAGE value="Adding Component annotation to the classes TraineeDao and TrainingDao" />
     <MESSAGE value="Implementing the logic for TraineeService" />
     <MESSAGE value="Implementing the logic for TrainerService" />
     <MESSAGE value="Implementing the logic for TrainingService" />
@@ -499,6 +518,9 @@
     <MESSAGE value="Removing the annotations from the classes which make those beans and setting the bean configuration in the Config class. Injecting the Services to the Facades using constructor instead of autowiring" />
     <MESSAGE value="Using setter-based injections for injecting the DateConverter bean to the storages and for injecting the storages to the DAO classes" />
     <MESSAGE value="Adding intermediate interfaces that get implemented by their respective data access object classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding intermediate interfaces that get implemented by their respective data access object classes" />
+    <MESSAGE value="Adding intermediate interfaces that get implemented by their respective data access object classes for the Storage classes(TraineeStorage, TrainerStorage)" />
+    <MESSAGE value="Adding TrainingStorage interface that extends Training and gets implemented by TrainingStorageImpl" />
+    <MESSAGE value="Adding Exception classes if Trainee or Trainer is not found" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding Exception classes if Trainee or Trainer is not found" />
   </component>
 </project>
