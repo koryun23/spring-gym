@@ -1,17 +1,24 @@
 package org.example.dao.impl;
 
-import org.example.dao.core.Dao;
+import org.example.dao.core.TrainingDao;
 import org.example.entity.Training;
 import org.example.repository.impl.TrainingStorageImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class TrainingDao implements Dao<Training> {
+import java.util.Optional;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TrainingDao.class);
+public class TrainingDaoImpl implements TrainingDao {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TrainingDaoImpl.class);
 
     private TrainingStorageImpl storage;
+
+    @Autowired
+    public void setStorage(TrainingStorageImpl storage) {
+        this.storage = storage;
+    }
 
     @Override
     public Training get(Long id) {
@@ -46,8 +53,18 @@ public class TrainingDao implements Dao<Training> {
         return success;
     }
 
-    @Autowired
-    public void setStorage(TrainingStorageImpl storage) {
-        this.storage = storage;
+    @Override
+    public Training getByUsername(String username) {
+        return null;
+    }
+
+    @Override
+    public Optional<Training> findByUsername(String username) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Training> findById(Long id) {
+        return Optional.empty();
     }
 }

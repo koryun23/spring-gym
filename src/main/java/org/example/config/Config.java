@@ -1,8 +1,8 @@
 package org.example.config;
 
-import org.example.dao.impl.TraineeDao;
-import org.example.dao.impl.TrainerDao;
-import org.example.dao.impl.TrainingDao;
+import org.example.dao.impl.TraineeDaoImpl;
+import org.example.dao.impl.TrainerDaoImpl;
+import org.example.dao.impl.TrainingDaoImpl;
 import org.example.facade.core.TraineeFacade;
 import org.example.facade.core.TrainerFacade;
 import org.example.facade.core.TrainingFacade;
@@ -48,18 +48,18 @@ public class Config {
     }
 
     @Bean
-    public TrainingDao trainingDao() {
-        return new TrainingDao();
+    public TrainingDaoImpl trainingDao() {
+        return new TrainingDaoImpl();
     }
 
     @Bean
-    public TraineeDao traineeDao() {
-        return new TraineeDao();
+    public TraineeDaoImpl traineeDao() {
+        return new TraineeDaoImpl();
     }
 
     @Bean
-    public TrainerDao trainerDao() {
-        return new TrainerDao();
+    public TrainerDaoImpl trainerDao() {
+        return new TrainerDaoImpl();
     }
 
     @Bean

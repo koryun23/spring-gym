@@ -1,6 +1,6 @@
 package org.example.service.impl;
 
-import org.example.dao.impl.TraineeDao;
+import org.example.dao.impl.TraineeDaoImpl;
 import org.example.entity.Trainee;
 import org.example.service.core.TraineeService;
 import org.example.service.params.TraineeCreateParams;
@@ -14,7 +14,7 @@ public class TraineeServiceImpl implements TraineeService {
     private static final Logger LOGGER = LoggerFactory.getLogger(TraineeServiceImpl.class);
 
     @Autowired
-    private TraineeDao traineeDao;
+    private TraineeDaoImpl traineeDao;
 
     @Override
     public Trainee create(TraineeCreateParams params) {

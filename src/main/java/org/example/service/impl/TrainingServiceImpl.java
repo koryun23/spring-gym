@@ -1,6 +1,6 @@
 package org.example.service.impl;
 
-import org.example.dao.impl.TrainingDao;
+import org.example.dao.impl.TrainingDaoImpl;
 import org.example.entity.Training;
 import org.example.service.core.TrainingService;
 import org.example.service.params.TrainingCreateParams;
@@ -13,7 +13,7 @@ public class TrainingServiceImpl implements TrainingService {
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainerServiceImpl.class);
 
     @Autowired
-    private TrainingDao trainingDao;
+    private TrainingDaoImpl trainingDao;
 
     @Override
     public Training create(TrainingCreateParams params) {
