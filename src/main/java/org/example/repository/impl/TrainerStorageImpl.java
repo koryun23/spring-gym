@@ -3,6 +3,7 @@ package org.example.repository.impl;
 import jakarta.annotation.PostConstruct;
 import org.example.entity.SpecializationType;
 import org.example.entity.Trainer;
+import org.example.exception.TrainerNotFoundException;
 import org.example.repository.core.FileStorage;
 import org.example.repository.core.TrainerStorage;
 import org.slf4j.Logger;
@@ -68,17 +69,40 @@ public class TrainerStorageImpl implements FileStorage<Trainer>, TrainerStorage 
 
     @Override
     public Trainer getByUsername(String username) {
-        return null;
+        LOGGER.info("Retrieving a Trainer with a username of {}", username);
+        for(Map.Entry<Long, Trainer> pair : inMemoryStorage.entrySet()) {
+            Trainer trainer = pair.getValue();
+            if(trainer.getUsername().equals(username)) {
+                LOGGER.info("Successfully retrieved a Trainer with a username of {}, result - {}", username, trainer);
+                return trainer;
+            }
+        }
+        LOGGER.error("Failed to retrieve a Trainer with a username of {}, throwing a TrainerNotFoundException", username);
+        throw new TrainerNotFoundException(username);
     }
 
     @Override
     public Optional<Trainer> findByUsername(String username) {
-        return Optional.empty();
+        LOGGER.info("Retrieving an optional Trainer with a username of {}", username);
+        for(Map.Entry<Long, Trainer> pair : inMemoryStorage.entrySet()) {
+            Trainer trainer = pair.getValue();
+            if(trainer.getUsername().equals(username)) {
+                Optional<Trainer> optionalTrainer = Optional.of(trainer);
+                LOGGER.info("Successfully retrieved an optional Trainer with a username of {}, result - {}", username, optionalTrainer);
+                return optionalTrainer;
+            }
+        }
+        Optional<Trainer> optionalTrainer = Optional.empty();
+        LOGGER.info("Successfully retrieved an optional Trainer with a username of {}, result - {}", username, optionalTrainer);
+        return optionalTrainer;
     }
 
     @Override
     public Optional<Trainer> findById(Long id) {
-        return Optional.empty();
+        LOGGER.info("Retrieving an optional Trainer with an id of {}", id);
+        Optional<Trainer> optionalTrainer = Optional.of(inMemoryStorage.get(id));
+        LOGGER.info("Successfully retrieved an optional Trainer with an id of {}, result - {}", id, optionalTrainer);
+        return optionalTrainer;
     }
 
     @Override

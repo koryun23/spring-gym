@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding Exception classes if Trainee or Trainer is not found">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding logs to the getByUsername method">
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainerStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainerStorageImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -481,7 +481,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725049646168</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="Adding methods findByUsername, findById, getByUsername">
+      <option name="closed" value="true" />
+      <created>1725050239632</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1725050239632</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -496,8 +504,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Implementing the logic for TraineeService" />
-    <MESSAGE value="Implementing the logic for TrainerService" />
     <MESSAGE value="Implementing the logic for TrainingService" />
     <MESSAGE value="Creating Facade interfaces and classes and implementing the TraineeFacade logic" />
     <MESSAGE value="implementing the TrainerFacade logic" />
@@ -521,6 +527,8 @@
     <MESSAGE value="Adding intermediate interfaces that get implemented by their respective data access object classes for the Storage classes(TraineeStorage, TrainerStorage)" />
     <MESSAGE value="Adding TrainingStorage interface that extends Training and gets implemented by TrainingStorageImpl" />
     <MESSAGE value="Adding Exception classes if Trainee or Trainer is not found" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding Exception classes if Trainee or Trainer is not found" />
+    <MESSAGE value="Adding methods findByUsername, findById, getByUsername" />
+    <MESSAGE value="Adding logs to the getByUsername method" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding logs to the getByUsername method" />
   </component>
 </project>
