@@ -75,9 +75,11 @@ public class TraineeStorageImpl implements FileStorage<Trainee>, TraineeStorage 
         for (Map.Entry<Long, Trainee> pair : inMemoryStorage.entrySet()) {
             Trainee trainee = pair.getValue();
             if(trainee.getUsername().equals(username)) {
+                LOGGER.info("Successfully retrieved a Trainee with a username of {}, result - {}", username, trainee);
                 return trainee;
             }
         }
+        LOGGER.error("Failed to retrieve a Trainee with a username of {}, throwing a TraineeNotFoundException", username);
         throw new TraineeNotFoundException(username);
     }
 
