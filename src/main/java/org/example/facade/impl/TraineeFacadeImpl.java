@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
+import java.util.Optional;
+
 public class TraineeFacadeImpl implements TraineeFacade {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TraineeFacadeImpl.class);
@@ -32,11 +34,18 @@ public class TraineeFacadeImpl implements TraineeFacade {
     public TraineeCreationResponseDto createTrainee(TraineeCreationRequestDto requestDto) {
 
         LOGGER.info("Creating a Trainee based on the TraineeCreationRequestDto - {}", requestDto);
+
+        String username = uniqueUsername(
+                requestDto.getFirstName(),
+                requestDto.getLastName(),
+                requestDto.getUserId()
+        );
+
         Trainee trainee = traineeService.create(new TraineeCreateParams(
                 requestDto.getUserId(),
                 requestDto.getFirstName(),
                 requestDto.getLastName(),
-                requestDto.getUsername(),
+                username,
                 requestDto.getPassword(),
                 requestDto.isActive(),
                 requestDto.getDateOfBirth(),
@@ -109,5 +118,14 @@ public class TraineeFacadeImpl implements TraineeFacade {
         TraineeDeletionResponseDto responseDto = new TraineeDeletionResponseDto(success);
         LOGGER.info("Successfully deleted a Trainee with an id of {}, response - {}", id, responseDto);
         return responseDto;
+    }
+
+    private String uniqueUsername(String firstName, String lastName, Long id) {
+        String temporaryUsername = firstName + "." + lastName;
+        Optional<Trainee> optionalTrainee = traineeService.findByUsername(temporaryUsername);
+        if(optionalTrainee.isEmpty()) {
+            return temporaryUsername;
+        }
+        return temporaryUsername + "." + id;
     }
 }
