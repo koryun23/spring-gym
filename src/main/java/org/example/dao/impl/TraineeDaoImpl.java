@@ -32,8 +32,8 @@ public class TraineeDaoImpl implements TraineeDao {
     public Trainee save(Trainee trainee) {
         LOGGER.info("Saving {}", trainee);
         Trainee addedTrainee = storage.add(trainee);
-        LOGGER.info("Successfully saved {}", addedTrainee);
-        return addedTrainee;
+        LOGGER.info("Successfully saved {}", trainee);
+        return trainee;
     }
 
     @Override
