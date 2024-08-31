@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Creating a method for generating a random password with length 10 for both TraineeFacade and TrainerFacade" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Committing the workspace.xml file">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/core/IdService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/core/trainee-id.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/core/trainer-id.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/IdServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/config/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/config/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -59,17 +68,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.gym-spring [:Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;adding__new__methods__to__beans&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Koryun/Desktop/Koryun/gym-spring/src/main/java/org/example/db&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.gym-spring [:Main.main()].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Koryun/Desktop/Koryun/gym-spring/src/main/java/org/example/db",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Koryun\Desktop\Koryun\gym-spring\src\main\java\org\example\db" />
@@ -110,14 +119,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Adding a method for persisting the map object to the file">
-      <option name="closed" value="true" />
-      <created>1724627148394</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1724627148394</updated>
     </task>
     <task id="LOCAL-00009" summary="Using an absolute path instead of relative, keeping the path to the file as a static constant inside storage class, instead of keeping it in application.properties">
       <option name="closed" value="true" />
@@ -503,7 +504,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725131588201</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="Committing the workspace.xml file">
+      <option name="closed" value="true" />
+      <created>1725131933940</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1725131933940</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -518,7 +527,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added logs in the TrainerStorageImpl class" />
     <MESSAGE value="Changing some of the log messages to match the pattern of the other logs(getting -&gt; retrieving, put -&gt; add)" />
     <MESSAGE value="Adding logs for the TrainingStorageImpl class" />
     <MESSAGE value="Adding logs for the TraineeDao class" />
@@ -543,6 +551,7 @@
     <MESSAGE value="Creating findByUsername, findById, getById methods for TrainerServiceImpl" />
     <MESSAGE value="Creating method for generating a method for generating a unique username for Trainer and fixing the logic in the same method for TraineeFacadeImpl" />
     <MESSAGE value="Creating a method for generating a random password with length 10 for both TraineeFacade and TrainerFacade" />
-    <option name="LAST_COMMIT_MESSAGE" value="Creating a method for generating a random password with length 10 for both TraineeFacade and TrainerFacade" />
+    <MESSAGE value="Committing the workspace.xml file" />
+    <option name="LAST_COMMIT_MESSAGE" value="Committing the workspace.xml file" />
   </component>
 </project>

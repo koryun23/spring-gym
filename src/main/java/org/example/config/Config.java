@@ -13,9 +13,11 @@ import org.example.helper.DateConverter;
 import org.example.repository.impl.TraineeStorageImpl;
 import org.example.repository.impl.TrainerStorageImpl;
 import org.example.repository.impl.TrainingStorageImpl;
+import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
 import org.example.service.core.TrainingService;
+import org.example.service.impl.IdServiceImpl;
 import org.example.service.impl.TraineeServiceImpl;
 import org.example.service.impl.TrainerServiceImpl;
 import org.example.service.impl.TrainingServiceImpl;
@@ -26,6 +28,9 @@ import java.text.SimpleDateFormat;
 
 @Configuration
 public class Config {
+
+    private static final String TRAINEE_ID_PATH = "C:\\Users\\Koryun\\Desktop\\Koryun\\gym-spring\\src\\main\\java\\org\\example\\service\\core\\trainee.txt";
+    private static final String TRAINER_ID_PATH = "C:\\Users\\Koryun\\Desktop\\Koryun\\gym-spring\\src\\main\\java\\org\\example\\service\\core\\trainer.txt";
 
     @Bean
     public DateConverter dateConverter() {
@@ -79,12 +84,12 @@ public class Config {
 
     @Bean
     public TraineeFacade traineeFacade() {
-        return new TraineeFacadeImpl(traineeService(), trainerService());
+        return new TraineeFacadeImpl(traineeService(), trainerService(), idService(TRAINEE_ID_PATH));
     }
 
     @Bean
     public TrainerFacade trainerFacade() {
-        return new TrainerFacadeImpl(trainerService(), traineeService());
+        return new TrainerFacadeImpl(trainerService(), traineeService(), idService(TRAINER_ID_PATH));
     }
 
     @Bean
@@ -92,4 +97,8 @@ public class Config {
         return new TrainingFacadeImpl(new TrainingServiceImpl());
     }
 
+    @Bean
+    public IdService idService(String filePath) {
+        return new IdServiceImpl(filePath);
+    }
 }

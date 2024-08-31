@@ -9,6 +9,7 @@ import org.example.dto.response.TraineeUpdateResponseDto;
 import org.example.entity.Trainee;
 import org.example.entity.Trainer;
 import org.example.facade.core.TraineeFacade;
+import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
 import org.example.service.params.TraineeCreateParams;
@@ -27,13 +28,16 @@ public class TraineeFacadeImpl implements TraineeFacade {
 
     private final TraineeService traineeService;
     private final TrainerService trainerService;
+    private final IdService idService;
 
     @Autowired
-    public TraineeFacadeImpl(TraineeService traineeService, TrainerService trainerService) {
+    public TraineeFacadeImpl(TraineeService traineeService, TrainerService trainerService, IdService idService) {
         Assert.notNull(traineeService, "Trainee Service must not be null");
         Assert.notNull(trainerService, "Trainer Service must not be null");
+        Assert.notNull(idService, "Id Service must not be null");
         this.traineeService = traineeService;
         this.trainerService = trainerService;
+        this.idService = idService;
     }
 
     @Override
@@ -48,7 +52,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
         );
 
         Trainee trainee = traineeService.create(new TraineeCreateParams(
-                requestDto.getUserId(),
+                idService.getId(),
                 requestDto.getFirstName(),
                 requestDto.getLastName(),
                 username,
@@ -67,6 +71,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
                 trainee.getDateOfBirth(),
                 requestDto.getAddress()
         );
+        idService.autoIncrement();
         LOGGER.info("Successfully created a Trainee based on the TraineeCreationRequestDto - {}, response - {}", requestDto, responseDto);
         return responseDto;
     }

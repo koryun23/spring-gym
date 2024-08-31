@@ -8,6 +8,7 @@ import org.example.dto.response.TrainerUpdateResponseDto;
 import org.example.entity.Trainee;
 import org.example.entity.Trainer;
 import org.example.facade.core.TrainerFacade;
+import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
 import org.example.service.params.TrainerCreateParams;
@@ -26,13 +27,16 @@ public class TrainerFacadeImpl implements TrainerFacade {
 
     private final TrainerService trainerService;
     private final TraineeService traineeService;
+    private final IdService idService;
 
     @Autowired
-    public TrainerFacadeImpl(TrainerService trainerService, TraineeService traineeService) {
+    public TrainerFacadeImpl(TrainerService trainerService, TraineeService traineeService, IdService idService) {
         Assert.notNull(trainerService, "Trainer Service must not be null");
         Assert.notNull(traineeService, "Trainee Service must not be null");
+        Assert.notNull(idService, "Id Service must not be null");
         this.trainerService = trainerService;
         this.traineeService = traineeService;
+        this.idService = idService;
     }
 
     @Override
@@ -47,7 +51,7 @@ public class TrainerFacadeImpl implements TrainerFacade {
         );
 
         Trainer trainer = trainerService.create(new TrainerCreateParams(
-                requestDto.getUserId(),
+                idService.getId(),
                 requestDto.getFirstName(),
                 requestDto.getLastName(),
                 username,
@@ -64,6 +68,7 @@ public class TrainerFacadeImpl implements TrainerFacade {
                 trainer.isActive(),
                 trainer.getSpecialization()
         );
+        idService.autoIncrement();
         LOGGER.info("Successfully created a Trainer according to the TrainerCreationRequestDto - {}, response - {}", requestDto, responseDto);
         return responseDto;
     }
