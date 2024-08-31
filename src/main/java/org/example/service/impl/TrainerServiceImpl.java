@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Optional;
+
 public class TrainerServiceImpl implements TrainerService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainerServiceImpl.class);
@@ -54,5 +56,29 @@ public class TrainerServiceImpl implements TrainerService {
         Trainer trainer = trainerDao.get(trainerId);
         LOGGER.info("Successfully selected a Trainer with an id of {}, result - {}", trainerId, trainer);
         return trainer;
+    }
+
+    @Override
+    public Trainer selectByUsername(String username) {
+        LOGGER.info("Selecting a Trainer with a username of {}", username);
+        Trainer trainer = trainerDao.getByUsername(username);
+        LOGGER.info("Successfully selected a Trainer with a username of {}, result - {}", username, trainer);
+        return trainer;
+    }
+
+    @Override
+    public Optional<Trainer> findById(Long id) {
+        LOGGER.info("Retrieving an optional Trainer with an id of {}", id);
+        Optional<Trainer> optionalTrainer = trainerDao.findById(id);
+        LOGGER.info("Successfully retrieved an optional Trainer with an id of {}, result - {}", id, optionalTrainer);
+        return optionalTrainer;
+    }
+
+    @Override
+    public Optional<Trainer> findByUsername(String username) {
+        LOGGER.info("Retrieved an optional Trainer with a username of {}", username);
+        Optional<Trainer> optionalTrainer = trainerDao.findByUsername(username);
+        LOGGER.info("Successfully retrieved an optional Trainer with a username of {}, result - {}", username, optionalTrainer);
+        return optionalTrainer;
     }
 }
