@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding assertj dependency">
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/entity/TraineeTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Creating tests for Trainer entity class">
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/entity/TrainingTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +64,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Gradle.Tests in 'gym-spring.test'.executor": "Run",
     "Gradle.TraineeTest.TestTrainee.executor": "Run",
     "Gradle.TraineeTest.executor": "Run",
     "Gradle.gym-spring [:Main.main()].executor": "Run",
@@ -195,22 +195,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00024" summary="Implementing the logic for TrainingService">
-      <option name="closed" value="true" />
-      <created>1724843594069</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1724843594069</updated>
-    </task>
-    <task id="LOCAL-00025" summary="Creating Facade interfaces and classes and implementing the TraineeFacade logic">
-      <option name="closed" value="true" />
-      <created>1724844963356</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1724844963356</updated>
     </task>
     <task id="LOCAL-00026" summary="implementing the TrainerFacade logic">
       <option name="closed" value="true" />
@@ -588,7 +572,23 @@
       <option name="project" value="LOCAL" />
       <updated>1725142996788</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="Creating tests for Trainee entity class">
+      <option name="closed" value="true" />
+      <created>1725144012865</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1725144012865</updated>
+    </task>
+    <task id="LOCAL-00074" summary="Creating tests for Trainer entity class">
+      <option name="closed" value="true" />
+      <created>1725144278619</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1725144278620</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -603,8 +603,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Adding logs to the getByUsername method" />
-    <MESSAGE value="Implementing the getByUsername, findByUsername, findById methods" />
     <MESSAGE value="Implementing the findById method of TraineeDaoImpl class" />
     <MESSAGE value="Implementing the getByUsername, findByUsername and findById methods of TrainerDaoImpl" />
     <MESSAGE value="Implementing the getByUsername, findByUsername and findById methods of TraineeService" />
@@ -628,6 +626,8 @@
     <MESSAGE value="Interacting with facades in the Main class to test the functionality(it works)" />
     <MESSAGE value="Committing the changes made to the .txt files as a result of interactions with facade classes in the main method" />
     <MESSAGE value="Adding assertj dependency" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding assertj dependency" />
+    <MESSAGE value="Creating tests for Trainee entity class" />
+    <MESSAGE value="Creating tests for Trainer entity class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creating tests for Trainer entity class" />
   </component>
 </project>
