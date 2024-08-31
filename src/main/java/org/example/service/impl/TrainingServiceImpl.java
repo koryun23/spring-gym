@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class TrainingServiceImpl implements TrainingService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TrainerServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TrainingServiceImpl.class);
 
     @Autowired
     private TrainingDaoImpl trainingDao;
