@@ -55,16 +55,25 @@ public class TrainerDaoImpl implements TrainerDao {
 
     @Override
     public Trainer getByUsername(String username) {
-        return null;
+        LOGGER.info("Retrieving a Trainer with a username of {}", username);
+        Trainer trainer = storage.getByUsername(username);
+        LOGGER.info("Successfully retrieved a Trainer with a username of {}, result - {}", username, trainer);
+        return trainer;
     }
 
     @Override
     public Optional<Trainer> findByUsername(String username) {
-        return Optional.empty();
+        LOGGER.info("Retrieving an optional Trainer with a username of {}", username);
+        Optional<Trainer> optionalTrainer = storage.findByUsername(username);
+        LOGGER.info("Successfully retrieved an optional Trainer with a username of {}, result - {}", username, optionalTrainer);
+        return optionalTrainer;
     }
 
     @Override
     public Optional<Trainer> findById(Long id) {
-        return Optional.empty();
+        LOGGER.info("Retrieving an optional Trainer with an id of {}", id);
+        Optional<Trainer> optionalTrainer = storage.findById(id);
+        LOGGER.info("Successfully retrieved an optional Trainer with an id od {}, result - {}", id, optionalTrainer);
+        return optionalTrainer;
     }
 }
