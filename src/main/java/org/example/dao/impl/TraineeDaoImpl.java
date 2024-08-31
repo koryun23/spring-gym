@@ -55,16 +55,25 @@ public class TraineeDaoImpl implements TraineeDao {
 
     @Override
     public Trainee getByUsername(String username) {
-        return null;
+        LOGGER.info("Retrieving a Trainee with a username of {}", username);
+        Trainee trainee = storage.getByUsername(username);
+        LOGGER.info("Successfully retrieved a Trainee with a username of {}, result - {}", username, trainee);
+        return trainee;
     }
 
     @Override
     public Optional<Trainee> findByUsername(String username) {
-        return Optional.empty();
+        LOGGER.info("Retrieving an optional Trainee with a username of {}", username);
+        Optional<Trainee> optionalTrainee = storage.findByUsername(username);
+        LOGGER.info("Successfully retrieved an optional Trainee with a username of {}, result - {}", username, optionalTrainee);
+        return optionalTrainee;
     }
 
     @Override
     public Optional<Trainee> findById(Long id) {
-        return Optional.empty();
+        LOGGER.info("Retrieving an optional Trainee with an id of {}", id);
+        Optional<Trainee> optionalTrainee = storage.findById(id);
+        LOGGER.info("Successfully retrieved an optional Trainee with an id {}, result - {}", id, optionalTrainee);
+        return optionalTrainee;
     }
 }

@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding logs to the getByUsername method">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainerStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainerStorageImpl.java" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Implementing the getByUsername, findByUsername, findById methods">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/TraineeDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/TraineeDaoImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -489,7 +489,23 @@
       <option name="project" value="LOCAL" />
       <updated>1725050239632</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="Adding logs to the getByUsername method">
+      <option name="closed" value="true" />
+      <created>1725050540642</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1725050540642</updated>
+    </task>
+    <task id="LOCAL-00049" summary="Implementing the getByUsername, findByUsername, findById methods">
+      <option name="closed" value="true" />
+      <created>1725050983272</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1725050983273</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -504,7 +520,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Implementing the logic for TrainingService" />
     <MESSAGE value="Creating Facade interfaces and classes and implementing the TraineeFacade logic" />
     <MESSAGE value="implementing the TrainerFacade logic" />
     <MESSAGE value="implementing the TrainingFacade logic" />
@@ -529,6 +544,7 @@
     <MESSAGE value="Adding Exception classes if Trainee or Trainer is not found" />
     <MESSAGE value="Adding methods findByUsername, findById, getByUsername" />
     <MESSAGE value="Adding logs to the getByUsername method" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding logs to the getByUsername method" />
+    <MESSAGE value="Implementing the getByUsername, findByUsername, findById methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implementing the getByUsername, findByUsername, findById methods" />
   </component>
 </project>
