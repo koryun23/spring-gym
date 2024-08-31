@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Creating findByUsername, findById, getById methods for TrainerServiceImpl">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/config/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/config/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Creating method for generating a method for generating a unique username for Trainer and fixing the logic in the same method for TraineeFacadeImpl">
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -114,14 +111,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Implementing the get method of TraineeStorageImpl">
-      <option name="closed" value="true" />
-      <created>1724594098326</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1724594098326</updated>
     </task>
     <task id="LOCAL-00007" summary="Implementing the add, remove and update methods of TraineeStorageImpl by updating only the hashmap without writing to the file.">
       <option name="closed" value="true" />
@@ -507,7 +496,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725129577401</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Creating method for generating a method for generating a unique username for Trainer and fixing the logic in the same method for TraineeFacadeImpl">
+      <option name="closed" value="true" />
+      <created>1725131095413</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1725131095414</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -522,7 +519,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Committing workspace.xml file" />
     <MESSAGE value="Added logs in the TraineeStorageImpl class" />
     <MESSAGE value="Added logs in the TrainerStorageImpl class" />
     <MESSAGE value="Changing some of the log messages to match the pattern of the other logs(getting -&gt; retrieving, put -&gt; add)" />
@@ -547,6 +543,7 @@
     <MESSAGE value="Implementing the getByUsername, findByUsername and findById methods of TraineeService" />
     <MESSAGE value="Creating a method for generating a unique username for a trainee" />
     <MESSAGE value="Creating findByUsername, findById, getById methods for TrainerServiceImpl" />
-    <option name="LAST_COMMIT_MESSAGE" value="Creating findByUsername, findById, getById methods for TrainerServiceImpl" />
+    <MESSAGE value="Creating method for generating a method for generating a unique username for Trainer and fixing the logic in the same method for TraineeFacadeImpl" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creating method for generating a method for generating a unique username for Trainer and fixing the logic in the same method for TraineeFacadeImpl" />
   </component>
 </project>

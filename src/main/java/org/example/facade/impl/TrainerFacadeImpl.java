@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public class TrainerFacadeImpl implements TrainerFacade {
 
@@ -49,8 +50,8 @@ public class TrainerFacadeImpl implements TrainerFacade {
                 requestDto.getUserId(),
                 requestDto.getFirstName(),
                 requestDto.getLastName(),
-                requestDto.getUsername(),
-                requestDto.getPassword(),
+                username,
+                uniquePassword(),
                 requestDto.isActive(),
                 requestDto.getSpecializationType()
         ));
@@ -127,5 +128,9 @@ public class TrainerFacadeImpl implements TrainerFacade {
 
         if(optionalTrainee.isEmpty()) return temporaryUsername;
         return temporaryUsername + ".trainer";
+    }
+
+    private String uniquePassword() {
+        return UUID.randomUUID().toString().substring(0, 10);
     }
 }
