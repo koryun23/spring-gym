@@ -8,7 +8,6 @@ import java.util.Objects;
 
 public class TrainingCreationRequestDto {
 
-    private Long trainingId;
     private Long traineeId;
     private Long trainerId;
     private String name;
@@ -16,8 +15,7 @@ public class TrainingCreationRequestDto {
     private Date trainingDate;
     private Long duration;
 
-    public TrainingCreationRequestDto(Long trainingId, Long traineeId, Long trainerId, String name, TrainingType trainingType, Date trainingDate, Long duration) {
-        this.trainingId = trainingId;
+    public TrainingCreationRequestDto(Long traineeId, Long trainerId, String name, TrainingType trainingType, Date trainingDate, Long duration) {
         this.traineeId = traineeId;
         this.trainerId = trainerId;
         this.name = name;
@@ -74,31 +72,22 @@ public class TrainingCreationRequestDto {
         this.duration = duration;
     }
 
-    public Long getTrainingId() {
-        return trainingId;
-    }
-
-    public void setTrainingId(Long trainingId) {
-        this.trainingId = trainingId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TrainingCreationRequestDto training = (TrainingCreationRequestDto) o;
-        return Objects.equals(trainingId, training.trainingId) && Objects.equals(traineeId, training.traineeId) && Objects.equals(trainerId, training.trainerId) && Objects.equals(name, training.name) && trainingType == training.trainingType && Objects.equals(trainingDate, training.trainingDate) && Objects.equals(duration, training.duration);
+        return Objects.equals(traineeId, training.traineeId) && Objects.equals(trainerId, training.trainerId) && Objects.equals(name, training.name) && trainingType == training.trainingType && Objects.equals(trainingDate, training.trainingDate) && Objects.equals(duration, training.duration);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(trainingId, traineeId, trainerId, name, trainingType, trainingDate, duration);
+        return Objects.hash(traineeId, trainerId, name, trainingType, trainingDate, duration);
     }
 
     @Override
     public String toString() {
         return "Training{" +
-                "trainingId=" + trainingId +
                 ", traineeId=" + traineeId +
                 ", trainerId=" + trainerId +
                 ", name='" + name + '\'' +
