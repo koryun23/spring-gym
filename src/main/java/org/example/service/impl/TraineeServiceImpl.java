@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Optional;
+
 public class TraineeServiceImpl implements TraineeService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TraineeServiceImpl.class);
@@ -65,5 +67,29 @@ public class TraineeServiceImpl implements TraineeService {
         Trainee trainee = traineeDao.get(traineeId);
         LOGGER.info("Successfully selected a Trainee with an id of {}, result - {}", traineeId, trainee);
         return trainee;
+    }
+
+    @Override
+    public Trainee selectByUsername(String username) {
+        LOGGER.info("Selecting a Trainee with a username of {}", username);
+        Trainee trainee = traineeDao.getByUsername(username);
+        LOGGER.info("Successfully selected a trainee with a username of {}, result - {}", username, trainee);
+        return trainee;
+    }
+
+    @Override
+    public Optional<Trainee> findById(Long id) {
+        LOGGER.info("Retrieved an optional Trainee with an id of {}", id);
+        Optional<Trainee> optionalTrainee = traineeDao.findById(id);
+        LOGGER.info("Successfully retrieved an optional Trainee with an id of {}, result - {}", id, optionalTrainee);
+        return optionalTrainee;
+    }
+
+    @Override
+    public Optional<Trainee> findByUsername(String username) {
+        LOGGER.info("Retrieved an optional Trainee with a username of {}", username);
+        Optional<Trainee> optionalTrainee = traineeDao.findByUsername(username);
+        LOGGER.info("Successfully retrieved an optional Trainee with an username of {}, result - {}", username, optionalTrainee);
+        return optionalTrainee;
     }
 }
