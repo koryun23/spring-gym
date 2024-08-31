@@ -35,6 +35,7 @@ public class TraineeStorageImpl implements FileStorage<Trainee>, TraineeStorage 
     @Override
     public Trainee get(Long id) {
         LOGGER.info("Retrieving a Trainee with an id of {} from the in-memory storage", id);
+        Assert.notNull(id, "Trainee Id must not be null");
         Trainee trainee = inMemoryStorage.get(id);
         if(trainee == null) throw new TraineeNotFoundException(id);
         LOGGER.info("Successfully retrieved a Trainer with an id of {}, result - {}", id, trainee);
@@ -44,6 +45,7 @@ public class TraineeStorageImpl implements FileStorage<Trainee>, TraineeStorage 
     @Override
     public Trainee add(Trainee trainee) {
         LOGGER.info("Adding {} to the in-memory storage", trainee);
+        Assert.notNull(trainee, "Trainee must not be null");
         Trainee addedTrainee = inMemoryStorage.put(trainee.getUserId(), trainee);
         LOGGER.info("Successfully added {} to the in-memory storage", addedTrainee);
         persist();
@@ -53,6 +55,7 @@ public class TraineeStorageImpl implements FileStorage<Trainee>, TraineeStorage 
     @Override
     public boolean remove(Long id) {
         LOGGER.info("Removing a Trainee with an id of {} from the in-memory storage", id);
+        Assert.notNull(id, "Trainee id must not be null");
         if(!inMemoryStorage.containsKey(id)) throw new TraineeNotFoundException(id);
         Trainee removedTrainee = inMemoryStorage.remove(id);
         LOGGER.info("Successfully removed {} from the in-memory storage", removedTrainee);
@@ -63,6 +66,7 @@ public class TraineeStorageImpl implements FileStorage<Trainee>, TraineeStorage 
     @Override
     public Trainee update(Trainee trainee) {
         LOGGER.info("Updating a Trainee with an id of {}", trainee.getUserId());
+        Assert.notNull(trainee, "Trainee must not be null");
         Trainee updatedTrainee = inMemoryStorage.put(trainee.getUserId(), trainee);
         LOGGER.info("Successfully updated a Trainee with an id of {}, final result - {}", trainee.getUserId(), updatedTrainee);
         persist();
@@ -72,6 +76,9 @@ public class TraineeStorageImpl implements FileStorage<Trainee>, TraineeStorage 
     @Override
     public Trainee getByUsername(String username) {
         LOGGER.info("Retrieving a Trainee with a username of {}", username);
+        Assert.notNull(username, "Trainee username must not be null");
+        Assert.hasText(username, "Trainee username must not be empty");
+
         for (Map.Entry<Long, Trainee> pair : inMemoryStorage.entrySet()) {
             Trainee trainee = pair.getValue();
             if(trainee.getUsername().equals(username)) {
@@ -86,6 +93,8 @@ public class TraineeStorageImpl implements FileStorage<Trainee>, TraineeStorage 
     @Override
     public Optional<Trainee> findByUsername(String username) {
         LOGGER.info("Retrieving an optional of a Trainee with a username of {}", username);
+        Assert.notNull(username, "Trainee username must not be null");
+        Assert.hasText(username, "Trainee username must not be empty");
         for(Map.Entry<Long, Trainee> pair : inMemoryStorage.entrySet()) {
             Trainee trainee = pair.getValue();
             if(trainee.getUsername().equals(username)) {
@@ -102,6 +111,8 @@ public class TraineeStorageImpl implements FileStorage<Trainee>, TraineeStorage 
     @Override
     public Optional<Trainee> findById(Long id) {
         LOGGER.info("Retrieving an optional of a Trainee with an id of {}", id);
+        Assert.notNull(id, "Trainee id must not be null");
+
         Trainee trainee = inMemoryStorage.get(id);
         Optional<Trainee> optionalTrainee = Optional.of(trainee);
         LOGGER.info("Successfully retrieved an optional of a Trainee with an id of {}, result - {}", id, optionalTrainee);

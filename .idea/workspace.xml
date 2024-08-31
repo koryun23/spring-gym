@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Creating tests for Trainer entity class">
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/entity/TrainingTest.java" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Creating tests for Training entity class">
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -195,14 +195,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00026" summary="implementing the TrainerFacade logic">
-      <option name="closed" value="true" />
-      <created>1724849200229</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1724849200229</updated>
     </task>
     <task id="LOCAL-00027" summary="implementing the TrainingFacade logic">
       <option name="closed" value="true" />
@@ -588,7 +580,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725144278620</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="Creating tests for Training entity class">
+      <option name="closed" value="true" />
+      <created>1725144508637</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1725144508637</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -603,7 +603,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Implementing the findById method of TraineeDaoImpl class" />
     <MESSAGE value="Implementing the getByUsername, findByUsername and findById methods of TrainerDaoImpl" />
     <MESSAGE value="Implementing the getByUsername, findByUsername and findById methods of TraineeService" />
     <MESSAGE value="Creating a method for generating a unique username for a trainee" />
@@ -628,6 +627,7 @@
     <MESSAGE value="Adding assertj dependency" />
     <MESSAGE value="Creating tests for Trainee entity class" />
     <MESSAGE value="Creating tests for Trainer entity class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Creating tests for Trainer entity class" />
+    <MESSAGE value="Creating tests for Training entity class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creating tests for Training entity class" />
   </component>
 </project>
