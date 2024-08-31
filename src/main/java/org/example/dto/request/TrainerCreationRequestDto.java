@@ -6,41 +6,24 @@ import java.util.Objects;
 
 public class TrainerCreationRequestDto {
 
-    private Long userId;
     private String firstName;
     private String lastName;
-    private String username;
-    private String password;
     private boolean isActive;
+
     private SpecializationType specializationType;
 
     public TrainerCreationRequestDto() {
     }
 
-    public TrainerCreationRequestDto(Long userId,
-                                     String firstName,
+    public TrainerCreationRequestDto(String firstName,
                                      String lastName,
-                                     String username,
-                                     String password,
                                      boolean isActive,
                                      SpecializationType specializationType) {
-        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.username = username;
-        this.password = password;
         this.isActive = isActive;
         this.specializationType = specializationType;
     }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -55,22 +38,6 @@ public class TrainerCreationRequestDto {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public boolean isActive() {
@@ -94,22 +61,22 @@ public class TrainerCreationRequestDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TrainerCreationRequestDto that = (TrainerCreationRequestDto) o;
-        return isActive == that.isActive && Objects.equals(userId, that.userId) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && specializationType == that.specializationType;
+        return isActive == that.isActive &&
+                Objects.equals(firstName, that.firstName) &&
+                Objects.equals(lastName, that.lastName) &&
+                specializationType == that.specializationType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, firstName, lastName, username, password, isActive, specializationType);
+        return Objects.hash(firstName, lastName, isActive, specializationType);
     }
 
     @Override
     public String toString() {
         return "TrainerCreationRequestDto{" +
-                "userId=" + userId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 ", isActive=" + isActive +
                 ", specializationType=" + specializationType +
                 '}';
