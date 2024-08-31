@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Creating method for generating a method for generating a unique username for Trainer and fixing the logic in the same method for TraineeFacadeImpl">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Creating a method for generating a random password with length 10 for both TraineeFacade and TrainerFacade" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -111,14 +109,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Implementing the add, remove and update methods of TraineeStorageImpl by updating only the hashmap without writing to the file.">
-      <option name="closed" value="true" />
-      <created>1724594288569</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1724594288569</updated>
     </task>
     <task id="LOCAL-00008" summary="Adding a method for persisting the map object to the file">
       <option name="closed" value="true" />
@@ -504,7 +494,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725131095414</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="Creating a method for generating a random password with length 10 for both TraineeFacade and TrainerFacade">
+      <option name="closed" value="true" />
+      <created>1725131588201</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1725131588201</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -519,7 +517,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added logs in the TraineeStorageImpl class" />
     <MESSAGE value="Added logs in the TrainerStorageImpl class" />
     <MESSAGE value="Changing some of the log messages to match the pattern of the other logs(getting -&gt; retrieving, put -&gt; add)" />
     <MESSAGE value="Adding logs for the TrainingStorageImpl class" />
@@ -544,6 +541,7 @@
     <MESSAGE value="Creating a method for generating a unique username for a trainee" />
     <MESSAGE value="Creating findByUsername, findById, getById methods for TrainerServiceImpl" />
     <MESSAGE value="Creating method for generating a method for generating a unique username for Trainer and fixing the logic in the same method for TraineeFacadeImpl" />
-    <option name="LAST_COMMIT_MESSAGE" value="Creating method for generating a method for generating a unique username for Trainer and fixing the logic in the same method for TraineeFacadeImpl" />
+    <MESSAGE value="Creating a method for generating a random password with length 10 for both TraineeFacade and TrainerFacade" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creating a method for generating a random password with length 10 for both TraineeFacade and TrainerFacade" />
   </component>
 </project>
