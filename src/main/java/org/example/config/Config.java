@@ -29,8 +29,9 @@ import java.text.SimpleDateFormat;
 @Configuration
 public class Config {
 
-    private static final String TRAINEE_ID_PATH = "C:\\Users\\Koryun\\Desktop\\Koryun\\gym-spring\\src\\main\\java\\org\\example\\service\\core\\trainee.txt";
-    private static final String TRAINER_ID_PATH = "C:\\Users\\Koryun\\Desktop\\Koryun\\gym-spring\\src\\main\\java\\org\\example\\service\\core\\trainer.txt";
+    private static final String TRAINEE_ID_PATH = "C:\\Users\\Koryun\\Desktop\\Koryun\\gym-spring\\src\\main\\java\\org\\example\\service\\core\\trainee-id.txt";
+    private static final String TRAINER_ID_PATH = "C:\\Users\\Koryun\\Desktop\\Koryun\\gym-spring\\src\\main\\java\\org\\example\\service\\core\\trainer-id.txt";
+    private static final String TRAINING_ID_PATH = "C:\\Users\\Koryun\\Desktop\\Koryun\\gym-spring\\src\\main\\java\\org\\example\\service\\core\\training-id.txt";
 
     @Bean
     public DateConverter dateConverter() {

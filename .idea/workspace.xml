@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Committing the workspace.xml file">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/core/IdService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/core/trainee-id.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/core/trainer-id.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/IdServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Creating IdService interface and class for writing to and getting id from a file and using it in the corresponding facade class to create entity class">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/core/training-id.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/config/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/config/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainingFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainingFacadeImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,14 +114,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Using an absolute path instead of relative, keeping the path to the file as a static constant inside storage class, instead of keeping it in application.properties">
-      <option name="closed" value="true" />
-      <created>1724677110353</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1724677110353</updated>
     </task>
     <task id="LOCAL-00010" summary="Adding a DateConverter spring bean to convert a string to date and vice versa">
       <option name="closed" value="true" />
@@ -512,7 +499,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725131933940</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="Creating IdService interface and class for writing to and getting id from a file and using it in the corresponding facade class to create entity class">
+      <option name="closed" value="true" />
+      <created>1725134412906</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1725134412906</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -527,7 +522,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Changing some of the log messages to match the pattern of the other logs(getting -&gt; retrieving, put -&gt; add)" />
     <MESSAGE value="Adding logs for the TrainingStorageImpl class" />
     <MESSAGE value="Adding logs for the TraineeDao class" />
     <MESSAGE value="Adding logs for the TrainerDao class" />
@@ -552,6 +546,7 @@
     <MESSAGE value="Creating method for generating a method for generating a unique username for Trainer and fixing the logic in the same method for TraineeFacadeImpl" />
     <MESSAGE value="Creating a method for generating a random password with length 10 for both TraineeFacade and TrainerFacade" />
     <MESSAGE value="Committing the workspace.xml file" />
-    <option name="LAST_COMMIT_MESSAGE" value="Committing the workspace.xml file" />
+    <MESSAGE value="Creating IdService interface and class for writing to and getting id from a file and using it in the corresponding facade class to create entity class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creating IdService interface and class for writing to and getting id from a file and using it in the corresponding facade class to create entity class" />
   </component>
 </project>
