@@ -23,6 +23,7 @@ import org.example.service.impl.TrainerServiceImpl;
 import org.example.service.impl.TrainingServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 import java.text.SimpleDateFormat;
 
@@ -99,6 +100,7 @@ public class Config {
     }
 
     @Bean
+    @Scope("prototype")
     public IdService idService(String filePath) {
         return new IdServiceImpl(filePath);
     }
