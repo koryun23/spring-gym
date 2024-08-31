@@ -5,8 +5,10 @@ import org.example.dto.request.TrainerUpdateRequestDto;
 import org.example.dto.response.TrainerCreationResponseDto;
 import org.example.dto.response.TrainerRetrievalResponseDto;
 import org.example.dto.response.TrainerUpdateResponseDto;
+import org.example.entity.Trainee;
 import org.example.entity.Trainer;
 import org.example.facade.core.TrainerFacade;
+import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
 import org.example.service.params.TrainerCreateParams;
 import org.example.service.params.TrainerUpdateParams;
@@ -15,22 +17,33 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
+import java.util.Optional;
+
 public class TrainerFacadeImpl implements TrainerFacade {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainerFacadeImpl.class);
 
     private final TrainerService trainerService;
+    private final TraineeService traineeService;
 
     @Autowired
-    public TrainerFacadeImpl(TrainerService trainerService) {
+    public TrainerFacadeImpl(TrainerService trainerService, TraineeService traineeService) {
         Assert.notNull(trainerService, "Trainer Service must not be null");
+        Assert.notNull(traineeService, "Trainee Service must not be null");
         this.trainerService = trainerService;
+        this.traineeService = traineeService;
     }
 
     @Override
     public TrainerCreationResponseDto createTrainer(TrainerCreationRequestDto requestDto) {
 
         LOGGER.info("Creating a Trainer according to the TrainerCreationRequestDto - {}", requestDto);
+
+        String username = uniqueUsername(
+                requestDto.getFirstName(),
+                requestDto.getLastName(),
+                requestDto.getUserId()
+        );
 
         Trainer trainer = trainerService.create(new TrainerCreateParams(
                 requestDto.getUserId(),
@@ -101,5 +114,18 @@ public class TrainerFacadeImpl implements TrainerFacade {
 
         LOGGER.info("Successfully retrieved a Trainer with an id of {}, response - {}", trainerId, responseDto);
         return responseDto;
+    }
+
+    private String uniqueUsername(String firstName, String lastName, Long id) {
+        String temporaryUsername = firstName + "." + lastName;
+        Optional<Trainer> optionalTrainer = trainerService.findByUsername(temporaryUsername);
+
+        if(optionalTrainer.isEmpty()) return temporaryUsername;
+
+        temporaryUsername += ("." + id);
+        Optional<Trainee> optionalTrainee = traineeService.findByUsername(temporaryUsername);
+
+        if(optionalTrainee.isEmpty()) return temporaryUsername;
+        return temporaryUsername + ".trainer";
     }
 }

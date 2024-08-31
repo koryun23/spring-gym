@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Creating a method for generating a unique username for a trainee">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/core/TrainerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/core/TrainerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainerServiceImpl.java" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Creating findByUsername, findById, getById methods for TrainerServiceImpl">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/config/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/config/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,14 +114,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Implementing the post construct method of parsing the file containing trainee data into an in-memory hash map.">
-      <option name="closed" value="true" />
-      <created>1724594045081</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1724594045081</updated>
     </task>
     <task id="LOCAL-00006" summary="Implementing the get method of TraineeStorageImpl">
       <option name="closed" value="true" />
@@ -505,7 +499,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725129324649</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="Creating findByUsername, findById, getById methods for TrainerServiceImpl">
+      <option name="closed" value="true" />
+      <created>1725129577401</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1725129577401</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -520,7 +522,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Formatting Training entity class" />
     <MESSAGE value="Committing workspace.xml file" />
     <MESSAGE value="Added logs in the TraineeStorageImpl class" />
     <MESSAGE value="Added logs in the TrainerStorageImpl class" />
@@ -545,6 +546,7 @@
     <MESSAGE value="Implementing the getByUsername, findByUsername and findById methods of TrainerDaoImpl" />
     <MESSAGE value="Implementing the getByUsername, findByUsername and findById methods of TraineeService" />
     <MESSAGE value="Creating a method for generating a unique username for a trainee" />
-    <option name="LAST_COMMIT_MESSAGE" value="Creating a method for generating a unique username for a trainee" />
+    <MESSAGE value="Creating findByUsername, findById, getById methods for TrainerServiceImpl" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creating findByUsername, findById, getById methods for TrainerServiceImpl" />
   </component>
 </project>

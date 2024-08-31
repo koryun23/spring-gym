@@ -79,12 +79,12 @@ public class Config {
 
     @Bean
     public TraineeFacade traineeFacade() {
-        return new TraineeFacadeImpl(traineeService());
+        return new TraineeFacadeImpl(traineeService(), trainerService());
     }
 
     @Bean
     public TrainerFacade trainerFacade() {
-        return new TrainerFacadeImpl(new TrainerServiceImpl());
+        return new TrainerFacadeImpl(trainerService(), traineeService());
     }
 
     @Bean

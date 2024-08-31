@@ -7,8 +7,10 @@ import org.example.dto.response.TraineeDeletionResponseDto;
 import org.example.dto.response.TraineeRetrievalResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
 import org.example.entity.Trainee;
+import org.example.entity.Trainer;
 import org.example.facade.core.TraineeFacade;
 import org.example.service.core.TraineeService;
+import org.example.service.core.TrainerService;
 import org.example.service.params.TraineeCreateParams;
 import org.example.service.params.TraineeUpdateParams;
 import org.slf4j.Logger;
@@ -23,11 +25,14 @@ public class TraineeFacadeImpl implements TraineeFacade {
     private static final Logger LOGGER = LoggerFactory.getLogger(TraineeFacadeImpl.class);
 
     private final TraineeService traineeService;
+    private final TrainerService trainerService;
 
     @Autowired
-    public TraineeFacadeImpl(TraineeService traineeService) {
+    public TraineeFacadeImpl(TraineeService traineeService, TrainerService trainerService) {
         Assert.notNull(traineeService, "Trainee Service must not be null");
+        Assert.notNull(trainerService, "Trainer Service must not be null");
         this.traineeService = traineeService;
+        this.trainerService = trainerService;
     }
 
     @Override
@@ -123,9 +128,13 @@ public class TraineeFacadeImpl implements TraineeFacade {
     private String uniqueUsername(String firstName, String lastName, Long id) {
         String temporaryUsername = firstName + "." + lastName;
         Optional<Trainee> optionalTrainee = traineeService.findByUsername(temporaryUsername);
-        if(optionalTrainee.isEmpty()) {
-            return temporaryUsername;
-        }
-        return temporaryUsername + "." + id;
+
+        if(optionalTrainee.isEmpty()) return temporaryUsername;
+
+        temporaryUsername += ("." + id);
+        Optional<Trainer> optionalTrainer = trainerService.findByUsername(temporaryUsername);
+
+        if(optionalTrainer.isEmpty()) return temporaryUsername;
+        return temporaryUsername + ".trainee";
     }
 }
