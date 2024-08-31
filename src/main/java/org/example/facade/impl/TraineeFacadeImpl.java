@@ -45,14 +45,16 @@ public class TraineeFacadeImpl implements TraineeFacade {
 
         LOGGER.info("Creating a Trainee based on the TraineeCreationRequestDto - {}", requestDto);
 
+        Long traineeId = idService.getId();
+
         String username = uniqueUsername(
                 requestDto.getFirstName(),
                 requestDto.getLastName(),
-                requestDto.getUserId()
+                traineeId
         );
 
         Trainee trainee = traineeService.create(new TraineeCreateParams(
-                idService.getId(),
+                traineeId,
                 requestDto.getFirstName(),
                 requestDto.getLastName(),
                 username,

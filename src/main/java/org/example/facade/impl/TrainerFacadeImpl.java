@@ -44,14 +44,16 @@ public class TrainerFacadeImpl implements TrainerFacade {
 
         LOGGER.info("Creating a Trainer according to the TrainerCreationRequestDto - {}", requestDto);
 
+        Long trainerId = idService.getId();
+
         String username = uniqueUsername(
                 requestDto.getFirstName(),
                 requestDto.getLastName(),
-                requestDto.getUserId()
+                trainerId
         );
 
         Trainer trainer = trainerService.create(new TrainerCreateParams(
-                idService.getId(),
+                trainerId,
                 requestDto.getFirstName(),
                 requestDto.getLastName(),
                 username,
