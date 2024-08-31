@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Creating IdService interface and class for writing to and getting id from a file and using it in the corresponding facade class to create entity class">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/core/training-id.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/config/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/config/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainingFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainingFacadeImpl.java" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Changing the return value of save method to the reference passed as argument">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,70 +113,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Adding a DateConverter spring bean to convert a string to date and vice versa">
-      <option name="closed" value="true" />
-      <created>1724677534988</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1724677534989</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Removing data from the trainee.txt file">
-      <option name="closed" value="true" />
-      <created>1724683278435</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1724683278436</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Using the date converter bean in the main method">
-      <option name="closed" value="true" />
-      <created>1724683452977</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1724683452977</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Removing unnecessary print statements">
-      <option name="closed" value="true" />
-      <created>1724701925320</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1724701925321</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Changing the return type of the remove method from the object being removed to a boolean, and changing the parameter from the object to its id">
-      <option name="closed" value="true" />
-      <created>1724702260815</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1724702260815</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Removing unnecessary import statements and the SpringBootApplicaion annotation from the Main class">
-      <option name="closed" value="true" />
-      <created>1724702309803</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1724702309804</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Adding the SpringBootApplication to the Main class">
-      <option name="closed" value="true" />
-      <created>1724704345774</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1724704345791</updated>
-    </task>
-    <task id="LOCAL-00017" summary="Implementing the TrainerStorage class">
-      <option name="closed" value="true" />
-      <created>1724704508188</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1724704508189</updated>
     </task>
     <task id="LOCAL-00018" summary="Implementing the TrainingStorage logic">
       <option name="closed" value="true" />
@@ -507,7 +442,71 @@
       <option name="project" value="LOCAL" />
       <updated>1725134412906</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="Implementing the logic for id generation for Training entity">
+      <option name="closed" value="true" />
+      <created>1725134673874</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1725134673874</updated>
+    </task>
+    <task id="LOCAL-00060" summary="Updating the Config class according to the new changes">
+      <option name="closed" value="true" />
+      <created>1725134792266</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1725134792266</updated>
+    </task>
+    <task id="LOCAL-00061" summary="Removing all the data from trainee.txt, trainer.txt and training.txt filess">
+      <option name="closed" value="true" />
+      <created>1725134856393</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1725134856394</updated>
+    </task>
+    <task id="LOCAL-00062" summary="Removing userId, username and password fields from TraineeCreationRequestDto">
+      <option name="closed" value="true" />
+      <created>1725135087379</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1725135087379</updated>
+    </task>
+    <task id="LOCAL-00063" summary="Removing userId, username and password fields from TrainerCreationRequestDto">
+      <option name="closed" value="true" />
+      <created>1725135203895</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1725135203895</updated>
+    </task>
+    <task id="LOCAL-00064" summary="Fixing the bug of accessing ids from the dtos. Instead, getting id from the IdService">
+      <option name="closed" value="true" />
+      <created>1725135473065</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1725135473066</updated>
+    </task>
+    <task id="LOCAL-00065" summary="Changing the scope of IdService to property">
+      <option name="closed" value="true" />
+      <created>1725136623812</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1725136623812</updated>
+    </task>
+    <task id="LOCAL-00066" summary="Changing the return value of save method to the reference passed as argument">
+      <option name="closed" value="true" />
+      <created>1725136724615</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1725136724616</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -522,14 +521,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Adding logs for the TrainingStorageImpl class" />
-    <MESSAGE value="Adding logs for the TraineeDao class" />
-    <MESSAGE value="Adding logs for the TrainerDao class" />
-    <MESSAGE value="Adding logs for the TrainingDao class" />
-    <MESSAGE value="Adding logs for the TraineeServiceImpl class" />
-    <MESSAGE value="Adding logs for the TrainerServiceImpl class" />
-    <MESSAGE value="Adding logs for the TrainingServiceImpl class" />
-    <MESSAGE value="Removing the annotations from the classes which make those beans and setting the bean configuration in the Config class. Injecting the Services to the Facades using constructor instead of autowiring" />
     <MESSAGE value="Using setter-based injections for injecting the DateConverter bean to the storages and for injecting the storages to the DAO classes" />
     <MESSAGE value="Adding intermediate interfaces that get implemented by their respective data access object classes" />
     <MESSAGE value="Adding intermediate interfaces that get implemented by their respective data access object classes for the Storage classes(TraineeStorage, TrainerStorage)" />
@@ -547,6 +538,14 @@
     <MESSAGE value="Creating a method for generating a random password with length 10 for both TraineeFacade and TrainerFacade" />
     <MESSAGE value="Committing the workspace.xml file" />
     <MESSAGE value="Creating IdService interface and class for writing to and getting id from a file and using it in the corresponding facade class to create entity class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Creating IdService interface and class for writing to and getting id from a file and using it in the corresponding facade class to create entity class" />
+    <MESSAGE value="Implementing the logic for id generation for Training entity" />
+    <MESSAGE value="Updating the Config class according to the new changes" />
+    <MESSAGE value="Removing all the data from trainee.txt, trainer.txt and training.txt filess" />
+    <MESSAGE value="Removing userId, username and password fields from TraineeCreationRequestDto" />
+    <MESSAGE value="Removing userId, username and password fields from TrainerCreationRequestDto" />
+    <MESSAGE value="Fixing the bug of accessing ids from the dtos. Instead, getting id from the IdService" />
+    <MESSAGE value="Changing the scope of IdService to property" />
+    <MESSAGE value="Changing the return value of save method to the reference passed as argument" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changing the return value of save method to the reference passed as argument" />
   </component>
 </project>
