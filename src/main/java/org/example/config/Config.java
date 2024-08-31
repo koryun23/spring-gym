@@ -95,7 +95,7 @@ public class Config {
 
     @Bean
     public TrainingFacade trainingFacade() {
-        return new TrainingFacadeImpl(new TrainingServiceImpl());
+        return new TrainingFacadeImpl(new TrainingServiceImpl(), new IdServiceImpl(TRAINING_ID_PATH));
     }
 
     @Bean
