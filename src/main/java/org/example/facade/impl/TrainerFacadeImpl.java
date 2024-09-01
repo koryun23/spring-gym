@@ -11,6 +11,7 @@ import org.example.facade.core.TrainerFacade;
 import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
+import org.example.service.core.UsernamePasswordService;
 import org.example.service.params.TrainerCreateParams;
 import org.example.service.params.TrainerUpdateParams;
 import org.slf4j.Logger;
@@ -29,15 +30,21 @@ public class TrainerFacadeImpl implements TrainerFacade {
     private final TrainerService trainerService;
     private final TraineeService traineeService;
     private final IdService idService;
+    private final UsernamePasswordService usernamePasswordService;
 
     @Autowired
-    public TrainerFacadeImpl(TrainerService trainerService, TraineeService traineeService, IdService idService) {
+    public TrainerFacadeImpl(TrainerService trainerService,
+                             TraineeService traineeService,
+                             IdService idService,
+                             UsernamePasswordService usernamePasswordService) {
         Assert.notNull(trainerService, "Trainer Service must not be null");
         Assert.notNull(traineeService, "Trainee Service must not be null");
         Assert.notNull(idService, "Id Service must not be null");
+        Assert.notNull(usernamePasswordService, "Username Password Service must not be null");
         this.trainerService = trainerService;
         this.traineeService = traineeService;
         this.idService = idService;
+        this.usernamePasswordService = usernamePasswordService;
     }
 
     @Override
@@ -51,18 +58,20 @@ public class TrainerFacadeImpl implements TrainerFacade {
             return new TrainerCreationResponseDto(List.of(String.format("A Trainer with the specified id - %d, already exists", trainerId)));
         }
 
-        String username = uniqueUsername(
+        String username = usernamePasswordService.username(
                 requestDto.getFirstName(),
                 requestDto.getLastName(),
                 trainerId
         );
+
+        String password = usernamePasswordService.password();
 
         Trainer trainer = trainerService.create(new TrainerCreateParams(
                 trainerId,
                 requestDto.getFirstName(),
                 requestDto.getLastName(),
                 username,
-                uniquePassword(),
+                password,
                 requestDto.isActive(),
                 requestDto.getSpecializationType()
         ));
@@ -135,22 +144,5 @@ public class TrainerFacadeImpl implements TrainerFacade {
 
         LOGGER.info("Successfully retrieved a Trainer with an id of {}, response - {}", trainerId, responseDto);
         return responseDto;
-    }
-
-    private String uniqueUsername(String firstName, String lastName, Long id) {
-        String temporaryUsername = firstName + "." + lastName;
-        Optional<Trainer> optionalTrainer = trainerService.findByUsername(temporaryUsername);
-
-        if(optionalTrainer.isEmpty()) return temporaryUsername;
-
-        temporaryUsername += ("." + id);
-        Optional<Trainee> optionalTrainee = traineeService.findByUsername(temporaryUsername);
-
-        if(optionalTrainee.isEmpty()) return temporaryUsername;
-        return temporaryUsername + ".trainer";
-    }
-
-    private String uniquePassword() {
-        return UUID.randomUUID().toString().substring(0, 10);
     }
 }

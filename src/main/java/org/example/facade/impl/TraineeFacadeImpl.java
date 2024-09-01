@@ -12,6 +12,7 @@ import org.example.facade.core.TraineeFacade;
 import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
+import org.example.service.core.UsernamePasswordService;
 import org.example.service.params.TraineeCreateParams;
 import org.example.service.params.TraineeUpdateParams;
 import org.slf4j.Logger;
@@ -30,15 +31,21 @@ public class TraineeFacadeImpl implements TraineeFacade {
     private final TraineeService traineeService;
     private final TrainerService trainerService;
     private final IdService idService;
+    private final UsernamePasswordService usernamePasswordService;
 
     @Autowired
-    public TraineeFacadeImpl(TraineeService traineeService, TrainerService trainerService, IdService idService) {
+    public TraineeFacadeImpl(TraineeService traineeService,
+                             TrainerService trainerService,
+                             IdService idService,
+                             UsernamePasswordService usernamePasswordService) {
         Assert.notNull(traineeService, "Trainee Service must not be null");
         Assert.notNull(trainerService, "Trainer Service must not be null");
         Assert.notNull(idService, "Id Service must not be null");
+        Assert.notNull(usernamePasswordService, "Username Password Service must not be null");
         this.traineeService = traineeService;
         this.trainerService = trainerService;
         this.idService = idService;
+        this.usernamePasswordService = usernamePasswordService;
     }
 
     @Override
@@ -48,22 +55,22 @@ public class TraineeFacadeImpl implements TraineeFacade {
 
         Long traineeId = idService.getId();
 
-        if(traineeService.findById(traineeId).isEmpty()) {
+        if(!traineeService.findById(traineeId).isEmpty()) {
             return new TraineeCreationResponseDto(List.of(String.format("A trainee with the specified id - %d, already exists")));
         }
 
-        String username = uniqueUsername(
+        String username = usernamePasswordService.username(
                 requestDto.getFirstName(),
                 requestDto.getLastName(),
                 traineeId
         );
-
+        String password = usernamePasswordService.password();
         Trainee trainee = traineeService.create(new TraineeCreateParams(
                 traineeId,
                 requestDto.getFirstName(),
                 requestDto.getLastName(),
                 username,
-                uniquePassword(),
+                password,
                 requestDto.isActive(),
                 requestDto.getDateOfBirth(),
                 requestDto.getAddress()
@@ -89,7 +96,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
         LOGGER.info("Updating a Trainee based on the TraineeUpdateRequestDto - {}", requestDto);
 
         if(traineeService.findByUsername(requestDto.getUsername()).isEmpty()) {
-            return new TraineeUpdateResponseDto(List.of(String.format("A user with specified username - %s, does not exist")));
+            return new TraineeUpdateResponseDto(List.of(String.format("A user with specified username - %s, does not exist", requestDto.getUsername())));
         }
 
         Trainee trainee = traineeService.update(new TraineeUpdateParams(
@@ -160,22 +167,5 @@ public class TraineeFacadeImpl implements TraineeFacade {
         TraineeDeletionResponseDto responseDto = new TraineeDeletionResponseDto(success);
         LOGGER.info("Successfully deleted a Trainee with an id of {}, response - {}", id, responseDto);
         return responseDto;
-    }
-
-    private String uniqueUsername(String firstName, String lastName, Long id) {
-        String temporaryUsername = firstName + "." + lastName;
-        Optional<Trainee> optionalTrainee = traineeService.findByUsername(temporaryUsername);
-
-        if(optionalTrainee.isEmpty()) return temporaryUsername;
-
-        temporaryUsername += ("." + id);
-        Optional<Trainer> optionalTrainer = trainerService.findByUsername(temporaryUsername);
-
-        if(optionalTrainer.isEmpty()) return temporaryUsername;
-        return temporaryUsername + ".trainee";
-    }
-
-    private String uniquePassword() {
-        return UUID.randomUUID().toString().substring(0, 10);
     }
 }

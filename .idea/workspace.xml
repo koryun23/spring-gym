@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Creating tests for testing the functionality of TraineeServiceImpl class">
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/service/impl/TrainerServiceImplTest.java" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Crating tests for testing the functionality of TrainingServiceImpl">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/core/UsernamePasswordService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/UsernamePasswordServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TraineeFacadeImplTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainerServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,9 +47,9 @@
       <list>
         <option value="AnnotationType" />
         <option value="Enum" />
+        <option value="JUnit5 Test Class" />
         <option value="Interface" />
         <option value="Class" />
-        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -100,6 +103,7 @@
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="org.example.facade.impl" />
       <recent name="org.example.service.impl" />
       <recent name="org.example.dao.impl" />
       <recent name="org.example.repository.impl" />
@@ -232,22 +236,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00061" summary="Removing all the data from trainee.txt, trainer.txt and training.txt filess">
-      <option name="closed" value="true" />
-      <created>1725134856393</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1725134856394</updated>
-    </task>
-    <task id="LOCAL-00062" summary="Removing userId, username and password fields from TraineeCreationRequestDto">
-      <option name="closed" value="true" />
-      <created>1725135087379</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1725135087379</updated>
     </task>
     <task id="LOCAL-00063" summary="Removing userId, username and password fields from TrainerCreationRequestDto">
       <option name="closed" value="true" />
@@ -625,7 +613,23 @@
       <option name="project" value="LOCAL" />
       <updated>1725222081299</updated>
     </task>
-    <option name="localTasksCounter" value="110" />
+    <task id="LOCAL-00110" summary="Adding validations to the TrainerServiceImpl class and creating tests for testing the functionality of the class">
+      <option name="closed" value="true" />
+      <created>1725222656484</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1725222656484</updated>
+    </task>
+    <task id="LOCAL-00111" summary="Crating tests for testing the functionality of TrainingServiceImpl">
+      <option name="closed" value="true" />
+      <created>1725222938522</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1725222938522</updated>
+    </task>
+    <option name="localTasksCounter" value="112" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -640,8 +644,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Adding an assertion to the update method" />
-    <MESSAGE value="Implementing Unit tests for the TrainerStorageImpl" />
     <MESSAGE value="Changing the logic of hashCode method in Trainer entity class" />
     <MESSAGE value="Adding assertions to the TrainingStorageImpl" />
     <MESSAGE value="Creating a TrainingNotFoundException" />
@@ -665,6 +667,8 @@
     <MESSAGE value="Changing the reference type of the dao from class name to interface name. Throwing an exception in delete method if trainee is not found" />
     <MESSAGE value="Creating tests for testing the funcionality of TraineeServiceImpl class" />
     <MESSAGE value="Creating tests for testing the functionality of TraineeServiceImpl class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Creating tests for testing the functionality of TraineeServiceImpl class" />
+    <MESSAGE value="Adding validations to the TrainerServiceImpl class and creating tests for testing the functionality of the class" />
+    <MESSAGE value="Crating tests for testing the functionality of TrainingServiceImpl" />
+    <option name="LAST_COMMIT_MESSAGE" value="Crating tests for testing the functionality of TrainingServiceImpl" />
   </component>
 </project>
