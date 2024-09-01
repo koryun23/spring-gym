@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding validations to the TrainingFacadeImpl and TrainingServiceImpl classes" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Creating tests for testing the functionality of TraineeServiceImpl class">
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/service/impl/TrainerServiceImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainerServiceImpl.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -96,6 +100,7 @@
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="org.example.service.impl" />
       <recent name="org.example.dao.impl" />
       <recent name="org.example.repository.impl" />
       <recent name="org.example.entity" />
@@ -227,46 +232,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00056" summary="Creating a method for generating a random password with length 10 for both TraineeFacade and TrainerFacade">
-      <option name="closed" value="true" />
-      <created>1725131588201</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1725131588201</updated>
-    </task>
-    <task id="LOCAL-00057" summary="Committing the workspace.xml file">
-      <option name="closed" value="true" />
-      <created>1725131933940</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
-      <option name="project" value="LOCAL" />
-      <updated>1725131933940</updated>
-    </task>
-    <task id="LOCAL-00058" summary="Creating IdService interface and class for writing to and getting id from a file and using it in the corresponding facade class to create entity class">
-      <option name="closed" value="true" />
-      <created>1725134412906</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1725134412906</updated>
-    </task>
-    <task id="LOCAL-00059" summary="Implementing the logic for id generation for Training entity">
-      <option name="closed" value="true" />
-      <created>1725134673874</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1725134673874</updated>
-    </task>
-    <task id="LOCAL-00060" summary="Updating the Config class according to the new changes">
-      <option name="closed" value="true" />
-      <created>1725134792266</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1725134792266</updated>
     </task>
     <task id="LOCAL-00061" summary="Removing all the data from trainee.txt, trainer.txt and training.txt filess">
       <option name="closed" value="true" />
@@ -620,7 +585,47 @@
       <option name="project" value="LOCAL" />
       <updated>1725218804180</updated>
     </task>
-    <option name="localTasksCounter" value="105" />
+    <task id="LOCAL-00105" summary="Adding a method of retrieving an optional training, moving that method both to the main dao interface and the main storage interface. Adding validations to the services, daos, storages and facades">
+      <option name="closed" value="true" />
+      <created>1725219404543</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1725219404543</updated>
+    </task>
+    <task id="LOCAL-00106" summary="Making the corresponding changes to the Config class">
+      <option name="closed" value="true" />
+      <created>1725219641015</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1725219641015</updated>
+    </task>
+    <task id="LOCAL-00107" summary="Adding validations to the TraineeServiceImpl class">
+      <option name="closed" value="true" />
+      <created>1725220234497</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1725220234498</updated>
+    </task>
+    <task id="LOCAL-00108" summary="Changing the reference type of the dao from class name to interface name. Throwing an exception in delete method if trainee is not found">
+      <option name="closed" value="true" />
+      <created>1725222016179</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1725222016180</updated>
+    </task>
+    <task id="LOCAL-00109" summary="Creating tests for testing the functionality of TraineeServiceImpl class">
+      <option name="closed" value="true" />
+      <created>1725222081299</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1725222081299</updated>
+    </task>
+    <option name="localTasksCounter" value="110" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -635,12 +640,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Implementing the tests for TraineeStorageImpl class" />
-    <MESSAGE value="Creating a separate class TraineeFileStorageImpl which handles the file interactions and is injected into TraineeStorageImpl which only handles the in-memory interactions" />
-    <MESSAGE value="Removing the traineeStorage bean from the comments and changing its return type to TraineeStorage instead of TraineeStorageImpl" />
-    <MESSAGE value="Creating a separate class TrainerFileStorageImpl which handles the file interactions and is injected into TrainerStorageImpl which only handles the in-memory interactions" />
-    <MESSAGE value="Creating a separate class TrainingFileStorageImpl which handles the file interactions and is injected into TrainingStorageImpl which only handles the in-memory interactions.&#10;Also editing the return types of Config class methods to the interfaces rather than classes" />
-    <MESSAGE value="Resetting the content of the .txt files to the default state and fixing bugs in FileStorage implementation classes: returning the actual in memory storage instead of null." />
     <MESSAGE value="Adding an assertion to the update method" />
     <MESSAGE value="Implementing Unit tests for the TrainerStorageImpl" />
     <MESSAGE value="Changing the logic of hashCode method in Trainer entity class" />
@@ -660,6 +659,12 @@
     <MESSAGE value="Adding validations to the TraineeFacadeImpl class" />
     <MESSAGE value="Adding validations to the TrainerFacadeImpl class" />
     <MESSAGE value="Adding validations to the TrainingFacadeImpl and TrainingServiceImpl classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding validations to the TrainingFacadeImpl and TrainingServiceImpl classes" />
+    <MESSAGE value="Adding a method of retrieving an optional training, moving that method both to the main dao interface and the main storage interface. Adding validations to the services, daos, storages and facades" />
+    <MESSAGE value="Making the corresponding changes to the Config class" />
+    <MESSAGE value="Adding validations to the TraineeServiceImpl class" />
+    <MESSAGE value="Changing the reference type of the dao from class name to interface name. Throwing an exception in delete method if trainee is not found" />
+    <MESSAGE value="Creating tests for testing the funcionality of TraineeServiceImpl class" />
+    <MESSAGE value="Creating tests for testing the functionality of TraineeServiceImpl class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creating tests for testing the functionality of TraineeServiceImpl class" />
   </component>
 </project>
