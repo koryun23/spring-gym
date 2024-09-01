@@ -4,13 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Crating tests for testing the functionality of TrainingServiceImpl">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/core/UsernamePasswordService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/UsernamePasswordServiceImpl.java" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Registering UsernamePasswordService as a bean in the Configuration class">
       <change afterPath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TraineeFacadeImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -236,22 +231,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00063" summary="Removing userId, username and password fields from TrainerCreationRequestDto">
-      <option name="closed" value="true" />
-      <created>1725135203895</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1725135203895</updated>
-    </task>
-    <task id="LOCAL-00064" summary="Fixing the bug of accessing ids from the dtos. Instead, getting id from the IdService">
-      <option name="closed" value="true" />
-      <created>1725135473065</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1725135473066</updated>
     </task>
     <task id="LOCAL-00065" summary="Changing the scope of IdService to property">
       <option name="closed" value="true" />
@@ -629,7 +608,23 @@
       <option name="project" value="LOCAL" />
       <updated>1725222938522</updated>
     </task>
-    <option name="localTasksCounter" value="112" />
+    <task id="LOCAL-00112" summary="Creating a new service for generating username and password for trainees and trainers">
+      <option name="closed" value="true" />
+      <created>1725228347807</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1725228347807</updated>
+    </task>
+    <task id="LOCAL-00113" summary="Registering UsernamePasswordService as a bean in the Configuration class">
+      <option name="closed" value="true" />
+      <created>1725228461672</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1725228461672</updated>
+    </task>
+    <option name="localTasksCounter" value="114" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -644,8 +639,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Changing the logic of hashCode method in Trainer entity class" />
-    <MESSAGE value="Adding assertions to the TrainingStorageImpl" />
     <MESSAGE value="Creating a TrainingNotFoundException" />
     <MESSAGE value="Throwing an exception if the get method fails" />
     <MESSAGE value="Finishing the implementation of the TrainingStorageImpl tests and finishing the tests for all the storages" />
@@ -669,6 +662,8 @@
     <MESSAGE value="Creating tests for testing the functionality of TraineeServiceImpl class" />
     <MESSAGE value="Adding validations to the TrainerServiceImpl class and creating tests for testing the functionality of the class" />
     <MESSAGE value="Crating tests for testing the functionality of TrainingServiceImpl" />
-    <option name="LAST_COMMIT_MESSAGE" value="Crating tests for testing the functionality of TrainingServiceImpl" />
+    <MESSAGE value="Creating a new service for generating username and password for trainees and trainers" />
+    <MESSAGE value="Registering UsernamePasswordService as a bean in the Configuration class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Registering UsernamePasswordService as a bean in the Configuration class" />
   </component>
 </project>
