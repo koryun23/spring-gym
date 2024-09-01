@@ -109,4 +109,23 @@ class TrainingFacadeImplTest {
                 1000L
         )).getErrors().getFirst()).isEqualTo("Cannot create a training: a trainer with an id of 1 does not exist");
     }
+
+    @Test
+    public void testRetrieveTrainingWhenNull() {
+        Assertions.assertThatThrownBy(() -> testSubject.retrieveTraining(null))
+                .isExactlyInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void testRetrieveTrainingWhenNegative() {
+        Assertions.assertThat(testSubject.retrieveTraining(-1L).getErrors().getFirst())
+                .isEqualTo("Training id must be positive: -1 specified");
+    }
+
+    @Test
+    public void testRetrieveTrainingWhenDoesNotExist() {
+        Mockito.when(trainingService.findById(1L)).thenReturn(Optional.empty());
+        Assertions.assertThat(testSubject.retrieveTraining(1L).getErrors().getFirst())
+                .isEqualTo("Training with a specified id of 1 does not exist");
+    }
 }

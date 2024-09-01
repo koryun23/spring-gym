@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding validations to the TrainerFacadeImpl class and creating tests to test the functionality of the class">
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TrainingFacadeImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainingFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainingFacadeImpl.java" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding validations to the TrainingFacadeImpl class and creating tests to test the functionality of the class">
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TrainingFacadeImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TrainingFacadeImplTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -232,14 +231,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00068" summary="Fixing a bug in Config class: using pre-declared methods for injecting beans to another beans">
-      <option name="closed" value="true" />
-      <created>1725137536482</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1725137536482</updated>
     </task>
     <task id="LOCAL-00069" summary="Fixing a bug in TrainingServiceImpl class: Changing the logger's inspected class name from TrainerServiceImpl to TrainingServiceImpl">
       <option name="closed" value="true" />
@@ -625,7 +616,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725230122632</updated>
     </task>
-    <option name="localTasksCounter" value="117" />
+    <task id="LOCAL-00117" summary="Adding validations to the TrainingFacadeImpl class and creating tests to test the functionality of the class">
+      <option name="closed" value="true" />
+      <created>1725231077824</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1725231077824</updated>
+    </task>
+    <option name="localTasksCounter" value="118" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -640,7 +639,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Adding validations to the TraineeDaoImpl class" />
     <MESSAGE value="Changing the type of storage from class name to the interface name" />
     <MESSAGE value="Fixing the log message of the update method" />
     <MESSAGE value="Creating tests for the TraineeDaoImpl class" />
@@ -665,6 +663,7 @@
     <MESSAGE value="big fix: Adding format specifier" />
     <MESSAGE value="Creating tests for testing the functionality of TraineeFacadeImpl class" />
     <MESSAGE value="Adding validations to the TrainerFacadeImpl class and creating tests to test the functionality of the class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding validations to the TrainerFacadeImpl class and creating tests to test the functionality of the class" />
+    <MESSAGE value="Adding validations to the TrainingFacadeImpl class and creating tests to test the functionality of the class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding validations to the TrainingFacadeImpl class and creating tests to test the functionality of the class" />
   </component>
 </project>
