@@ -10,6 +10,7 @@ import org.example.facade.impl.TraineeFacadeImpl;
 import org.example.facade.impl.TrainerFacadeImpl;
 import org.example.facade.impl.TrainingFacadeImpl;
 import org.example.helper.DateConverter;
+import org.example.repository.impl.TraineeFileStorageImpl;
 import org.example.repository.impl.TraineeStorageImpl;
 import org.example.repository.impl.TrainerStorageImpl;
 import org.example.repository.impl.TrainingStorageImpl;
@@ -39,21 +40,25 @@ public class Config {
         return new DateConverter(new SimpleDateFormat("yyyy-MM-dd"));
     }
 
-    @Bean
-    public TrainingStorageImpl trainingStorage() {
-        return new TrainingStorageImpl();
-    }
+//    @Bean
+//    public TrainingStorageImpl trainingStorage() {
+//        return new TrainingStorageImpl();
+//    }
+//
+//    @Bean
+//    public TraineeStorageImpl traineeStorage() {
+//        return new TraineeStorageImpl();
+//    }
+//
+//    @Bean
+//    public TrainerStorageImpl trainerStorage() {
+//        return new TrainerStorageImpl();
+//    }
 
     @Bean
-    public TraineeStorageImpl traineeStorage() {
-        return new TraineeStorageImpl();
+    public TraineeFileStorageImpl traineeFileStorage() {
+        return new TraineeFileStorageImpl();
     }
-
-    @Bean
-    public TrainerStorageImpl trainerStorage() {
-        return new TrainerStorageImpl();
-    }
-
     @Bean
     public TrainingDaoImpl trainingDao() {
         return new TrainingDaoImpl();

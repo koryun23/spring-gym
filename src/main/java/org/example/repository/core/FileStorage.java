@@ -1,8 +1,10 @@
 package org.example.repository.core;
 
+import java.util.Map;
+
 public interface FileStorage<T> {
 
-    void parseMemoryFile();
+    Map<Long, T> parseMemoryFile();
 
-    void persist();
+    void persist(Map<Long, T> storage);
 }
