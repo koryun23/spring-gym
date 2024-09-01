@@ -46,12 +46,20 @@ public class TrainingFacadeImpl implements TrainingFacade {
         Assert.notNull(requestDto, "TrainingCreationRequestDto");
         LOGGER.info("Creating a Training according to the TrainingCreationRequestDto - {}", requestDto);
 
+        if(requestDto.getTraineeId() <= 0) {
+            return new TrainingCreationResponseDto(List.of(String.format("The trainee id must be positive: %d specified", requestDto.getTraineeId())));
+        }
+
+        if(requestDto.getTrainerId() <= 0) {
+            return new TrainingCreationResponseDto(List.of(String.format("The trainer id must be positive: %d specified", requestDto.getTrainerId())));
+
+        }
         if(traineeService.findById(requestDto.getTraineeId()).isEmpty()) {
             return new TrainingCreationResponseDto(List.of(String.format("Cannot create a training: a trainee with an id of %d does not exist", requestDto.getTraineeId())));
         }
 
         if(trainerService.findById(requestDto.getTrainerId()).isEmpty()) {
-            return new TrainingCreationResponseDto(List.of(String.format("Cannot create a training: a trainer with an id of %d not not exist", requestDto.getTrainerId())));
+            return new TrainingCreationResponseDto(List.of(String.format("Cannot create a training: a trainer with an id of %d does not exist", requestDto.getTrainerId())));
         }
 
         Training training = trainingService.create(new TrainingCreateParams(
