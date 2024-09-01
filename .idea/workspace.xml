@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Creating tests for Training entity class">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Creating a separate class TrainerFileStorageImpl which handles the file interactions and is injected into TrainerStorageImpl which only handles the in-memory interactions">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainingFileStorageImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainingStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainingStorageImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,8 +42,8 @@
         <option value="AnnotationType" />
         <option value="Enum" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -65,6 +67,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Gradle.Tests in 'gym-spring.test'.executor": "Run",
+    "Gradle.TraineeStorageImplTest.TestTraineeUpdate.executor": "Run",
+    "Gradle.TraineeStorageImplTest.executor": "Run",
     "Gradle.TraineeTest.TestTrainee.executor": "Run",
     "Gradle.TraineeTest.executor": "Run",
     "Gradle.gym-spring [:Main.main()].executor": "Run",
@@ -72,7 +76,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "adding__file__interaction__classes",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Koryun/Desktop/Koryun/gym-spring/src/main/java/org/example/db",
     "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
@@ -90,23 +94,11 @@
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="org.example.repository.impl" />
       <recent name="org.example.entity" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Tests in 'gym-spring.test'">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.Main" />
-      <module name="gym-spring.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Gradle.TraineeStorageImplTest">
     <configuration name="Tests in 'gym-spring.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -119,6 +111,54 @@
         <option name="taskNames">
           <list>
             <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="TraineeStorageImplTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.repository.impl.TraineeStorageImplTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="TraineeStorageImplTest.TestTraineeUpdate" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.repository.impl.TraineeStorageImplTest.TestTraineeUpdate&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -179,11 +219,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.TraineeStorageImplTest" />
+        <item itemvalue="Gradle.TraineeStorageImplTest.TestTraineeUpdate" />
         <item itemvalue="Gradle.Tests in 'gym-spring.test'" />
         <item itemvalue="Gradle.TraineeTest" />
         <item itemvalue="Gradle.TraineeTest.TestTrainee" />
-        <item itemvalue="Application.Main" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -195,70 +235,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00027" summary="implementing the TrainingFacade logic">
-      <option name="closed" value="true" />
-      <created>1724849737564</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1724849737564</updated>
-    </task>
-    <task id="LOCAL-00028" summary="Adding Component annotation to the TrainerFacadeImpl class">
-      <option name="closed" value="true" />
-      <created>1724849778994</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1724849778994</updated>
-    </task>
-    <task id="LOCAL-00029" summary="Formatting Training entity class">
-      <option name="closed" value="true" />
-      <created>1724849867742</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1724849867742</updated>
-    </task>
-    <task id="LOCAL-00030" summary="Committing workspace.xml file">
-      <option name="closed" value="true" />
-      <created>1724849920907</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1724849920907</updated>
-    </task>
-    <task id="LOCAL-00031" summary="Added logs in the TraineeStorageImpl class">
-      <option name="closed" value="true" />
-      <created>1724859179983</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1724859179983</updated>
-    </task>
-    <task id="LOCAL-00032" summary="Added logs in the TrainerStorageImpl class">
-      <option name="closed" value="true" />
-      <created>1724862821908</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1724862821908</updated>
-    </task>
-    <task id="LOCAL-00033" summary="Changing some of the log messages to match the pattern of the other logs(getting -&gt; retrieving, put -&gt; add)">
-      <option name="closed" value="true" />
-      <created>1724862885592</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1724862885593</updated>
-    </task>
-    <task id="LOCAL-00034" summary="Adding logs for the TrainingStorageImpl class">
-      <option name="closed" value="true" />
-      <created>1724863254515</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1724863254515</updated>
     </task>
     <task id="LOCAL-00035" summary="Adding logs for the TraineeDao class">
       <option name="closed" value="true" />
@@ -588,7 +564,71 @@
       <option name="project" value="LOCAL" />
       <updated>1725144508637</updated>
     </task>
-    <option name="localTasksCounter" value="76" />
+    <task id="LOCAL-00076" summary="Adding validations in all the methods of TraineeStorageImpl class">
+      <option name="closed" value="true" />
+      <created>1725144824019</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1725144824019</updated>
+    </task>
+    <task id="LOCAL-00077" summary="Adding testing methods to the TraineeStorageImplTest class, need to fix the bugs">
+      <option name="closed" value="true" />
+      <created>1725151384576</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1725151384576</updated>
+    </task>
+    <task id="LOCAL-00078" summary="Adding equals and hashcode method to User class">
+      <option name="closed" value="true" />
+      <created>1725188771838</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1725188771840</updated>
+    </task>
+    <task id="LOCAL-00079" summary="Editing hashCode method of Trainee">
+      <option name="closed" value="true" />
+      <created>1725188805573</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1725188805574</updated>
+    </task>
+    <task id="LOCAL-00080" summary="Implementing the tests for TraineeStorageImpl class">
+      <option name="closed" value="true" />
+      <created>1725194648415</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1725194648415</updated>
+    </task>
+    <task id="LOCAL-00081" summary="Creating a separate class TraineeFileStorageImpl which handles the file interactions and is injected into TraineeStorageImpl which only handles the in-memory interactions">
+      <option name="closed" value="true" />
+      <created>1725194733758</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1725194733758</updated>
+    </task>
+    <task id="LOCAL-00082" summary="Removing the traineeStorage bean from the comments and changing its return type to TraineeStorage instead of TraineeStorageImpl">
+      <option name="closed" value="true" />
+      <created>1725196426706</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1725196426706</updated>
+    </task>
+    <task id="LOCAL-00083" summary="Creating a separate class TrainerFileStorageImpl which handles the file interactions and is injected into TrainerStorageImpl which only handles the in-memory interactions">
+      <option name="closed" value="true" />
+      <created>1725196790429</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1725196790429</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -603,14 +643,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Implementing the getByUsername, findByUsername and findById methods of TrainerDaoImpl" />
-    <MESSAGE value="Implementing the getByUsername, findByUsername and findById methods of TraineeService" />
-    <MESSAGE value="Creating a method for generating a unique username for a trainee" />
-    <MESSAGE value="Creating findByUsername, findById, getById methods for TrainerServiceImpl" />
-    <MESSAGE value="Creating method for generating a method for generating a unique username for Trainer and fixing the logic in the same method for TraineeFacadeImpl" />
-    <MESSAGE value="Creating a method for generating a random password with length 10 for both TraineeFacade and TrainerFacade" />
-    <MESSAGE value="Committing the workspace.xml file" />
-    <MESSAGE value="Creating IdService interface and class for writing to and getting id from a file and using it in the corresponding facade class to create entity class" />
     <MESSAGE value="Implementing the logic for id generation for Training entity" />
     <MESSAGE value="Updating the Config class according to the new changes" />
     <MESSAGE value="Removing all the data from trainee.txt, trainer.txt and training.txt filess" />
@@ -628,6 +660,14 @@
     <MESSAGE value="Creating tests for Trainee entity class" />
     <MESSAGE value="Creating tests for Trainer entity class" />
     <MESSAGE value="Creating tests for Training entity class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Creating tests for Training entity class" />
+    <MESSAGE value="Adding validations in all the methods of TraineeStorageImpl class" />
+    <MESSAGE value="Adding testing methods to the TraineeStorageImplTest class, need to fix the bugs" />
+    <MESSAGE value="Adding equals and hashcode method to User class" />
+    <MESSAGE value="Editing hashCode method of Trainee" />
+    <MESSAGE value="Implementing the tests for TraineeStorageImpl class" />
+    <MESSAGE value="Creating a separate class TraineeFileStorageImpl which handles the file interactions and is injected into TraineeStorageImpl which only handles the in-memory interactions" />
+    <MESSAGE value="Removing the traineeStorage bean from the comments and changing its return type to TraineeStorage instead of TraineeStorageImpl" />
+    <MESSAGE value="Creating a separate class TrainerFileStorageImpl which handles the file interactions and is injected into TrainerStorageImpl which only handles the in-memory interactions" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creating a separate class TrainerFileStorageImpl which handles the file interactions and is injected into TrainerStorageImpl which only handles the in-memory interactions" />
   </component>
 </project>

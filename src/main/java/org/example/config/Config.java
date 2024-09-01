@@ -1,8 +1,14 @@
 package org.example.config;
 
+import org.example.dao.core.TraineeDao;
+import org.example.dao.core.TrainerDao;
+import org.example.dao.core.TrainingDao;
 import org.example.dao.impl.TraineeDaoImpl;
 import org.example.dao.impl.TrainerDaoImpl;
 import org.example.dao.impl.TrainingDaoImpl;
+import org.example.entity.Trainee;
+import org.example.entity.Trainer;
+import org.example.entity.Training;
 import org.example.facade.core.TraineeFacade;
 import org.example.facade.core.TrainerFacade;
 import org.example.facade.core.TrainingFacade;
@@ -10,11 +16,11 @@ import org.example.facade.impl.TraineeFacadeImpl;
 import org.example.facade.impl.TrainerFacadeImpl;
 import org.example.facade.impl.TrainingFacadeImpl;
 import org.example.helper.DateConverter;
+import org.example.repository.core.FileStorage;
 import org.example.repository.core.TraineeStorage;
-import org.example.repository.impl.TraineeFileStorageImpl;
-import org.example.repository.impl.TraineeStorageImpl;
-import org.example.repository.impl.TrainerStorageImpl;
-import org.example.repository.impl.TrainingStorageImpl;
+import org.example.repository.core.TrainerStorage;
+import org.example.repository.core.TrainingStorage;
+import org.example.repository.impl.*;
 import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
@@ -41,10 +47,10 @@ public class Config {
         return new DateConverter(new SimpleDateFormat("yyyy-MM-dd"));
     }
 
-//    @Bean
-//    public TrainingStorageImpl trainingStorage() {
-//        return new TrainingStorageImpl();
-//    }
+    @Bean
+    public TrainingStorage trainingStorage() {
+        return new TrainingStorageImpl();
+    }
 //
     @Bean
     public TraineeStorage traineeStorage() {
@@ -52,26 +58,37 @@ public class Config {
     }
 
     @Bean
-    public TrainerStorageImpl trainerStorage() {
+    public TrainerStorage trainerStorage() {
         return new TrainerStorageImpl();
     }
 
     @Bean
-    public TraineeFileStorageImpl traineeFileStorage() {
+    public FileStorage<Trainee> traineeFileStorage() {
         return new TraineeFileStorageImpl();
     }
+
     @Bean
-    public TrainingDaoImpl trainingDao() {
+    public FileStorage<Trainer> trainerFileStorage() {
+        return new TrainerFileStorageImpl();
+    }
+
+    @Bean
+    public FileStorage<Training> trainingFileStorage() {
+        return new TrainingFileStorageImpl();
+    }
+
+    @Bean
+    public TrainingDao trainingDao() {
         return new TrainingDaoImpl();
     }
 
     @Bean
-    public TraineeDaoImpl traineeDao() {
+    public TraineeDao traineeDao() {
         return new TraineeDaoImpl();
     }
 
     @Bean
-    public TrainerDaoImpl trainerDao() {
+    public TrainerDao trainerDao() {
         return new TrainerDaoImpl();
     }
 
