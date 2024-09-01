@@ -10,6 +10,7 @@ import org.example.facade.impl.TraineeFacadeImpl;
 import org.example.facade.impl.TrainerFacadeImpl;
 import org.example.facade.impl.TrainingFacadeImpl;
 import org.example.helper.DateConverter;
+import org.example.repository.core.TraineeStorage;
 import org.example.repository.impl.TraineeFileStorageImpl;
 import org.example.repository.impl.TraineeStorageImpl;
 import org.example.repository.impl.TrainerStorageImpl;
@@ -45,10 +46,10 @@ public class Config {
 //        return new TrainingStorageImpl();
 //    }
 //
-//    @Bean
-//    public TraineeStorageImpl traineeStorage() {
-//        return new TraineeStorageImpl();
-//    }
+    @Bean
+    public TraineeStorage traineeStorage() {
+        return new TraineeStorageImpl();
+    }
 //
 //    @Bean
 //    public TrainerStorageImpl trainerStorage() {
