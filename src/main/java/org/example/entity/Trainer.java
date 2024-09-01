@@ -40,13 +40,14 @@ public class Trainer extends User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         Trainer trainer = (Trainer) o;
-        return Objects.equals(specialization, trainer.specialization) && Objects.equals(userId, trainer.userId);
+        return specialization == trainer.specialization && Objects.equals(userId, trainer.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(specialization, userId);
+        return Objects.hash(super.hashCode(), specialization, userId);
     }
 
     @Override
