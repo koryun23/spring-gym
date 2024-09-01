@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding a field of type List called errors to all the response dtos">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding validations to the TraineeFacadeImpl class">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -229,14 +230,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00053" summary="Creating a method for generating a unique username for a trainee">
-      <option name="closed" value="true" />
-      <created>1725129324649</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1725129324649</updated>
     </task>
     <task id="LOCAL-00054" summary="Creating findByUsername, findById, getById methods for TrainerServiceImpl">
       <option name="closed" value="true" />
@@ -622,7 +615,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725216286739</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <task id="LOCAL-00102" summary="Adding validations to the TraineeFacadeImpl class">
+      <option name="closed" value="true" />
+      <created>1725216666942</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1725216666943</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -637,7 +638,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Adding testing methods to the TraineeStorageImplTest class, need to fix the bugs" />
     <MESSAGE value="Adding equals and hashcode method to User class" />
     <MESSAGE value="Editing hashCode method of Trainee" />
     <MESSAGE value="Implementing the tests for TraineeStorageImpl class" />
@@ -662,6 +662,7 @@
     <MESSAGE value="Adding validations to the training dao impl class and removing unnecessary methods from it" />
     <MESSAGE value="Creating tests for testing the functionality of TrainingDaoImpl class" />
     <MESSAGE value="Adding a field of type List called errors to all the response dtos" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding a field of type List called errors to all the response dtos" />
+    <MESSAGE value="Adding validations to the TraineeFacadeImpl class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding validations to the TraineeFacadeImpl class" />
   </component>
 </project>

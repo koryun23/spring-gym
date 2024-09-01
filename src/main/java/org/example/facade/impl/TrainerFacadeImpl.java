@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -41,10 +42,14 @@ public class TrainerFacadeImpl implements TrainerFacade {
 
     @Override
     public TrainerCreationResponseDto createTrainer(TrainerCreationRequestDto requestDto) {
-
+        Assert.notNull(requestDto, "TrainerCreationRequestDto must not be null");
         LOGGER.info("Creating a Trainer according to the TrainerCreationRequestDto - {}", requestDto);
 
         Long trainerId = idService.getId();
+
+        if(!trainerService.findById(trainerId).isEmpty()) {
+            return new TrainerCreationResponseDto(List.of(String.format("A Trainer with the specified id - %d, already exists", trainerId)));
+        }
 
         String username = uniqueUsername(
                 requestDto.getFirstName(),
@@ -77,7 +82,7 @@ public class TrainerFacadeImpl implements TrainerFacade {
 
     @Override
     public TrainerUpdateResponseDto updateTrainer(TrainerUpdateRequestDto requestDto) {
-
+        Assert.notNull(requestDto, "TrainerUpdateRequestDto must not be null");
         LOGGER.info("Updating a Trainer according to the TrainerUpdateRequestDto - {}", requestDto);
 
         Trainer trainer = trainerService.update(new TrainerUpdateParams(
@@ -106,8 +111,16 @@ public class TrainerFacadeImpl implements TrainerFacade {
 
     @Override
     public TrainerRetrievalResponseDto retrieveTrainer(Long trainerId) {
-
+        Assert.notNull(trainerId, "Trainer id must not be null");
         LOGGER.info("Retrieving a Trainer with an id of {}", trainerId);
+
+        if(trainerId <= 0) {
+            return new TrainerRetrievalResponseDto(List.of(String.format("Trainer id must be positive: %d specified", trainerId)));
+        }
+
+        if(trainerService.findById(trainerId).isEmpty()) {
+            return new TrainerRetrievalResponseDto(List.of(String.format("A Trainer with a specified id of %d not found", trainerId)));
+        }
 
         Trainer trainer = trainerService.select(trainerId);
         TrainerRetrievalResponseDto responseDto = new TrainerRetrievalResponseDto(
