@@ -119,7 +119,7 @@ public class Config {
 
     @Bean
     public TrainingFacade trainingFacade() {
-        return new TrainingFacadeImpl(trainingService(), idService(TRAINING_ID_PATH));
+        return new TrainingFacadeImpl(trainingService(), idService(TRAINING_ID_PATH), traineeService(), trainerService());
     }
 
     @Bean
