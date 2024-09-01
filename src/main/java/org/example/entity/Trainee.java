@@ -51,13 +51,16 @@ public class Trainee extends User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         Trainee trainee = (Trainee) o;
-        return Objects.equals(dateOfBirth, trainee.dateOfBirth) && Objects.equals(address, trainee.address) && Objects.equals(userId, trainee.userId);
+        return  Objects.equals(dateOfBirth, trainee.dateOfBirth) &&
+                Objects.equals(address, trainee.address) &&
+                Objects.equals(userId, trainee.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(dateOfBirth, address, userId);
+        return Objects.hash(super.hashCode(), dateOfBirth, address, userId);
     }
 
     @Override
