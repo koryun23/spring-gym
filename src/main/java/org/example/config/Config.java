@@ -21,14 +21,8 @@ import org.example.repository.core.TraineeStorage;
 import org.example.repository.core.TrainerStorage;
 import org.example.repository.core.TrainingStorage;
 import org.example.repository.impl.*;
-import org.example.service.core.IdService;
-import org.example.service.core.TraineeService;
-import org.example.service.core.TrainerService;
-import org.example.service.core.TrainingService;
-import org.example.service.impl.IdServiceImpl;
-import org.example.service.impl.TraineeServiceImpl;
-import org.example.service.impl.TrainerServiceImpl;
-import org.example.service.impl.TrainingServiceImpl;
+import org.example.service.core.*;
+import org.example.service.impl.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -109,12 +103,12 @@ public class Config {
 
     @Bean
     public TraineeFacade traineeFacade() {
-        return new TraineeFacadeImpl(traineeService(), trainerService(), idService(TRAINEE_ID_PATH));
+        return new TraineeFacadeImpl(traineeService(), trainerService(), idService(TRAINEE_ID_PATH), usernamePasswordService());
     }
 
     @Bean
     public TrainerFacade trainerFacade() {
-        return new TrainerFacadeImpl(trainerService(), traineeService(), idService(TRAINER_ID_PATH));
+        return new TrainerFacadeImpl(trainerService(), traineeService(), idService(TRAINER_ID_PATH), usernamePasswordService());
     }
 
     @Bean
@@ -126,5 +120,10 @@ public class Config {
     @Scope("prototype")
     public IdService idService(String filePath) {
         return new IdServiceImpl(filePath);
+    }
+
+    @Bean
+    public UsernamePasswordService usernamePasswordService() {
+        return new UsernamePasswordServiceImpl(traineeService(), trainerService());
     }
 }
