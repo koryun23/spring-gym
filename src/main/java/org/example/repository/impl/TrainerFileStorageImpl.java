@@ -48,7 +48,7 @@ public class TrainerFileStorageImpl implements FileStorage<Trainer> {
         }
 
         LOGGER.info("In memory storage - {}", inMemoryStorage);
-        return null;
+        return inMemoryStorage;
     }
 
     @Override

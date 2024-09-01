@@ -52,7 +52,7 @@ public class TrainingFileStorageImpl implements FileStorage<Training> {
             LOGGER.info("Successfully stored {} in the in-memory storage", currentTraining);
         }
         LOGGER.info("In memory storage - {}", inMemoryStorage);
-        return null;
+        return inMemoryStorage;
     }
 
     @Override

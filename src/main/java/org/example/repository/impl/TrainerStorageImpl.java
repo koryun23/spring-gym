@@ -25,14 +25,14 @@ public class TrainerStorageImpl implements TrainerStorage {
 
     private FileStorage<Trainer> trainerFileStorage;
 
-    public TrainerStorageImpl(Map<Long, Trainer> inMemoryStorage) {
-        Assert.notNull(inMemoryStorage, "In-memory storage must not be null");
-        this.inMemoryStorage = inMemoryStorage;
-    }
-
-    public TrainerStorageImpl() {
-        this.inMemoryStorage = new HashMap<>();
-    }
+//    public TrainerStorageImpl(Map<Long, Trainer> inMemoryStorage) {
+//        Assert.notNull(inMemoryStorage, "In-memory storage must not be null");
+//        this.inMemoryStorage = inMemoryStorage;
+//    }
+//
+//    public TrainerStorageImpl() {
+//        this.inMemoryStorage = new HashMap<>();
+//    }
 
     @Override
     public Trainer get(Long id) {
@@ -114,6 +114,7 @@ public class TrainerStorageImpl implements TrainerStorage {
 
     @PostConstruct
     public void init() {
+        LOGGER.info("Initializing TrainerStorageImpl bean");
         this.inMemoryStorage = trainerFileStorage.parseMemoryFile();
     }
 }

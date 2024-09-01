@@ -22,14 +22,14 @@ public class TraineeStorageImpl implements TraineeStorage {
 
     private FileStorage<Trainee> traineeFileStorage;
 
-    public TraineeStorageImpl(Map<Long, Trainee> map) {
-        Assert.notNull(map, "In memory storage must not be null");
-        inMemoryStorage = map;
-    }
-
-    public TraineeStorageImpl() {
-        inMemoryStorage = new HashMap<>();
-    }
+//    public TraineeStorageImpl(Map<Long, Trainee> map) {
+//        Assert.notNull(map, "In memory storage must not be null");
+//        inMemoryStorage = map;
+//    }
+//
+//    public TraineeStorageImpl() {
+//        inMemoryStorage = new HashMap<>();
+//    }
 
     @Override
     public Trainee get(Long id) {
