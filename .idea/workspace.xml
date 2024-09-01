@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Registering UsernamePasswordService as a bean in the Configuration class">
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TraineeFacadeImplTest.java" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Creating tests for testing the functionality of TraineeFacadeImpl class">
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TrainerFacadeImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,9 +43,9 @@
       <list>
         <option value="AnnotationType" />
         <option value="Enum" />
-        <option value="JUnit5 Test Class" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -231,22 +232,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00065" summary="Changing the scope of IdService to property">
-      <option name="closed" value="true" />
-      <created>1725136623812</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1725136623812</updated>
-    </task>
-    <task id="LOCAL-00066" summary="Changing the return value of save method to the reference passed as argument">
-      <option name="closed" value="true" />
-      <created>1725136724615</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1725136724616</updated>
     </task>
     <task id="LOCAL-00067" summary="Removing trainingId from the fields of TrainingCreationRequestDto">
       <option name="closed" value="true" />
@@ -624,7 +609,23 @@
       <option name="project" value="LOCAL" />
       <updated>1725228461672</updated>
     </task>
-    <option name="localTasksCounter" value="114" />
+    <task id="LOCAL-00114" summary="big fix: Adding format specifier">
+      <option name="closed" value="true" />
+      <created>1725229180925</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1725229180926</updated>
+    </task>
+    <task id="LOCAL-00115" summary="Creating tests for testing the functionality of TraineeFacadeImpl class">
+      <option name="closed" value="true" />
+      <created>1725229211678</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1725229211678</updated>
+    </task>
+    <option name="localTasksCounter" value="116" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -639,8 +640,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Creating a TrainingNotFoundException" />
-    <MESSAGE value="Throwing an exception if the get method fails" />
     <MESSAGE value="Finishing the implementation of the TrainingStorageImpl tests and finishing the tests for all the storages" />
     <MESSAGE value="Adding validations to the TraineeDaoImpl class" />
     <MESSAGE value="Changing the type of storage from class name to the interface name" />
@@ -664,6 +663,8 @@
     <MESSAGE value="Crating tests for testing the functionality of TrainingServiceImpl" />
     <MESSAGE value="Creating a new service for generating username and password for trainees and trainers" />
     <MESSAGE value="Registering UsernamePasswordService as a bean in the Configuration class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Registering UsernamePasswordService as a bean in the Configuration class" />
+    <MESSAGE value="big fix: Adding format specifier" />
+    <MESSAGE value="Creating tests for testing the functionality of TraineeFacadeImpl class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creating tests for testing the functionality of TraineeFacadeImpl class" />
   </component>
 </project>

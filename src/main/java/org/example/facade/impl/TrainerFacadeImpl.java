@@ -94,6 +94,10 @@ public class TrainerFacadeImpl implements TrainerFacade {
         Assert.notNull(requestDto, "TrainerUpdateRequestDto must not be null");
         LOGGER.info("Updating a Trainer according to the TrainerUpdateRequestDto - {}", requestDto);
 
+        if(trainerService.findById(requestDto.getUserId()).isEmpty()) {
+            return new TrainerUpdateResponseDto(List.of(String.format("Trainer with the specified id of %d does not exist", requestDto.getUserId())));
+        }
+
         Trainer trainer = trainerService.update(new TrainerUpdateParams(
                 requestDto.getUserId(),
                 requestDto.getFirstName(),
