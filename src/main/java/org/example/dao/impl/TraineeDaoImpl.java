@@ -72,7 +72,7 @@ public class TraineeDaoImpl implements TraineeDao {
     @Override
     public Optional<Trainee> findByUsername(String username) {
         Assert.notNull(username, "Trainee username must not be null");
-        Assert.notNull(username, "Trainee username must not be empty");
+        Assert.hasText(username, "Trainee username must not be empty");
         LOGGER.info("Retrieving an optional Trainee with a username of {}", username);
         Optional<Trainee> optionalTrainee = storage.findByUsername(username);
         LOGGER.info("Successfully retrieved an optional Trainee with a username of {}, result - {}", username, optionalTrainee);

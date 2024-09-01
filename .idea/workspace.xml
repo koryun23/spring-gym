@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Finishing the implementation of the TrainingStorageImpl tests and finishing the tests for all the storages" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Fixing the log message of the update method">
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/dao/impl/TraineeDaoImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,8 +44,8 @@
         <option value="AnnotationType" />
         <option value="Enum" />
         <option value="Interface" />
-        <option value="JUnit5 Test Class" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -96,6 +99,7 @@
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="org.example.dao.impl" />
       <recent name="org.example.repository.impl" />
       <recent name="org.example.entity" />
     </key>
@@ -226,30 +230,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00044" summary="Adding intermediate interfaces that get implemented by their respective data access object classes for the Storage classes(TraineeStorage, TrainerStorage)">
-      <option name="closed" value="true" />
-      <created>1725022948662</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1725022948663</updated>
-    </task>
-    <task id="LOCAL-00045" summary="Adding TrainingStorage interface that extends Training and gets implemented by TrainingStorageImpl">
-      <option name="closed" value="true" />
-      <created>1725023082885</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1725023082885</updated>
-    </task>
-    <task id="LOCAL-00046" summary="Adding Exception classes if Trainee or Trainer is not found">
-      <option name="closed" value="true" />
-      <created>1725049646168</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1725049646168</updated>
     </task>
     <task id="LOCAL-00047" summary="Adding methods findByUsername, findById, getByUsername">
       <option name="closed" value="true" />
@@ -619,7 +599,31 @@
       <option name="project" value="LOCAL" />
       <updated>1725202602719</updated>
     </task>
-    <option name="localTasksCounter" value="93" />
+    <task id="LOCAL-00093" summary="Adding validations to the TraineeDaoImpl class">
+      <option name="closed" value="true" />
+      <created>1725208062754</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1725208062763</updated>
+    </task>
+    <task id="LOCAL-00094" summary="Changing the type of storage from class name to the interface name">
+      <option name="closed" value="true" />
+      <created>1725208287911</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1725208287911</updated>
+    </task>
+    <task id="LOCAL-00095" summary="Fixing the log message of the update method">
+      <option name="closed" value="true" />
+      <created>1725210604539</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1725210604540</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -634,9 +638,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixing a bug in Config class: using pre-declared methods for injecting beans to another beans" />
-    <MESSAGE value="Fixing a bug in TrainingServiceImpl class: Changing the logger's inspected class name from TrainerServiceImpl to TrainingServiceImpl" />
-    <MESSAGE value="Interacting with facades in the Main class to test the functionality(it works)" />
     <MESSAGE value="Committing the changes made to the .txt files as a result of interactions with facade classes in the main method" />
     <MESSAGE value="Adding assertj dependency" />
     <MESSAGE value="Creating tests for Trainee entity class" />
@@ -659,6 +660,9 @@
     <MESSAGE value="Creating a TrainingNotFoundException" />
     <MESSAGE value="Throwing an exception if the get method fails" />
     <MESSAGE value="Finishing the implementation of the TrainingStorageImpl tests and finishing the tests for all the storages" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finishing the implementation of the TrainingStorageImpl tests and finishing the tests for all the storages" />
+    <MESSAGE value="Adding validations to the TraineeDaoImpl class" />
+    <MESSAGE value="Changing the type of storage from class name to the interface name" />
+    <MESSAGE value="Fixing the log message of the update method" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing the log message of the update method" />
   </component>
 </project>
