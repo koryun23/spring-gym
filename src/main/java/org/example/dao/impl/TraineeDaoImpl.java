@@ -2,6 +2,7 @@ package org.example.dao.impl;
 
 import org.example.dao.core.TraineeDao;
 import org.example.entity.Trainee;
+import org.example.repository.core.TraineeStorage;
 import org.example.repository.impl.TraineeStorageImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +15,10 @@ public class TraineeDaoImpl implements TraineeDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TraineeDaoImpl.class);
 
-    private TraineeStorageImpl storage;
+    private TraineeStorage storage;
 
     @Autowired
-    public void setStorage(TraineeStorageImpl storage) {
+    public void setStorage(TraineeStorage storage) {
         this.storage = storage;
     }
 
