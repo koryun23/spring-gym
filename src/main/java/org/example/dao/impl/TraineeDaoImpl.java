@@ -45,7 +45,7 @@ public class TraineeDaoImpl implements TraineeDao {
         Assert.notNull(trainee, "Trainee must not be null");
         LOGGER.info("Updating a Trainee with an id of {}", trainee.getUserId());
         Trainee updatedTrainee = storage.update(trainee);
-        LOGGER.info("Successfully updated a Trainee with an id of {}, reslut - {}", trainee.getUserId(), updatedTrainee);
+        LOGGER.info("Successfully updated a Trainee with an id of {}, result - {}", trainee.getUserId(), updatedTrainee);
         return updatedTrainee;
     }
 
