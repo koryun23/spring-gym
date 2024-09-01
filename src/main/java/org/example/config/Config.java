@@ -50,11 +50,11 @@ public class Config {
     public TraineeStorage traineeStorage() {
         return new TraineeStorageImpl();
     }
-//
-//    @Bean
-//    public TrainerStorageImpl trainerStorage() {
-//        return new TrainerStorageImpl();
-//    }
+
+    @Bean
+    public TrainerStorageImpl trainerStorage() {
+        return new TrainerStorageImpl();
+    }
 
     @Bean
     public TraineeFileStorageImpl traineeFileStorage() {
