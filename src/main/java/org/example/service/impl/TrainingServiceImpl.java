@@ -7,6 +7,7 @@ import org.example.service.params.TrainingCreateParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 
 public class TrainingServiceImpl implements TrainingService {
 
@@ -17,6 +18,7 @@ public class TrainingServiceImpl implements TrainingService {
 
     @Override
     public Training create(TrainingCreateParams params) {
+        Assert.notNull(params, "TrainingCreateParams must not be null");
         LOGGER.info("Creating a Training according to the TrainingCreateParams - {}", params);
         Training training = trainingDao.save(new Training(
                 params.getTrainingId(),
@@ -33,6 +35,7 @@ public class TrainingServiceImpl implements TrainingService {
 
     @Override
     public Training select(Long id) {
+        Assert.notNull(id, "Training Id must not be null");
         LOGGER.info("Selecting a Training with an id of {}", id);
         Training training = trainingDao.get(id);
         LOGGER.info("Successfully selected a Training with an id of {}, result - {}", id, training);
