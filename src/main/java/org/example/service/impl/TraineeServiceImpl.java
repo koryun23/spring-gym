@@ -1,7 +1,9 @@
 package org.example.service.impl;
 
+import org.example.dao.core.TraineeDao;
 import org.example.dao.impl.TraineeDaoImpl;
 import org.example.entity.Trainee;
+import org.example.exception.TraineeNotFoundException;
 import org.example.service.core.TraineeService;
 import org.example.service.params.TraineeCreateParams;
 import org.example.service.params.TraineeUpdateParams;
@@ -17,7 +19,7 @@ public class TraineeServiceImpl implements TraineeService {
     private static final Logger LOGGER = LoggerFactory.getLogger(TraineeServiceImpl.class);
 
     @Autowired
-    private TraineeDaoImpl traineeDao;
+    private TraineeDao traineeDao;
 
     @Override
     public Trainee create(TraineeCreateParams params) {
@@ -60,8 +62,12 @@ public class TraineeServiceImpl implements TraineeService {
         Assert.notNull(traineeId, "Trainee id must not be null");
         LOGGER.info("Deleting a Trainee with an id of {}", traineeId);
         boolean success = traineeDao.delete(traineeId);
-        if (success) LOGGER.info("Successfully deleted a trainee with an id of {}", traineeId);
-        else LOGGER.error("Failed to delete a trainee with an id of {}", traineeId);
+        if (success) {
+            LOGGER.info("Successfully deleted a trainee with an id of {}", traineeId);
+        } else {
+            LOGGER.error("Failed to delete a trainee with an id of {}", traineeId);
+            throw new TraineeNotFoundException(traineeId);
+        }
         return success;
     }
 
