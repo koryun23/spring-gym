@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -42,10 +43,14 @@ public class TraineeFacadeImpl implements TraineeFacade {
 
     @Override
     public TraineeCreationResponseDto createTrainee(TraineeCreationRequestDto requestDto) {
-
+        Assert.notNull(requestDto, "TraineeCreationRequestDto must not be null");
         LOGGER.info("Creating a Trainee based on the TraineeCreationRequestDto - {}", requestDto);
 
         Long traineeId = idService.getId();
+
+        if(traineeService.findById(traineeId).isEmpty()) {
+            return new TraineeCreationResponseDto(List.of(String.format("A trainee with the specified id - %d, already exists")));
+        }
 
         String username = uniqueUsername(
                 requestDto.getFirstName(),
@@ -80,7 +85,12 @@ public class TraineeFacadeImpl implements TraineeFacade {
 
     @Override
     public TraineeUpdateResponseDto updateTrainee(TraineeUpdateRequestDto requestDto) {
+        Assert.notNull(requestDto, "TraineeUpdateRequestDto must not be null");
         LOGGER.info("Updating a Trainee based on the TraineeUpdateRequestDto - {}", requestDto);
+
+        if(traineeService.findByUsername(requestDto.getUsername()).isEmpty()) {
+            return new TraineeUpdateResponseDto(List.of(String.format("A user with specified username - %s, does not exist")));
+        }
 
         Trainee trainee = traineeService.update(new TraineeUpdateParams(
                 requestDto.getUserId(),
@@ -108,7 +118,17 @@ public class TraineeFacadeImpl implements TraineeFacade {
 
     @Override
     public TraineeRetrievalResponseDto retrieveTrainee(Long id) {
+        Assert.notNull(id, "Trainee id must not be null");
         LOGGER.info("Retrieving a Trainee with an id of {}", id);
+
+        if(id <= 0) {
+            return new TraineeRetrievalResponseDto(List.of(String.format("Trainee id must be positive: %d specified", id)));
+        }
+
+        if(traineeService.findById(id).isEmpty()) {
+            return new TraineeRetrievalResponseDto(List.of(String.format("A Trainee with an id - %d, does not exist", id)));
+        }
+
         Trainee trainee = traineeService.select(id);
         TraineeRetrievalResponseDto responseDto = new TraineeRetrievalResponseDto(
                 trainee.getUserId(),
@@ -126,6 +146,15 @@ public class TraineeFacadeImpl implements TraineeFacade {
 
     @Override
     public TraineeDeletionResponseDto deleteTrainee(Long id) {
+        Assert.notNull(id, "Trainee id must not be null");
+        if(id <= 0) {
+            return new TraineeDeletionResponseDto(List.of(String.format("Trainee id must be positive: %d specified", id)));
+        }
+
+        if(traineeService.findById(id).isEmpty()) {
+            return new TraineeDeletionResponseDto(List.of(String.format("A Trainee with an id - %d, does not exist", id)));
+        }
+
         LOGGER.info("Deleting a Trainee with an id of {}", id);
         boolean success = traineeService.delete(id);
         TraineeDeletionResponseDto responseDto = new TraineeDeletionResponseDto(success);

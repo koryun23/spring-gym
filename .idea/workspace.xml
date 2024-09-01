@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding validations to the TrainerDaoImpl class and creating unit tests for testing its functionality">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/TrainingDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/TrainingDaoImpl.java" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding a field of type List called errors to all the response dtos">
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -229,30 +229,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00050" summary="Implementing the findById method of TraineeDaoImpl class">
-      <option name="closed" value="true" />
-      <created>1725128409688</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1725128409689</updated>
-    </task>
-    <task id="LOCAL-00051" summary="Implementing the getByUsername, findByUsername and findById methods of TrainerDaoImpl">
-      <option name="closed" value="true" />
-      <created>1725128615421</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1725128615421</updated>
-    </task>
-    <task id="LOCAL-00052" summary="Implementing the getByUsername, findByUsername and findById methods of TraineeService">
-      <option name="closed" value="true" />
-      <created>1725129266387</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1725129266387</updated>
     </task>
     <task id="LOCAL-00053" summary="Creating a method for generating a unique username for a trainee">
       <option name="closed" value="true" />
@@ -622,7 +598,31 @@
       <option name="project" value="LOCAL" />
       <updated>1725215058212</updated>
     </task>
-    <option name="localTasksCounter" value="99" />
+    <task id="LOCAL-00099" summary="Adding validations to the training dao impl class and removing unnecessary methods from it">
+      <option name="closed" value="true" />
+      <created>1725215195737</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1725215195738</updated>
+    </task>
+    <task id="LOCAL-00100" summary="Creating tests for testing the functionality of TrainingDaoImpl class">
+      <option name="closed" value="true" />
+      <created>1725215833392</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1725215833392</updated>
+    </task>
+    <task id="LOCAL-00101" summary="Adding a field of type List called errors to all the response dtos">
+      <option name="closed" value="true" />
+      <created>1725216286739</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1725216286739</updated>
+    </task>
+    <option name="localTasksCounter" value="102" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -637,9 +637,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Creating tests for Trainer entity class" />
-    <MESSAGE value="Creating tests for Training entity class" />
-    <MESSAGE value="Adding validations in all the methods of TraineeStorageImpl class" />
     <MESSAGE value="Adding testing methods to the TraineeStorageImplTest class, need to fix the bugs" />
     <MESSAGE value="Adding equals and hashcode method to User class" />
     <MESSAGE value="Editing hashCode method of Trainee" />
@@ -662,6 +659,9 @@
     <MESSAGE value="Creating tests for the TraineeDaoImpl class" />
     <MESSAGE value="Bug fix: changing Assert.notNull() to Assert.hasText" />
     <MESSAGE value="Adding validations to the TrainerDaoImpl class and creating unit tests for testing its functionality" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding validations to the TrainerDaoImpl class and creating unit tests for testing its functionality" />
+    <MESSAGE value="Adding validations to the training dao impl class and removing unnecessary methods from it" />
+    <MESSAGE value="Creating tests for testing the functionality of TrainingDaoImpl class" />
+    <MESSAGE value="Adding a field of type List called errors to all the response dtos" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding a field of type List called errors to all the response dtos" />
   </component>
 </project>
