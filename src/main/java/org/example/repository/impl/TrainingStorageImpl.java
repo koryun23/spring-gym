@@ -3,6 +3,7 @@ package org.example.repository.impl;
 import jakarta.annotation.PostConstruct;
 import org.example.entity.Training;
 import org.example.entity.TrainingType;
+import org.example.exception.TrainingNotFoundException;
 import org.example.helper.DateConverter;
 import org.example.repository.core.FileStorage;
 import org.example.repository.core.TrainingStorage;
@@ -39,6 +40,7 @@ public class TrainingStorageImpl implements TrainingStorage {
         LOGGER.info("Retrieving a Training with an id of {}", id);
         Training training = inMemoryStorage.get(id);
         LOGGER.info("Successfully retrieved a Training with an id of {}, result - {}", id, training);
+        if(training == null) throw new TrainingNotFoundException(id);
         return training;
     }
 
