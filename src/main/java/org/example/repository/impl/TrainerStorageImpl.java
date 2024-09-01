@@ -25,19 +25,21 @@ public class TrainerStorageImpl implements TrainerStorage {
 
     private FileStorage<Trainer> trainerFileStorage;
 
-//    public TrainerStorageImpl(Map<Long, Trainer> inMemoryStorage) {
-//        Assert.notNull(inMemoryStorage, "In-memory storage must not be null");
-//        this.inMemoryStorage = inMemoryStorage;
-//    }
-//
-//    public TrainerStorageImpl() {
-//        this.inMemoryStorage = new HashMap<>();
-//    }
+    public TrainerStorageImpl(Map<Long, Trainer> inMemoryStorage) {
+        Assert.notNull(inMemoryStorage, "In-memory storage must not be null");
+        this.inMemoryStorage = inMemoryStorage;
+    }
+
+    public TrainerStorageImpl() {
+        this.inMemoryStorage = new HashMap<>();
+    }
 
     @Override
     public Trainer get(Long id) {
         LOGGER.info("Retrieving a Trainer with an id of {} from the in-memory storage", id);
+        Assert.notNull(id, "Trainer id must not be null");
         Trainer trainer = inMemoryStorage.get(id);
+        if(trainer == null) throw new TrainerNotFoundException(id);
         LOGGER.info("Successfully retrieved a Trainer with an id of {}, result - {}", id, trainer);
         return trainer;
     }
@@ -45,6 +47,7 @@ public class TrainerStorageImpl implements TrainerStorage {
     @Override
     public Trainer add(Trainer trainer) {
         LOGGER.info("Adding {} to the in-memory storage", trainer);
+        Assert.notNull(trainer, "Trainer must not be null");
         Trainer addedTrainer = inMemoryStorage.put(trainer.getUserId(), trainer);
         LOGGER.info("Successfully added {} to the in-memory storage", addedTrainer);
         trainerFileStorage.persist(inMemoryStorage);
@@ -53,6 +56,7 @@ public class TrainerStorageImpl implements TrainerStorage {
 
     @Override
     public boolean remove(Long id) {
+        Assert.notNull(id, "Trainer id must not be null");
         LOGGER.info("Removing a Trainer with an id of {} from the in-memory storage", id);
         Trainer removedTrainer = inMemoryStorage.remove(id);
         LOGGER.info("Successfully removed {} from the in-memory storage", removedTrainer);
@@ -62,6 +66,7 @@ public class TrainerStorageImpl implements TrainerStorage {
 
     @Override
     public Trainer update(Trainer trainer) {
+        Assert.notNull(trainer, "Trainer must not be null");
         LOGGER.info("Updating a Trainer with an id of {}", trainer.getUserId());
         Trainer updatedTrainer = inMemoryStorage.put(trainer.getUserId(), trainer);
         LOGGER.info("Successfully updated a Trainer with an id of {}, final result - {}", trainer.getUserId(), updatedTrainer);
@@ -71,6 +76,8 @@ public class TrainerStorageImpl implements TrainerStorage {
 
     @Override
     public Trainer getByUsername(String username) {
+        Assert.notNull(username, "Trainer username must not be null");
+        Assert.hasText(username, "Trainer username must not be empty");
         LOGGER.info("Retrieving a Trainer with a username of {}", username);
         for(Map.Entry<Long, Trainer> pair : inMemoryStorage.entrySet()) {
             Trainer trainer = pair.getValue();
@@ -85,6 +92,8 @@ public class TrainerStorageImpl implements TrainerStorage {
 
     @Override
     public Optional<Trainer> findByUsername(String username) {
+        Assert.notNull(username, "Trainer username must not be null");
+        Assert.hasText(username, "Trainer username must not be empty");
         LOGGER.info("Retrieving an optional Trainer with a username of {}", username);
         for(Map.Entry<Long, Trainer> pair : inMemoryStorage.entrySet()) {
             Trainer trainer = pair.getValue();
@@ -101,6 +110,7 @@ public class TrainerStorageImpl implements TrainerStorage {
 
     @Override
     public Optional<Trainer> findById(Long id) {
+        Assert.notNull(id, "Trainer id must not be null");
         LOGGER.info("Retrieving an optional Trainer with an id of {}", id);
         Optional<Trainer> optionalTrainer = Optional.of(inMemoryStorage.get(id));
         LOGGER.info("Successfully retrieved an optional Trainer with an id of {}, result - {}", id, optionalTrainer);
