@@ -9,6 +9,7 @@ import org.example.repository.core.TrainingStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 
 import java.io.*;
 import java.util.Date;
@@ -34,6 +35,7 @@ public class TrainingStorageImpl implements TrainingStorage {
 
     @Override
     public Training get(Long id) {
+        Assert.notNull(id, "Training id must not be null");
         LOGGER.info("Retrieving a Training with an id of {}", id);
         Training training = inMemoryStorage.get(id);
         LOGGER.info("Successfully retrieved a Training with an id of {}, result - {}", id, training);
@@ -42,6 +44,7 @@ public class TrainingStorageImpl implements TrainingStorage {
 
     @Override
     public Training add(Training training) {
+        Assert.notNull(training, "Training must not be null");
         LOGGER.info("Adding a Training with an id of {} to the in-memory storage", training.getTrainingId());
         Training addedTraining = inMemoryStorage.put(training.getTrainingId(), training);
         LOGGER.info("Successfully added {} to the in-memory storage", addedTraining);
@@ -51,6 +54,7 @@ public class TrainingStorageImpl implements TrainingStorage {
 
     @Override
     public boolean remove(Long id) {
+        Assert.notNull(id, "Training id must not be null");
         LOGGER.info("Removing a Training with an id of {} from the in-memory storage", id);
         Training removedTraining = inMemoryStorage.remove(id);
         LOGGER.info("Successfully removed {} from the in-memory storage", removedTraining);
@@ -60,6 +64,7 @@ public class TrainingStorageImpl implements TrainingStorage {
 
     @Override
     public Training update(Training training) {
+        Assert.notNull(training, "Training id must noe be null");
         LOGGER.info("Updating a Training with an id of {}", training.getTrainingId());
         Training updatedTraining = inMemoryStorage.put(training.getTrainingId(), training);
         LOGGER.info("Successfully updated a Training with an id of {}, result - {}", training.getTrainingId(), updatedTraining);
