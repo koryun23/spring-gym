@@ -2,6 +2,7 @@ package org.example.dto.response;
 
 import org.example.entity.SpecializationType;
 
+import java.util.List;
 import java.util.Objects;
 
 public class TrainerUpdateResponseDto {
@@ -13,6 +14,8 @@ public class TrainerUpdateResponseDto {
     private String password;
     private boolean isActive;
     private SpecializationType specializationType;
+
+    private List<String> errors;
 
     public TrainerUpdateResponseDto() {
     }
@@ -31,6 +34,10 @@ public class TrainerUpdateResponseDto {
         this.password = password;
         this.isActive = isActive;
         this.specializationType = specializationType;
+    }
+
+    public TrainerUpdateResponseDto(List<String> errors) {
+        this.errors = errors;
     }
 
     public Long getUserId() {
@@ -89,22 +96,30 @@ public class TrainerUpdateResponseDto {
         this.specializationType = specializationType;
     }
 
+    public List<String> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(List<String> errors) {
+        this.errors = errors;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TrainerUpdateResponseDto that = (TrainerUpdateResponseDto) o;
-        return isActive == that.isActive && Objects.equals(userId, that.userId) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && specializationType == that.specializationType;
+        return isActive == that.isActive && Objects.equals(userId, that.userId) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && specializationType == that.specializationType && Objects.equals(errors, that.errors);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, firstName, lastName, username, password, isActive, specializationType);
+        return Objects.hash(userId, firstName, lastName, username, password, isActive, specializationType, errors);
     }
 
     @Override
     public String toString() {
-        return "TrainerCreationRequestDto{" +
+        return "TrainerUpdateResponseDto{" +
                 "userId=" + userId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
@@ -112,6 +127,7 @@ public class TrainerUpdateResponseDto {
                 ", password='" + password + '\'' +
                 ", isActive=" + isActive +
                 ", specializationType=" + specializationType +
+                ", errors=" + errors +
                 '}';
     }
 }

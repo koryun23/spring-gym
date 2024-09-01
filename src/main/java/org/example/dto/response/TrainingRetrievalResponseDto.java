@@ -4,6 +4,7 @@ import org.example.entity.Training;
 import org.example.entity.TrainingType;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class TrainingRetrievalResponseDto {
@@ -16,6 +17,8 @@ public class TrainingRetrievalResponseDto {
     private Date trainingDate;
     private Long duration;
 
+    private List<String> errors;
+
     public TrainingRetrievalResponseDto(Long trainingId, Long traineeId, Long trainerId, String name, TrainingType trainingType, Date trainingDate, Long duration) {
         this.trainingId = trainingId;
         this.traineeId = traineeId;
@@ -24,6 +27,10 @@ public class TrainingRetrievalResponseDto {
         this.trainingType = trainingType;
         this.trainingDate = trainingDate;
         this.duration = duration;
+    }
+
+    public TrainingRetrievalResponseDto(List<String> errors) {
+        this.errors = errors;
     }
 
     public Long getTraineeId() {
@@ -82,22 +89,30 @@ public class TrainingRetrievalResponseDto {
         this.trainingId = trainingId;
     }
 
+    public List<String> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(List<String> errors) {
+        this.errors = errors;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TrainingRetrievalResponseDto training = (TrainingRetrievalResponseDto) o;
-        return Objects.equals(trainingId, training.trainingId) && Objects.equals(traineeId, training.traineeId) && Objects.equals(trainerId, training.trainerId) && Objects.equals(name, training.name) && trainingType == training.trainingType && Objects.equals(trainingDate, training.trainingDate) && Objects.equals(duration, training.duration);
+        TrainingRetrievalResponseDto that = (TrainingRetrievalResponseDto) o;
+        return Objects.equals(trainingId, that.trainingId) && Objects.equals(traineeId, that.traineeId) && Objects.equals(trainerId, that.trainerId) && Objects.equals(name, that.name) && trainingType == that.trainingType && Objects.equals(trainingDate, that.trainingDate) && Objects.equals(duration, that.duration) && Objects.equals(errors, that.errors);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(trainingId, traineeId, trainerId, name, trainingType, trainingDate, duration);
+        return Objects.hash(trainingId, traineeId, trainerId, name, trainingType, trainingDate, duration, errors);
     }
 
     @Override
     public String toString() {
-        return "Training{" +
+        return "TrainingRetrievalResponseDto{" +
                 "trainingId=" + trainingId +
                 ", traineeId=" + traineeId +
                 ", trainerId=" + trainerId +
@@ -105,6 +120,7 @@ public class TrainingRetrievalResponseDto {
                 ", trainingType=" + trainingType +
                 ", trainingDate=" + trainingDate +
                 ", duration=" + duration +
+                ", errors=" + errors +
                 '}';
     }
 }

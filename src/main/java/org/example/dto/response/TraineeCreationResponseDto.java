@@ -1,6 +1,7 @@
 package org.example.dto.response;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class TraineeCreationResponseDto {
@@ -13,6 +14,8 @@ public class TraineeCreationResponseDto {
     private boolean isActive;
     private Date dateOfBirth;
     private String address;
+
+    private List<String> errors;
 
     public TraineeCreationResponseDto(Long userId,
                       String firstName,
@@ -30,6 +33,10 @@ public class TraineeCreationResponseDto {
         this.isActive = isActive;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
+    }
+
+    public TraineeCreationResponseDto(List<String> errors) {
+        this.errors = errors;
     }
 
     public TraineeCreationResponseDto() {
@@ -99,22 +106,30 @@ public class TraineeCreationResponseDto {
         this.address = address;
     }
 
+    public List<String> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(List<String> errors) {
+        this.errors = errors;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TraineeCreationResponseDto that = (TraineeCreationResponseDto) o;
-        return isActive == that.isActive && Objects.equals(userId, that.userId) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(dateOfBirth, that.dateOfBirth) && Objects.equals(address, that.address);
+        return isActive == that.isActive && Objects.equals(userId, that.userId) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(dateOfBirth, that.dateOfBirth) && Objects.equals(address, that.address) && Objects.equals(errors, that.errors);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, firstName, lastName, username, password, isActive, dateOfBirth, address);
+        return Objects.hash(userId, firstName, lastName, username, password, isActive, dateOfBirth, address, errors);
     }
 
     @Override
     public String toString() {
-        return "TraineeDto{" +
+        return "TraineeCreationResponseDto{" +
                 "userId=" + userId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
@@ -123,6 +138,7 @@ public class TraineeCreationResponseDto {
                 ", isActive=" + isActive +
                 ", dateOfBirth=" + dateOfBirth +
                 ", address='" + address + '\'' +
+                ", errors=" + errors +
                 '}';
     }
 
