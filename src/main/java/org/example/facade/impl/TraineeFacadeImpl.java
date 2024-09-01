@@ -56,7 +56,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
         Long traineeId = idService.getId();
 
         if(!traineeService.findById(traineeId).isEmpty()) {
-            return new TraineeCreationResponseDto(List.of(String.format("A trainee with the specified id - %d, already exists")));
+            return new TraineeCreationResponseDto(List.of(String.format("A trainee with the specified id - %d, already exists", traineeId)));
         }
 
         String username = usernamePasswordService.username(
