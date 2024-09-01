@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Bug fix: changing Assert.notNull() to Assert.hasText">
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/dao/impl/TrainerDaoImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/TrainerDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/TrainerDaoImpl.java" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding validations to the TrainerDaoImpl class and creating unit tests for testing its functionality">
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/TrainingDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/TrainingDaoImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -231,14 +229,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00049" summary="Implementing the getByUsername, findByUsername, findById methods">
-      <option name="closed" value="true" />
-      <created>1725050983272</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1725050983273</updated>
     </task>
     <task id="LOCAL-00050" summary="Implementing the findById method of TraineeDaoImpl class">
       <option name="closed" value="true" />
@@ -624,7 +614,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725212057075</updated>
     </task>
-    <option name="localTasksCounter" value="98" />
+    <task id="LOCAL-00098" summary="Adding validations to the TrainerDaoImpl class and creating unit tests for testing its functionality">
+      <option name="closed" value="true" />
+      <created>1725215058209</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1725215058212</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -639,7 +637,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Creating tests for Trainee entity class" />
     <MESSAGE value="Creating tests for Trainer entity class" />
     <MESSAGE value="Creating tests for Training entity class" />
     <MESSAGE value="Adding validations in all the methods of TraineeStorageImpl class" />
@@ -664,6 +661,7 @@
     <MESSAGE value="Fixing the log message of the update method" />
     <MESSAGE value="Creating tests for the TraineeDaoImpl class" />
     <MESSAGE value="Bug fix: changing Assert.notNull() to Assert.hasText" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug fix: changing Assert.notNull() to Assert.hasText" />
+    <MESSAGE value="Adding validations to the TrainerDaoImpl class and creating unit tests for testing its functionality" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding validations to the TrainerDaoImpl class and creating unit tests for testing its functionality" />
   </component>
 </project>
