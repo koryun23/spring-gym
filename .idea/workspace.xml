@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding validations to the TrainerFacadeImpl class" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding validations to the TrainingFacadeImpl and TrainingServiceImpl classes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -227,14 +227,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00055" summary="Creating method for generating a method for generating a unique username for Trainer and fixing the logic in the same method for TraineeFacadeImpl">
-      <option name="closed" value="true" />
-      <created>1725131095413</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1725131095414</updated>
     </task>
     <task id="LOCAL-00056" summary="Creating a method for generating a random password with length 10 for both TraineeFacade and TrainerFacade">
       <option name="closed" value="true" />
@@ -620,7 +612,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725218423673</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="Adding validations to the TrainingFacadeImpl and TrainingServiceImpl classes">
+      <option name="closed" value="true" />
+      <created>1725218804180</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1725218804180</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -635,7 +635,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Editing hashCode method of Trainee" />
     <MESSAGE value="Implementing the tests for TraineeStorageImpl class" />
     <MESSAGE value="Creating a separate class TraineeFileStorageImpl which handles the file interactions and is injected into TraineeStorageImpl which only handles the in-memory interactions" />
     <MESSAGE value="Removing the traineeStorage bean from the comments and changing its return type to TraineeStorage instead of TraineeStorageImpl" />
@@ -660,6 +659,7 @@
     <MESSAGE value="Adding a field of type List called errors to all the response dtos" />
     <MESSAGE value="Adding validations to the TraineeFacadeImpl class" />
     <MESSAGE value="Adding validations to the TrainerFacadeImpl class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding validations to the TrainerFacadeImpl class" />
+    <MESSAGE value="Adding validations to the TrainingFacadeImpl and TrainingServiceImpl classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding validations to the TrainingFacadeImpl and TrainingServiceImpl classes" />
   </component>
 </project>

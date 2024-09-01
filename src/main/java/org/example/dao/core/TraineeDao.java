@@ -9,6 +9,4 @@ public interface TraineeDao extends Dao<Trainee> {
     Trainee getByUsername(String username);
 
     Optional<Trainee> findByUsername(String username);
-
-    Optional<Trainee> findById(Long id);
 }

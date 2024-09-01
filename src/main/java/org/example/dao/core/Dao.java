@@ -1,5 +1,7 @@
 package org.example.dao.core;
 
+import java.util.Optional;
+
 public interface Dao<T> {
 
     T get(Long id);
@@ -9,4 +11,6 @@ public interface Dao<T> {
     T update(T t);
 
     boolean delete(Long id);
+
+    Optional<T> findById(Long id);
 }

@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
 import java.io.*;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class TrainingStorageImpl implements TrainingStorage {
 
@@ -72,6 +69,15 @@ public class TrainingStorageImpl implements TrainingStorage {
         LOGGER.info("Successfully updated a Training with an id of {}, result - {}", training.getTrainingId(), updatedTraining);
         trainingFileStorage.persist(inMemoryStorage);
         return training;
+    }
+
+    @Override
+    public Optional<Training> findById(Long id) {
+        Assert.notNull(id, "Training id must not be null");
+        LOGGER.info("Retrieving an optional Training with an id of {}", id);
+        Optional<Training> optionalTraining = Optional.ofNullable(inMemoryStorage.get(id));
+        LOGGER.info("Successfully retrieved an optional Training with an id of {}", id);
+        return optionalTraining;
     }
 
     @Autowired

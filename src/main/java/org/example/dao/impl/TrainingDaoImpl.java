@@ -57,4 +57,13 @@ public class TrainingDaoImpl implements TrainingDao {
         else LOGGER.error("Failed to delete a Training with an id of {}", id);
         return success;
     }
+
+    @Override
+    public Optional<Training> findById(Long id) {
+        Assert.notNull(id, "Training id must not be null");
+        LOGGER.info("Retrieving an optional Training with an id of {}", id);
+        Optional<Training> optionalTraining = storage.findById(id);
+        LOGGER.info("Successfully retrieved an optional Training with an id of {}, result - {}", id, optionalTraining);
+        return optionalTraining;
+    }
 }

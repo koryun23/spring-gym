@@ -87,6 +87,10 @@ public class TrainingFacadeImpl implements TrainingFacade {
             return new TrainingRetrievalResponseDto(List.of(String.format("Training id must be positive: %d specified", trainingId)));
         }
 
+        if(trainingService.findById(trainingId).isEmpty()) {
+            return new TrainingRetrievalResponseDto(List.of(String.format("Training with a specified id of %d does not exist", trainingId)));
+        }
+
         Training training = trainingService.select(trainingId);
         TrainingRetrievalResponseDto responseDto = new TrainingRetrievalResponseDto(
                 training.getTrainingId(),
@@ -99,7 +103,6 @@ public class TrainingFacadeImpl implements TrainingFacade {
         );
 
         LOGGER.info("Successfully retrieved a Training with an id of {}, response - {}", trainingId, responseDto);
-
         return responseDto;
     }
 }
