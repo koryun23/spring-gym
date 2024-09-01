@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding assertions to the TrainingStorageImpl">
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/repository/impl/TrainingStorageImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Finishing the implementation of the TrainingStorageImpl tests and finishing the tests for all the storages" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -44,8 +41,8 @@
         <option value="AnnotationType" />
         <option value="Enum" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -229,30 +226,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00041" summary="Removing the annotations from the classes which make those beans and setting the bean configuration in the Config class. Injecting the Services to the Facades using constructor instead of autowiring">
-      <option name="closed" value="true" />
-      <created>1724961961734</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1724961961735</updated>
-    </task>
-    <task id="LOCAL-00042" summary="Using setter-based injections for injecting the DateConverter bean to the storages and for injecting the storages to the DAO classes">
-      <option name="closed" value="true" />
-      <created>1724962200692</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1724962200693</updated>
-    </task>
-    <task id="LOCAL-00043" summary="Adding intermediate interfaces that get implemented by their respective data access object classes">
-      <option name="closed" value="true" />
-      <created>1725022546261</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1725022546261</updated>
     </task>
     <task id="LOCAL-00044" summary="Adding intermediate interfaces that get implemented by their respective data access object classes for the Storage classes(TraineeStorage, TrainerStorage)">
       <option name="closed" value="true" />
@@ -622,7 +595,31 @@
       <option name="project" value="LOCAL" />
       <updated>1725201821969</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="Creating a TrainingNotFoundException">
+      <option name="closed" value="true" />
+      <created>1725202423836</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1725202423836</updated>
+    </task>
+    <task id="LOCAL-00091" summary="Throwing an exception if the get method fails">
+      <option name="closed" value="true" />
+      <created>1725202568487</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1725202568487</updated>
+    </task>
+    <task id="LOCAL-00092" summary="Finishing the implementation of the TrainingStorageImpl tests and finishing the tests for all the storages">
+      <option name="closed" value="true" />
+      <created>1725202602719</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1725202602719</updated>
+    </task>
+    <option name="localTasksCounter" value="93" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -637,9 +634,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Changing the scope of IdService to property" />
-    <MESSAGE value="Changing the return value of save method to the reference passed as argument" />
-    <MESSAGE value="Removing trainingId from the fields of TrainingCreationRequestDto" />
     <MESSAGE value="Fixing a bug in Config class: using pre-declared methods for injecting beans to another beans" />
     <MESSAGE value="Fixing a bug in TrainingServiceImpl class: Changing the logger's inspected class name from TrainerServiceImpl to TrainingServiceImpl" />
     <MESSAGE value="Interacting with facades in the Main class to test the functionality(it works)" />
@@ -662,6 +656,9 @@
     <MESSAGE value="Implementing Unit tests for the TrainerStorageImpl" />
     <MESSAGE value="Changing the logic of hashCode method in Trainer entity class" />
     <MESSAGE value="Adding assertions to the TrainingStorageImpl" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding assertions to the TrainingStorageImpl" />
+    <MESSAGE value="Creating a TrainingNotFoundException" />
+    <MESSAGE value="Throwing an exception if the get method fails" />
+    <MESSAGE value="Finishing the implementation of the TrainingStorageImpl tests and finishing the tests for all the storages" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finishing the implementation of the TrainingStorageImpl tests and finishing the tests for all the storages" />
   </component>
 </project>
