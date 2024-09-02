@@ -5,6 +5,7 @@ import org.example.entity.Training;
 import org.example.entity.TrainingType;
 import org.example.helper.DateConverter;
 import org.example.repository.core.FileStorage;
+import org.example.service.core.DatabasePathService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +18,18 @@ import java.util.Scanner;
 
 public class TrainingFileStorageImpl implements FileStorage<Training> {
 
-    private static final String PATH = "C:\\Users\\Koryun\\Desktop\\Koryun\\gym-spring\\src\\main\\java\\org\\example\\repository\\core\\training.txt";
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainingFileStorageImpl.class);
 
     private DateConverter dateConverter;
+    private DatabasePathService databasePathService;
+
+    private String trainingPath;
 
     @Override
     public Map<Long, Training> parseMemoryFile() {
         Scanner scanner;
         try {
-            scanner = new Scanner(new File(PATH));
+            scanner = new Scanner(new File(trainingPath));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -59,7 +62,7 @@ public class TrainingFileStorageImpl implements FileStorage<Training> {
     public void persist(Map<Long, Training> inMemoryStorage) {
         BufferedWriter writer;
         try {
-            writer = new BufferedWriter(new FileWriter(PATH));
+            writer = new BufferedWriter(new FileWriter(trainingPath));
             for (Map.Entry<Long, Training> entry : inMemoryStorage.entrySet()) {
                 Training currentTraining = entry.getValue();
                 LOGGER.info("Persisting {} to the .txt file", currentTraining);
@@ -89,9 +92,14 @@ public class TrainingFileStorageImpl implements FileStorage<Training> {
         this.dateConverter = dateConverter;
     }
 
+    @Autowired
+    public void setDatabasePathService(DatabasePathService databasePathService) {
+        this.databasePathService = databasePathService;
+    }
+
     @PostConstruct
     public void init() {
-        parseMemoryFile();
+        trainingPath = databasePathService.getTrainingPath();
     }
 
     private Long getTrainingIdFromArray(String[] array) {

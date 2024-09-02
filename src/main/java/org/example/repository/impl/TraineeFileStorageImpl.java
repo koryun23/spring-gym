@@ -4,9 +4,12 @@ import jakarta.annotation.PostConstruct;
 import org.example.entity.Trainee;
 import org.example.helper.DateConverter;
 import org.example.repository.core.FileStorage;
+import org.example.service.core.DatabasePathService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -20,15 +23,17 @@ import java.util.Scanner;
 public class TraineeFileStorageImpl implements FileStorage<Trainee> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TraineeFileStorageImpl.class);
-    private static final String PATH = "C:\\Users\\Koryun\\Desktop\\Koryun\\gym-spring\\src\\main\\java\\org\\example\\repository\\core\\trainee.txt";
 
     private DateConverter dateConverter;
+    private DatabasePathService databasePathService;
+
+    private String traineePath;
 
     @Override
     public void persist(Map<Long, Trainee> inMemoryStorage) {
         BufferedWriter writer;
         try {
-            writer = new BufferedWriter(new FileWriter(PATH));
+            writer = new BufferedWriter(new FileWriter(traineePath));
             for (Map.Entry<Long, Trainee> entry : inMemoryStorage.entrySet()) {
                 Trainee currentTrainee = entry.getValue();
                 LOGGER.info("Persisting {} to the .txt file", currentTrainee);
@@ -57,7 +62,7 @@ public class TraineeFileStorageImpl implements FileStorage<Trainee> {
     public Map<Long, Trainee> parseMemoryFile() {
         Scanner scanner;
         try {
-            scanner = new Scanner(new File(PATH));
+            scanner = new Scanner(new File(traineePath));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -122,5 +127,15 @@ public class TraineeFileStorageImpl implements FileStorage<Trainee> {
     @Autowired
     public void setDateConverter(DateConverter dateConverter) {
         this.dateConverter = dateConverter;
+    }
+
+    @Autowired
+    public void setDatabasePathService(DatabasePathService databasePathService) {
+        this.databasePathService = databasePathService;
+    }
+
+    @PostConstruct
+    public void init() {
+        traineePath = databasePathService.getTraineePath();
     }
 }

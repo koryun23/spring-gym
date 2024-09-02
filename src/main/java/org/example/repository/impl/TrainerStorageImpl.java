@@ -112,7 +112,7 @@ public class TrainerStorageImpl implements TrainerStorage {
     public Optional<Trainer> findById(Long id) {
         Assert.notNull(id, "Trainer id must not be null");
         LOGGER.info("Retrieving an optional Trainer with an id of {}", id);
-        Optional<Trainer> optionalTrainer = Optional.of(inMemoryStorage.get(id));
+        Optional<Trainer> optionalTrainer = Optional.ofNullable(inMemoryStorage.get(id));
         LOGGER.info("Successfully retrieved an optional Trainer with an id of {}, result - {}", id, optionalTrainer);
         return optionalTrainer;
     }

@@ -113,7 +113,7 @@ public class TraineeStorageImpl implements TraineeStorage {
         Assert.notNull(id, "Trainee id must not be null");
 
         Trainee trainee = inMemoryStorage.get(id);
-        Optional<Trainee> optionalTrainee = Optional.of(trainee);
+        Optional<Trainee> optionalTrainee = Optional.ofNullable(trainee);
         LOGGER.info("Successfully retrieved an optional of a Trainee with an id of {}, result - {}", id, optionalTrainee);
         return optionalTrainee;
     }

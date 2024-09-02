@@ -4,8 +4,11 @@ import jakarta.annotation.PostConstruct;
 import org.example.entity.SpecializationType;
 import org.example.entity.Trainer;
 import org.example.repository.core.FileStorage;
+import org.example.service.core.DatabasePathService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.*;
 import java.util.HashMap;
@@ -15,13 +18,16 @@ import java.util.Scanner;
 public class TrainerFileStorageImpl implements FileStorage<Trainer> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainerFileStorageImpl.class);
-    private static final String PATH = "C:\\Users\\Koryun\\Desktop\\Koryun\\gym-spring\\src\\main\\java\\org\\example\\repository\\core\\trainer.txt";
+
+    private DatabasePathService databasePathService;
+
+    private String trainerPath;
 
     @Override
     public Map<Long, Trainer> parseMemoryFile() {
         Scanner scanner;
         try {
-            scanner = new Scanner(new File(PATH));
+            scanner = new Scanner(new File(trainerPath));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -55,7 +61,7 @@ public class TrainerFileStorageImpl implements FileStorage<Trainer> {
     public void persist(Map<Long, Trainer> inMemoryStorage) {
         BufferedWriter writer;
         try {
-            writer = new BufferedWriter(new FileWriter(PATH));
+            writer = new BufferedWriter(new FileWriter(trainerPath));
             for (Map.Entry<Long, Trainer> entry : inMemoryStorage.entrySet()) {
                 Trainer currentTrainer = entry.getValue();
                 LOGGER.info("Persisting {} to the .txt file", currentTrainer);
@@ -105,5 +111,15 @@ public class TrainerFileStorageImpl implements FileStorage<Trainer> {
 
     private SpecializationType getSpecializationFromArray(String[] array) {
         return SpecializationType.valueOf(array[6]);
+    }
+
+    @Autowired
+    public void setDatabasePathService(DatabasePathService databasePathService) {
+        this.databasePathService = databasePathService;
+    }
+
+    @PostConstruct
+    public void init() {
+        trainerPath = databasePathService.getTrainerPath();
     }
 }

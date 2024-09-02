@@ -23,18 +23,22 @@ import org.example.repository.core.TrainingStorage;
 import org.example.repository.impl.*;
 import org.example.service.core.*;
 import org.example.service.impl.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 
 import java.text.SimpleDateFormat;
 
+@PropertySource("classpath:application.properties")
 @Configuration
 public class Config {
 
-    private static final String TRAINEE_ID_PATH = "C:\\Users\\Koryun\\Desktop\\Koryun\\gym-spring\\src\\main\\java\\org\\example\\service\\core\\trainee-id.txt";
-    private static final String TRAINER_ID_PATH = "C:\\Users\\Koryun\\Desktop\\Koryun\\gym-spring\\src\\main\\java\\org\\example\\service\\core\\trainer-id.txt";
-    private static final String TRAINING_ID_PATH = "C:\\Users\\Koryun\\Desktop\\Koryun\\gym-spring\\src\\main\\java\\org\\example\\service\\core\\training-id.txt";
+    @Bean
+    public DatabasePathService databasePathService() {
+        return new DatabasePathServiceImpl();
+    }
 
     @Bean
     public DateConverter dateConverter() {
@@ -103,17 +107,17 @@ public class Config {
 
     @Bean
     public TraineeFacade traineeFacade() {
-        return new TraineeFacadeImpl(traineeService(), trainerService(), idService(TRAINEE_ID_PATH), usernamePasswordService());
+        return new TraineeFacadeImpl(traineeService(), trainerService(), idService(databasePathService().getTraineeIdPath()), usernamePasswordService());
     }
 
     @Bean
     public TrainerFacade trainerFacade() {
-        return new TrainerFacadeImpl(trainerService(), traineeService(), idService(TRAINER_ID_PATH), usernamePasswordService());
+        return new TrainerFacadeImpl(trainerService(), traineeService(), idService(databasePathService().getTrainerIdPath()), usernamePasswordService());
     }
 
     @Bean
     public TrainingFacade trainingFacade() {
-        return new TrainingFacadeImpl(trainingService(), idService(TRAINING_ID_PATH), traineeService(), trainerService());
+        return new TrainingFacadeImpl(trainingService(), idService(databasePathService().getTrainingIdPath()), traineeService(), trainerService());
     }
 
     @Bean
