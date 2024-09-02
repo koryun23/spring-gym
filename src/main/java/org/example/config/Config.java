@@ -23,7 +23,6 @@ import org.example.repository.core.TrainingStorage;
 import org.example.repository.impl.*;
 import org.example.service.core.*;
 import org.example.service.impl.*;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -107,12 +106,12 @@ public class Config {
 
     @Bean
     public TraineeFacade traineeFacade() {
-        return new TraineeFacadeImpl(traineeService(), trainerService(), idService(databasePathService().getTraineeIdPath()), usernamePasswordService());
+        return new TraineeFacadeImpl(traineeService(), trainerService(), idService(databasePathService().getTraineeIdPath()), traineeUsernamePasswordService());
     }
 
     @Bean
     public TrainerFacade trainerFacade() {
-        return new TrainerFacadeImpl(trainerService(), traineeService(), idService(databasePathService().getTrainerIdPath()), usernamePasswordService());
+        return new TrainerFacadeImpl(trainerService(), traineeService(), idService(databasePathService().getTrainerIdPath()), trainerUsernamePasswordService());
     }
 
     @Bean
@@ -127,7 +126,14 @@ public class Config {
     }
 
     @Bean
-    public UsernamePasswordService usernamePasswordService() {
-        return new UsernamePasswordServiceImpl(traineeService(), trainerService());
+    @Scope("prototype")
+    public UsernamePasswordService traineeUsernamePasswordService() {
+        return new TraineeUsernamePasswordServiceImpl(traineeService(), trainerService());
+    }
+
+    @Bean
+    @Scope("prototype")
+    public UsernamePasswordService trainerUsernamePasswordService() {
+        return new TrainerUsernamePasswordServiceImpl(traineeService(), trainerService());
     }
 }

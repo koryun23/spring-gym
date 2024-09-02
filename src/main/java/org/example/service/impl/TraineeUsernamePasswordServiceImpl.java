@@ -10,12 +10,12 @@ import org.springframework.util.Assert;
 import java.util.Optional;
 import java.util.UUID;
 
-public class UsernamePasswordServiceImpl implements UsernamePasswordService {
+public class TraineeUsernamePasswordServiceImpl implements UsernamePasswordService {
 
     private final TraineeService traineeService;
     private final TrainerService trainerService;
 
-    public UsernamePasswordServiceImpl(TraineeService traineeService, TrainerService trainerService) {
+    public TraineeUsernamePasswordServiceImpl(TraineeService traineeService, TrainerService trainerService) {
         Assert.notNull(traineeService, "Trainee Service must not be null");
         Assert.notNull(trainerService, "Trainer Service must not be null");
         this.traineeService = traineeService;
