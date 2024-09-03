@@ -126,13 +126,11 @@ public class Config {
     }
 
     @Bean
-    @Scope("prototype")
     public UsernamePasswordService traineeUsernamePasswordService() {
         return new TraineeUsernamePasswordServiceImpl(traineeService(), trainerService());
     }
 
     @Bean
-    @Scope("prototype")
     public UsernamePasswordService trainerUsernamePasswordService() {
         return new TrainerUsernamePasswordServiceImpl(traineeService(), trainerService());
     }
