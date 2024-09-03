@@ -4,16 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Moving all the .txt files to the resources folder and accessing paths to them using a separate bean called DatabasePathService">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Moving the .txt files to the source of the project and accessing them with a relative path">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/data/trainee-id.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/trainee-id.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/data/trainee.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/trainee.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/data/trainer-id.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/trainer-id.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/data/trainer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/trainer.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/data/training-id.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/training-id.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/data/training.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/training.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/trainee-id.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/trainee-id.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/trainee.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/trainee.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/trainer-id.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/trainer-id.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/trainer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/trainer.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/training-id.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/training-id.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/training.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/training.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,30 +71,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Tests in 'gym-spring.test'.executor": "Run",
-    "Gradle.TraineeStorageImplTest.TestTraineeUpdate.executor": "Run",
-    "Gradle.TraineeStorageImplTest.executor": "Run",
-    "Gradle.TraineeTest.TestTrainee.executor": "Run",
-    "Gradle.TraineeTest.executor": "Run",
-    "Gradle.TrainerStorageImplTest.executor": "Run",
-    "Gradle.TrainerStorageImplTest.testGetWhenNull.executor": "Run",
-    "Gradle.TrainerStorageImplTest.testRemoveWhenExists.executor": "Run",
-    "Gradle.gym-spring [:Main.main()].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Koryun/Desktop/Koryun/gym-spring/src/main/java/org/example/db",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Tests in 'gym-spring.test'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TraineeStorageImplTest.TestTraineeUpdate.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TraineeStorageImplTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TraineeTest.TestTrainee.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TraineeTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TrainerStorageImplTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TrainerStorageImplTest.testGetWhenNull.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TrainerStorageImplTest.testRemoveWhenExists.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.gym-spring [:Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Koryun/Desktop/Koryun/gym-spring/src/main/java/org/example/db&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Koryun\Desktop\Koryun\gym-spring\src\main\java\org\example\db" />
@@ -245,14 +243,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00072" summary="Adding assertj dependency">
-      <option name="closed" value="true" />
-      <created>1725142996774</created>
-      <option name="number" value="00072" />
-      <option name="presentableId" value="LOCAL-00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1725142996788</updated>
     </task>
     <task id="LOCAL-00073" summary="Creating tests for Trainee entity class">
       <option name="closed" value="true" />
@@ -638,7 +628,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725282439996</updated>
     </task>
-    <option name="localTasksCounter" value="121" />
+    <task id="LOCAL-00121" summary="Moving the .txt files to the source of the project and accessing them with a relative path">
+      <option name="closed" value="true" />
+      <created>1725388809387</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1725388809388</updated>
+    </task>
+    <option name="localTasksCounter" value="122" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -653,7 +651,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Bug fix: changing Assert.notNull() to Assert.hasText" />
     <MESSAGE value="Adding validations to the TrainerDaoImpl class and creating unit tests for testing its functionality" />
     <MESSAGE value="Adding validations to the training dao impl class and removing unnecessary methods from it" />
     <MESSAGE value="Creating tests for testing the functionality of TrainingDaoImpl class" />
@@ -678,6 +675,7 @@
     <MESSAGE value="Adding tests testing the retrieval functionality of the TrainingFacadeImpl class" />
     <MESSAGE value="Committing the workspace.xml file" />
     <MESSAGE value="Moving all the .txt files to the resources folder and accessing paths to them using a separate bean called DatabasePathService" />
-    <option name="LAST_COMMIT_MESSAGE" value="Moving all the .txt files to the resources folder and accessing paths to them using a separate bean called DatabasePathService" />
+    <MESSAGE value="Moving the .txt files to the source of the project and accessing them with a relative path" />
+    <option name="LAST_COMMIT_MESSAGE" value="Moving the .txt files to the source of the project and accessing them with a relative path" />
   </component>
 </project>
