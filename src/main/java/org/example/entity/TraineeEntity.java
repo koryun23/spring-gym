@@ -2,7 +2,19 @@ package org.example.entity;
 
 import java.util.Date;
 import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
+@NoArgsConstructor
+@Setter
+@Getter
+@EqualsAndHashCode
+@ToString
 public class TraineeEntity extends User {
 
     private Date dateOfBirth;
@@ -21,54 +33,5 @@ public class TraineeEntity extends User {
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.userId = userId;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        TraineeEntity trainee = (TraineeEntity) o;
-        return  Objects.equals(dateOfBirth, trainee.dateOfBirth) &&
-                Objects.equals(address, trainee.address) &&
-                Objects.equals(userId, trainee.userId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), dateOfBirth, address, userId);
-    }
-
-    @Override
-    public String toString() {
-        return "TraineeEntity{" +
-                "dateOfBirth=" + dateOfBirth +
-                ", address='" + address + '\'' +
-                ", userId=" + userId +
-                '}';
     }
 }
