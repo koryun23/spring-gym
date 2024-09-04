@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Moving the .txt files to the source of the project and accessing them with a relative path">
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Removing the Params classes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/trainee-id.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/trainee-id.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/trainee.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/trainee.txt" afterDir="false" />
@@ -12,6 +12,21 @@
       <change beforePath="$PROJECT_DIR$/data/trainer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/trainer.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/training-id.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/training-id.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/training.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/training.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainingFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainingFacadeImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/core/TraineeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/core/TraineeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/core/TrainerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/core/TrainerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/core/TrainingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/core/TrainingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TraineeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TraineeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainerServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainingServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/params/TraineeCreateParams.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/params/TraineeUpdateParams.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/params/TrainerCreateParams.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/params/TrainerUpdateParams.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/params/TrainingCreateParams.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/params/TrainingUpdateParams.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +101,7 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;remove__params__classes&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/Koryun/Desktop/Koryun/gym-spring/src/main/java/org/example/db&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
@@ -651,7 +666,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Adding validations to the TrainerDaoImpl class and creating unit tests for testing its functionality" />
     <MESSAGE value="Adding validations to the training dao impl class and removing unnecessary methods from it" />
     <MESSAGE value="Creating tests for testing the functionality of TrainingDaoImpl class" />
     <MESSAGE value="Adding a field of type List called errors to all the response dtos" />
@@ -676,6 +690,7 @@
     <MESSAGE value="Committing the workspace.xml file" />
     <MESSAGE value="Moving all the .txt files to the resources folder and accessing paths to them using a separate bean called DatabasePathService" />
     <MESSAGE value="Moving the .txt files to the source of the project and accessing them with a relative path" />
-    <option name="LAST_COMMIT_MESSAGE" value="Moving the .txt files to the source of the project and accessing them with a relative path" />
+    <MESSAGE value="Removing the Params classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removing the Params classes" />
   </component>
 </project>

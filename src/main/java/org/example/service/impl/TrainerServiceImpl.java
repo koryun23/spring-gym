@@ -3,8 +3,6 @@ package org.example.service.impl;
 import org.example.dao.impl.TrainerDaoImpl;
 import org.example.entity.Trainer;
 import org.example.service.core.TrainerService;
-import org.example.service.params.TrainerCreateParams;
-import org.example.service.params.TrainerUpdateParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,37 +18,37 @@ public class TrainerServiceImpl implements TrainerService {
     private TrainerDaoImpl trainerDao;
 
     @Override
-    public Trainer create(TrainerCreateParams params) {
-        Assert.notNull(params, "TrainerCreateParams must not be null");
-        LOGGER.info("Creating a Trainer based on TrainerCreateParams - {}", params);
-        Trainer trainer = trainerDao.save(new Trainer(
-                params.getUserId(),
-                params.getFirstName(),
-                params.getLastName(),
-                params.getUsername(),
-                params.getPassword(),
-                params.isActive(),
-                params.getSpecializationType()
+    public Trainer create(Trainer trainer) {
+        Assert.notNull(trainer, "TrainerCreateParams must not be null");
+        LOGGER.info("Creating a Trainer based on TrainerCreateParams - {}", trainer);
+        Trainer createdTrainer = trainerDao.save(new Trainer(
+                trainer.getUserId(),
+                trainer.getFirstName(),
+                trainer.getLastName(),
+                trainer.getUsername(),
+                trainer.getPassword(),
+                trainer.isActive(),
+                trainer.getSpecialization()
         ));
-        LOGGER.info("Successfully created a Trainer based on TrainerCreateParams - {}, result - {}", params, trainer);
-        return trainer;
+        LOGGER.info("Successfully created a Trainer based on TrainerCreateParams - {}, result - {}", trainer, createdTrainer);
+        return createdTrainer;
     }
 
     @Override
-    public Trainer update(TrainerUpdateParams params) {
-        Assert.notNull(params, "TrainerUpdateParams must not be null");
-        LOGGER.info("Updating a Trainer based on TrainerUpdateParams - {}", params);
-        Trainer trainer = trainerDao.update(new Trainer(
-                params.getUserId(),
-                params.getFirstName(),
-                params.getLastName(),
-                params.getUsername(),
-                params.getPassword(),
-                params.isActive(),
-                params.getSpecializationType()
+    public Trainer update(Trainer trainer) {
+        Assert.notNull(trainer, "TrainerUpdateParams must not be null");
+        LOGGER.info("Updating a Trainer based on TrainerUpdateParams - {}", trainer);
+        Trainer updatedTrainer = trainerDao.update(new Trainer(
+                trainer.getUserId(),
+                trainer.getFirstName(),
+                trainer.getLastName(),
+                trainer.getUsername(),
+                trainer.getPassword(),
+                trainer.isActive(),
+                trainer.getSpecialization()
         ));
-        LOGGER.info("Successfully updated a Trainer based on TrainerUpdateParams - {}, result - {}", params, trainer);
-        return trainer;
+        LOGGER.info("Successfully updated a Trainer based on TrainerUpdateParams - {}, result - {}", trainer, updatedTrainer);
+        return updatedTrainer;
     }
 
     @Override

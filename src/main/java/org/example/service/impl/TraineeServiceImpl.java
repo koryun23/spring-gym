@@ -1,12 +1,9 @@
 package org.example.service.impl;
 
 import org.example.dao.core.TraineeDao;
-import org.example.dao.impl.TraineeDaoImpl;
 import org.example.entity.Trainee;
 import org.example.exception.TraineeNotFoundException;
 import org.example.service.core.TraineeService;
-import org.example.service.params.TraineeCreateParams;
-import org.example.service.params.TraineeUpdateParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,39 +19,39 @@ public class TraineeServiceImpl implements TraineeService {
     private TraineeDao traineeDao;
 
     @Override
-    public Trainee create(TraineeCreateParams params) {
-        Assert.notNull(params, "TraineeCreateParams must not be null");
-        LOGGER.info("Creating a Trainee based on TraineeCreateParams - {}", params);
-        Trainee trainee = traineeDao.save(new Trainee(
-                params.getUserId(),
-                params.getFirstName(),
-                params.getLastName(),
-                params.getUsername(),
-                params.getPassword(),
-                params.isActive(),
-                params.getDateOfBirth(),
-                params.getAddress()
+    public Trainee create(Trainee trainee) {
+        Assert.notNull(trainee, "TraineeCreateParams must not be null");
+        LOGGER.info("Creating a Trainee based on TraineeCreateParams - {}", trainee);
+        Trainee createdTrainee = traineeDao.save(new Trainee(
+                trainee.getUserId(),
+                trainee.getFirstName(),
+                trainee.getLastName(),
+                trainee.getUsername(),
+                trainee.getPassword(),
+                trainee.isActive(),
+                trainee.getDateOfBirth(),
+                trainee.getAddress()
         ));
-        LOGGER.info("Successfully created a Trainee based on TraineeCreateParams - {}, result - {}", params, trainee);
-        return trainee;
+        LOGGER.info("Successfully created a Trainee based on TraineeCreateParams - {}, result - {}", trainee, trainee);
+        return createdTrainee;
     }
 
     @Override
-    public Trainee update(TraineeUpdateParams params) {
-        Assert.notNull(params, "TraineeCreateParams must not be null");
-        LOGGER.info("Updating a Trainee based on TraineeUpdateParams - {}", params);
-        Trainee trainee = traineeDao.update(new Trainee(
-                params.getUserId(),
-                params.getFirstName(),
-                params.getLastName(),
-                params.getUsername(),
-                params.getPassword(),
-                params.isActive(),
-                params.getDateOfBirth(),
-                params.getAddress()
+    public Trainee update(Trainee trainee) {
+        Assert.notNull(trainee, "TraineeCreateParams must not be null");
+        LOGGER.info("Updating a Trainee based on TraineeUpdateParams - {}", trainee);
+        Trainee updatedTrainee = traineeDao.update(new Trainee(
+                trainee.getUserId(),
+                trainee.getFirstName(),
+                trainee.getLastName(),
+                trainee.getUsername(),
+                trainee.getPassword(),
+                trainee.isActive(),
+                trainee.getDateOfBirth(),
+                trainee.getAddress()
         ));
-        LOGGER.info("Successfully updated a Trainee based on TraineeUpdateParams - {}, result - {}", params, trainee);
-        return trainee;
+        LOGGER.info("Successfully updated a Trainee based on TraineeUpdateParams - {}, result - {}", trainee, trainee);
+        return updatedTrainee;
     }
 
     @Override

@@ -1,10 +1,8 @@
 package org.example.service.impl;
 
 import org.example.dao.core.TrainingDao;
-import org.example.dao.impl.TrainingDaoImpl;
 import org.example.entity.Training;
 import org.example.service.core.TrainingService;
-import org.example.service.params.TrainingCreateParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +18,20 @@ public class TrainingServiceImpl implements TrainingService {
     private TrainingDao trainingDao;
 
     @Override
-    public Training create(TrainingCreateParams params) {
-        Assert.notNull(params, "TrainingCreateParams must not be null");
-        LOGGER.info("Creating a Training according to the TrainingCreateParams - {}", params);
-        Training training = trainingDao.save(new Training(
-                params.getTrainingId(),
-                params.getTraineeId(),
-                params.getTrainerId(),
-                params.getName(),
-                params.getTrainingType(),
-                params.getTrainingDate(),
-                params.getDuration()
+    public Training create(Training training) {
+        Assert.notNull(training, "TrainingCreateParams must not be null");
+        LOGGER.info("Creating a Training according to the TrainingCreateParams - {}", training);
+        Training createdTraining = trainingDao.save(new Training(
+                training.getTrainingId(),
+                training.getTraineeId(),
+                training.getTrainerId(),
+                training.getName(),
+                training.getTrainingType(),
+                training.getTrainingDate(),
+                training.getDuration()
         ));
-        LOGGER.info("Successfully created a Training according to the Training Create Params - {}, result - {}", params, training);
-        return training;
+        LOGGER.info("Successfully created a Training according to the Training Create Params - {}, result - {}", training, createdTraining);
+        return createdTraining;
     }
 
     @Override

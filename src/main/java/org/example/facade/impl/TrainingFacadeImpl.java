@@ -9,12 +9,10 @@ import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
 import org.example.service.core.TrainingService;
-import org.example.service.params.TrainingCreateParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
-
 import java.util.List;
 
 public class TrainingFacadeImpl implements TrainingFacade {
@@ -62,7 +60,7 @@ public class TrainingFacadeImpl implements TrainingFacade {
             return new TrainingCreationResponseDto(List.of(String.format("Cannot create a training: a trainer with an id of %d does not exist", requestDto.getTrainerId())));
         }
 
-        Training training = trainingService.create(new TrainingCreateParams(
+        Training training = trainingService.create(new Training(
                 idService.getId(),
                 requestDto.getTraineeId(),
                 requestDto.getTrainerId(),

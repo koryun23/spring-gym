@@ -7,22 +7,16 @@ import org.example.dto.response.TraineeDeletionResponseDto;
 import org.example.dto.response.TraineeRetrievalResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
 import org.example.entity.Trainee;
-import org.example.entity.Trainer;
 import org.example.facade.core.TraineeFacade;
 import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
 import org.example.service.core.UsernamePasswordService;
-import org.example.service.params.TraineeCreateParams;
-import org.example.service.params.TraineeUpdateParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
-
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 public class TraineeFacadeImpl implements TraineeFacade {
 
@@ -65,7 +59,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
                 traineeId
         );
         String password = usernamePasswordService.password();
-        Trainee trainee = traineeService.create(new TraineeCreateParams(
+        Trainee trainee = traineeService.create(new Trainee(
                 traineeId,
                 requestDto.getFirstName(),
                 requestDto.getLastName(),
@@ -99,7 +93,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
             return new TraineeUpdateResponseDto(List.of(String.format("A user with specified username - %s, does not exist", requestDto.getUsername())));
         }
 
-        Trainee trainee = traineeService.update(new TraineeUpdateParams(
+        Trainee trainee = traineeService.update(new Trainee(
                 requestDto.getUserId(),
                 requestDto.getFirstName(),
                 requestDto.getLastName(),

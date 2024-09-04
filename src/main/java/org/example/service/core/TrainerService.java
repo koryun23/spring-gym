@@ -1,16 +1,14 @@
 package org.example.service.core;
 
 import org.example.entity.Trainer;
-import org.example.service.params.TrainerCreateParams;
-import org.example.service.params.TrainerUpdateParams;
 
 import java.util.Optional;
 
 public interface TrainerService {
 
-    Trainer create(TrainerCreateParams params);
+    Trainer create(Trainer params);
 
-    Trainer update(TrainerUpdateParams params);
+    Trainer update(Trainer params);
 
     Trainer select(Long trainerId);
 

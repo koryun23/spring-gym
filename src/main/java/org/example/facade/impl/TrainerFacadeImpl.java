@@ -5,23 +5,17 @@ import org.example.dto.request.TrainerUpdateRequestDto;
 import org.example.dto.response.TrainerCreationResponseDto;
 import org.example.dto.response.TrainerRetrievalResponseDto;
 import org.example.dto.response.TrainerUpdateResponseDto;
-import org.example.entity.Trainee;
 import org.example.entity.Trainer;
 import org.example.facade.core.TrainerFacade;
 import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
 import org.example.service.core.UsernamePasswordService;
-import org.example.service.params.TrainerCreateParams;
-import org.example.service.params.TrainerUpdateParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
-
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 public class TrainerFacadeImpl implements TrainerFacade {
 
@@ -66,7 +60,7 @@ public class TrainerFacadeImpl implements TrainerFacade {
 
         String password = usernamePasswordService.password();
 
-        Trainer trainer = trainerService.create(new TrainerCreateParams(
+        Trainer trainer = trainerService.create(new Trainer(
                 trainerId,
                 requestDto.getFirstName(),
                 requestDto.getLastName(),
@@ -98,7 +92,7 @@ public class TrainerFacadeImpl implements TrainerFacade {
             return new TrainerUpdateResponseDto(List.of(String.format("Trainer with the specified id of %d does not exist", requestDto.getUserId())));
         }
 
-        Trainer trainer = trainerService.update(new TrainerUpdateParams(
+        Trainer trainer = trainerService.update(new Trainer(
                 requestDto.getUserId(),
                 requestDto.getFirstName(),
                 requestDto.getLastName(),

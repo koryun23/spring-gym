@@ -11,9 +11,6 @@ import org.example.facade.core.TraineeFacade;
 import org.example.facade.core.TrainerFacade;
 import org.example.facade.core.TrainingFacade;
 import org.example.helper.DateConverter;
-import org.example.service.core.TraineeService;
-import org.example.service.impl.TraineeServiceImpl;
-import org.example.service.params.TraineeCreateParams;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {
