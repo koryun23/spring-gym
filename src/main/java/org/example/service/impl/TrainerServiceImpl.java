@@ -1,7 +1,7 @@
 package org.example.service.impl;
 
 import org.example.dao.impl.TrainerDaoImpl;
-import org.example.entity.Trainer;
+import org.example.entity.TrainerEntity;
 import org.example.service.core.TrainerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,74 +18,76 @@ public class TrainerServiceImpl implements TrainerService {
     private TrainerDaoImpl trainerDao;
 
     @Override
-    public Trainer create(Trainer trainer) {
-        Assert.notNull(trainer, "TrainerCreateParams must not be null");
-        LOGGER.info("Creating a Trainer based on TrainerCreateParams - {}", trainer);
-        Trainer createdTrainer = trainerDao.save(new Trainer(
-                trainer.getUserId(),
-                trainer.getFirstName(),
-                trainer.getLastName(),
-                trainer.getUsername(),
-                trainer.getPassword(),
-                trainer.isActive(),
-                trainer.getSpecialization()
+    public TrainerEntity create(TrainerEntity trainerEntity) {
+        Assert.notNull(trainerEntity, "TrainerCreateParams must not be null");
+        LOGGER.info("Creating a TrainerEntity based on TrainerCreateParams - {}", trainerEntity);
+        TrainerEntity createdTrainerEntity = trainerDao.save(new TrainerEntity(
+                trainerEntity.getUserId(),
+                trainerEntity.getFirstName(),
+                trainerEntity.getLastName(),
+                trainerEntity.getUsername(),
+                trainerEntity.getPassword(),
+                trainerEntity.isActive(),
+                trainerEntity.getSpecialization()
         ));
-        LOGGER.info("Successfully created a Trainer based on TrainerCreateParams - {}, result - {}", trainer, createdTrainer);
-        return createdTrainer;
+        LOGGER.info("Successfully created a TrainerEntity based on TrainerCreateParams - {}, result - {}", trainerEntity,
+            createdTrainerEntity);
+        return createdTrainerEntity;
     }
 
     @Override
-    public Trainer update(Trainer trainer) {
-        Assert.notNull(trainer, "TrainerUpdateParams must not be null");
-        LOGGER.info("Updating a Trainer based on TrainerUpdateParams - {}", trainer);
-        Trainer updatedTrainer = trainerDao.update(new Trainer(
-                trainer.getUserId(),
-                trainer.getFirstName(),
-                trainer.getLastName(),
-                trainer.getUsername(),
-                trainer.getPassword(),
-                trainer.isActive(),
-                trainer.getSpecialization()
+    public TrainerEntity update(TrainerEntity trainerEntity) {
+        Assert.notNull(trainerEntity, "TrainerUpdateParams must not be null");
+        LOGGER.info("Updating a TrainerEntity based on TrainerUpdateParams - {}", trainerEntity);
+        TrainerEntity updatedTrainerEntity = trainerDao.update(new TrainerEntity(
+                trainerEntity.getUserId(),
+                trainerEntity.getFirstName(),
+                trainerEntity.getLastName(),
+                trainerEntity.getUsername(),
+                trainerEntity.getPassword(),
+                trainerEntity.isActive(),
+                trainerEntity.getSpecialization()
         ));
-        LOGGER.info("Successfully updated a Trainer based on TrainerUpdateParams - {}, result - {}", trainer, updatedTrainer);
-        return updatedTrainer;
+        LOGGER.info("Successfully updated a TrainerEntity based on TrainerUpdateParams - {}, result - {}", trainerEntity,
+            updatedTrainerEntity);
+        return updatedTrainerEntity;
     }
 
     @Override
-    public Trainer select(Long trainerId) {
-        Assert.notNull(trainerId, "Trainer id must not be null");
-        LOGGER.info("Selecting a Trainer with an id of {}", trainerId);
-        Trainer trainer = trainerDao.get(trainerId);
-        LOGGER.info("Successfully selected a Trainer with an id of {}, result - {}", trainerId, trainer);
-        return trainer;
+    public TrainerEntity select(Long trainerId) {
+        Assert.notNull(trainerId, "TrainerEntity id must not be null");
+        LOGGER.info("Selecting a TrainerEntity with an id of {}", trainerId);
+        TrainerEntity trainerEntity = trainerDao.get(trainerId);
+        LOGGER.info("Successfully selected a TrainerEntity with an id of {}, result - {}", trainerId, trainerEntity);
+        return trainerEntity;
     }
 
     @Override
-    public Trainer selectByUsername(String username) {
-        Assert.notNull(username, "Trainer username must not be null");
-        Assert.hasText(username, "Trainer username must not be empty");
-        LOGGER.info("Selecting a Trainer with a username of {}", username);
-        Trainer trainer = trainerDao.getByUsername(username);
-        LOGGER.info("Successfully selected a Trainer with a username of {}, result - {}", username, trainer);
-        return trainer;
+    public TrainerEntity selectByUsername(String username) {
+        Assert.notNull(username, "TrainerEntity username must not be null");
+        Assert.hasText(username, "TrainerEntity username must not be empty");
+        LOGGER.info("Selecting a TrainerEntity with a username of {}", username);
+        TrainerEntity trainerEntity = trainerDao.getByUsername(username);
+        LOGGER.info("Successfully selected a TrainerEntity with a username of {}, result - {}", username, trainerEntity);
+        return trainerEntity;
     }
 
     @Override
-    public Optional<Trainer> findById(Long id) {
-        Assert.notNull(id, "Trainer id must not be null");
-        LOGGER.info("Retrieving an optional Trainer with an id of {}", id);
-        Optional<Trainer> optionalTrainer = trainerDao.findById(id);
-        LOGGER.info("Successfully retrieved an optional Trainer with an id of {}, result - {}", id, optionalTrainer);
+    public Optional<TrainerEntity> findById(Long id) {
+        Assert.notNull(id, "TrainerEntity id must not be null");
+        LOGGER.info("Retrieving an optional TrainerEntity with an id of {}", id);
+        Optional<TrainerEntity> optionalTrainer = trainerDao.findById(id);
+        LOGGER.info("Successfully retrieved an optional TrainerEntity with an id of {}, result - {}", id, optionalTrainer);
         return optionalTrainer;
     }
 
     @Override
-    public Optional<Trainer> findByUsername(String username) {
-        Assert.notNull(username, "Trainer username must not be null");
-        Assert.hasText(username, "Trainer username must not be empty");
-        LOGGER.info("Retrieved an optional Trainer with a username of {}", username);
-        Optional<Trainer> optionalTrainer = trainerDao.findByUsername(username);
-        LOGGER.info("Successfully retrieved an optional Trainer with a username of {}, result - {}", username, optionalTrainer);
+    public Optional<TrainerEntity> findByUsername(String username) {
+        Assert.notNull(username, "TrainerEntity username must not be null");
+        Assert.hasText(username, "TrainerEntity username must not be empty");
+        LOGGER.info("Retrieved an optional TrainerEntity with a username of {}", username);
+        Optional<TrainerEntity> optionalTrainer = trainerDao.findByUsername(username);
+        LOGGER.info("Successfully retrieved an optional TrainerEntity with a username of {}, result - {}", username, optionalTrainer);
         return optionalTrainer;
     }
 }

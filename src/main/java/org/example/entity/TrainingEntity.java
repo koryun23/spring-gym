@@ -3,7 +3,7 @@ package org.example.entity;
 import java.util.Date;
 import java.util.Objects;
 
-public class Training {
+public class TrainingEntity {
 
     private Long trainingId;
     private Long traineeId;
@@ -13,13 +13,13 @@ public class Training {
     private Date trainingDate;
     private Long duration;
 
-    public Training(Long trainingId,
-                    Long traineeId,
-                    Long trainerId,
-                    String name,
-                    TrainingType trainingType,
-                    Date trainingDate,
-                    Long duration) {
+    public TrainingEntity(Long trainingId,
+                          Long traineeId,
+                          Long trainerId,
+                          String name,
+                          TrainingType trainingType,
+                          Date trainingDate,
+                          Long duration) {
         this.trainingId = trainingId;
         this.traineeId = traineeId;
         this.trainerId = trainerId;
@@ -89,8 +89,8 @@ public class Training {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Training training = (Training) o;
-        return Objects.equals(trainingId, training.trainingId) && Objects.equals(traineeId, training.traineeId) && Objects.equals(trainerId, training.trainerId) && Objects.equals(name, training.name) && trainingType == training.trainingType && Objects.equals(trainingDate, training.trainingDate) && Objects.equals(duration, training.duration);
+        TrainingEntity trainingEntity = (TrainingEntity) o;
+        return Objects.equals(trainingId, trainingEntity.trainingId) && Objects.equals(traineeId, trainingEntity.traineeId) && Objects.equals(trainerId, trainingEntity.trainerId) && Objects.equals(name, trainingEntity.name) && trainingType == trainingEntity.trainingType && Objects.equals(trainingDate, trainingEntity.trainingDate) && Objects.equals(duration, trainingEntity.duration);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class Training {
 
     @Override
     public String toString() {
-        return "Training{" +
+        return "TrainingEntity{" +
                 "trainingId=" + trainingId +
                 ", traineeId=" + traineeId +
                 ", trainerId=" + trainerId +

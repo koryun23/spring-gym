@@ -1,11 +1,9 @@
 package org.example.dao.impl;
 
 import org.assertj.core.api.Assertions;
-import org.example.dao.core.TrainerDao;
 import org.example.entity.SpecializationType;
-import org.example.entity.Trainer;
+import org.example.entity.TrainerEntity;
 import org.example.exception.TrainerNotFoundException;
-import org.example.repository.core.TrainerStorage;
 import org.example.repository.impl.TrainerStorageImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,14 +12,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(MockitoExtension.class)
-class TrainerDaoImplTest {
+class TrainerEntityDaoImplTest {
 
     private TrainerDaoImpl testSubject;
 
@@ -42,7 +36,7 @@ class TrainerDaoImplTest {
 
     @Test
     public void testGet() {
-        Mockito.when(trainerStorage.get(1L)).thenReturn(new Trainer(
+        Mockito.when(trainerStorage.get(1L)).thenReturn(new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -51,7 +45,7 @@ class TrainerDaoImplTest {
                 true,
                 SpecializationType.FITNESS
         ));
-        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new Trainer(
+        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -70,7 +64,7 @@ class TrainerDaoImplTest {
 
     @Test
     public void testSave() {
-        Mockito.when(trainerStorage.get(1L)).thenReturn(new Trainer(
+        Mockito.when(trainerStorage.get(1L)).thenReturn(new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -80,7 +74,7 @@ class TrainerDaoImplTest {
                 SpecializationType.FITNESS
         ));
 
-        testSubject.save(new Trainer(
+        testSubject.save(new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -89,7 +83,7 @@ class TrainerDaoImplTest {
                 true,
                 SpecializationType.FITNESS
         ));
-        Assertions.assertThat(trainerStorage.get(1L)).isEqualTo(new Trainer(
+        Assertions.assertThat(trainerStorage.get(1L)).isEqualTo(new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -108,7 +102,7 @@ class TrainerDaoImplTest {
 
     @Test
     public void testUpdate() {
-        testSubject.save(new Trainer(
+        testSubject.save(new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -117,7 +111,7 @@ class TrainerDaoImplTest {
                 true,
                 SpecializationType.FITNESS
         ));
-        Mockito.when(trainerStorage.get(1L)).thenReturn(new Trainer(
+        Mockito.when(trainerStorage.get(1L)).thenReturn(new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -126,8 +120,8 @@ class TrainerDaoImplTest {
                 true,
                 SpecializationType.FITNESS
         ));
-        Trainer initialTrainer = testSubject.get(1L);
-        testSubject.update(new Trainer(
+        TrainerEntity initialTrainerEntity = testSubject.get(1L);
+        testSubject.update(new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -136,7 +130,7 @@ class TrainerDaoImplTest {
                 false,
                 SpecializationType.FITNESS
         ));
-        Mockito.when(trainerStorage.get(1L)).thenReturn(new Trainer(
+        Mockito.when(trainerStorage.get(1L)).thenReturn(new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -145,7 +139,7 @@ class TrainerDaoImplTest {
                 false,
                 SpecializationType.FITNESS
         ));
-        Assertions.assertThat(testSubject.get(1L)).isNotEqualTo(initialTrainer);
+        Assertions.assertThat(testSubject.get(1L)).isNotEqualTo(initialTrainerEntity);
     }
 
     @Test
@@ -156,7 +150,7 @@ class TrainerDaoImplTest {
 
     @Test
     public void testDelete() {
-        Mockito.when(trainerStorage.get(1L)).thenReturn(new Trainer(
+        Mockito.when(trainerStorage.get(1L)).thenReturn(new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -185,7 +179,7 @@ class TrainerDaoImplTest {
 
     @Test
     public void testGetByUsername() {
-        Mockito.when(trainerStorage.getByUsername("username")).thenReturn(new Trainer(
+        Mockito.when(trainerStorage.getByUsername("username")).thenReturn(new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -194,7 +188,7 @@ class TrainerDaoImplTest {
                 true,
                 SpecializationType.FITNESS
         ));
-        Assertions.assertThat(testSubject.getByUsername("username")).isEqualTo(new Trainer(
+        Assertions.assertThat(testSubject.getByUsername("username")).isEqualTo(new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -219,7 +213,7 @@ class TrainerDaoImplTest {
 
     @Test
     public void testFindByUsername() {
-        Mockito.when(trainerStorage.findByUsername("username")).thenReturn(Optional.of(new Trainer(
+        Mockito.when(trainerStorage.findByUsername("username")).thenReturn(Optional.of(new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -228,7 +222,7 @@ class TrainerDaoImplTest {
                 true,
                 SpecializationType.FITNESS
         )));
-        Assertions.assertThat(testSubject.findByUsername("username")).isEqualTo(Optional.of(new Trainer(
+        Assertions.assertThat(testSubject.findByUsername("username")).isEqualTo(Optional.of(new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -247,7 +241,7 @@ class TrainerDaoImplTest {
 
     @Test
     public void testFindById() {
-        Mockito.when(trainerStorage.findById(1L)).thenReturn(Optional.of(new Trainer(
+        Mockito.when(trainerStorage.findById(1L)).thenReturn(Optional.of(new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -256,7 +250,7 @@ class TrainerDaoImplTest {
                 true,
                 SpecializationType.FITNESS
         )));
-        Assertions.assertThat(testSubject.findById(1L)).isEqualTo(Optional.of(new Trainer(
+        Assertions.assertThat(testSubject.findById(1L)).isEqualTo(Optional.of(new TrainerEntity(
                 1L,
                 "first",
                 "last",

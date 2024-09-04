@@ -1,15 +1,13 @@
 package org.example.repository.impl;
 
 import jakarta.annotation.PostConstruct;
-import org.example.entity.Trainee;
+import org.example.entity.TraineeEntity;
 import org.example.helper.DateConverter;
 import org.example.repository.core.FileStorage;
 import org.example.service.core.DatabasePathService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -20,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class TraineeFileStorageImpl implements FileStorage<Trainee> {
+public class TraineeFileStorageImpl implements FileStorage<TraineeEntity> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TraineeFileStorageImpl.class);
 
@@ -30,12 +28,12 @@ public class TraineeFileStorageImpl implements FileStorage<Trainee> {
     private String traineePath;
 
     @Override
-    public void persist(Map<Long, Trainee> inMemoryStorage) {
+    public void persist(Map<Long, TraineeEntity> inMemoryStorage) {
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new FileWriter(traineePath));
-            for (Map.Entry<Long, Trainee> entry : inMemoryStorage.entrySet()) {
-                Trainee currentTrainee = entry.getValue();
+            for (Map.Entry<Long, TraineeEntity> entry : inMemoryStorage.entrySet()) {
+                TraineeEntity currentTrainee = entry.getValue();
                 LOGGER.info("Persisting {} to the .txt file", currentTrainee);
                 String stringRepresentationOfTrainee = String.format("%d,%s,%s,%s,%s,%s,%s,%s",
                         currentTrainee.getUserId(),
@@ -59,7 +57,7 @@ public class TraineeFileStorageImpl implements FileStorage<Trainee> {
     }
 
     @Override
-    public Map<Long, Trainee> parseMemoryFile() {
+    public Map<Long, TraineeEntity> parseMemoryFile() {
         Scanner scanner;
         try {
             scanner = new Scanner(new File(traineePath));
@@ -67,14 +65,14 @@ public class TraineeFileStorageImpl implements FileStorage<Trainee> {
             throw new RuntimeException(e);
         }
 
-        Map<Long, Trainee> inMemoryStorage = new HashMap<>();
+        Map<Long, TraineeEntity> inMemoryStorage = new HashMap<>();
 
         while (scanner.hasNextLine()) {
             String currentTraineeString = scanner.nextLine();
             LOGGER.info("Storing the row '{}' in the in-memory storage", currentTraineeString);
             String[] currentTraineeSplit = currentTraineeString.split(",");
             Long userId = getUserIdFromArray(currentTraineeSplit);
-            Trainee currentTrainee = new Trainee(
+            TraineeEntity currentTrainee = new TraineeEntity(
                     userId,
                     getFirstNameFromArray(currentTraineeSplit),
                     getLastNameFromArray(currentTraineeSplit),

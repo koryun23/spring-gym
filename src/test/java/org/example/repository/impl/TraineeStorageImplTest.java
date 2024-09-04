@@ -1,7 +1,7 @@
 package org.example.repository.impl;
 
 import org.assertj.core.api.Assertions;
-import org.example.entity.Trainee;
+import org.example.entity.TraineeEntity;
 import org.example.exception.TraineeNotFoundException;
 import org.example.helper.DateConverter;
 import org.example.repository.core.FileStorage;
@@ -21,16 +21,16 @@ class TraineeStorageImplTest {
     private TraineeStorageImpl testSubject;
 
     @Mock
-    private FileStorage<Trainee> traineeFileStorage;
+    private FileStorage<TraineeEntity> traineeFileStorage;
 
     @Mock
     private DateConverter dateConverter;
 
     @BeforeEach
     public void setUp() {
-        Map<Long, Trainee> map = new HashMap<>();
+        Map<Long, TraineeEntity> map = new HashMap<>();
         map.put(
-                1L, new Trainee(
+                1L, new TraineeEntity(
                         1L,
                         "first",
                         "last",
@@ -48,7 +48,7 @@ class TraineeStorageImplTest {
 
     @Test
     public void TestTraineeGetByIdWhenExists() {
-        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new Trainee(
+        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new TraineeEntity(
                 1L,
                 "first",
                 "last",
@@ -62,7 +62,7 @@ class TraineeStorageImplTest {
 
     @Test
     public void TestTraineeGetByUsernameWhenExists() {
-        Assertions.assertThat(testSubject.getByUsername("username")).isEqualTo(new Trainee(
+        Assertions.assertThat(testSubject.getByUsername("username")).isEqualTo(new TraineeEntity(
                 1L,
                 "first",
                 "last",
@@ -103,8 +103,8 @@ class TraineeStorageImplTest {
     @Test
     public void TestTraineeAdd() {
 
-        HashMap<Long, Trainee> map = new HashMap<>();
-        map.put(1L, new Trainee(
+        HashMap<Long, TraineeEntity> map = new HashMap<>();
+        map.put(1L, new TraineeEntity(
                 1L,
                 "first",
                 "last",
@@ -114,7 +114,7 @@ class TraineeStorageImplTest {
                 Date.valueOf("2024-10-10"),
                 "manchester"
         ));
-        map.put(2L, new Trainee(
+        map.put(2L, new TraineeEntity(
                 2L,
                 "first",
                 "last",
@@ -127,7 +127,7 @@ class TraineeStorageImplTest {
         Assertions.assertThatThrownBy(() -> testSubject.get(2L))
                 .isExactlyInstanceOf(TraineeNotFoundException.class);
 
-        testSubject.add(new Trainee(
+        testSubject.add(new TraineeEntity(
                 2L,
                 "first",
                 "last",
@@ -138,7 +138,7 @@ class TraineeStorageImplTest {
                 "manchester"
         ));
 
-        Assertions.assertThat(testSubject.get(2L)).isEqualTo(new Trainee(
+        Assertions.assertThat(testSubject.get(2L)).isEqualTo(new TraineeEntity(
                 2L,
                 "first",
                 "last",
@@ -158,7 +158,7 @@ class TraineeStorageImplTest {
 
     @Test
     public void TestTraineeRemove() {
-        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new Trainee(
+        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new TraineeEntity(
                         1L,
                         "first",
                         "last",
@@ -181,8 +181,8 @@ class TraineeStorageImplTest {
 
     @Test
     public void TestTraineeUpdate() {
-        HashMap<Long, Trainee> map = new HashMap<>();
-        map.put(1L, new Trainee(
+        HashMap<Long, TraineeEntity> map = new HashMap<>();
+        map.put(1L, new TraineeEntity(
                 1L,
                 "first",
                 "last",
@@ -192,7 +192,7 @@ class TraineeStorageImplTest {
                 Date.valueOf("2024-10-10"),
                 "manchester"
         ));
-        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new Trainee(
+        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new TraineeEntity(
                 1L,
                 "first",
                 "last",
@@ -203,7 +203,7 @@ class TraineeStorageImplTest {
                 "manchester"
         ));
 
-        testSubject.update(new Trainee(
+        testSubject.update(new TraineeEntity(
                 1L,
                 "first",
                 "last",
@@ -214,7 +214,7 @@ class TraineeStorageImplTest {
                 "manchester"
         ));
 
-        Assertions.assertThat(testSubject.get(1L)).isNotEqualTo(new Trainee(
+        Assertions.assertThat(testSubject.get(1L)).isNotEqualTo(new TraineeEntity(
                 1L,
                 "first",
                 "last",

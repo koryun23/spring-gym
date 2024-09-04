@@ -2,20 +2,19 @@ package org.example.repository.impl;
 
 import jakarta.annotation.PostConstruct;
 import org.example.entity.SpecializationType;
-import org.example.entity.Trainer;
+import org.example.entity.TrainerEntity;
 import org.example.repository.core.FileStorage;
 import org.example.service.core.DatabasePathService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class TrainerFileStorageImpl implements FileStorage<Trainer> {
+public class TrainerFileStorageImpl implements FileStorage<TrainerEntity> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainerFileStorageImpl.class);
 
@@ -24,7 +23,7 @@ public class TrainerFileStorageImpl implements FileStorage<Trainer> {
     private String trainerPath;
 
     @Override
-    public Map<Long, Trainer> parseMemoryFile() {
+    public Map<Long, TrainerEntity> parseMemoryFile() {
         Scanner scanner;
         try {
             scanner = new Scanner(new File(trainerPath));
@@ -32,13 +31,13 @@ public class TrainerFileStorageImpl implements FileStorage<Trainer> {
             throw new RuntimeException(e);
         }
 
-        Map<Long, Trainer> inMemoryStorage = new HashMap<>();
+        Map<Long, TrainerEntity> inMemoryStorage = new HashMap<>();
 
         while (scanner.hasNextLine()) {
             String currentTrainerString = scanner.nextLine();
             LOGGER.info("Storing the row '{}' in the in-memory storage", currentTrainerString);
             String[] currentTrainerArray = currentTrainerString.split(",");
-            Trainer currentTrainer = new Trainer(
+            TrainerEntity currentTrainerEntity = new TrainerEntity(
                     getUserIdFromArray(currentTrainerArray),
                     getFirstNameFromArray(currentTrainerArray),
                     getLastNameFromArray(currentTrainerArray),
@@ -48,9 +47,9 @@ public class TrainerFileStorageImpl implements FileStorage<Trainer> {
                     getSpecializationFromArray(currentTrainerArray)
             );
 
-            LOGGER.info("Converted the row '{}' to {}", currentTrainerString, currentTrainer);
-            inMemoryStorage.put(currentTrainer.getUserId(), currentTrainer);
-            LOGGER.info("Successfully stored {} in the in-memory storage", currentTrainer);
+            LOGGER.info("Converted the row '{}' to {}", currentTrainerString, currentTrainerEntity);
+            inMemoryStorage.put(currentTrainerEntity.getUserId(), currentTrainerEntity);
+            LOGGER.info("Successfully stored {} in the in-memory storage", currentTrainerEntity);
         }
 
         LOGGER.info("In memory storage - {}", inMemoryStorage);
@@ -58,26 +57,26 @@ public class TrainerFileStorageImpl implements FileStorage<Trainer> {
     }
 
     @Override
-    public void persist(Map<Long, Trainer> inMemoryStorage) {
+    public void persist(Map<Long, TrainerEntity> inMemoryStorage) {
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new FileWriter(trainerPath));
-            for (Map.Entry<Long, Trainer> entry : inMemoryStorage.entrySet()) {
-                Trainer currentTrainer = entry.getValue();
-                LOGGER.info("Persisting {} to the .txt file", currentTrainer);
+            for (Map.Entry<Long, TrainerEntity> entry : inMemoryStorage.entrySet()) {
+                TrainerEntity currentTrainerEntity = entry.getValue();
+                LOGGER.info("Persisting {} to the .txt file", currentTrainerEntity);
                 String stringRepresentationOfTrainer = String.format("%d,%s,%s,%s,%s,%s,%s",
-                        currentTrainer.getUserId(),
-                        currentTrainer.getFirstName(),
-                        currentTrainer.getLastName(),
-                        currentTrainer.getUsername(),
-                        currentTrainer.getPassword(),
-                        currentTrainer.isActive(),
-                        currentTrainer.getSpecialization()
+                        currentTrainerEntity.getUserId(),
+                        currentTrainerEntity.getFirstName(),
+                        currentTrainerEntity.getLastName(),
+                        currentTrainerEntity.getUsername(),
+                        currentTrainerEntity.getPassword(),
+                        currentTrainerEntity.isActive(),
+                        currentTrainerEntity.getSpecialization()
                 );
                 LOGGER.info("The row being persisted to the .txt file - {}", stringRepresentationOfTrainer);
                 writer.write(stringRepresentationOfTrainer);
                 writer.newLine();
-                LOGGER.info("Successfully persisted {}, result - {}", currentTrainer, stringRepresentationOfTrainer);
+                LOGGER.info("Successfully persisted {}, result - {}", currentTrainerEntity, stringRepresentationOfTrainer);
             }
             writer.close();
         } catch (IOException e) {

@@ -5,12 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.Date;
 
-class TraineeTest {
+class TraineeEntityTest {
 
     @Test
     public void TestTraineeEquals() {
 
-        Trainee trainee1 = new Trainee(
+        TraineeEntity trainee1 = new TraineeEntity(
                 1L,
                 "first",
                 "last",
@@ -21,7 +21,7 @@ class TraineeTest {
                 "manchester"
         );
 
-        Trainee trainee2 = new Trainee(
+        TraineeEntity trainee2 = new TraineeEntity(
                 1L,
                 "first",
                 "last",
@@ -37,7 +37,7 @@ class TraineeTest {
 
     @Test
     public void TestTraineeHashCode() {
-        Trainee trainee1 = new Trainee(
+        TraineeEntity trainee1 = new TraineeEntity(
                 1L,
                 "first",
                 "last",
@@ -48,7 +48,7 @@ class TraineeTest {
                 "manchester"
         );
 
-        Trainee trainee2 = new Trainee(
+        TraineeEntity trainee2 = new TraineeEntity(
                 1L,
                 "first",
                 "last",

@@ -1,6 +1,5 @@
 package org.example.dto.response;
 
-import org.example.entity.Training;
 import org.example.entity.TrainingType;
 
 import java.util.Date;

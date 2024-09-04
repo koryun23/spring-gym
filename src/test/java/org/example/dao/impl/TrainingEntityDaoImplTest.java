@@ -1,8 +1,7 @@
 package org.example.dao.impl;
 
 import org.assertj.core.api.Assertions;
-import org.example.dao.core.TrainingDao;
-import org.example.entity.Training;
+import org.example.entity.TrainingEntity;
 import org.example.entity.TrainingType;
 import org.example.exception.TrainingNotFoundException;
 import org.example.repository.impl.TrainingStorageImpl;
@@ -15,10 +14,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(MockitoExtension.class)
-class TrainingDaoImplTest {
+class TrainingEntityDaoImplTest {
 
     private TrainingDaoImpl testSubject;
 
@@ -39,7 +36,7 @@ class TrainingDaoImplTest {
 
     @Test
     public void testGet() {
-        Mockito.when(trainingStorage.get(1L)).thenReturn(new Training(
+        Mockito.when(trainingStorage.get(1L)).thenReturn(new TrainingEntity(
                 1L,
                 1L,
                 1L,
@@ -48,7 +45,7 @@ class TrainingDaoImplTest {
                 Date.valueOf("2024-10-10"),
                 1000L
         ));
-        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new Training(
+        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new TrainingEntity(
                 1L,
                 1L,
                 1L,
@@ -67,7 +64,7 @@ class TrainingDaoImplTest {
 
     @Test
     public void testSave() {
-        testSubject.save(new Training(
+        testSubject.save(new TrainingEntity(
                 1L,
                 1L,
                 1L,
@@ -76,7 +73,7 @@ class TrainingDaoImplTest {
                 Date.valueOf("2024-10-10"),
                 1000L
         ));
-        Mockito.when(trainingStorage.get(1L)).thenReturn(new Training(
+        Mockito.when(trainingStorage.get(1L)).thenReturn(new TrainingEntity(
                 1L,
                 1L,
                 1L,
@@ -85,7 +82,7 @@ class TrainingDaoImplTest {
                 Date.valueOf("2024-10-10"),
                 1000L
         ));
-        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new Training(
+        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new TrainingEntity(
                 1L,
                 1L,
                 1L,
@@ -104,7 +101,7 @@ class TrainingDaoImplTest {
 
     @Test
     public void testUpdate() {
-        Mockito.when(trainingStorage.get(1L)).thenReturn(new Training(
+        Mockito.when(trainingStorage.get(1L)).thenReturn(new TrainingEntity(
                 1L,
                 1L,
                 1L,
@@ -113,8 +110,8 @@ class TrainingDaoImplTest {
                 Date.valueOf("2024-10-10"),
                 1000L
         ));
-        Training initialTraining = testSubject.get(1L);
-        Mockito.when(trainingStorage.get(1L)).thenReturn(new Training(
+        TrainingEntity initialTrainingEntity = testSubject.get(1L);
+        Mockito.when(trainingStorage.get(1L)).thenReturn(new TrainingEntity(
                 1L,
                 1L,
                 1L,
@@ -123,7 +120,7 @@ class TrainingDaoImplTest {
                 Date.valueOf("2024-10-10"),
                 2000L
         ));
-        testSubject.update(new Training(
+        testSubject.update(new TrainingEntity(
                 1L,
                 1L,
                 1L,
@@ -132,7 +129,7 @@ class TrainingDaoImplTest {
                 Date.valueOf("2024-10-10"),
                 2000L
         ));
-        Assertions.assertThat(testSubject.get(1L)).isNotEqualTo(initialTraining);
+        Assertions.assertThat(testSubject.get(1L)).isNotEqualTo(initialTrainingEntity);
     }
 
     @Test
@@ -143,7 +140,7 @@ class TrainingDaoImplTest {
 
     @Test
     public void testDelete() {
-        testSubject.save(new Training(
+        testSubject.save(new TrainingEntity(
                 1L,
                 1L,
                 1L,

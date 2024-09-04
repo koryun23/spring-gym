@@ -6,9 +6,9 @@ import org.example.dao.core.TrainingDao;
 import org.example.dao.impl.TraineeDaoImpl;
 import org.example.dao.impl.TrainerDaoImpl;
 import org.example.dao.impl.TrainingDaoImpl;
-import org.example.entity.Trainee;
-import org.example.entity.Trainer;
-import org.example.entity.Training;
+import org.example.entity.TraineeEntity;
+import org.example.entity.TrainerEntity;
+import org.example.entity.TrainingEntity;
 import org.example.facade.core.TraineeFacade;
 import org.example.facade.core.TrainerFacade;
 import org.example.facade.core.TrainingFacade;
@@ -60,17 +60,17 @@ public class Config {
     }
 
     @Bean
-    public FileStorage<Trainee> traineeFileStorage() {
+    public FileStorage<TraineeEntity> traineeFileStorage() {
         return new TraineeFileStorageImpl();
     }
 
     @Bean
-    public FileStorage<Trainer> trainerFileStorage() {
+    public FileStorage<TrainerEntity> trainerFileStorage() {
         return new TrainerFileStorageImpl();
     }
 
     @Bean
-    public FileStorage<Training> trainingFileStorage() {
+    public FileStorage<TrainingEntity> trainingFileStorage() {
         return new TrainingFileStorageImpl();
     }
 

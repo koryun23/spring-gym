@@ -1,7 +1,7 @@
 package org.example.dao.impl;
 
 import org.example.dao.core.TrainingDao;
-import org.example.entity.Training;
+import org.example.entity.TrainingEntity;
 import org.example.repository.impl.TrainingStorageImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,48 +22,49 @@ public class TrainingDaoImpl implements TrainingDao {
     }
 
     @Override
-    public Training get(Long id) {
-        Assert.notNull(id, "Training id must not be null");
-        LOGGER.info("Retrieving a Training with an id of {}", id);
-        Training training = storage.get(id);
-        LOGGER.info("Successfully retrieved a Training with an id of {}, result - {}", id, training);
-        return training;
+    public TrainingEntity get(Long id) {
+        Assert.notNull(id, "TrainingEntity id must not be null");
+        LOGGER.info("Retrieving a TrainingEntity with an id of {}", id);
+        TrainingEntity trainingEntity = storage.get(id);
+        LOGGER.info("Successfully retrieved a TrainingEntity with an id of {}, result - {}", id, trainingEntity);
+        return trainingEntity;
     }
 
     @Override
-    public Training save(Training training) {
-        Assert.notNull(training, "Training must not be null");
-        LOGGER.info("Saving {}", training);
-        Training addedTraining = storage.add(training);
-        LOGGER.info("Successfully saved {}", addedTraining);
-        return addedTraining;
+    public TrainingEntity save(TrainingEntity trainingEntity) {
+        Assert.notNull(trainingEntity, "TrainingEntity must not be null");
+        LOGGER.info("Saving {}", trainingEntity);
+        TrainingEntity addedTrainingEntity = storage.add(trainingEntity);
+        LOGGER.info("Successfully saved {}", addedTrainingEntity);
+        return addedTrainingEntity;
     }
 
     @Override
-    public Training update(Training training) {
-        Assert.notNull(training, "Training must not be null");
-        LOGGER.info("Updating a Training with an id of {}", training.getTrainingId());
-        Training updatedTraining = storage.update(training);
-        LOGGER.info("Successfully updated a Training with an id of {}, result - {}", training.getTrainingId(), updatedTraining);
-        return updatedTraining;
+    public TrainingEntity update(TrainingEntity trainingEntity) {
+        Assert.notNull(trainingEntity, "TrainingEntity must not be null");
+        LOGGER.info("Updating a TrainingEntity with an id of {}", trainingEntity.getTrainingId());
+        TrainingEntity updatedTrainingEntity = storage.update(trainingEntity);
+        LOGGER.info("Successfully updated a TrainingEntity with an id of {}, result - {}", trainingEntity.getTrainingId(),
+            updatedTrainingEntity);
+        return updatedTrainingEntity;
     }
 
     @Override
     public boolean delete(Long id) {
-        Assert.notNull(id, "Training id must not be null");
-        LOGGER.info("Deleting a Training with an id of {}", id);
+        Assert.notNull(id, "TrainingEntity id must not be null");
+        LOGGER.info("Deleting a TrainingEntity with an id of {}", id);
         boolean success = storage.remove(id);
-        if(success) LOGGER.info("Successfully deleted a Training with an id of {}", id);
-        else LOGGER.error("Failed to delete a Training with an id of {}", id);
+        if(success) LOGGER.info("Successfully deleted a TrainingEntity with an id of {}", id);
+        else LOGGER.error("Failed to delete a TrainingEntity with an id of {}", id);
         return success;
     }
 
     @Override
-    public Optional<Training> findById(Long id) {
-        Assert.notNull(id, "Training id must not be null");
-        LOGGER.info("Retrieving an optional Training with an id of {}", id);
-        Optional<Training> optionalTraining = storage.findById(id);
-        LOGGER.info("Successfully retrieved an optional Training with an id of {}, result - {}", id, optionalTraining);
+    public Optional<TrainingEntity> findById(Long id) {
+        Assert.notNull(id, "TrainingEntity id must not be null");
+        LOGGER.info("Retrieving an optional TrainingEntity with an id of {}", id);
+        Optional<TrainingEntity> optionalTraining = storage.findById(id);
+        LOGGER.info("Successfully retrieved an optional TrainingEntity with an id of {}, result - {}", id, optionalTraining);
         return optionalTraining;
     }
 }

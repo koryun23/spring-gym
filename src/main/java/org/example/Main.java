@@ -5,7 +5,6 @@ import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TrainerCreationRequestDto;
 import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.entity.SpecializationType;
-import org.example.entity.Trainer;
 import org.example.entity.TrainingType;
 import org.example.facade.core.TraineeFacade;
 import org.example.facade.core.TrainerFacade;
@@ -43,7 +42,7 @@ public class Main {
         trainingFacade.createTraining(new TrainingCreationRequestDto(
                 1L,
                 1L,
-                "Aeoribics Training",
+                "Aeoribics TrainingEntity",
                 TrainingType.AEROBIC,
                 dateConverter.stringToDate("2024-12-12"),
                 1_000_000L

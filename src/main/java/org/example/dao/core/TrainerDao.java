@@ -1,12 +1,12 @@
 package org.example.dao.core;
 
-import org.example.entity.Trainer;
+import org.example.entity.TrainerEntity;
 
 import java.util.Optional;
 
-public interface TrainerDao extends Dao<Trainer> {
+public interface TrainerDao extends Dao<TrainerEntity> {
 
-    Trainer getByUsername(String username);
+    TrainerEntity getByUsername(String username);
 
-    Optional<Trainer> findByUsername(String username);
+    Optional<TrainerEntity> findByUsername(String username);
 }

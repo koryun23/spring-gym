@@ -2,8 +2,7 @@ package org.example.facade.impl;
 
 import org.assertj.core.api.Assertions;
 import org.example.dto.request.TrainingCreationRequestDto;
-import org.example.entity.Trainee;
-import org.example.entity.Training;
+import org.example.entity.TraineeEntity;
 import org.example.entity.TrainingType;
 import org.example.facade.core.TrainingFacade;
 import org.example.service.core.IdService;
@@ -20,10 +19,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.Date;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(MockitoExtension.class)
-class TrainingFacadeImplTest {
+class TrainingEntityFacadeImplTest {
 
     private TrainingFacade testSubject;
 
@@ -90,7 +87,7 @@ class TrainingFacadeImplTest {
     @Test
     public void testCreateTrainingWhenTrainerDoesNotExist() {
         Mockito.when(trainerService.findById(1L)).thenReturn(Optional.empty());
-        Mockito.when(traineeService.findById(1L)).thenReturn(Optional.of(new Trainee(
+        Mockito.when(traineeService.findById(1L)).thenReturn(Optional.of(new TraineeEntity(
                 1L,
                 "first",
                 "last",
@@ -119,13 +116,13 @@ class TrainingFacadeImplTest {
     @Test
     public void testRetrieveTrainingWhenNegative() {
         Assertions.assertThat(testSubject.retrieveTraining(-1L).getErrors().getFirst())
-                .isEqualTo("Training id must be positive: -1 specified");
+                .isEqualTo("TrainingEntity id must be positive: -1 specified");
     }
 
     @Test
     public void testRetrieveTrainingWhenDoesNotExist() {
         Mockito.when(trainingService.findById(1L)).thenReturn(Optional.empty());
         Assertions.assertThat(testSubject.retrieveTraining(1L).getErrors().getFirst())
-                .isEqualTo("Training with a specified id of 1 does not exist");
+                .isEqualTo("TrainingEntity with a specified id of 1 does not exist");
     }
 }

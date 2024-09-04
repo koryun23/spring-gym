@@ -1,7 +1,7 @@
 package org.example.repository.impl;
 
 import org.assertj.core.api.Assertions;
-import org.example.entity.Training;
+import org.example.entity.TrainingEntity;
 import org.example.entity.TrainingType;
 import org.example.exception.TrainingNotFoundException;
 import org.example.helper.DateConverter;
@@ -17,20 +17,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ExtendWith(MockitoExtension.class)
-class TrainingStorageImplTest {
+class TrainingEntityStorageImplTest {
 
     private TrainingStorageImpl testSubject;
 
     @Mock
-    private FileStorage<Training> trainingFileStorage;
+    private FileStorage<TrainingEntity> trainingFileStorage;
 
     @Mock
     private DateConverter dateConverter;
 
     @BeforeEach
     public void setUp() {
-        Map<Long, Training> map = new HashMap<>();
-        map.put(1L, new Training(
+        Map<Long, TrainingEntity> map = new HashMap<>();
+        map.put(1L, new TrainingEntity(
                 1L,
                 1L,
                 1L,
@@ -51,7 +51,7 @@ class TrainingStorageImplTest {
 
     @Test
     public void testGetTraining() {
-        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new Training(
+        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new TrainingEntity(
                 1L,
                 1L,
                 1L,
@@ -66,7 +66,7 @@ class TrainingStorageImplTest {
     public void testAdd() {
         Assertions.assertThatThrownBy(() -> testSubject.get(2L))
                 .isExactlyInstanceOf(TrainingNotFoundException.class);
-        testSubject.add(new Training(
+        testSubject.add(new TrainingEntity(
                 2L,
                 1L,
                 1L,
@@ -75,7 +75,7 @@ class TrainingStorageImplTest {
                 Date.valueOf("2024-10-10"),
                 1000L
         ));
-        Assertions.assertThat(testSubject.get(2L)).isEqualTo(new Training(
+        Assertions.assertThat(testSubject.get(2L)).isEqualTo(new TrainingEntity(
                 2L,
                 1L,
                 1L,
@@ -88,7 +88,7 @@ class TrainingStorageImplTest {
 
     @Test
     public void testRemove() {
-        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new Training(
+        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new TrainingEntity(
                 1L,
                 1L,
                 1L,
@@ -104,7 +104,7 @@ class TrainingStorageImplTest {
 
     @Test
     public void testUpdate() {
-        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new Training(
+        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new TrainingEntity(
                 1L,
                 1L,
                 1L,
@@ -113,7 +113,7 @@ class TrainingStorageImplTest {
                 Date.valueOf("2024-10-10"),
                 1000L
         ));
-        testSubject.update(new Training(
+        testSubject.update(new TrainingEntity(
                 1L,
                 1L,
                 1L,
@@ -122,7 +122,7 @@ class TrainingStorageImplTest {
                 Date.valueOf("2024-10-10"),
                 1000L
         ));
-        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new Training(
+        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new TrainingEntity(
                 1L,
                 1L,
                 1L,

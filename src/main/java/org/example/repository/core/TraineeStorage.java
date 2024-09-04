@@ -1,12 +1,12 @@
 package org.example.repository.core;
 
-import org.example.entity.Trainee;
+import org.example.entity.TraineeEntity;
 
 import java.util.Optional;
 
-public interface TraineeStorage extends Storage<Trainee> {
+public interface TraineeStorage extends Storage<TraineeEntity> {
 
-    Trainee getByUsername(String username);
+    TraineeEntity getByUsername(String username);
 
-    Optional<Trainee> findByUsername(String username);
+    Optional<TraineeEntity> findByUsername(String username);
 }

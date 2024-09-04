@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions;
 import org.example.dto.request.TrainerCreationRequestDto;
 import org.example.dto.request.TrainerUpdateRequestDto;
 import org.example.entity.SpecializationType;
-import org.example.entity.Trainer;
+import org.example.entity.TrainerEntity;
 import org.example.facade.core.TrainerFacade;
 import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
@@ -16,14 +16,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.autoconfigure.rsocket.RSocketProperties;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(MockitoExtension.class)
-class TrainerFacadeImplTest {
+class TrainerEntityFacadeImplTest {
 
     private TrainerFacade testSubject;
 
@@ -53,7 +50,7 @@ class TrainerFacadeImplTest {
     @Test
     public void testCreateTrainerExceptionWhenUserWithIdExists() {
         Mockito.when(idService.getId()).thenReturn(1L);
-        Mockito.when(trainerService.findById(1L)).thenReturn(Optional.of(new Trainer(
+        Mockito.when(trainerService.findById(1L)).thenReturn(Optional.of(new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -68,7 +65,7 @@ class TrainerFacadeImplTest {
                 "last",
                 true,
                 SpecializationType.FITNESS
-        )).getErrors().getFirst()).isEqualTo("A Trainer with the specified id - 1, already exists");
+        )).getErrors().getFirst()).isEqualTo("A TrainerEntity with the specified id - 1, already exists");
     }
 
     @Test
@@ -88,7 +85,7 @@ class TrainerFacadeImplTest {
                 "password",
                 false,
                 SpecializationType.FITNESS
-        )).getErrors().getFirst()).isEqualTo("Trainer with the specified id of 1 does not exist");
+        )).getErrors().getFirst()).isEqualTo("TrainerEntity with the specified id of 1 does not exist");
     }
 
     @Test
@@ -100,13 +97,13 @@ class TrainerFacadeImplTest {
     @Test
     public void testRetrieveTrainerWhenNegative() {
         Assertions.assertThat(testSubject.retrieveTrainer(-1L).getErrors().getFirst())
-                .isEqualTo("Trainer id must be positive: -1 specified");
+                .isEqualTo("TrainerEntity id must be positive: -1 specified");
     }
 
     @Test
     public void testRetrieveTrainerWhenDoesNotExist() {
         Mockito.when(trainerService.findById(1L)).thenReturn(Optional.empty());
         Assertions.assertThat(testSubject.retrieveTrainer(1L).getErrors().getFirst())
-                .isEqualTo("A Trainer with a specified id of 1 not found");
+                .isEqualTo("A TrainerEntity with a specified id of 1 not found");
     }
 }

@@ -1,20 +1,20 @@
 package org.example.service.core;
 
-import org.example.entity.Trainer;
+import org.example.entity.TrainerEntity;
 
 import java.util.Optional;
 
 public interface TrainerService {
 
-    Trainer create(Trainer params);
+    TrainerEntity create(TrainerEntity params);
 
-    Trainer update(Trainer params);
+    TrainerEntity update(TrainerEntity params);
 
-    Trainer select(Long trainerId);
+    TrainerEntity select(Long trainerId);
 
-    Trainer selectByUsername(String username);
+    TrainerEntity selectByUsername(String username);
 
-    Optional<Trainer> findById(Long id);
+    Optional<TrainerEntity> findById(Long id);
 
-    Optional<Trainer> findByUsername(String username);
+    Optional<TrainerEntity> findByUsername(String username);
 }

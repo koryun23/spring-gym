@@ -1,7 +1,7 @@
 package org.example.service.impl;
 
-import org.example.entity.Trainee;
-import org.example.entity.Trainer;
+import org.example.entity.TraineeEntity;
+import org.example.entity.TrainerEntity;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
 import org.example.service.core.UsernamePasswordService;
@@ -16,8 +16,8 @@ public class TraineeUsernamePasswordServiceImpl implements UsernamePasswordServi
     private final TrainerService trainerService;
 
     public TraineeUsernamePasswordServiceImpl(TraineeService traineeService, TrainerService trainerService) {
-        Assert.notNull(traineeService, "Trainee Service must not be null");
-        Assert.notNull(trainerService, "Trainer Service must not be null");
+        Assert.notNull(traineeService, "TraineeEntity Service must not be null");
+        Assert.notNull(trainerService, "TrainerEntity Service must not be null");
         this.traineeService = traineeService;
         this.trainerService = trainerService;
     }
@@ -25,12 +25,12 @@ public class TraineeUsernamePasswordServiceImpl implements UsernamePasswordServi
     @Override
     public String username(String firstName, String lastName, Long id) {
         String temporaryUsername = firstName + "." + lastName;
-        Optional<Trainee> optionalTrainee = traineeService.findByUsername(temporaryUsername);
+        Optional<TraineeEntity> optionalTrainee = traineeService.findByUsername(temporaryUsername);
 
         if (optionalTrainee.isEmpty()) return temporaryUsername;
 
         temporaryUsername += ("." + id);
-        Optional<Trainer> optionalTrainer = trainerService.findByUsername(temporaryUsername);
+        Optional<TrainerEntity> optionalTrainer = trainerService.findByUsername(temporaryUsername);
 
         if (optionalTrainer.isEmpty()) return temporaryUsername;
         return temporaryUsername + ".trainee";

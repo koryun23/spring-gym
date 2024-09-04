@@ -3,11 +3,9 @@ package org.example.facade.impl;
 import org.assertj.core.api.Assertions;
 import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
-import org.example.entity.Trainee;
+import org.example.entity.TraineeEntity;
 import org.example.facade.core.TraineeFacade;
 import org.example.service.core.*;
-import org.example.service.impl.TrainingServiceImpl;
-import org.example.service.params.TraineeCreateParams;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,10 +14,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.Date;
-import java.util.List;
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class TraineeFacadeImplTest {
@@ -52,7 +47,7 @@ class TraineeFacadeImplTest {
     @Test
     public void testCreateTraineeWhenTraineeWithIdExists() {
         Mockito.when(idService.getId()).thenReturn(1L);
-        Mockito.when(traineeService.findById(1L)).thenReturn(Optional.of(new Trainee(
+        Mockito.when(traineeService.findById(1L)).thenReturn(Optional.of(new TraineeEntity(
                 1L,
                 "first",
                 "last",
@@ -101,14 +96,14 @@ class TraineeFacadeImplTest {
     @Test
     public void testRetrieveTraineeWhenNegative() {
         Assertions.assertThat(testSubject.retrieveTrainee(-1L).getErrors().getFirst())
-                .isEqualTo("Trainee id must be positive: -1 specified");
+                .isEqualTo("TraineeEntity id must be positive: -1 specified");
     }
 
     @Test
     public void testRetrieveTraineeWhenTraineeDoesNotExist() {
         Mockito.when(traineeService.findById(1L)).thenReturn(Optional.empty());
         Assertions.assertThat(testSubject.retrieveTrainee(1L).getErrors().getFirst())
-                .isEqualTo("A Trainee with an id - 1, does not exist");
+                .isEqualTo("A TraineeEntity with an id - 1, does not exist");
     }
 
     @Test
@@ -120,13 +115,13 @@ class TraineeFacadeImplTest {
     @Test
     public void testDeleteTraineeWhenNegative() {
         Assertions.assertThat(testSubject.deleteTrainee(-1L).getErrors().getFirst())
-                .isEqualTo("Trainee id must be positive: -1 specified");
+                .isEqualTo("TraineeEntity id must be positive: -1 specified");
     }
 
     @Test
     public void testDeleteTraineeWhenUserDoesNotExist() {
         Mockito.when(traineeService.findById(1L)).thenReturn(Optional.empty());
         Assertions.assertThat(testSubject.deleteTrainee(1L).getErrors().getFirst())
-                .isEqualTo("A Trainee with an id - 1, does not exist");
+                .isEqualTo("A TraineeEntity with an id - 1, does not exist");
     }
 }

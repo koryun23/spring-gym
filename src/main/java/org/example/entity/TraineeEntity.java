@@ -3,20 +3,20 @@ package org.example.entity;
 import java.util.Date;
 import java.util.Objects;
 
-public class Trainee extends User {
+public class TraineeEntity extends User {
 
     private Date dateOfBirth;
     private String address;
     private Long userId;
 
-    public Trainee(Long userId,
-                   String firstName,
-                   String lastName,
-                   String username,
-                   String password,
-                   boolean isActive,
-                   Date dateOfBirth,
-                   String address) {
+    public TraineeEntity(Long userId,
+                         String firstName,
+                         String lastName,
+                         String username,
+                         String password,
+                         boolean isActive,
+                         Date dateOfBirth,
+                         String address) {
         super(firstName, lastName, username, password, isActive);
         this.dateOfBirth = dateOfBirth;
         this.address = address;
@@ -52,7 +52,7 @@ public class Trainee extends User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        Trainee trainee = (Trainee) o;
+        TraineeEntity trainee = (TraineeEntity) o;
         return  Objects.equals(dateOfBirth, trainee.dateOfBirth) &&
                 Objects.equals(address, trainee.address) &&
                 Objects.equals(userId, trainee.userId);
@@ -65,7 +65,7 @@ public class Trainee extends User {
 
     @Override
     public String toString() {
-        return "Trainee{" +
+        return "TraineeEntity{" +
                 "dateOfBirth=" + dateOfBirth +
                 ", address='" + address + '\'' +
                 ", userId=" + userId +

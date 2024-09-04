@@ -3,11 +3,11 @@ package org.example.entity;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class TrainerTest {
+class TrainerEntityTest {
 
     @Test
     public void TestTrainerEquals() {
-        Trainer trainer1 = new Trainer(
+        TrainerEntity trainerEntity1 = new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -17,7 +17,7 @@ class TrainerTest {
                 SpecializationType.FITNESS
         );
 
-        Trainer trainer2 = new Trainer(
+        TrainerEntity trainerEntity2 = new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -27,12 +27,12 @@ class TrainerTest {
                 SpecializationType.FITNESS
         );
 
-        Assertions.assertThat(trainer1).isEqualTo(trainer2);
+        Assertions.assertThat(trainerEntity1).isEqualTo(trainerEntity2);
     }
 
     @Test
     public void TestTrainerHashCode() {
-        Trainer trainer1 = new Trainer(
+        TrainerEntity trainerEntity1 = new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -42,7 +42,7 @@ class TrainerTest {
                 SpecializationType.FITNESS
         );
 
-        Trainer trainer2 = new Trainer(
+        TrainerEntity trainerEntity2 = new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -52,6 +52,6 @@ class TrainerTest {
                 SpecializationType.FITNESS
         );
 
-        Assertions.assertThat(trainer1.hashCode()).isEqualTo(trainer2.hashCode());
+        Assertions.assertThat(trainerEntity1.hashCode()).isEqualTo(trainerEntity2.hashCode());
     }
 }

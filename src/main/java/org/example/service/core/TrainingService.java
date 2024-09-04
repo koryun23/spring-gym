@@ -1,14 +1,14 @@
 package org.example.service.core;
 
-import org.example.entity.Training;
+import org.example.entity.TrainingEntity;
 
 import java.util.Optional;
 
 public interface TrainingService {
 
-    Training create(Training params);
+    TrainingEntity create(TrainingEntity params);
 
-    Training select(Long id);
+    TrainingEntity select(Long id);
 
-    Optional<Training> findById(Long id);
+    Optional<TrainingEntity> findById(Long id);
 }

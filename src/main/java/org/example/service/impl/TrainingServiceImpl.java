@@ -1,7 +1,7 @@
 package org.example.service.impl;
 
 import org.example.dao.core.TrainingDao;
-import org.example.entity.Training;
+import org.example.entity.TrainingEntity;
 import org.example.service.core.TrainingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,37 +18,38 @@ public class TrainingServiceImpl implements TrainingService {
     private TrainingDao trainingDao;
 
     @Override
-    public Training create(Training training) {
-        Assert.notNull(training, "TrainingCreateParams must not be null");
-        LOGGER.info("Creating a Training according to the TrainingCreateParams - {}", training);
-        Training createdTraining = trainingDao.save(new Training(
-                training.getTrainingId(),
-                training.getTraineeId(),
-                training.getTrainerId(),
-                training.getName(),
-                training.getTrainingType(),
-                training.getTrainingDate(),
-                training.getDuration()
+    public TrainingEntity create(TrainingEntity trainingEntity) {
+        Assert.notNull(trainingEntity, "TrainingCreateParams must not be null");
+        LOGGER.info("Creating a TrainingEntity according to the TrainingCreateParams - {}", trainingEntity);
+        TrainingEntity createdTrainingEntity = trainingDao.save(new TrainingEntity(
+                trainingEntity.getTrainingId(),
+                trainingEntity.getTraineeId(),
+                trainingEntity.getTrainerId(),
+                trainingEntity.getName(),
+                trainingEntity.getTrainingType(),
+                trainingEntity.getTrainingDate(),
+                trainingEntity.getDuration()
         ));
-        LOGGER.info("Successfully created a Training according to the Training Create Params - {}, result - {}", training, createdTraining);
-        return createdTraining;
+        LOGGER.info("Successfully created a TrainingEntity according to the TrainingEntity Create Params - {}, result - {}",
+            trainingEntity, createdTrainingEntity);
+        return createdTrainingEntity;
     }
 
     @Override
-    public Training select(Long id) {
-        Assert.notNull(id, "Training Id must not be null");
-        LOGGER.info("Selecting a Training with an id of {}", id);
-        Training training = trainingDao.get(id);
-        LOGGER.info("Successfully selected a Training with an id of {}, result - {}", id, training);
-        return training;
+    public TrainingEntity select(Long id) {
+        Assert.notNull(id, "TrainingEntity Id must not be null");
+        LOGGER.info("Selecting a TrainingEntity with an id of {}", id);
+        TrainingEntity trainingEntity = trainingDao.get(id);
+        LOGGER.info("Successfully selected a TrainingEntity with an id of {}, result - {}", id, trainingEntity);
+        return trainingEntity;
     }
 
     @Override
-    public Optional<Training> findById(Long id) {
-        Assert.notNull(id, "Training id must not be null");
-        LOGGER.info("Retrieving an optional Training with an id of {}", id);
-        Optional<Training> optionalTraining = trainingDao.findById(id);
-        LOGGER.info("Successfully retrieved an optional Training with an id of {}, result - {}", id, optionalTraining);
+    public Optional<TrainingEntity> findById(Long id) {
+        Assert.notNull(id, "TrainingEntity id must not be null");
+        LOGGER.info("Retrieving an optional TrainingEntity with an id of {}", id);
+        Optional<TrainingEntity> optionalTraining = trainingDao.findById(id);
+        LOGGER.info("Successfully retrieved an optional TrainingEntity with an id of {}, result - {}", id, optionalTraining);
         return optionalTraining;
     }
 }

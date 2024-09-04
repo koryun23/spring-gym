@@ -5,56 +5,56 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.Date;
 
-class TrainingTest {
+class TrainingEntityTest {
 
     @Test
     public void TestTrainingEquals() {
-        Training training1 = new Training(
+        TrainingEntity trainingEntity1 = new TrainingEntity(
                 1L,
                 1L,
                 1L,
-                "training1",
+                "trainingEntity1",
                 TrainingType.AEROBIC,
                 Date.valueOf("2024-10-10"),
                 1000L
         );
 
-        Training training2 = new Training(
+        TrainingEntity trainingEntity2 = new TrainingEntity(
                 1L,
                 1L,
                 1L,
-                "training1",
+                "trainingEntity1",
                 TrainingType.AEROBIC,
                 Date.valueOf("2024-10-10"),
                 1000L
         );
 
-        Assertions.assertThat(training1).isEqualTo(training2);
+        Assertions.assertThat(trainingEntity1).isEqualTo(trainingEntity2);
     }
 
     @Test
     public void TestTrainingHashCode() {
-        Training training1 = new Training(
+        TrainingEntity trainingEntity1 = new TrainingEntity(
                 1L,
                 1L,
                 1L,
-                "training1",
+                "trainingEntity1",
                 TrainingType.AEROBIC,
                 Date.valueOf("2024-10-10"),
                 1000L
         );
 
-        Training training2 = new Training(
+        TrainingEntity trainingEntity2 = new TrainingEntity(
                 1L,
                 1L,
                 1L,
-                "training1",
+                "trainingEntity1",
                 TrainingType.AEROBIC,
                 Date.valueOf("2024-10-10"),
                 1000L
         );
 
-        Assertions.assertThat(training1.hashCode()).isEqualTo(training2.hashCode());
+        Assertions.assertThat(trainingEntity1.hashCode()).isEqualTo(trainingEntity2.hashCode());
 
     }
 }

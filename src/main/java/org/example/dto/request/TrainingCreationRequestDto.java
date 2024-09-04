@@ -1,6 +1,5 @@
 package org.example.dto.request;
 
-import org.example.entity.Training;
 import org.example.entity.TrainingType;
 
 import java.util.Date;
@@ -87,7 +86,7 @@ public class TrainingCreationRequestDto {
 
     @Override
     public String toString() {
-        return "Training{" +
+        return "TrainingEntity{" +
                 ", traineeId=" + traineeId +
                 ", trainerId=" + trainerId +
                 ", name='" + name + '\'' +

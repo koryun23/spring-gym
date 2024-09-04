@@ -1,9 +1,8 @@
 package org.example.dao.impl;
 
 import org.example.dao.core.TraineeDao;
-import org.example.entity.Trainee;
+import org.example.entity.TraineeEntity;
 import org.example.repository.core.TraineeStorage;
-import org.example.repository.impl.TraineeStorageImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,35 +22,35 @@ public class TraineeDaoImpl implements TraineeDao {
     }
 
     @Override
-    public Trainee get(Long id) {
-        Assert.notNull(id, "Trainee id must not be null");
-        LOGGER.info("Retrieving a Trainee with an id of {}", id);
-        Trainee trainee = storage.get(id);
-        LOGGER.info("Successfully retrieved a Trainee with an id of {}, result - {}", id, trainee);
+    public TraineeEntity get(Long id) {
+        Assert.notNull(id, "TraineeEntity id must not be null");
+        LOGGER.info("Retrieving a TraineeEntity with an id of {}", id);
+        TraineeEntity trainee = storage.get(id);
+        LOGGER.info("Successfully retrieved a TraineeEntity with an id of {}, result - {}", id, trainee);
         return trainee;
     }
 
     @Override
-    public Trainee save(Trainee trainee) {
-        Assert.notNull(trainee, "Trainee must not be null");
+    public TraineeEntity save(TraineeEntity trainee) {
+        Assert.notNull(trainee, "TraineeEntity must not be null");
         LOGGER.info("Saving {}", trainee);
-        Trainee addedTrainee = storage.add(trainee);
+        TraineeEntity addedTrainee = storage.add(trainee);
         LOGGER.info("Successfully saved {}", trainee);
         return trainee;
     }
 
     @Override
-    public Trainee update(Trainee trainee) {
-        Assert.notNull(trainee, "Trainee must not be null");
-        LOGGER.info("Updating a Trainee with an id of {}", trainee.getUserId());
-        Trainee updatedTrainee = storage.update(trainee);
-        LOGGER.info("Successfully updated a Trainee with an id of {}, result - {}", trainee.getUserId(), updatedTrainee);
+    public TraineeEntity update(TraineeEntity trainee) {
+        Assert.notNull(trainee, "TraineeEntity must not be null");
+        LOGGER.info("Updating a TraineeEntity with an id of {}", trainee.getUserId());
+        TraineeEntity updatedTrainee = storage.update(trainee);
+        LOGGER.info("Successfully updated a TraineeEntity with an id of {}, result - {}", trainee.getUserId(), updatedTrainee);
         return updatedTrainee;
     }
 
     @Override
     public boolean delete(Long id) {
-        Assert.notNull(id, "Trainee Id must not be null");
+        Assert.notNull(id, "TraineeEntity Id must not be null");
         LOGGER.info("Deleting a trainee with an id of {}", id);
         boolean remove = storage.remove(id);
         if(remove) LOGGER.info("Successfully removed a trainee with an id of {}", id);
@@ -60,31 +59,31 @@ public class TraineeDaoImpl implements TraineeDao {
     }
 
     @Override
-    public Trainee getByUsername(String username) {
-        Assert.notNull(username, "Trainee username must not be null");
-        Assert.hasText(username, "Trainee username must not be empty");
-        LOGGER.info("Retrieving a Trainee with a username of {}", username);
-        Trainee trainee = storage.getByUsername(username);
-        LOGGER.info("Successfully retrieved a Trainee with a username of {}, result - {}", username, trainee);
+    public TraineeEntity getByUsername(String username) {
+        Assert.notNull(username, "TraineeEntity username must not be null");
+        Assert.hasText(username, "TraineeEntity username must not be empty");
+        LOGGER.info("Retrieving a TraineeEntity with a username of {}", username);
+        TraineeEntity trainee = storage.getByUsername(username);
+        LOGGER.info("Successfully retrieved a TraineeEntity with a username of {}, result - {}", username, trainee);
         return trainee;
     }
 
     @Override
-    public Optional<Trainee> findByUsername(String username) {
-        Assert.notNull(username, "Trainee username must not be null");
-        Assert.hasText(username, "Trainee username must not be empty");
-        LOGGER.info("Retrieving an optional Trainee with a username of {}", username);
-        Optional<Trainee> optionalTrainee = storage.findByUsername(username);
-        LOGGER.info("Successfully retrieved an optional Trainee with a username of {}, result - {}", username, optionalTrainee);
+    public Optional<TraineeEntity> findByUsername(String username) {
+        Assert.notNull(username, "TraineeEntity username must not be null");
+        Assert.hasText(username, "TraineeEntity username must not be empty");
+        LOGGER.info("Retrieving an optional TraineeEntity with a username of {}", username);
+        Optional<TraineeEntity> optionalTrainee = storage.findByUsername(username);
+        LOGGER.info("Successfully retrieved an optional TraineeEntity with a username of {}, result - {}", username, optionalTrainee);
         return optionalTrainee;
     }
 
     @Override
-    public Optional<Trainee> findById(Long id) {
-        Assert.notNull(id, "Trainee id must not be null");
-        LOGGER.info("Retrieving an optional Trainee with an id of {}", id);
-        Optional<Trainee> optionalTrainee = storage.findById(id);
-        LOGGER.info("Successfully retrieved an optional Trainee with an id {}, result - {}", id, optionalTrainee);
+    public Optional<TraineeEntity> findById(Long id) {
+        Assert.notNull(id, "TraineeEntity id must not be null");
+        LOGGER.info("Retrieving an optional TraineeEntity with an id of {}", id);
+        Optional<TraineeEntity> optionalTrainee = storage.findById(id);
+        LOGGER.info("Successfully retrieved an optional TraineeEntity with an id {}, result - {}", id, optionalTrainee);
         return optionalTrainee;
     }
 }

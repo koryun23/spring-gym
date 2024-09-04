@@ -3,18 +3,18 @@ package org.example.entity;
 
 import java.util.Objects;
 
-public class Trainer extends User {
+public class TrainerEntity extends User {
 
     private SpecializationType specialization;
     private Long userId;
 
-    public Trainer(Long userId,
-                   String firstName,
-                   String lastName,
-                   String username,
-                   String password,
-                   boolean isActive,
-                   SpecializationType specialization) {
+    public TrainerEntity(Long userId,
+                         String firstName,
+                         String lastName,
+                         String username,
+                         String password,
+                         boolean isActive,
+                         SpecializationType specialization) {
         super(firstName, lastName, username, password, isActive);
         this.specialization = specialization;
         this.userId = userId;
@@ -41,8 +41,8 @@ public class Trainer extends User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        Trainer trainer = (Trainer) o;
-        return specialization == trainer.specialization && Objects.equals(userId, trainer.userId);
+        TrainerEntity trainerEntity = (TrainerEntity) o;
+        return specialization == trainerEntity.specialization && Objects.equals(userId, trainerEntity.userId);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class Trainer extends User {
 
     @Override
     public String toString() {
-        return "Trainer{" +
+        return "TrainerEntity{" +
                 "specialization='" + specialization + '\'' +
                 ", userId=" + userId +
                 '}';

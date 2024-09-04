@@ -2,7 +2,7 @@ package org.example.repository.impl;
 
 import org.assertj.core.api.Assertions;
 import org.example.entity.SpecializationType;
-import org.example.entity.Trainer;
+import org.example.entity.TrainerEntity;
 import org.example.exception.TrainerNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,10 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(MockitoExtension.class)
-class TrainerStorageImplTest {
+class TrainerEntityStorageImplTest {
 
     private TrainerStorageImpl testSubject;
 
@@ -26,8 +24,8 @@ class TrainerStorageImplTest {
 
     @BeforeEach
     public void setUp() {
-        Map<Long, Trainer> map = new HashMap<>();
-        map.put(1L, new Trainer(
+        Map<Long, TrainerEntity> map = new HashMap<>();
+        map.put(1L, new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -48,7 +46,7 @@ class TrainerStorageImplTest {
     }
 
     public void testGetWhenExists() {
-        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new Trainer(
+        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -68,7 +66,7 @@ class TrainerStorageImplTest {
     public void testAdd() {
         Assertions.assertThatThrownBy(() -> testSubject.get(2L))
                 .isExactlyInstanceOf(TrainerNotFoundException.class);
-        testSubject.add(new Trainer(
+        testSubject.add(new TrainerEntity(
                 2L,
                 "first",
                 "last",
@@ -77,7 +75,7 @@ class TrainerStorageImplTest {
                 true,
                 SpecializationType.FITNESS
         ));
-        Assertions.assertThat(testSubject.get(2L)).isEqualTo(new Trainer(
+        Assertions.assertThat(testSubject.get(2L)).isEqualTo(new TrainerEntity(
                 2L,
                 "first",
                 "last",
@@ -96,7 +94,7 @@ class TrainerStorageImplTest {
 
     @Test
     public void testRemoveWhenExists() {
-        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new Trainer(
+        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -118,7 +116,7 @@ class TrainerStorageImplTest {
 
     @Test
     public void testUpdateWhenExists() {
-        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new Trainer(
+        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -127,7 +125,7 @@ class TrainerStorageImplTest {
                 true,
                 SpecializationType.FITNESS
         ));
-        testSubject.update(new Trainer(
+        testSubject.update(new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -136,7 +134,7 @@ class TrainerStorageImplTest {
                 false,
                 SpecializationType.FITNESS
         ));
-        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new Trainer(
+        Assertions.assertThat(testSubject.get(1L)).isEqualTo(new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -161,7 +159,7 @@ class TrainerStorageImplTest {
 
     @Test
     public void testGetByUsernameWhenExists() {
-        Assertions.assertThat(testSubject.getByUsername("username")).isEqualTo(new Trainer(
+        Assertions.assertThat(testSubject.getByUsername("username")).isEqualTo(new TrainerEntity(
                         1L,
                         "first",
                         "last",
@@ -174,7 +172,7 @@ class TrainerStorageImplTest {
 
     @Test
     public void testFindByUsername() {
-        Assertions.assertThat(testSubject.findByUsername("username")).isEqualTo(Optional.of(new Trainer(
+        Assertions.assertThat(testSubject.findByUsername("username")).isEqualTo(Optional.of(new TrainerEntity(
                 1L,
                 "first",
                 "last",
@@ -187,7 +185,7 @@ class TrainerStorageImplTest {
 
     @Test
     void testFindById() {
-        Assertions.assertThat(testSubject.findById(1L)).isEqualTo(Optional.of(new Trainer(
+        Assertions.assertThat(testSubject.findById(1L)).isEqualTo(Optional.of(new TrainerEntity(
                 1L,
                 "first",
                 "last",
