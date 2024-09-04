@@ -8,57 +8,28 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/config/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/config/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dao/core/TraineeDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dao/core/TraineeDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dao/core/TrainerDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dao/core/TrainerDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dao/core/TrainingDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dao/core/TrainingDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/TraineeDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/TraineeDaoImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/TrainerDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/TrainerDaoImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/TrainingDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/TrainingDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TrainingCreationRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TrainingCreationRequestDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainingCreationResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainingCreationResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainingRetrievalResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainingRetrievalResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Trainee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/TraineeEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Trainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/TrainerEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/Training.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/TrainingEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/exception/TraineeNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/exception/TraineeNotFoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/exception/TrainerNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/exception/TrainerNotFoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/exception/TrainingNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/exception/TrainingNotFoundException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainingFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainingFacadeImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/core/TraineeStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/core/TraineeStorage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/core/TrainerStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/core/TrainerStorage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/core/TrainingStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/core/TrainingStorage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/helper/DateConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/helper/DateConverter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeFileStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeFileStorageImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeStorageImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainerFileStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainerFileStorageImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainerStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainerStorageImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainingFileStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainingFileStorageImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainingStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TrainingStorageImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/core/TraineeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/core/TraineeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/core/TrainerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/core/TrainerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/core/TrainingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/core/TrainingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/core/DatabasePathService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/core/DatabasePathService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/DatabasePathServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/DatabasePathServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/IdServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/IdServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TraineeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TraineeServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TraineeUsernamePasswordServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TraineeUsernamePasswordServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainerServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainerUsernamePasswordServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainerUsernamePasswordServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainingServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/dao/impl/TraineeDaoImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/dao/impl/TraineeDaoImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/dao/impl/TrainerDaoImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/dao/impl/TrainerEntityDaoImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/dao/impl/TrainingDaoImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/dao/impl/TrainingEntityDaoImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/entity/TraineeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/entity/TraineeEntityTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/entity/TrainerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/entity/TrainerEntityTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/entity/TrainingTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/entity/TrainingEntityTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TraineeFacadeImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TraineeFacadeImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TrainerFacadeImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TrainerEntityFacadeImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TrainingFacadeImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TrainingEntityFacadeImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/repository/impl/TraineeStorageImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/repository/impl/TraineeStorageImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/repository/impl/TrainerStorageImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/repository/impl/TrainerEntityStorageImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/repository/impl/TrainingStorageImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/repository/impl/TrainingEntityStorageImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/service/impl/TraineeServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/service/impl/TraineeServiceImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/service/impl/TrainerServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/service/impl/TrainerEntityServiceImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/service/impl/TrainingServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/service/impl/TrainingEntityServiceImplTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,30 +89,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Tests in 'gym-spring.test'.executor": "Run",
-    "Gradle.TraineeStorageImplTest.TestTraineeUpdate.executor": "Run",
-    "Gradle.TraineeStorageImplTest.executor": "Run",
-    "Gradle.TraineeTest.TestTrainee.executor": "Run",
-    "Gradle.TraineeTest.executor": "Run",
-    "Gradle.TrainerStorageImplTest.executor": "Run",
-    "Gradle.TrainerStorageImplTest.testGetWhenNull.executor": "Run",
-    "Gradle.TrainerStorageImplTest.testRemoveWhenExists.executor": "Run",
-    "Gradle.gym-spring [:Main.main()].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Koryun/Desktop/Koryun/gym-spring/src/main/java/org/example/db",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.sourceCode"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Tests in 'gym-spring.test'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TraineeStorageImplTest.TestTraineeUpdate.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TraineeStorageImplTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TraineeTest.TestTrainee.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TraineeTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TrainerStorageImplTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TrainerStorageImplTest.testGetWhenNull.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TrainerStorageImplTest.testRemoveWhenExists.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.gym-spring [:Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Koryun/Desktop/Koryun/gym-spring/src/main/java/org/example/db&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Koryun\Desktop\Koryun\gym-spring\src\main\java\org\example\db" />

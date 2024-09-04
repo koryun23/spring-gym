@@ -15,14 +15,12 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class Main {
     public static void main(String[] args) {
 
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-        context.register(Config.class);
-        context.refresh();
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
 
-        DateConverter dateConverter = (DateConverter) context.getBean("dateConverter");
-        TraineeFacade traineeFacade = (TraineeFacade) context.getBean("traineeFacade");
-        TrainerFacade trainerFacade = (TrainerFacade) context.getBean("trainerFacade");
-        TrainingFacade trainingFacade = (TrainingFacade) context.getBean("trainingFacade");
+        DateConverter dateConverter = context.getBean(DateConverter.class);
+        TraineeFacade traineeFacade = context.getBean(TraineeFacade.class);
+        TrainerFacade trainerFacade = context.getBean(TrainerFacade.class);
+        TrainingFacade trainingFacade = context.getBean(TrainingFacade.class);
 
         traineeFacade.createTrainee(new TraineeCreationRequestDto(
                 "John",

@@ -17,7 +17,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TraineeFileStorageImpl implements FileStorage<TraineeEntity> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TraineeFileStorageImpl.class);
@@ -62,6 +65,7 @@ public class TraineeFileStorageImpl implements FileStorage<TraineeEntity> {
         try {
             scanner = new Scanner(new File(traineePath));
         } catch (IOException e) {
+            LOGGER.error("No file found with path {}", traineePath);
             throw new RuntimeException(e);
         }
 
@@ -128,12 +132,16 @@ public class TraineeFileStorageImpl implements FileStorage<TraineeEntity> {
     }
 
     @Autowired
+    @Qualifier("traineeDatabasePathService")
     public void setDatabasePathService(DatabasePathService databasePathService) {
         this.databasePathService = databasePathService;
     }
 
     @PostConstruct
     public void init() {
-        traineePath = databasePathService.getTraineePath();
+        LOGGER.info("Entering the post construct method");
+        System.out.println(databasePathService);
+        traineePath = databasePathService.getEntityPath();
+        LOGGER.info("trainee path - {}", traineePath);
     }
 }

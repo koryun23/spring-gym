@@ -2,15 +2,7 @@ package org.example.service.core;
 
 public interface DatabasePathService {
 
-    String getTraineePath();
+    String getEntityPath();
 
-    String getTrainerPath();
-
-    String getTrainingPath();
-
-    String getTraineeIdPath();
-
-    String getTrainerIdPath();
-
-    String getTrainingIdPath();
+    String getIdPath();
 }

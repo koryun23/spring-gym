@@ -1,56 +1,32 @@
 package org.example.service.impl;
 
 import org.example.service.core.DatabasePathService;
-import org.springframework.beans.factory.annotation.Value;
 
 public class DatabasePathServiceImpl implements DatabasePathService {
 
-    @Value("${trainee.id.path}")
-    private String traineeIdPath;
+    private String entityPath;
+    private String idPath;
 
-    @Value("${trainer.id.path}")
-    private String trainerIdPath;
-
-    @Value("${training.id.path}")
-    private String trainingIdPath;
-
-    @Value("${training.path}")
-    private String trainingPath;
-
-    @Value("${trainee.path}")
-    private String traineePath;
-
-    @Value("${trainer.path}")
-    private String trainerPath;
-
-
-    @Override
-    public String getTraineePath() {
-        return traineePath;
+    public DatabasePathServiceImpl(String entityPath, String idPath) {
+        this.entityPath = entityPath;
+        this.idPath = idPath;
     }
 
     @Override
-    public String getTrainerPath() {
-        return trainerPath;
+    public String getEntityPath() {
+        return entityPath;
     }
 
     @Override
-    public String getTrainingPath() {
-        return trainingPath;
+    public String getIdPath() {
+        return idPath;
     }
 
     @Override
-    public String getTraineeIdPath() {
-        return traineeIdPath;
-    }
-
-    @Override
-    public String getTrainerIdPath() {
-        return trainerIdPath;
-    }
-
-    @Override
-    public String getTrainingIdPath() {
-        return trainingIdPath;
+    public String toString() {
+        return "DatabasePathServiceImpl{" +
+            "entityPath='" + entityPath + '\'' +
+            ", idPath='" + idPath + '\'' +
+            '}';
     }
 }

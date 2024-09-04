@@ -23,115 +23,71 @@ import org.example.repository.core.TrainingStorage;
 import org.example.repository.impl.*;
 import org.example.service.core.*;
 import org.example.service.impl.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 
 import java.text.SimpleDateFormat;
+import org.springframework.stereotype.Component;
 
 @PropertySource("classpath:application.properties")
 @Configuration
+@ComponentScan("org.example")
 public class Config {
 
+    @Value("${trainee.path}")
+    private String traineePath;
+
+    @Value("${trainee.id.path}")
+    private String traineeIdPath;
+
+    @Value("${trainer.path}")
+    private String trainerPath;
+
+    @Value("${trainer.id.path}")
+    private String trainerIdPath;
+
+    @Value("${training.path}")
+    private String trainingPath;
+
+    @Value("${training.id.path}")
+    private String trainingIdPath;
+
     @Bean
-    public DatabasePathService databasePathService() {
-        return new DatabasePathServiceImpl();
+    public DatabasePathService traineeDatabasePathService() {
+        return new DatabasePathServiceImpl(traineePath, traineeIdPath);
+    }
+
+    @Bean
+    public DatabasePathService trainerDatabasePathService() {
+        return new DatabasePathServiceImpl(trainerPath, trainerIdPath);
+    }
+
+    @Bean
+    public DatabasePathService trainingDatabasePathService() {
+        return new DatabasePathServiceImpl(trainingPath, trainingIdPath);
+    }
+
+    @Bean
+    public IdService traineeIdService() {
+        return new IdServiceImpl(traineeDatabasePathService());
+    }
+
+    @Bean
+    public IdService trainerIdService() {
+        return new IdServiceImpl(trainerDatabasePathService());
+    }
+
+    @Bean
+    public IdService trainingIdService() {
+        return new IdServiceImpl(trainingDatabasePathService());
     }
 
     @Bean
     public DateConverter dateConverter() {
         return new DateConverter(new SimpleDateFormat("yyyy-MM-dd"));
-    }
-
-    @Bean
-    public TrainingStorage trainingStorage() {
-        return new TrainingStorageImpl();
-    }
-//
-    @Bean
-    public TraineeStorage traineeStorage() {
-        return new TraineeStorageImpl();
-    }
-
-    @Bean
-    public TrainerStorage trainerStorage() {
-        return new TrainerStorageImpl();
-    }
-
-    @Bean
-    public FileStorage<TraineeEntity> traineeFileStorage() {
-        return new TraineeFileStorageImpl();
-    }
-
-    @Bean
-    public FileStorage<TrainerEntity> trainerFileStorage() {
-        return new TrainerFileStorageImpl();
-    }
-
-    @Bean
-    public FileStorage<TrainingEntity> trainingFileStorage() {
-        return new TrainingFileStorageImpl();
-    }
-
-    @Bean
-    public TrainingDao trainingDao() {
-        return new TrainingDaoImpl();
-    }
-
-    @Bean
-    public TraineeDao traineeDao() {
-        return new TraineeDaoImpl();
-    }
-
-    @Bean
-    public TrainerDao trainerDao() {
-        return new TrainerDaoImpl();
-    }
-
-    @Bean
-    public TrainingService trainingService() {
-        return new TrainingServiceImpl();
-    }
-
-    @Bean
-    public TrainerService trainerService() {
-        return new TrainerServiceImpl();
-    }
-
-    @Bean
-    public TraineeService traineeService() {
-        return new TraineeServiceImpl();
-    }
-
-    @Bean
-    public TraineeFacade traineeFacade() {
-        return new TraineeFacadeImpl(traineeService(), trainerService(), idService(databasePathService().getTraineeIdPath()), traineeUsernamePasswordService());
-    }
-
-    @Bean
-    public TrainerFacade trainerFacade() {
-        return new TrainerFacadeImpl(trainerService(), traineeService(), idService(databasePathService().getTrainerIdPath()), trainerUsernamePasswordService());
-    }
-
-    @Bean
-    public TrainingFacade trainingFacade() {
-        return new TrainingFacadeImpl(trainingService(), idService(databasePathService().getTrainingIdPath()), traineeService(), trainerService());
-    }
-
-    @Bean
-    @Scope("prototype")
-    public IdService idService(String filePath) {
-        return new IdServiceImpl(filePath);
-    }
-
-    @Bean
-    public UsernamePasswordService traineeUsernamePasswordService() {
-        return new TraineeUsernamePasswordServiceImpl(traineeService(), trainerService());
-    }
-
-    @Bean
-    public UsernamePasswordService trainerUsernamePasswordService() {
-        return new TrainerUsernamePasswordServiceImpl(traineeService(), trainerService());
     }
 }

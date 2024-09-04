@@ -5,11 +5,13 @@ import org.example.entity.TrainerEntity;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
 import org.example.service.core.UsernamePasswordService;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.Optional;
 import java.util.UUID;
 
+@Service("traineeUsernamePasswordService")
 public class TraineeUsernamePasswordServiceImpl implements UsernamePasswordService {
 
     private final TraineeService traineeService;

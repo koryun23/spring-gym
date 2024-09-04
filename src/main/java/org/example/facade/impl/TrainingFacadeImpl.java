@@ -12,29 +12,32 @@ import org.example.service.core.TrainingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import java.util.List;
 
+@Component
 public class TrainingFacadeImpl implements TrainingFacade {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainingFacadeImpl.class);
 
     private final TrainingService trainingService;
-    private final IdService idService;
     private final TraineeService traineeService;
     private final TrainerService trainerService;
 
     @Autowired
+    @Qualifier("trainingIdService")
+    private IdService idService;
+
+    @Autowired
     public TrainingFacadeImpl(TrainingService trainingService,
-                              IdService idService,
                               TraineeService traineeService,
                               TrainerService trainerService) {
         Assert.notNull(trainingService, "TrainingEntity Service must not be null");
-        Assert.notNull(idService, "Id Service must not be null");
         Assert.notNull(traineeService, "TraineeEntity Service must not be null");
         Assert.notNull(trainerService, "TrainerEntity Service must not be null");
         this.trainingService = trainingService;
-        this.idService = idService;
         this.traineeService = traineeService;
         this.trainerService = trainerService;
     }

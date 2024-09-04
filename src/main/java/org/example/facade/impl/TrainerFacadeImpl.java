@@ -14,31 +14,34 @@ import org.example.service.core.UsernamePasswordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import java.util.List;
 
+@Component
 public class TrainerFacadeImpl implements TrainerFacade {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainerFacadeImpl.class);
 
     private final TrainerService trainerService;
     private final TraineeService traineeService;
-    private final IdService idService;
-    private final UsernamePasswordService usernamePasswordService;
+
+    @Autowired
+    @Qualifier("trainerUsernamePasswordService")
+    private UsernamePasswordService usernamePasswordService;
+
+    @Autowired
+    @Qualifier("trainerIdService")
+    private IdService idService;
 
     @Autowired
     public TrainerFacadeImpl(TrainerService trainerService,
-                             TraineeService traineeService,
-                             IdService idService,
-                             UsernamePasswordService usernamePasswordService) {
+                             TraineeService traineeService) {
         Assert.notNull(trainerService, "TrainerEntity Service must not be null");
         Assert.notNull(traineeService, "TraineeEntity Service must not be null");
-        Assert.notNull(idService, "Id Service must not be null");
-        Assert.notNull(usernamePasswordService, "Username Password Service must not be null");
         this.trainerService = trainerService;
         this.traineeService = traineeService;
-        this.idService = idService;
-        this.usernamePasswordService = usernamePasswordService;
     }
 
     @Override

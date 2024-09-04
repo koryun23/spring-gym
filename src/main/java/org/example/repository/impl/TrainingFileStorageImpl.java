@@ -15,7 +15,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TrainingFileStorageImpl implements FileStorage<TrainingEntity> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainingFileStorageImpl.class);
@@ -87,21 +90,6 @@ public class TrainingFileStorageImpl implements FileStorage<TrainingEntity> {
         }
     }
 
-    @Autowired
-    public void setDateConverter(DateConverter dateConverter) {
-        this.dateConverter = dateConverter;
-    }
-
-    @Autowired
-    public void setDatabasePathService(DatabasePathService databasePathService) {
-        this.databasePathService = databasePathService;
-    }
-
-    @PostConstruct
-    public void init() {
-        trainingPath = databasePathService.getTrainingPath();
-    }
-
     private Long getTrainingIdFromArray(String[] array) {
         return Long.valueOf(array[0]);
     }
@@ -128,5 +116,21 @@ public class TrainingFileStorageImpl implements FileStorage<TrainingEntity> {
 
     private Long getTrainingDurationFromArray(String[] array) {
         return Long.valueOf(array[6]);
+    }
+
+    @Autowired
+    public void setDateConverter(DateConverter dateConverter) {
+        this.dateConverter = dateConverter;
+    }
+
+    @Autowired
+    @Qualifier("trainingDatabasePathService")
+    public void setDatabasePathService(DatabasePathService databasePathService) {
+        this.databasePathService = databasePathService;
+    }
+
+    @PostConstruct
+    public void init() {
+        trainingPath = databasePathService.getEntityPath();
     }
 }

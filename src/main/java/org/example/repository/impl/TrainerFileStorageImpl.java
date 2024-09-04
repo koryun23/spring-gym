@@ -13,7 +13,10 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TrainerFileStorageImpl implements FileStorage<TrainerEntity> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainerFileStorageImpl.class);
@@ -113,12 +116,13 @@ public class TrainerFileStorageImpl implements FileStorage<TrainerEntity> {
     }
 
     @Autowired
+    @Qualifier("trainerDatabasePathService")
     public void setDatabasePathService(DatabasePathService databasePathService) {
         this.databasePathService = databasePathService;
     }
 
     @PostConstruct
     public void init() {
-        trainerPath = databasePathService.getTrainerPath();
+        trainerPath = databasePathService.getEntityPath();
     }
 }

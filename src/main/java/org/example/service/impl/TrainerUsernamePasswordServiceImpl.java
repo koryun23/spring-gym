@@ -6,11 +6,13 @@ import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
 import org.example.service.core.UsernamePasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.Optional;
 import java.util.UUID;
 
+@Service("trainerUsernamePasswordService")
 public class TrainerUsernamePasswordServiceImpl implements UsernamePasswordService {
 
     private final TraineeService traineeService;

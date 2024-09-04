@@ -8,12 +8,14 @@ import org.example.repository.core.TrainerStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@Component
 public class TrainerStorageImpl implements TrainerStorage {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainerStorageImpl.class);
