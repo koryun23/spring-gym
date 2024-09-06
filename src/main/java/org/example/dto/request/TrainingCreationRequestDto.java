@@ -18,6 +18,8 @@ import java.util.Objects;
 @EqualsAndHashCode
 @ToString
 public class TrainingCreationRequestDto {
+
+    private Long trainingId;
     private Long traineeId;
     private Long trainerId;
     private String name;

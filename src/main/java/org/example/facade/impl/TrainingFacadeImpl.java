@@ -5,6 +5,9 @@ import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.dto.response.TrainingRetrievalResponseDto;
 import org.example.entity.TrainingEntity;
 import org.example.facade.core.TrainingFacade;
+import org.example.mapper.training.TrainingCreationRequestDtoToTrainingEntityMapper;
+import org.example.mapper.training.TrainingEntityToTrainingCreationResponseDtoMapper;
+import org.example.mapper.training.TrainingEntityToTrainingRetrievalResponseDtoMapper;
 import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
@@ -26,6 +29,10 @@ public class TrainingFacadeImpl implements TrainingFacade {
     private final TraineeService traineeService;
     private final TrainerService trainerService;
 
+    private final TrainingCreationRequestDtoToTrainingEntityMapper trainingCreationRequestDtoToTrainingEntityMapper;
+    private final TrainingEntityToTrainingCreationResponseDtoMapper trainingEntityToTrainingCreationResponseDtoMapper;
+    private final TrainingEntityToTrainingRetrievalResponseDtoMapper trainingEntityToTrainingRetrievalResponseDtoMapper;
+
     @Autowired
     @Qualifier("trainingIdService")
     private IdService idService;
@@ -33,13 +40,16 @@ public class TrainingFacadeImpl implements TrainingFacade {
     @Autowired
     public TrainingFacadeImpl(TrainingService trainingService,
                               TraineeService traineeService,
-                              TrainerService trainerService) {
-        Assert.notNull(trainingService, "TrainingEntity Service must not be null");
-        Assert.notNull(traineeService, "TraineeEntity Service must not be null");
-        Assert.notNull(trainerService, "TrainerEntity Service must not be null");
+                              TrainerService trainerService,
+                              TrainingCreationRequestDtoToTrainingEntityMapper trainingCreationRequestDtoToTrainingEntityMapper,
+                              TrainingEntityToTrainingCreationResponseDtoMapper trainingEntityToTrainingCreationResponseDtoMapper,
+                              TrainingEntityToTrainingRetrievalResponseDtoMapper trainingEntityToTrainingRetrievalResponseDtoMapper) {
         this.trainingService = trainingService;
         this.traineeService = traineeService;
         this.trainerService = trainerService;
+        this.trainingCreationRequestDtoToTrainingEntityMapper = trainingCreationRequestDtoToTrainingEntityMapper;
+        this.trainingEntityToTrainingCreationResponseDtoMapper = trainingEntityToTrainingCreationResponseDtoMapper;
+        this.trainingEntityToTrainingRetrievalResponseDtoMapper = trainingEntityToTrainingRetrievalResponseDtoMapper;
     }
 
     @Override
@@ -63,26 +73,11 @@ public class TrainingFacadeImpl implements TrainingFacade {
             return new TrainingCreationResponseDto(List.of(String.format("Cannot create a trainingEntity: a trainer with an id of %d does not exist", requestDto.getTrainerId())));
         }
 
-        TrainingEntity trainingEntity = trainingService.create(new TrainingEntity(
-                idService.getId(),
-                requestDto.getTraineeId(),
-                requestDto.getTrainerId(),
-                requestDto.getName(),
-                requestDto.getTrainingType(),
-                requestDto.getTrainingDate(),
-                requestDto.getDuration()
-        ));
-        TrainingCreationResponseDto responseDto = new TrainingCreationResponseDto(
-                trainingEntity.getTrainingId(),
-                trainingEntity.getTraineeId(),
-                trainingEntity.getTrainerId(),
-                trainingEntity.getName(),
-                trainingEntity.getTrainingType(),
-                trainingEntity.getTrainingDate(),
-                trainingEntity.getDuration()
-        );
+        requestDto.setTrainingId(idService.getId());
 
+        TrainingCreationResponseDto responseDto = trainingEntityToTrainingCreationResponseDtoMapper.map(trainingService.create(trainingCreationRequestDtoToTrainingEntityMapper.map(requestDto)));
         idService.autoIncrement();
+
         LOGGER.info("Successfully created a TrainingEntity according to the TrainingCreationRequestDto - {}, response - {}", requestDto, responseDto);
         return responseDto;
     }
@@ -100,16 +95,7 @@ public class TrainingFacadeImpl implements TrainingFacade {
             return new TrainingRetrievalResponseDto(List.of(String.format("TrainingEntity with a specified id of %d does not exist", trainingId)));
         }
 
-        TrainingEntity trainingEntity = trainingService.select(trainingId);
-        TrainingRetrievalResponseDto responseDto = new TrainingRetrievalResponseDto(
-                trainingEntity.getTrainingId(),
-                trainingEntity.getTraineeId(),
-                trainingEntity.getTrainerId(),
-                trainingEntity.getName(),
-                trainingEntity.getTrainingType(),
-                trainingEntity.getTrainingDate(),
-                trainingEntity.getDuration()
-        );
+        TrainingRetrievalResponseDto responseDto = trainingEntityToTrainingRetrievalResponseDtoMapper.map(trainingService.select(trainingId));
 
         LOGGER.info("Successfully retrieved a TrainingEntity with an id of {}, response - {}", trainingId, responseDto);
         return responseDto;
