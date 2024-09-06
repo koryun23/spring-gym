@@ -18,8 +18,11 @@ import java.util.Objects;
 @ToString
 public class TrainerCreationRequestDto {
 
+    private Long userId;
     private String firstName;
     private String lastName;
+    private String username;
+    private String password;
     private boolean isActive;
     private SpecializationType specializationType;
 }

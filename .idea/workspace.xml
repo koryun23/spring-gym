@@ -4,18 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Using lombok in entity and dto classes">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/Mapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/TraineeCreationRequestDtoToTraineeEntityMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/TraineeCreationRequestDtoToTraineeEntityMapperImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/TraineeEntityToTraineeCreationResponseDtoMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/TraineeEntityToTraineeCreationResponseDtoMapperImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/TraineeEntityToTraineeUpdateResponseDtoMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/TraineeEntityToTraineeUpdateResponseDtoMapperImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/TraineeUpdateRequestDtoToTraineeEntityMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/TraineeUpdateRequestDtoToTraineeEntityMapperImpl.java" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Creating mappers for the TrainerFacadeImpl class">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainer/TrainerCreationRequestDtoToTrainerEntityMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainer/TrainerCreationRequestDtoToTrainerEntityMapperImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainer/TrainerEntityToTrainerCreationResponseDtoMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainer/TrainerEntityToTrainerCreationResponseDtoMapperImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainer/TrainerEntityToTrainerRetrievalResponseDtoMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainer/TrainerEntityToTrainerRetrievalResponseDtoMapperImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainer/TrainerEntityToTrainerUpdateResponseDtoMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainer/TrainerEntityToTrainerUpdateResponseDtoMapperImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainer/TrainerUpdateRequestDtoToTrainerEntityMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainer/TrainerUpdateRequestDtoToTrainerEntityMapperImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TrainerCreationRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TrainerCreationRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -247,14 +249,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00076" summary="Adding validations in all the methods of TraineeStorageImpl class">
-      <option name="closed" value="true" />
-      <created>1725144824019</created>
-      <option name="number" value="00076" />
-      <option name="presentableId" value="LOCAL-00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1725144824019</updated>
     </task>
     <task id="LOCAL-00077" summary="Adding testing methods to the TraineeStorageImplTest class, need to fix the bugs">
       <option name="closed" value="true" />
@@ -640,7 +634,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725479807449</updated>
     </task>
-    <option name="localTasksCounter" value="125" />
+    <task id="LOCAL-00125" summary="Creating mappers for the TraineeFacadeImpl class">
+      <option name="closed" value="true" />
+      <created>1725623433765</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1725623433766</updated>
+    </task>
+    <option name="localTasksCounter" value="126" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -655,8 +657,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Adding a field of type List called errors to all the response dtos" />
-    <MESSAGE value="Adding validations to the TraineeFacadeImpl class" />
     <MESSAGE value="Adding validations to the TrainerFacadeImpl class" />
     <MESSAGE value="Adding validations to the TrainingFacadeImpl and TrainingServiceImpl classes" />
     <MESSAGE value="Adding a method of retrieving an optional training, moving that method both to the main dao interface and the main storage interface. Adding validations to the services, daos, storages and facades" />
@@ -680,6 +680,8 @@
     <MESSAGE value="Removing the Params classes" />
     <MESSAGE value="Reducing the Config class by using spring based annotations that turn classes into beans" />
     <MESSAGE value="Using lombok in entity and dto classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Using lombok in entity and dto classes" />
+    <MESSAGE value="Creating mappers for the TraineeFacadeImpl class" />
+    <MESSAGE value="Creating mappers for the TrainerFacadeImpl class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creating mappers for the TrainerFacadeImpl class" />
   </component>
 </project>
