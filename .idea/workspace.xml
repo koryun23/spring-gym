@@ -5,26 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Using lombok in entity and dto classes">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/Mapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/TraineeCreationRequestDtoToTraineeEntityMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/TraineeCreationRequestDtoToTraineeEntityMapperImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/TraineeEntityToTraineeCreationResponseDtoMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/TraineeEntityToTraineeCreationResponseDtoMapperImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/TraineeEntityToTraineeUpdateResponseDtoMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/TraineeEntityToTraineeUpdateResponseDtoMapperImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/TraineeUpdateRequestDtoToTraineeEntityMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/TraineeUpdateRequestDtoToTraineeEntityMapperImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TraineeCreationRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TraineeCreationRequestDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TraineeUpdateRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TraineeUpdateRequestDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TrainerCreationRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TrainerCreationRequestDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TrainerUpdateRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TrainerUpdateRequestDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TrainingCreationRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TrainingCreationRequestDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TraineeCreationResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TraineeCreationResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TraineeDeletionResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TraineeDeletionResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TraineeRetrievalResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TraineeRetrievalResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TraineeUpdateResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TraineeUpdateResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainerCreationResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainerCreationResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainerRetrievalResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainerRetrievalResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainerUpdateResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainerUpdateResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainingCreationResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainingCreationResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainingRetrievalResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainingRetrievalResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/TraineeEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/TraineeEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/TrainerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/TrainerEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/TrainingEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/TrainingEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +96,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -256,14 +247,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00075" summary="Creating tests for Training entity class">
-      <option name="closed" value="true" />
-      <created>1725144508637</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1725144508637</updated>
     </task>
     <task id="LOCAL-00076" summary="Adding validations in all the methods of TraineeStorageImpl class">
       <option name="closed" value="true" />
@@ -649,7 +632,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725475998880</updated>
     </task>
-    <option name="localTasksCounter" value="124" />
+    <task id="LOCAL-00124" summary="Using lombok in entity and dto classes">
+      <option name="closed" value="true" />
+      <created>1725479807449</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1725479807449</updated>
+    </task>
+    <option name="localTasksCounter" value="125" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
