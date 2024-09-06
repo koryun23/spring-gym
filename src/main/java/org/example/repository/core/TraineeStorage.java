@@ -1,8 +1,7 @@
 package org.example.repository.core;
 
-import org.example.entity.TraineeEntity;
-
 import java.util.Optional;
+import org.example.entity.TraineeEntity;
 
 public interface TraineeStorage extends Storage<TraineeEntity> {
 

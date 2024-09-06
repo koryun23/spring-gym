@@ -1,5 +1,6 @@
 package org.example.facade.impl;
 
+import java.util.List;
 import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
 import org.example.dto.response.TraineeCreationResponseDto;
@@ -22,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-import java.util.List;
 
 @Component
 public class TraineeFacadeImpl implements TraineeFacade {
@@ -69,14 +69,15 @@ public class TraineeFacadeImpl implements TraineeFacade {
 
         Long traineeId = idService.getId();
 
-        if(!traineeService.findById(traineeId).isEmpty()) {
-            return new TraineeCreationResponseDto(List.of(String.format("A trainee with the specified id - %d, already exists", traineeId)));
+        if (!traineeService.findById(traineeId).isEmpty()) {
+            return new TraineeCreationResponseDto(
+                List.of(String.format("A trainee with the specified id - %d, already exists", traineeId)));
         }
 
         String username = usernamePasswordService.username(
-                requestDto.getFirstName(),
-                requestDto.getLastName(),
-                traineeId
+            requestDto.getFirstName(),
+            requestDto.getLastName(),
+            traineeId
         );
 
         String password = usernamePasswordService.password();
@@ -84,11 +85,13 @@ public class TraineeFacadeImpl implements TraineeFacade {
         requestDto.setUsername(username);
         requestDto.setPassword(password);
 
-        TraineeCreationResponseDto responseDto = traineeToTraineeCreationResponseDtoMapper.map(traineeCreationRequestDtoToTraineeEntityMapper.map(requestDto));
+        TraineeCreationResponseDto responseDto = traineeToTraineeCreationResponseDtoMapper.map(
+            traineeCreationRequestDtoToTraineeEntityMapper.map(requestDto));
 
         idService.autoIncrement();
 
-        LOGGER.info("Successfully created a TraineeEntity based on the TraineeCreationRequestDto - {}, response - {}", requestDto, responseDto);
+        LOGGER.info("Successfully created a TraineeEntity based on the TraineeCreationRequestDto - {}, response - {}",
+            requestDto, responseDto);
         return responseDto;
     }
 
@@ -97,13 +100,16 @@ public class TraineeFacadeImpl implements TraineeFacade {
         Assert.notNull(requestDto, "TraineeUpdateRequestDto must not be null");
         LOGGER.info("Updating a TraineeEntity based on the TraineeUpdateRequestDto - {}", requestDto);
 
-        if(traineeService.findByUsername(requestDto.getUsername()).isEmpty()) {
-            return new TraineeUpdateResponseDto(List.of(String.format("A user with specified username - %s, does not exist", requestDto.getUsername())));
+        if (traineeService.findByUsername(requestDto.getUsername()).isEmpty()) {
+            return new TraineeUpdateResponseDto(List.of(
+                String.format("A user with specified username - %s, does not exist", requestDto.getUsername())));
         }
 
-        TraineeUpdateResponseDto responseDto = traineeEntityToTraineeUpdateResponseDtoMapper.map(traineeUpdateRequestDtoToTraineeEntityMapper.map(requestDto));
+        TraineeUpdateResponseDto responseDto = traineeEntityToTraineeUpdateResponseDtoMapper.map(
+            traineeUpdateRequestDtoToTraineeEntityMapper.map(requestDto));
 
-        LOGGER.info("Successfully updated a TraineeEntity based on the TraineeUpdateRequestDto - {}, response - {}", requestDto, responseDto);
+        LOGGER.info("Successfully updated a TraineeEntity based on the TraineeUpdateRequestDto - {}, response - {}",
+            requestDto, responseDto);
         return responseDto;
     }
 
@@ -112,15 +118,18 @@ public class TraineeFacadeImpl implements TraineeFacade {
         Assert.notNull(id, "TraineeEntity id must not be null");
         LOGGER.info("Retrieving a TraineeEntity with an id of {}", id);
 
-        if(id <= 0) {
-            return new TraineeRetrievalResponseDto(List.of(String.format("TraineeEntity id must be positive: %d specified", id)));
+        if (id <= 0) {
+            return new TraineeRetrievalResponseDto(
+                List.of(String.format("TraineeEntity id must be positive: %d specified", id)));
         }
 
-        if(traineeService.findById(id).isEmpty()) {
-            return new TraineeRetrievalResponseDto(List.of(String.format("A TraineeEntity with an id - %d, does not exist", id)));
+        if (traineeService.findById(id).isEmpty()) {
+            return new TraineeRetrievalResponseDto(
+                List.of(String.format("A TraineeEntity with an id - %d, does not exist", id)));
         }
 
-        TraineeRetrievalResponseDto responseDto = traineeEntityToTraineeRetrievalResponseDtoMapper.map(traineeService.select(id));
+        TraineeRetrievalResponseDto responseDto =
+            traineeEntityToTraineeRetrievalResponseDtoMapper.map(traineeService.select(id));
 
         LOGGER.info("Successfully retrieved a TraineeEntity with an id of {}, response - {}", id, responseDto);
         return responseDto;
@@ -129,12 +138,14 @@ public class TraineeFacadeImpl implements TraineeFacade {
     @Override
     public TraineeDeletionResponseDto deleteTrainee(Long id) {
         Assert.notNull(id, "TraineeEntity id must not be null");
-        if(id <= 0) {
-            return new TraineeDeletionResponseDto(List.of(String.format("TraineeEntity id must be positive: %d specified", id)));
+        if (id <= 0) {
+            return new TraineeDeletionResponseDto(
+                List.of(String.format("TraineeEntity id must be positive: %d specified", id)));
         }
 
-        if(traineeService.findById(id).isEmpty()) {
-            return new TraineeDeletionResponseDto(List.of(String.format("A TraineeEntity with an id - %d, does not exist", id)));
+        if (traineeService.findById(id).isEmpty()) {
+            return new TraineeDeletionResponseDto(
+                List.of(String.format("A TraineeEntity with an id - %d, does not exist", id)));
         }
 
         LOGGER.info("Deleting a TraineeEntity with an id of {}", id);

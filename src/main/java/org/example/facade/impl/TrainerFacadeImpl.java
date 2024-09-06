@@ -1,20 +1,18 @@
 package org.example.facade.impl;
 
+import java.util.List;
 import org.example.dto.request.TrainerCreationRequestDto;
 import org.example.dto.request.TrainerUpdateRequestDto;
 import org.example.dto.response.TrainerCreationResponseDto;
 import org.example.dto.response.TrainerRetrievalResponseDto;
 import org.example.dto.response.TrainerUpdateResponseDto;
-import org.example.entity.TrainerEntity;
 import org.example.facade.core.TrainerFacade;
 import org.example.mapper.trainer.TrainerCreationRequestDtoToTrainerEntityMapper;
 import org.example.mapper.trainer.TrainerEntityToTrainerCreationResponseDtoMapper;
 import org.example.mapper.trainer.TrainerEntityToTrainerRetrievalResponseDtoMapper;
-import org.example.mapper.trainer.TrainerEntityToTrainerRetrievalResponseDtoMapperImpl;
 import org.example.mapper.trainer.TrainerEntityToTrainerUpdateResponseDtoMapper;
 import org.example.mapper.trainer.TrainerUpdateRequestDtoToTrainerEntityMapper;
 import org.example.service.core.IdService;
-import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
 import org.example.service.core.UsernamePasswordService;
 import org.slf4j.Logger;
@@ -23,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-import java.util.List;
 
 @Component
 public class TrainerFacadeImpl implements TrainerFacade {
@@ -67,14 +64,15 @@ public class TrainerFacadeImpl implements TrainerFacade {
 
         Long trainerId = idService.getId();
 
-        if(!trainerService.findById(trainerId).isEmpty()) {
-            return new TrainerCreationResponseDto(List.of(String.format("A TrainerEntity with the specified id - %d, already exists", trainerId)));
+        if (!trainerService.findById(trainerId).isEmpty()) {
+            return new TrainerCreationResponseDto(
+                List.of(String.format("A TrainerEntity with the specified id - %d, already exists", trainerId)));
         }
 
         String username = usernamePasswordService.username(
-                requestDto.getFirstName(),
-                requestDto.getLastName(),
-                trainerId
+            requestDto.getFirstName(),
+            requestDto.getLastName(),
+            trainerId
         );
 
         String password = usernamePasswordService.password();
@@ -83,10 +81,13 @@ public class TrainerFacadeImpl implements TrainerFacade {
         requestDto.setUsername(username);
         requestDto.setPassword(password);
 
-        TrainerCreationResponseDto responseDto = trainerEntityToTrainerCreationResponseDtoMapper.map(trainerService.create(trainerCreationRequestDtoToTrainerEntityMapper.map(requestDto)));
+        TrainerCreationResponseDto responseDto = trainerEntityToTrainerCreationResponseDtoMapper.map(
+            trainerService.create(trainerCreationRequestDtoToTrainerEntityMapper.map(requestDto)));
         idService.autoIncrement();
 
-        LOGGER.info("Successfully created a TrainerEntity according to the TrainerCreationRequestDto - {}, response - {}", requestDto, responseDto);
+        LOGGER.info(
+            "Successfully created a TrainerEntity according to the TrainerCreationRequestDto - {}, response - {}",
+            requestDto, responseDto);
         return responseDto;
     }
 
@@ -95,13 +96,16 @@ public class TrainerFacadeImpl implements TrainerFacade {
         Assert.notNull(requestDto, "TrainerUpdateRequestDto must not be null");
         LOGGER.info("Updating a TrainerEntity according to the TrainerUpdateRequestDto - {}", requestDto);
 
-        if(trainerService.findById(requestDto.getUserId()).isEmpty()) {
-            return new TrainerUpdateResponseDto(List.of(String.format("TrainerEntity with the specified id of %d does not exist", requestDto.getUserId())));
+        if (trainerService.findById(requestDto.getUserId()).isEmpty()) {
+            return new TrainerUpdateResponseDto(List.of(
+                String.format("TrainerEntity with the specified id of %d does not exist", requestDto.getUserId())));
         }
 
-        TrainerUpdateResponseDto responseDto = trainerEntityToTrainerUpdateResponseDtoMapper.map(trainerService.update(trainerUpdateRequestDtoToTrainerEntityMapper.map(requestDto)));
+        TrainerUpdateResponseDto responseDto = trainerEntityToTrainerUpdateResponseDtoMapper.map(
+            trainerService.update(trainerUpdateRequestDtoToTrainerEntityMapper.map(requestDto)));
 
-        LOGGER.info("Successfully updated a TrainerEntity according to the TrainerUpdateRequestDto - {}, response - {}", requestDto, responseDto);
+        LOGGER.info("Successfully updated a TrainerEntity according to the TrainerUpdateRequestDto - {}, response - {}",
+            requestDto, responseDto);
         return responseDto;
     }
 
@@ -110,15 +114,18 @@ public class TrainerFacadeImpl implements TrainerFacade {
         Assert.notNull(trainerId, "TrainerEntity id must not be null");
         LOGGER.info("Retrieving a TrainerEntity with an id of {}", trainerId);
 
-        if(trainerId <= 0) {
-            return new TrainerRetrievalResponseDto(List.of(String.format("TrainerEntity id must be positive: %d specified", trainerId)));
+        if (trainerId <= 0) {
+            return new TrainerRetrievalResponseDto(
+                List.of(String.format("TrainerEntity id must be positive: %d specified", trainerId)));
         }
 
-        if(trainerService.findById(trainerId).isEmpty()) {
-            return new TrainerRetrievalResponseDto(List.of(String.format("A TrainerEntity with a specified id of %d not found", trainerId)));
+        if (trainerService.findById(trainerId).isEmpty()) {
+            return new TrainerRetrievalResponseDto(
+                List.of(String.format("A TrainerEntity with a specified id of %d not found", trainerId)));
         }
 
-        TrainerRetrievalResponseDto responseDto = trainerEntityToTrainerRetrievalResponseDtoMapper.map(trainerService.select(trainerId));
+        TrainerRetrievalResponseDto responseDto =
+            trainerEntityToTrainerRetrievalResponseDtoMapper.map(trainerService.select(trainerId));
 
         LOGGER.info("Successfully retrieved a TrainerEntity with an id of {}, response - {}", trainerId, responseDto);
         return responseDto;

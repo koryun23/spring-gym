@@ -1,10 +1,7 @@
 package org.example.dto.response;
 
-import org.example.dto.request.TrainerCreationRequestDto;
-import org.example.entity.SpecializationType;
-
 import java.util.List;
-import java.util.Objects;
+import org.example.entity.SpecializationType;
 
 public class TrainerRetrievalResponseDto {
 
@@ -19,12 +16,12 @@ public class TrainerRetrievalResponseDto {
     private List<String> errors;
 
     public TrainerRetrievalResponseDto(Long userId,
-                                     String firstName,
-                                     String lastName,
-                                     String username,
-                                     String password,
-                                     boolean isActive,
-                                     SpecializationType specializationType) {
+                                       String firstName,
+                                       String lastName,
+                                       String username,
+                                       String password,
+                                       boolean isActive,
+                                       SpecializationType specializationType) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;

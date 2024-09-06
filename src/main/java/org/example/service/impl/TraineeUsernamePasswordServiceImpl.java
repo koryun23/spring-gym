@@ -1,5 +1,7 @@
 package org.example.service.impl;
 
+import java.util.Optional;
+import java.util.UUID;
 import org.example.entity.TraineeEntity;
 import org.example.entity.TrainerEntity;
 import org.example.service.core.TraineeService;
@@ -7,9 +9,6 @@ import org.example.service.core.TrainerService;
 import org.example.service.core.UsernamePasswordService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-
-import java.util.Optional;
-import java.util.UUID;
 
 @Service("traineeUsernamePasswordService")
 public class TraineeUsernamePasswordServiceImpl implements UsernamePasswordService {
@@ -29,12 +28,16 @@ public class TraineeUsernamePasswordServiceImpl implements UsernamePasswordServi
         String temporaryUsername = firstName + "." + lastName;
         Optional<TraineeEntity> optionalTrainee = traineeService.findByUsername(temporaryUsername);
 
-        if (optionalTrainee.isEmpty()) return temporaryUsername;
+        if (optionalTrainee.isEmpty()) {
+            return temporaryUsername;
+        }
 
         temporaryUsername += ("." + id);
         Optional<TrainerEntity> optionalTrainer = trainerService.findByUsername(temporaryUsername);
 
-        if (optionalTrainer.isEmpty()) return temporaryUsername;
+        if (optionalTrainer.isEmpty()) {
+            return temporaryUsername;
+        }
         return temporaryUsername + ".trainee";
     }
 

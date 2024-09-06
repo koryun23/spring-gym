@@ -1,6 +1,6 @@
 package org.example.dto.request;
 
-import lombok.AllArgsConstructor;
+import java.util.Date;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,10 +8,6 @@ import lombok.Setter;
 import lombok.ToString;
 import org.example.entity.TrainingType;
 
-import java.util.Date;
-import java.util.Objects;
-
-@AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
@@ -26,4 +22,14 @@ public class TrainingCreationRequestDto {
     private TrainingType trainingType;
     private Date trainingDate;
     private Long duration;
+
+    public TrainingCreationRequestDto(Long traineeId, Long trainerId, String name,
+                                      TrainingType trainingType, Date trainingDate, Long duration) {
+        this.traineeId = traineeId;
+        this.trainerId = trainerId;
+        this.name = name;
+        this.trainingType = trainingType;
+        this.trainingDate = trainingDate;
+        this.duration = duration;
+    }
 }

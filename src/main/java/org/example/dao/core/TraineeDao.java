@@ -1,8 +1,7 @@
 package org.example.dao.core;
 
-import org.example.entity.TraineeEntity;
-
 import java.util.Optional;
+import org.example.entity.TraineeEntity;
 
 public interface TraineeDao extends Dao<TraineeEntity> {
 

@@ -1,8 +1,7 @@
 package org.example.service.core;
 
-import org.example.entity.TraineeEntity;
-
 import java.util.Optional;
+import org.example.entity.TraineeEntity;
 
 public interface TraineeService {
 

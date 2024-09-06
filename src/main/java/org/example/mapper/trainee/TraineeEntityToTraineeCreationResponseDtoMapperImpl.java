@@ -5,7 +5,8 @@ import org.example.entity.TraineeEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TraineeEntityToTraineeCreationResponseDtoMapperImpl implements TraineeEntityToTraineeCreationResponseDtoMapper {
+public class TraineeEntityToTraineeCreationResponseDtoMapperImpl
+    implements TraineeEntityToTraineeCreationResponseDtoMapper {
 
     @Override
     public TraineeCreationResponseDto map(TraineeEntity trainee) {

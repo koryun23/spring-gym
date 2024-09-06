@@ -2,7 +2,6 @@ package org.example.dto.response;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,13 +27,13 @@ public class TraineeUpdateResponseDto {
     private List<String> errors;
 
     public TraineeUpdateResponseDto(Long userId,
-                      String firstName,
-                      String lastName,
-                      String username,
-                      String password,
-                      boolean isActive,
-                      Date dateOfBirth,
-                      String address) {
+                                    String firstName,
+                                    String lastName,
+                                    String username,
+                                    String password,
+                                    boolean isActive,
+                                    Date dateOfBirth,
+                                    String address) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;

@@ -1,5 +1,6 @@
 package org.example.dao.impl;
 
+import java.util.Optional;
 import org.example.dao.core.TrainingDao;
 import org.example.entity.TrainingEntity;
 import org.example.repository.impl.TrainingStorageImpl;
@@ -8,8 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-
-import java.util.Optional;
 
 @Component
 public class TrainingDaoImpl implements TrainingDao {
@@ -46,7 +45,8 @@ public class TrainingDaoImpl implements TrainingDao {
         Assert.notNull(trainingEntity, "TrainingEntity must not be null");
         LOGGER.info("Updating a TrainingEntity with an id of {}", trainingEntity.getTrainingId());
         TrainingEntity updatedTrainingEntity = storage.update(trainingEntity);
-        LOGGER.info("Successfully updated a TrainingEntity with an id of {}, result - {}", trainingEntity.getTrainingId(),
+        LOGGER.info("Successfully updated a TrainingEntity with an id of {}, result - {}",
+            trainingEntity.getTrainingId(),
             updatedTrainingEntity);
         return updatedTrainingEntity;
     }
@@ -56,8 +56,11 @@ public class TrainingDaoImpl implements TrainingDao {
         Assert.notNull(id, "TrainingEntity id must not be null");
         LOGGER.info("Deleting a TrainingEntity with an id of {}", id);
         boolean success = storage.remove(id);
-        if(success) LOGGER.info("Successfully deleted a TrainingEntity with an id of {}", id);
-        else LOGGER.error("Failed to delete a TrainingEntity with an id of {}", id);
+        if (success) {
+            LOGGER.info("Successfully deleted a TrainingEntity with an id of {}", id);
+        } else {
+            LOGGER.error("Failed to delete a TrainingEntity with an id of {}", id);
+        }
         return success;
     }
 
@@ -66,7 +69,8 @@ public class TrainingDaoImpl implements TrainingDao {
         Assert.notNull(id, "TrainingEntity id must not be null");
         LOGGER.info("Retrieving an optional TrainingEntity with an id of {}", id);
         Optional<TrainingEntity> optionalTraining = storage.findById(id);
-        LOGGER.info("Successfully retrieved an optional TrainingEntity with an id of {}, result - {}", id, optionalTraining);
+        LOGGER.info("Successfully retrieved an optional TrainingEntity with an id of {}, result - {}", id,
+            optionalTraining);
         return optionalTraining;
     }
 }

@@ -4,5 +4,6 @@ import org.example.dto.response.TrainerRetrievalResponseDto;
 import org.example.entity.TrainerEntity;
 import org.example.mapper.Mapper;
 
-public interface TrainerEntityToTrainerRetrievalResponseDtoMapper extends Mapper<TrainerEntity, TrainerRetrievalResponseDto> {
+public interface TrainerEntityToTrainerRetrievalResponseDtoMapper
+    extends Mapper<TrainerEntity, TrainerRetrievalResponseDto> {
 }

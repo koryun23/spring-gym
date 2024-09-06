@@ -1,16 +1,12 @@
 package org.example.dto.request;
 
 import java.util.Date;
-import java.util.Objects;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
@@ -27,4 +23,12 @@ public class TraineeCreationRequestDto {
     private Date dateOfBirth;
     private String address;
 
+    public TraineeCreationRequestDto(String firstName, String lastName, boolean isActive, Date dateOfBirth,
+                                     String address) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.isActive = isActive;
+        this.dateOfBirth = dateOfBirth;
+        this.address = address;
+    }
 }

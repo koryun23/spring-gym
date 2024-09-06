@@ -1,12 +1,14 @@
 package org.example.service.impl;
 
 import jakarta.annotation.PostConstruct;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 import org.example.service.core.DatabasePathService;
 import org.example.service.core.IdService;
-
-import java.io.*;
-import java.util.Scanner;
-import org.springframework.stereotype.Service;
 
 public class IdServiceImpl implements IdService {
 

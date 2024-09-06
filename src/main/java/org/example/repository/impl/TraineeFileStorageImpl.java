@@ -1,14 +1,6 @@
 package org.example.repository.impl;
 
 import jakarta.annotation.PostConstruct;
-import org.example.entity.TraineeEntity;
-import org.example.helper.DateConverter;
-import org.example.repository.core.FileStorage;
-import org.example.service.core.DatabasePathService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -17,6 +9,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import org.example.entity.TraineeEntity;
+import org.example.helper.DateConverter;
+import org.example.repository.core.FileStorage;
+import org.example.service.core.DatabasePathService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -39,14 +38,14 @@ public class TraineeFileStorageImpl implements FileStorage<TraineeEntity> {
                 TraineeEntity currentTrainee = entry.getValue();
                 LOGGER.info("Persisting {} to the .txt file", currentTrainee);
                 String stringRepresentationOfTrainee = String.format("%d,%s,%s,%s,%s,%s,%s,%s",
-                        currentTrainee.getUserId(),
-                        currentTrainee.getFirstName(),
-                        currentTrainee.getLastName(),
-                        currentTrainee.getUsername(),
-                        currentTrainee.getPassword(),
-                        currentTrainee.isActive(),
-                        dateConverter.dateToString(currentTrainee.getDateOfBirth()),
-                        currentTrainee.getAddress()
+                    currentTrainee.getUserId(),
+                    currentTrainee.getFirstName(),
+                    currentTrainee.getLastName(),
+                    currentTrainee.getUsername(),
+                    currentTrainee.getPassword(),
+                    currentTrainee.isActive(),
+                    dateConverter.dateToString(currentTrainee.getDateOfBirth()),
+                    currentTrainee.getAddress()
                 );
                 LOGGER.info("The row being persisted to the .txt file - {}", stringRepresentationOfTrainee);
                 writer.write(stringRepresentationOfTrainee);
@@ -77,14 +76,14 @@ public class TraineeFileStorageImpl implements FileStorage<TraineeEntity> {
             String[] currentTraineeSplit = currentTraineeString.split(",");
             Long userId = getUserIdFromArray(currentTraineeSplit);
             TraineeEntity currentTrainee = new TraineeEntity(
-                    userId,
-                    getFirstNameFromArray(currentTraineeSplit),
-                    getLastNameFromArray(currentTraineeSplit),
-                    getUsernameFromArray(currentTraineeSplit),
-                    getPasswordFromArray(currentTraineeSplit),
-                    getIsActiveFromArray(currentTraineeSplit),
-                    getDateOfBirthFromArray(currentTraineeSplit),
-                    getAddressFromArray(currentTraineeSplit)
+                userId,
+                getFirstNameFromArray(currentTraineeSplit),
+                getLastNameFromArray(currentTraineeSplit),
+                getUsernameFromArray(currentTraineeSplit),
+                getPasswordFromArray(currentTraineeSplit),
+                getIsActiveFromArray(currentTraineeSplit),
+                getDateOfBirthFromArray(currentTraineeSplit),
+                getAddressFromArray(currentTraineeSplit)
             );
             LOGGER.info("Converted the row '{}' to {}", currentTraineeString, currentTrainee);
             inMemoryStorage.put(userId, currentTrainee);

@@ -1,6 +1,14 @@
 package org.example.repository.impl;
 
 import jakarta.annotation.PostConstruct;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 import org.example.entity.SpecializationType;
 import org.example.entity.TrainerEntity;
 import org.example.repository.core.FileStorage;
@@ -8,11 +16,6 @@ import org.example.service.core.DatabasePathService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -41,13 +44,13 @@ public class TrainerFileStorageImpl implements FileStorage<TrainerEntity> {
             LOGGER.info("Storing the row '{}' in the in-memory storage", currentTrainerString);
             String[] currentTrainerArray = currentTrainerString.split(",");
             TrainerEntity currentTrainerEntity = new TrainerEntity(
-                    getUserIdFromArray(currentTrainerArray),
-                    getFirstNameFromArray(currentTrainerArray),
-                    getLastNameFromArray(currentTrainerArray),
-                    getUsernameFromArray(currentTrainerArray),
-                    getPasswordFromArray(currentTrainerArray),
-                    getIsActiveFromArray(currentTrainerArray),
-                    getSpecializationFromArray(currentTrainerArray)
+                getUserIdFromArray(currentTrainerArray),
+                getFirstNameFromArray(currentTrainerArray),
+                getLastNameFromArray(currentTrainerArray),
+                getUsernameFromArray(currentTrainerArray),
+                getPasswordFromArray(currentTrainerArray),
+                getIsActiveFromArray(currentTrainerArray),
+                getSpecializationFromArray(currentTrainerArray)
             );
 
             LOGGER.info("Converted the row '{}' to {}", currentTrainerString, currentTrainerEntity);
@@ -68,18 +71,19 @@ public class TrainerFileStorageImpl implements FileStorage<TrainerEntity> {
                 TrainerEntity currentTrainerEntity = entry.getValue();
                 LOGGER.info("Persisting {} to the .txt file", currentTrainerEntity);
                 String stringRepresentationOfTrainer = String.format("%d,%s,%s,%s,%s,%s,%s",
-                        currentTrainerEntity.getUserId(),
-                        currentTrainerEntity.getFirstName(),
-                        currentTrainerEntity.getLastName(),
-                        currentTrainerEntity.getUsername(),
-                        currentTrainerEntity.getPassword(),
-                        currentTrainerEntity.isActive(),
-                        currentTrainerEntity.getSpecialization()
+                    currentTrainerEntity.getUserId(),
+                    currentTrainerEntity.getFirstName(),
+                    currentTrainerEntity.getLastName(),
+                    currentTrainerEntity.getUsername(),
+                    currentTrainerEntity.getPassword(),
+                    currentTrainerEntity.isActive(),
+                    currentTrainerEntity.getSpecialization()
                 );
                 LOGGER.info("The row being persisted to the .txt file - {}", stringRepresentationOfTrainer);
                 writer.write(stringRepresentationOfTrainer);
                 writer.newLine();
-                LOGGER.info("Successfully persisted {}, result - {}", currentTrainerEntity, stringRepresentationOfTrainer);
+                LOGGER.info("Successfully persisted {}, result - {}", currentTrainerEntity,
+                    stringRepresentationOfTrainer);
             }
             writer.close();
         } catch (IOException e) {

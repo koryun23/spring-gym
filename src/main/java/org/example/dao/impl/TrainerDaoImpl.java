@@ -1,5 +1,6 @@
 package org.example.dao.impl;
 
+import java.util.Optional;
 import org.example.dao.core.TrainerDao;
 import org.example.entity.TrainerEntity;
 import org.example.repository.impl.TrainerStorageImpl;
@@ -8,8 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-
-import java.util.Optional;
 
 @Component
 public class TrainerDaoImpl implements TrainerDao {
@@ -56,8 +55,11 @@ public class TrainerDaoImpl implements TrainerDao {
         Assert.notNull(id, "TrainerEntity id must not be null");
         LOGGER.info("Deleting a TrainerEntity with an id of {}", id);
         boolean success = storage.remove(id);
-        if(success) LOGGER.info("Successfully deleted a TrainerEntity with an id of {}", id);
-        else LOGGER.error("Failed to delete a TrainerEntity with an id of {}", id);
+        if (success) {
+            LOGGER.info("Successfully deleted a TrainerEntity with an id of {}", id);
+        } else {
+            LOGGER.error("Failed to delete a TrainerEntity with an id of {}", id);
+        }
         return success;
     }
 
@@ -67,7 +69,8 @@ public class TrainerDaoImpl implements TrainerDao {
         Assert.hasText(username, "TrainerEntity username must not be empty");
         LOGGER.info("Retrieving a TrainerEntity with a username of {}", username);
         TrainerEntity trainerEntity = storage.getByUsername(username);
-        LOGGER.info("Successfully retrieved a TrainerEntity with a username of {}, result - {}", username, trainerEntity);
+        LOGGER.info("Successfully retrieved a TrainerEntity with a username of {}, result - {}", username,
+            trainerEntity);
         return trainerEntity;
     }
 
@@ -77,7 +80,8 @@ public class TrainerDaoImpl implements TrainerDao {
         Assert.hasText(username, "TrainerEntity username must not be empty");
         LOGGER.info("Retrieving an optional TrainerEntity with a username of {}", username);
         Optional<TrainerEntity> optionalTrainer = storage.findByUsername(username);
-        LOGGER.info("Successfully retrieved an optional TrainerEntity with a username of {}, result - {}", username, optionalTrainer);
+        LOGGER.info("Successfully retrieved an optional TrainerEntity with a username of {}, result - {}", username,
+            optionalTrainer);
         return optionalTrainer;
     }
 
@@ -86,7 +90,8 @@ public class TrainerDaoImpl implements TrainerDao {
         Assert.notNull(id, "TrainerEntity id must not be null");
         LOGGER.info("Retrieving an optional TrainerEntity with an id of {}", id);
         Optional<TrainerEntity> optionalTrainer = storage.findById(id);
-        LOGGER.info("Successfully retrieved an optional TrainerEntity with an id od {}, result - {}", id, optionalTrainer);
+        LOGGER.info("Successfully retrieved an optional TrainerEntity with an id od {}, result - {}", id,
+            optionalTrainer);
         return optionalTrainer;
     }
 }

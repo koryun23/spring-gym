@@ -27,13 +27,13 @@ public class TraineeCreationResponseDto {
     private List<String> errors;
 
     public TraineeCreationResponseDto(Long userId,
-                      String firstName,
-                      String lastName,
-                      String username,
-                      String password,
-                      boolean isActive,
-                      Date dateOfBirth,
-                      String address) {
+                                      String firstName,
+                                      String lastName,
+                                      String username,
+                                      String password,
+                                      boolean isActive,
+                                      Date dateOfBirth,
+                                      String address) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;

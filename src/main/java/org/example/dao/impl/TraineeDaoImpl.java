@@ -1,5 +1,6 @@
 package org.example.dao.impl;
 
+import java.util.Optional;
 import org.example.dao.core.TraineeDao;
 import org.example.entity.TraineeEntity;
 import org.example.repository.core.TraineeStorage;
@@ -8,8 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-
-import java.util.Optional;
 
 @Component
 public class TraineeDaoImpl implements TraineeDao {
@@ -46,7 +45,8 @@ public class TraineeDaoImpl implements TraineeDao {
         Assert.notNull(trainee, "TraineeEntity must not be null");
         LOGGER.info("Updating a TraineeEntity with an id of {}", trainee.getUserId());
         TraineeEntity updatedTrainee = storage.update(trainee);
-        LOGGER.info("Successfully updated a TraineeEntity with an id of {}, result - {}", trainee.getUserId(), updatedTrainee);
+        LOGGER.info("Successfully updated a TraineeEntity with an id of {}, result - {}", trainee.getUserId(),
+            updatedTrainee);
         return updatedTrainee;
     }
 
@@ -55,8 +55,11 @@ public class TraineeDaoImpl implements TraineeDao {
         Assert.notNull(id, "TraineeEntity Id must not be null");
         LOGGER.info("Deleting a trainee with an id of {}", id);
         boolean remove = storage.remove(id);
-        if(remove) LOGGER.info("Successfully removed a trainee with an id of {}", id);
-        else LOGGER.error("Failed to remove a trainee with an id of {}", id);
+        if (remove) {
+            LOGGER.info("Successfully removed a trainee with an id of {}", id);
+        } else {
+            LOGGER.error("Failed to remove a trainee with an id of {}", id);
+        }
         return remove;
     }
 
@@ -76,7 +79,8 @@ public class TraineeDaoImpl implements TraineeDao {
         Assert.hasText(username, "TraineeEntity username must not be empty");
         LOGGER.info("Retrieving an optional TraineeEntity with a username of {}", username);
         Optional<TraineeEntity> optionalTrainee = storage.findByUsername(username);
-        LOGGER.info("Successfully retrieved an optional TraineeEntity with a username of {}, result - {}", username, optionalTrainee);
+        LOGGER.info("Successfully retrieved an optional TraineeEntity with a username of {}, result - {}", username,
+            optionalTrainee);
         return optionalTrainee;
     }
 

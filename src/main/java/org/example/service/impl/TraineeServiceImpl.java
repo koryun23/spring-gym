@@ -1,5 +1,6 @@
 package org.example.service.impl;
 
+import java.util.Optional;
 import org.example.dao.core.TraineeDao;
 import org.example.entity.TraineeEntity;
 import org.example.exception.TraineeNotFoundException;
@@ -9,8 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-
-import java.util.Optional;
 
 @Service
 public class TraineeServiceImpl implements TraineeService {
@@ -25,16 +24,17 @@ public class TraineeServiceImpl implements TraineeService {
         Assert.notNull(trainee, "TraineeCreateParams must not be null");
         LOGGER.info("Creating a TraineeEntity based on TraineeCreateParams - {}", trainee);
         TraineeEntity createdTrainee = traineeDao.save(new TraineeEntity(
-                trainee.getUserId(),
-                trainee.getFirstName(),
-                trainee.getLastName(),
-                trainee.getUsername(),
-                trainee.getPassword(),
-                trainee.isActive(),
-                trainee.getDateOfBirth(),
-                trainee.getAddress()
+            trainee.getUserId(),
+            trainee.getFirstName(),
+            trainee.getLastName(),
+            trainee.getUsername(),
+            trainee.getPassword(),
+            trainee.isActive(),
+            trainee.getDateOfBirth(),
+            trainee.getAddress()
         ));
-        LOGGER.info("Successfully created a TraineeEntity based on TraineeCreateParams - {}, result - {}", trainee, trainee);
+        LOGGER.info("Successfully created a TraineeEntity based on TraineeCreateParams - {}, result - {}", trainee,
+            trainee);
         return createdTrainee;
     }
 
@@ -43,16 +43,17 @@ public class TraineeServiceImpl implements TraineeService {
         Assert.notNull(trainee, "TraineeCreateParams must not be null");
         LOGGER.info("Updating a TraineeEntity based on TraineeUpdateParams - {}", trainee);
         TraineeEntity updatedTrainee = traineeDao.update(new TraineeEntity(
-                trainee.getUserId(),
-                trainee.getFirstName(),
-                trainee.getLastName(),
-                trainee.getUsername(),
-                trainee.getPassword(),
-                trainee.isActive(),
-                trainee.getDateOfBirth(),
-                trainee.getAddress()
+            trainee.getUserId(),
+            trainee.getFirstName(),
+            trainee.getLastName(),
+            trainee.getUsername(),
+            trainee.getPassword(),
+            trainee.isActive(),
+            trainee.getDateOfBirth(),
+            trainee.getAddress()
         ));
-        LOGGER.info("Successfully updated a TraineeEntity based on TraineeUpdateParams - {}, result - {}", trainee, trainee);
+        LOGGER.info("Successfully updated a TraineeEntity based on TraineeUpdateParams - {}, result - {}", trainee,
+            trainee);
         return updatedTrainee;
     }
 
@@ -94,7 +95,8 @@ public class TraineeServiceImpl implements TraineeService {
         Assert.notNull(id, "TraineeEntity id must not be null");
         LOGGER.info("Retrieved an optional TraineeEntity with an id of {}", id);
         Optional<TraineeEntity> optionalTrainee = traineeDao.findById(id);
-        LOGGER.info("Successfully retrieved an optional TraineeEntity with an id of {}, result - {}", id, optionalTrainee);
+        LOGGER.info("Successfully retrieved an optional TraineeEntity with an id of {}, result - {}", id,
+            optionalTrainee);
         return optionalTrainee;
     }
 
@@ -104,7 +106,8 @@ public class TraineeServiceImpl implements TraineeService {
         Assert.hasText(username, "TraineeEntity username must not be empty");
         LOGGER.info("Retrieved an optional TraineeEntity with a username of {}", username);
         Optional<TraineeEntity> optionalTrainee = traineeDao.findByUsername(username);
-        LOGGER.info("Successfully retrieved an optional TraineeEntity with an username of {}, result - {}", username, optionalTrainee);
+        LOGGER.info("Successfully retrieved an optional TraineeEntity with an username of {}, result - {}", username,
+            optionalTrainee);
         return optionalTrainee;
     }
 }

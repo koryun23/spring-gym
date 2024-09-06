@@ -1,7 +1,6 @@
 package org.example.entity;
 
 import java.util.Date;
-import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

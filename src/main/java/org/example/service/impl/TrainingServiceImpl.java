@@ -1,5 +1,6 @@
 package org.example.service.impl;
 
+import java.util.Optional;
 import org.example.dao.core.TrainingDao;
 import org.example.entity.TrainingEntity;
 import org.example.service.core.TrainingService;
@@ -8,8 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-
-import java.util.Optional;
 
 @Service
 public class TrainingServiceImpl implements TrainingService {
@@ -24,15 +23,16 @@ public class TrainingServiceImpl implements TrainingService {
         Assert.notNull(trainingEntity, "TrainingCreateParams must not be null");
         LOGGER.info("Creating a TrainingEntity according to the TrainingCreateParams - {}", trainingEntity);
         TrainingEntity createdTrainingEntity = trainingDao.save(new TrainingEntity(
-                trainingEntity.getTrainingId(),
-                trainingEntity.getTraineeId(),
-                trainingEntity.getTrainerId(),
-                trainingEntity.getName(),
-                trainingEntity.getTrainingType(),
-                trainingEntity.getTrainingDate(),
-                trainingEntity.getDuration()
+            trainingEntity.getTrainingId(),
+            trainingEntity.getTraineeId(),
+            trainingEntity.getTrainerId(),
+            trainingEntity.getName(),
+            trainingEntity.getTrainingType(),
+            trainingEntity.getTrainingDate(),
+            trainingEntity.getDuration()
         ));
-        LOGGER.info("Successfully created a TrainingEntity according to the TrainingEntity Create Params - {}, result - {}",
+        LOGGER.info(
+            "Successfully created a TrainingEntity according to the TrainingEntity Create Params - {}, result - {}",
             trainingEntity, createdTrainingEntity);
         return createdTrainingEntity;
     }
@@ -51,7 +51,8 @@ public class TrainingServiceImpl implements TrainingService {
         Assert.notNull(id, "TrainingEntity id must not be null");
         LOGGER.info("Retrieving an optional TrainingEntity with an id of {}", id);
         Optional<TrainingEntity> optionalTraining = trainingDao.findById(id);
-        LOGGER.info("Successfully retrieved an optional TrainingEntity with an id of {}, result - {}", id, optionalTraining);
+        LOGGER.info("Successfully retrieved an optional TrainingEntity with an id of {}, result - {}", id,
+            optionalTraining);
         return optionalTraining;
     }
 }

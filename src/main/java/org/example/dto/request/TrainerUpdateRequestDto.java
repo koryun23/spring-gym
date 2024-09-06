@@ -8,8 +8,6 @@ import lombok.Setter;
 import lombok.ToString;
 import org.example.entity.SpecializationType;
 
-import java.util.Objects;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter

@@ -1,6 +1,9 @@
 package org.example.repository.impl;
 
 import jakarta.annotation.PostConstruct;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import org.example.entity.TraineeEntity;
 import org.example.exception.TraineeNotFoundException;
 import org.example.repository.core.FileStorage;
@@ -10,8 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-
-import java.util.*;
 
 @Component
 public class TraineeStorageImpl implements TraineeStorage {
@@ -36,7 +37,9 @@ public class TraineeStorageImpl implements TraineeStorage {
         LOGGER.info("Retrieving a TraineeEntity with an id of {} from the in-memory storage", id);
         Assert.notNull(id, "TraineeEntity Id must not be null");
         TraineeEntity trainee = inMemoryStorage.get(id);
-        if(trainee == null) throw new TraineeNotFoundException(id);
+        if (trainee == null) {
+            throw new TraineeNotFoundException(id);
+        }
         LOGGER.info("Successfully retrieved a TrainerEntity with an id of {}, result - {}", id, trainee);
         return trainee;
     }
@@ -55,7 +58,9 @@ public class TraineeStorageImpl implements TraineeStorage {
     public boolean remove(Long id) {
         LOGGER.info("Removing a TraineeEntity with an id of {} from the in-memory storage", id);
         Assert.notNull(id, "TraineeEntity id must not be null");
-        if(!inMemoryStorage.containsKey(id)) throw new TraineeNotFoundException(id);
+        if (!inMemoryStorage.containsKey(id)) {
+            throw new TraineeNotFoundException(id);
+        }
         TraineeEntity removedTrainee = inMemoryStorage.remove(id);
         LOGGER.info("Successfully removed {} from the in-memory storage", removedTrainee);
         traineeFileStorage.persist(inMemoryStorage);
@@ -67,7 +72,8 @@ public class TraineeStorageImpl implements TraineeStorage {
         Assert.notNull(trainee, "TraineeEntity must not be null");
         LOGGER.info("Updating a TraineeEntity with an id of {}", trainee.getUserId());
         TraineeEntity updatedTrainee = inMemoryStorage.put(trainee.getUserId(), trainee);
-        LOGGER.info("Successfully updated a TraineeEntity with an id of {}, final result - {}", trainee.getUserId(), updatedTrainee);
+        LOGGER.info("Successfully updated a TraineeEntity with an id of {}, final result - {}", trainee.getUserId(),
+            updatedTrainee);
         traineeFileStorage.persist(inMemoryStorage);
         return updatedTrainee;
     }
@@ -80,12 +86,14 @@ public class TraineeStorageImpl implements TraineeStorage {
 
         for (Map.Entry<Long, TraineeEntity> pair : inMemoryStorage.entrySet()) {
             TraineeEntity trainee = pair.getValue();
-            if(trainee.getUsername().equals(username)) {
-                LOGGER.info("Successfully retrieved a TraineeEntity with a username of {}, result - {}", username, trainee);
+            if (trainee.getUsername().equals(username)) {
+                LOGGER.info("Successfully retrieved a TraineeEntity with a username of {}, result - {}", username,
+                    trainee);
                 return trainee;
             }
         }
-        LOGGER.error("Failed to retrieve a TraineeEntity with a username of {}, throwing a TraineeNotFoundException", username);
+        LOGGER.error("Failed to retrieve a TraineeEntity with a username of {}, throwing a TraineeNotFoundException",
+            username);
         throw new TraineeNotFoundException(username);
     }
 
@@ -94,16 +102,18 @@ public class TraineeStorageImpl implements TraineeStorage {
         LOGGER.info("Retrieving an optional of a TraineeEntity with a username of {}", username);
         Assert.notNull(username, "TraineeEntity username must not be null");
         Assert.hasText(username, "TraineeEntity username must not be empty");
-        for(Map.Entry<Long, TraineeEntity> pair : inMemoryStorage.entrySet()) {
+        for (Map.Entry<Long, TraineeEntity> pair : inMemoryStorage.entrySet()) {
             TraineeEntity trainee = pair.getValue();
-            if(trainee.getUsername().equals(username)) {
+            if (trainee.getUsername().equals(username)) {
                 Optional<TraineeEntity> optionalTrainee = Optional.of(trainee);
-                LOGGER.info("Successfully retrieved an optional of a TraineeEntity with a username of {}, result - {}", username, optionalTrainee);
+                LOGGER.info("Successfully retrieved an optional of a TraineeEntity with a username of {}, result - {}",
+                    username, optionalTrainee);
                 return optionalTrainee;
             }
         }
         Optional<TraineeEntity> optionalTrainee = Optional.empty();
-        LOGGER.info("Successfully retrieved an optional of a TraineeEntity with a username of {}, result - {}", username, optionalTrainee);
+        LOGGER.info("Successfully retrieved an optional of a TraineeEntity with a username of {}, result - {}",
+            username, optionalTrainee);
         return optionalTrainee;
     }
 
@@ -114,7 +124,8 @@ public class TraineeStorageImpl implements TraineeStorage {
 
         TraineeEntity trainee = inMemoryStorage.get(id);
         Optional<TraineeEntity> optionalTrainee = Optional.ofNullable(trainee);
-        LOGGER.info("Successfully retrieved an optional of a TraineeEntity with an id of {}, result - {}", id, optionalTrainee);
+        LOGGER.info("Successfully retrieved an optional of a TraineeEntity with an id of {}, result - {}", id,
+            optionalTrainee);
         return optionalTrainee;
     }
 

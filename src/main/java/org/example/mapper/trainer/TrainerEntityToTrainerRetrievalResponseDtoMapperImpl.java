@@ -1,12 +1,12 @@
 package org.example.mapper.trainer;
 
-import java.util.Locale;
 import org.example.dto.response.TrainerRetrievalResponseDto;
 import org.example.entity.TrainerEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TrainerEntityToTrainerRetrievalResponseDtoMapperImpl implements TrainerEntityToTrainerRetrievalResponseDtoMapper{
+public class TrainerEntityToTrainerRetrievalResponseDtoMapperImpl
+    implements TrainerEntityToTrainerRetrievalResponseDtoMapper {
 
     @Override
     public TrainerRetrievalResponseDto map(TrainerEntity trainer) {

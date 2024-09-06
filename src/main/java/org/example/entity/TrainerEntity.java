@@ -1,6 +1,5 @@
 package org.example.entity;
 
-import java.util.Objects;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

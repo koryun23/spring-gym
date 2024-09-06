@@ -1,6 +1,9 @@
 package org.example.repository.impl;
 
 import jakarta.annotation.PostConstruct;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import org.example.entity.TrainerEntity;
 import org.example.exception.TrainerNotFoundException;
 import org.example.repository.core.FileStorage;
@@ -10,10 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 
 @Component
 public class TrainerStorageImpl implements TrainerStorage {
@@ -38,7 +37,9 @@ public class TrainerStorageImpl implements TrainerStorage {
         LOGGER.info("Retrieving a TrainerEntity with an id of {} from the in-memory storage", id);
         Assert.notNull(id, "TrainerEntity id must not be null");
         TrainerEntity trainerEntity = inMemoryStorage.get(id);
-        if(trainerEntity == null) throw new TrainerNotFoundException(id);
+        if (trainerEntity == null) {
+            throw new TrainerNotFoundException(id);
+        }
         LOGGER.info("Successfully retrieved a TrainerEntity with an id of {}, result - {}", id, trainerEntity);
         return trainerEntity;
     }
@@ -68,7 +69,8 @@ public class TrainerStorageImpl implements TrainerStorage {
         Assert.notNull(trainerEntity, "TrainerEntity must not be null");
         LOGGER.info("Updating a TrainerEntity with an id of {}", trainerEntity.getUserId());
         TrainerEntity updatedTrainerEntity = inMemoryStorage.put(trainerEntity.getUserId(), trainerEntity);
-        LOGGER.info("Successfully updated a TrainerEntity with an id of {}, final result - {}", trainerEntity.getUserId(),
+        LOGGER.info("Successfully updated a TrainerEntity with an id of {}, final result - {}",
+            trainerEntity.getUserId(),
             updatedTrainerEntity);
         trainerFileStorage.persist(inMemoryStorage);
         return updatedTrainerEntity;
@@ -79,15 +81,16 @@ public class TrainerStorageImpl implements TrainerStorage {
         Assert.notNull(username, "TrainerEntity username must not be null");
         Assert.hasText(username, "TrainerEntity username must not be empty");
         LOGGER.info("Retrieving a TrainerEntity with a username of {}", username);
-        for(Map.Entry<Long, TrainerEntity> pair : inMemoryStorage.entrySet()) {
+        for (Map.Entry<Long, TrainerEntity> pair : inMemoryStorage.entrySet()) {
             TrainerEntity trainerEntity = pair.getValue();
-            if(trainerEntity.getUsername().equals(username)) {
+            if (trainerEntity.getUsername().equals(username)) {
                 LOGGER.info("Successfully retrieved a TrainerEntity with a username of {}, result - {}", username,
                     trainerEntity);
                 return trainerEntity;
             }
         }
-        LOGGER.error("Failed to retrieve a TrainerEntity with a username of {}, throwing a TrainerNotFoundException", username);
+        LOGGER.error("Failed to retrieve a TrainerEntity with a username of {}, throwing a TrainerNotFoundException",
+            username);
         throw new TrainerNotFoundException(username);
     }
 
@@ -96,16 +99,18 @@ public class TrainerStorageImpl implements TrainerStorage {
         Assert.notNull(username, "TrainerEntity username must not be null");
         Assert.hasText(username, "TrainerEntity username must not be empty");
         LOGGER.info("Retrieving an optional TrainerEntity with a username of {}", username);
-        for(Map.Entry<Long, TrainerEntity> pair : inMemoryStorage.entrySet()) {
+        for (Map.Entry<Long, TrainerEntity> pair : inMemoryStorage.entrySet()) {
             TrainerEntity trainerEntity = pair.getValue();
-            if(trainerEntity.getUsername().equals(username)) {
+            if (trainerEntity.getUsername().equals(username)) {
                 Optional<TrainerEntity> optionalTrainer = Optional.of(trainerEntity);
-                LOGGER.info("Successfully retrieved an optional TrainerEntity with a username of {}, result - {}", username, optionalTrainer);
+                LOGGER.info("Successfully retrieved an optional TrainerEntity with a username of {}, result - {}",
+                    username, optionalTrainer);
                 return optionalTrainer;
             }
         }
         Optional<TrainerEntity> optionalTrainer = Optional.empty();
-        LOGGER.info("Successfully retrieved an optional TrainerEntity with a username of {}, result - {}", username, optionalTrainer);
+        LOGGER.info("Successfully retrieved an optional TrainerEntity with a username of {}, result - {}", username,
+            optionalTrainer);
         return optionalTrainer;
     }
 
@@ -114,7 +119,8 @@ public class TrainerStorageImpl implements TrainerStorage {
         Assert.notNull(id, "TrainerEntity id must not be null");
         LOGGER.info("Retrieving an optional TrainerEntity with an id of {}", id);
         Optional<TrainerEntity> optionalTrainer = Optional.ofNullable(inMemoryStorage.get(id));
-        LOGGER.info("Successfully retrieved an optional TrainerEntity with an id of {}, result - {}", id, optionalTrainer);
+        LOGGER.info("Successfully retrieved an optional TrainerEntity with an id of {}, result - {}", id,
+            optionalTrainer);
         return optionalTrainer;
     }
 

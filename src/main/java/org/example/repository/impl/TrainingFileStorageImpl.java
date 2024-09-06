@@ -1,6 +1,15 @@
 package org.example.repository.impl;
 
 import jakarta.annotation.PostConstruct;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 import org.example.entity.TrainingEntity;
 import org.example.entity.TrainingType;
 import org.example.helper.DateConverter;
@@ -9,12 +18,6 @@ import org.example.service.core.DatabasePathService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.io.*;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -45,13 +48,13 @@ public class TrainingFileStorageImpl implements FileStorage<TrainingEntity> {
             String[] currentTrainingArray = currentTrainingString.split(",");
             Long trainingId = getTrainingIdFromArray(currentTrainingArray);
             TrainingEntity currentTrainingEntity = new TrainingEntity(
-                    trainingId,
-                    getTraineeIdFromArray(currentTrainingArray),
-                    getTrainerIdFromArray(currentTrainingArray),
-                    getTrainingNameFromArray(currentTrainingArray),
-                    getTrainingTypeFromArray(currentTrainingArray),
-                    getTrainingDateFromArray(currentTrainingArray),
-                    getTrainingDurationFromArray(currentTrainingArray)
+                trainingId,
+                getTraineeIdFromArray(currentTrainingArray),
+                getTrainerIdFromArray(currentTrainingArray),
+                getTrainingNameFromArray(currentTrainingArray),
+                getTrainingTypeFromArray(currentTrainingArray),
+                getTrainingDateFromArray(currentTrainingArray),
+                getTrainingDurationFromArray(currentTrainingArray)
             );
             LOGGER.info("Converted the row '{}' to {}", currentTrainingString, currentTrainingEntity);
             inMemoryStorage.put(trainingId, currentTrainingEntity);
@@ -70,19 +73,20 @@ public class TrainingFileStorageImpl implements FileStorage<TrainingEntity> {
                 TrainingEntity currentTrainingEntity = entry.getValue();
                 LOGGER.info("Persisting {} to the .txt file", currentTrainingEntity);
                 String stringRepresentationOfTraining = String.format("%d,%d,%d,%s,%s,%s,%d",
-                        currentTrainingEntity.getTrainingId(),
-                        currentTrainingEntity.getTraineeId(),
-                        currentTrainingEntity.getTrainerId(),
-                        currentTrainingEntity.getName(),
-                        currentTrainingEntity.getTrainingType(),
-                        dateConverter.dateToString(currentTrainingEntity.getTrainingDate()),
-                        currentTrainingEntity.getDuration()
+                    currentTrainingEntity.getTrainingId(),
+                    currentTrainingEntity.getTraineeId(),
+                    currentTrainingEntity.getTrainerId(),
+                    currentTrainingEntity.getName(),
+                    currentTrainingEntity.getTrainingType(),
+                    dateConverter.dateToString(currentTrainingEntity.getTrainingDate()),
+                    currentTrainingEntity.getDuration()
                 );
 
                 LOGGER.info("The row being persisted to the .txt file - {}", stringRepresentationOfTraining);
                 writer.write(stringRepresentationOfTraining);
                 writer.newLine();
-                LOGGER.info("Successfully persisted {}, result - {}", currentTrainingEntity, stringRepresentationOfTraining);
+                LOGGER.info("Successfully persisted {}, result - {}", currentTrainingEntity,
+                    stringRepresentationOfTraining);
             }
             writer.close();
         } catch (IOException e) {

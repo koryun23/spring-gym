@@ -5,7 +5,8 @@ import org.example.entity.TrainingEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TrainingEntityToTrainingCreationResponseDtoMapperImpl implements TrainingEntityToTrainingCreationResponseDtoMapper {
+public class TrainingEntityToTrainingCreationResponseDtoMapperImpl
+    implements TrainingEntityToTrainingCreationResponseDtoMapper {
 
     @Override
     public TrainingCreationResponseDto map(TrainingEntity training) {

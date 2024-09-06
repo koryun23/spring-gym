@@ -23,27 +23,27 @@ public class Main {
         TrainingFacade trainingFacade = context.getBean(TrainingFacade.class);
 
         traineeFacade.createTrainee(new TraineeCreationRequestDto(
-                "John",
-                "Murray",
-                true,
-                dateConverter.stringToDate("2024-10-10"),
-                "manchester"
+            "John",
+            "Murray",
+            true,
+            dateConverter.stringToDate("2024-10-10"),
+            "manchester"
         ));
 
         trainerFacade.createTrainer(new TrainerCreationRequestDto(
-                "Jack",
-                "Henderson",
-                true,
-                SpecializationType.FITNESS
+            "Jack",
+            "Henderson",
+            true,
+            SpecializationType.FITNESS
         ));
 
         trainingFacade.createTraining(new TrainingCreationRequestDto(
-                1L,
-                1L,
-                "Aeoribics TrainingEntity",
-                TrainingType.AEROBIC,
-                dateConverter.stringToDate("2024-12-12"),
-                1_000_000L
+            1L,
+            1L,
+            "Aeoribics TrainingEntity",
+            TrainingType.AEROBIC,
+            dateConverter.stringToDate("2024-12-12"),
+            1_000_000L
         ));
     }
 }
