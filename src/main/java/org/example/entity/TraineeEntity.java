@@ -59,8 +59,8 @@ public class TraineeEntity extends User {
             return false;
         }
         TraineeEntity that = (TraineeEntity) o;
-        return Objects.equals(dateOfBirth, that.dateOfBirth) && Objects.equals(address, that.address) &&
-            Objects.equals(userId, that.userId);
+        return Objects.equals(dateOfBirth, that.dateOfBirth) && Objects.equals(address, that.address)
+            && Objects.equals(userId, that.userId);
     }
 
     @Override
@@ -70,10 +70,6 @@ public class TraineeEntity extends User {
 
     @Override
     public String toString() {
-        return "TraineeEntity{" +
-            "dateOfBirth=" + dateOfBirth +
-            ", address='" + address + '\'' +
-            ", userId=" + userId +
-            '}';
+        return "TraineeEntity{dateOfBirth=%s, address='%s', userId=%d}".formatted(dateOfBirth, address, userId);
     }
 }

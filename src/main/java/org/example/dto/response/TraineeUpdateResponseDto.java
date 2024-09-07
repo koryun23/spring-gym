@@ -3,11 +3,6 @@ package org.example.dto.response;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 public class TraineeUpdateResponseDto {
 
@@ -125,11 +120,11 @@ public class TraineeUpdateResponseDto {
             return false;
         }
         TraineeUpdateResponseDto that = (TraineeUpdateResponseDto) o;
-        return isActive == that.isActive && Objects.equals(userId, that.userId) &&
-            Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) &&
-            Objects.equals(username, that.username) && Objects.equals(password, that.password) &&
-            Objects.equals(dateOfBirth, that.dateOfBirth) && Objects.equals(address, that.address) &&
-            Objects.equals(errors, that.errors);
+        return isActive == that.isActive && Objects.equals(userId, that.userId)
+            && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName)
+            && Objects.equals(username, that.username) && Objects.equals(password, that.password)
+            && Objects.equals(dateOfBirth, that.dateOfBirth) && Objects.equals(address, that.address)
+            && Objects.equals(errors, that.errors);
     }
 
     @Override
@@ -139,16 +134,8 @@ public class TraineeUpdateResponseDto {
 
     @Override
     public String toString() {
-        return "TraineeUpdateResponseDto{" +
-            "userId=" + userId +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", username='" + username + '\'' +
-            ", password='" + password + '\'' +
-            ", isActive=" + isActive +
-            ", dateOfBirth=" + dateOfBirth +
-            ", address='" + address + '\'' +
-            ", errors=" + errors +
-            '}';
+        return ("TraineeUpdateResponseDto{userId=%d, firstName='%s', lastName='%s', username='%s', password='%s', "
+            + "isActive=%s, dateOfBirth=%s, address='%s', errors=%s}").formatted(
+            userId, firstName, lastName, username, password, isActive, dateOfBirth, address, errors);
     }
 }

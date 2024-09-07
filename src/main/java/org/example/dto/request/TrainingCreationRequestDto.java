@@ -2,11 +2,6 @@ package org.example.dto.request;
 
 import java.util.Date;
 import java.util.Objects;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 import org.example.entity.TrainingType;
 
 public class TrainingCreationRequestDto {
@@ -94,10 +89,10 @@ public class TrainingCreationRequestDto {
             return false;
         }
         TrainingCreationRequestDto that = (TrainingCreationRequestDto) o;
-        return Objects.equals(trainingId, that.trainingId) &&
-            Objects.equals(traineeId, that.traineeId) && Objects.equals(trainerId, that.trainerId) &&
-            Objects.equals(name, that.name) && trainingType == that.trainingType &&
-            Objects.equals(trainingDate, that.trainingDate) && Objects.equals(duration, that.duration);
+        return Objects.equals(trainingId, that.trainingId)
+            && Objects.equals(traineeId, that.traineeId) && Objects.equals(trainerId, that.trainerId)
+            && Objects.equals(name, that.name) && trainingType == that.trainingType
+            && Objects.equals(trainingDate, that.trainingDate) && Objects.equals(duration, that.duration);
     }
 
     @Override
@@ -107,14 +102,8 @@ public class TrainingCreationRequestDto {
 
     @Override
     public String toString() {
-        return "TrainingCreationRequestDto{" +
-            "trainingId=" + trainingId +
-            ", traineeId=" + traineeId +
-            ", trainerId=" + trainerId +
-            ", name='" + name + '\'' +
-            ", trainingType=" + trainingType +
-            ", trainingDate=" + trainingDate +
-            ", duration=" + duration +
-            '}';
+        return ("TrainingCreationRequestDto{trainingId=%d, traineeId=%d, trainerId=%d, name='%s', trainingType=%s, "
+            + "trainingDate=%s, duration=%d}").formatted(
+            trainingId, traineeId, trainerId, name, trainingType, trainingDate, duration);
     }
 }

@@ -2,11 +2,6 @@ package org.example.dto.response;
 
 import java.util.List;
 import java.util.Objects;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 import org.example.entity.SpecializationType;
 
 public class TrainerCreationResponseDto {
@@ -114,10 +109,10 @@ public class TrainerCreationResponseDto {
             return false;
         }
         TrainerCreationResponseDto that = (TrainerCreationResponseDto) o;
-        return isActive == that.isActive && Objects.equals(userId, that.userId) &&
-            Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) &&
-            Objects.equals(username, that.username) && Objects.equals(password, that.password) &&
-            specializationType == that.specializationType && Objects.equals(errors, that.errors);
+        return isActive == that.isActive && Objects.equals(userId, that.userId)
+            && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName)
+            && Objects.equals(username, that.username) && Objects.equals(password, that.password)
+            && specializationType == that.specializationType && Objects.equals(errors, that.errors);
     }
 
     @Override
@@ -127,15 +122,8 @@ public class TrainerCreationResponseDto {
 
     @Override
     public String toString() {
-        return "TrainerCreationResponseDto{" +
-            "userId=" + userId +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", username='" + username + '\'' +
-            ", password='" + password + '\'' +
-            ", isActive=" + isActive +
-            ", specializationType=" + specializationType +
-            ", errors=" + errors +
-            '}';
+        return ("TrainerCreationResponseDto{userId=%d, firstName='%s', lastName='%s', username='%s', password='%s', "
+            + "isActive=%s, specializationType=%s, errors=%s}").formatted(
+            userId, firstName, lastName, username, password, isActive, specializationType, errors);
     }
 }

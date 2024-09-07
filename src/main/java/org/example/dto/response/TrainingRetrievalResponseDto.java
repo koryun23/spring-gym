@@ -3,11 +3,6 @@ package org.example.dto.response;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 import org.example.entity.TrainingType;
 
 public class TrainingRetrievalResponseDto {
@@ -110,11 +105,11 @@ public class TrainingRetrievalResponseDto {
             return false;
         }
         TrainingRetrievalResponseDto that = (TrainingRetrievalResponseDto) o;
-        return Objects.equals(trainingId, that.trainingId) &&
-            Objects.equals(traineeId, that.traineeId) && Objects.equals(trainerId, that.trainerId) &&
-            Objects.equals(name, that.name) && trainingType == that.trainingType &&
-            Objects.equals(trainingDate, that.trainingDate) &&
-            Objects.equals(duration, that.duration) && Objects.equals(errors, that.errors);
+        return Objects.equals(trainingId, that.trainingId)
+            && Objects.equals(traineeId, that.traineeId) && Objects.equals(trainerId, that.trainerId)
+            && Objects.equals(name, that.name) && trainingType == that.trainingType
+            && Objects.equals(trainingDate, that.trainingDate)
+            && Objects.equals(duration, that.duration) && Objects.equals(errors, that.errors);
     }
 
     @Override
@@ -124,15 +119,8 @@ public class TrainingRetrievalResponseDto {
 
     @Override
     public String toString() {
-        return "TrainingRetrievalResponseDto{" +
-            "trainingId=" + trainingId +
-            ", traineeId=" + traineeId +
-            ", trainerId=" + trainerId +
-            ", name='" + name + '\'' +
-            ", trainingType=" + trainingType +
-            ", trainingDate=" + trainingDate +
-            ", duration=" + duration +
-            ", errors=" + errors +
-            '}';
+        return ("TrainingRetrievalResponseDto{trainingId=%d, traineeId=%d, trainerId=%d, name='%s', trainingType=%s, "
+            + "trainingDate=%s, duration=%d, errors=%s}").formatted(
+            trainingId, traineeId, trainerId, name, trainingType, trainingDate, duration, errors);
     }
 }

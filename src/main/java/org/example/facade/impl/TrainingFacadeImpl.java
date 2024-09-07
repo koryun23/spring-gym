@@ -40,9 +40,12 @@ public class TrainingFacadeImpl implements TrainingFacade {
     public TrainingFacadeImpl(TrainingService trainingService,
                               TraineeService traineeService,
                               TrainerService trainerService,
-                              TrainingCreationRequestDtoToTrainingEntityMapper trainingCreationRequestDtoToTrainingEntityMapper,
-                              TrainingEntityToTrainingCreationResponseDtoMapper trainingEntityToTrainingCreationResponseDtoMapper,
-                              TrainingEntityToTrainingRetrievalResponseDtoMapper trainingEntityToTrainingRetrievalResponseDtoMapper) {
+                              TrainingCreationRequestDtoToTrainingEntityMapper
+                                      trainingCreationRequestDtoToTrainingEntityMapper,
+                              TrainingEntityToTrainingCreationResponseDtoMapper
+                                      trainingEntityToTrainingCreationResponseDtoMapper,
+                              TrainingEntityToTrainingRetrievalResponseDtoMapper
+                                      trainingEntityToTrainingRetrievalResponseDtoMapper) {
         this.trainingService = trainingService;
         this.traineeService = traineeService;
         this.trainerService = trainerService;

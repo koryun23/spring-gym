@@ -1,11 +1,6 @@
 package org.example.dto.request;
 
 import java.util.Objects;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 import org.example.entity.SpecializationType;
 
 public class TrainerCreationRequestDto {
@@ -93,10 +88,10 @@ public class TrainerCreationRequestDto {
             return false;
         }
         TrainerCreationRequestDto that = (TrainerCreationRequestDto) o;
-        return isActive == that.isActive && Objects.equals(userId, that.userId) &&
-            Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) &&
-            Objects.equals(username, that.username) && Objects.equals(password, that.password) &&
-            specializationType == that.specializationType;
+        return isActive == that.isActive && Objects.equals(userId, that.userId)
+            && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName)
+            && Objects.equals(username, that.username) && Objects.equals(password, that.password)
+            && specializationType == that.specializationType;
     }
 
     @Override
@@ -106,14 +101,7 @@ public class TrainerCreationRequestDto {
 
     @Override
     public String toString() {
-        return "TrainerCreationRequestDto{" +
-            "userId=" + userId +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", username='" + username + '\'' +
-            ", password='" + password + '\'' +
-            ", isActive=" + isActive +
-            ", specializationType=" + specializationType +
-            '}';
+        return "TrainerCreationRequestDto{userId=%d, firstName='%s', lastName='%s', username='%s', password='%s', isActive=%s, specializationType=%s}".formatted(
+            userId, firstName, lastName, username, password, isActive, specializationType);
     }
 }

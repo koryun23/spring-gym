@@ -1,6 +1,5 @@
 package org.example.mapper.training;
 
-import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.dto.response.TrainingRetrievalResponseDto;
 import org.example.entity.TrainingEntity;
 import org.springframework.stereotype.Component;

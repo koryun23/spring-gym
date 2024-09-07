@@ -48,11 +48,14 @@ public class TraineeFacadeImpl implements TraineeFacade {
     @Autowired
     public TraineeFacadeImpl(TraineeService traineeService,
                              TrainerService trainerService,
-                             TraineeCreationRequestDtoToTraineeEntityMapper traineeCreationRequestDtoToTraineeEntityMapper,
+                             TraineeCreationRequestDtoToTraineeEntityMapper
+                                     traineeCreationRequestDtoToTraineeEntityMapper,
                              TraineeEntityToTraineeCreationResponseDtoMapper traineeToTraineeCreationResponseDtoMapper,
                              TraineeUpdateRequestDtoToTraineeEntityMapper traineeUpdateRequestDtoToTraineeEntityMapper,
-                             TraineeEntityToTraineeUpdateResponseDtoMapperImpl traineeEntityToTraineeUpdateResponseDtoMapper,
-                             TraineeEntityToTraineeRetrievalResponseDtoMapper traineeEntityToTraineeRetrievalResponseDtoMapper) {
+                             TraineeEntityToTraineeUpdateResponseDtoMapperImpl
+                                     traineeEntityToTraineeUpdateResponseDtoMapper,
+                             TraineeEntityToTraineeRetrievalResponseDtoMapper
+                                     traineeEntityToTraineeRetrievalResponseDtoMapper) {
         this.traineeToTraineeCreationResponseDtoMapper = traineeToTraineeCreationResponseDtoMapper;
         this.traineeService = traineeService;
         this.trainerService = trainerService;

@@ -67,9 +67,9 @@ public class User {
             return false;
         }
         User user = (User) o;
-        return isActive == user.isActive && Objects.equals(firstName, user.firstName) &&
-            Objects.equals(lastName, user.lastName) && Objects.equals(username, user.username) &&
-            Objects.equals(password, user.password);
+        return isActive == user.isActive && Objects.equals(firstName, user.firstName)
+            && Objects.equals(lastName, user.lastName) && Objects.equals(username, user.username)
+            && Objects.equals(password, user.password);
     }
 
     @Override
@@ -79,12 +79,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-            "firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", username='" + username + '\'' +
-            ", password='" + password + '\'' +
-            ", isActive=" + isActive +
-            '}';
+        return "User{firstName='%s', lastName='%s', username='%s', password='%s', isActive=%s}".formatted(firstName,
+            lastName, username, password, isActive);
     }
 }

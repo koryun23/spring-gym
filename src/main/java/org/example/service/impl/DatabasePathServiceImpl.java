@@ -4,8 +4,8 @@ import org.example.service.core.DatabasePathService;
 
 public class DatabasePathServiceImpl implements DatabasePathService {
 
-    private String entityPath;
-    private String idPath;
+    private final String entityPath;
+    private final String idPath;
 
     public DatabasePathServiceImpl(String entityPath, String idPath) {
         this.entityPath = entityPath;
@@ -24,9 +24,9 @@ public class DatabasePathServiceImpl implements DatabasePathService {
 
     @Override
     public String toString() {
-        return "DatabasePathServiceImpl{" +
-            "entityPath='" + entityPath + '\'' +
-            ", idPath='" + idPath + '\'' +
-            '}';
+        return "DatabasePathServiceImpl{"
+            + "entityPath='" + entityPath + '\''
+            + ", idPath='" + idPath + '\''
+            + '}';
     }
 }

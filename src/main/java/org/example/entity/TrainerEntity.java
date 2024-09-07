@@ -1,11 +1,6 @@
 package org.example.entity;
 
 import java.util.Objects;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 public class TrainerEntity extends User {
 
@@ -62,9 +57,6 @@ public class TrainerEntity extends User {
 
     @Override
     public String toString() {
-        return "TrainerEntity{" +
-            "specialization=" + specialization +
-            ", userId=" + userId +
-            '}';
+        return "TrainerEntity{specialization=%s, userId=%d}".formatted(specialization, userId);
     }
 }

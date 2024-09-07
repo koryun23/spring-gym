@@ -44,11 +44,15 @@ public class TrainerFacadeImpl implements TrainerFacade {
 
     @Autowired
     public TrainerFacadeImpl(TrainerService trainerService,
-                             TrainerCreationRequestDtoToTrainerEntityMapper trainerCreationRequestDtoToTrainerEntityMapper,
-                             TrainerEntityToTrainerCreationResponseDtoMapper trainerEntityToTrainerCreationResponseDtoMapper,
+                             TrainerCreationRequestDtoToTrainerEntityMapper
+                                 trainerCreationRequestDtoToTrainerEntityMapper,
+                             TrainerEntityToTrainerCreationResponseDtoMapper
+                                     trainerEntityToTrainerCreationResponseDtoMapper,
                              TrainerUpdateRequestDtoToTrainerEntityMapper trainerUpdateRequestDtoToTrainerEntityMapper,
-                             TrainerEntityToTrainerUpdateResponseDtoMapper trainerEntityToTrainerUpdateResponseDtoMapper,
-                             TrainerEntityToTrainerRetrievalResponseDtoMapper trainerEntityToTrainerRetrievalResponseDtoMapper) {
+                             TrainerEntityToTrainerUpdateResponseDtoMapper
+                                     trainerEntityToTrainerUpdateResponseDtoMapper,
+                             TrainerEntityToTrainerRetrievalResponseDtoMapper
+                                     trainerEntityToTrainerRetrievalResponseDtoMapper) {
         this.trainerService = trainerService;
         this.trainerCreationRequestDtoToTrainerEntityMapper = trainerCreationRequestDtoToTrainerEntityMapper;
         this.trainerEntityToTrainerCreationResponseDtoMapper = trainerEntityToTrainerCreationResponseDtoMapper;

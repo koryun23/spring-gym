@@ -1,6 +1,6 @@
 package org.example.mapper;
 
-public interface Mapper<From, To> {
+public interface Mapper<F, T> {
 
-    To map(From obj);
+    T map(F obj);
 }

@@ -2,11 +2,6 @@ package org.example.dto.response;
 
 import java.util.List;
 import java.util.Objects;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 public class TraineeDeletionResponseDto {
 
@@ -57,9 +52,6 @@ public class TraineeDeletionResponseDto {
 
     @Override
     public String toString() {
-        return "TraineeDeletionResponseDto{" +
-            "status=" + status +
-            ", errors=" + errors +
-            '}';
+        return "TraineeDeletionResponseDto{status=%s, errors=%s}".formatted(status, errors);
     }
 }
