@@ -1,15 +1,16 @@
 package org.example.mapper.training;
 
 import org.example.dto.response.TrainingCreationResponseDto;
+import org.example.dto.response.TrainingRetrievalResponseDto;
 import org.example.entity.TrainingEntity;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TrainingEntityToTrainingRetrievalResponseDtoMapperImpl
-    implements TrainingEntityToTrainingCreationResponseDtoMapper {
+    implements TrainingEntityToTrainingRetrievalResponseDtoMapper {
     @Override
-    public TrainingCreationResponseDto map(TrainingEntity training) {
-        return new TrainingCreationResponseDto(
+    public TrainingRetrievalResponseDto map(TrainingEntity training) {
+        return new TrainingRetrievalResponseDto(
             training.getTrainingId(),
             training.getTraineeId(),
             training.getTrainerId(),
