@@ -30,13 +30,14 @@ public class TrainerUsernamePasswordServiceImpl implements UsernamePasswordServi
     public String username(String firstName, String lastName, Long id) {
         String temporaryUsername = firstName + "." + lastName;
         Optional<TrainerEntity> optionalTrainer = trainerService.findByUsername(temporaryUsername);
+        Optional<TraineeEntity> optionalTrainee = traineeService.findByUsername(temporaryUsername);
 
-        if (optionalTrainer.isEmpty()) {
+        if (optionalTrainer.isEmpty() && optionalTrainee.isEmpty()) {
             return temporaryUsername;
         }
 
         temporaryUsername += ("." + id);
-        Optional<TraineeEntity> optionalTrainee = traineeService.findByUsername(temporaryUsername);
+        optionalTrainee = traineeService.findByUsername(temporaryUsername);
 
         if (optionalTrainee.isEmpty()) {
             return temporaryUsername;

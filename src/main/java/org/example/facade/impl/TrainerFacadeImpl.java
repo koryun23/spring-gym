@@ -32,12 +32,8 @@ public class TrainerFacadeImpl implements TrainerFacade {
     private final TrainerUpdateRequestDtoToTrainerEntityMapper trainerUpdateRequestDtoToTrainerEntityMapper;
     private final TrainerEntityToTrainerUpdateResponseDtoMapper trainerEntityToTrainerUpdateResponseDtoMapper;
     private final TrainerEntityToTrainerRetrievalResponseDtoMapper trainerEntityToTrainerRetrievalResponseDtoMapper;
-
-    @Qualifier("trainerUsernamePasswordService")
-    private UsernamePasswordService usernamePasswordService;
-
-    @Qualifier("trainerIdService")
-    private IdService idService;
+    private final UsernamePasswordService usernamePasswordService;
+    private final IdService idService;
 
     /**
      * Constructor.
@@ -52,7 +48,9 @@ public class TrainerFacadeImpl implements TrainerFacade {
                                      trainerEntityToTrainerUpdateResponseDtoMapper,
                              TrainerEntityToTrainerRetrievalResponseDtoMapper
                                      trainerEntityToTrainerRetrievalResponseDtoMapper,
+                             @Qualifier("trainerUsernamePasswordService")
                              UsernamePasswordService usernamePasswordService,
+                             @Qualifier("trainerIdService")
                              IdService idService) {
         this.trainerService = trainerService;
         this.trainerCreationRequestDtoToTrainerEntityMapper = trainerCreationRequestDtoToTrainerEntityMapper;

@@ -26,13 +26,10 @@ public class TrainingFacadeImpl implements TrainingFacade {
     private final TrainingService trainingService;
     private final TraineeService traineeService;
     private final TrainerService trainerService;
-
+    private final IdService idService;
     private final TrainingCreationRequestDtoToTrainingEntityMapper trainingCreationRequestDtoToTrainingEntityMapper;
     private final TrainingEntityToTrainingCreationResponseDtoMapper trainingEntityToTrainingCreationResponseDtoMapper;
     private final TrainingEntityToTrainingRetrievalResponseDtoMapper trainingEntityToTrainingRetrievalResponseDtoMapper;
-
-    @Qualifier("trainingIdService")
-    private IdService idService;
 
     /**
      * Constructor.
@@ -46,6 +43,7 @@ public class TrainingFacadeImpl implements TrainingFacade {
                                       trainingEntityToTrainingCreationResponseDtoMapper,
                               TrainingEntityToTrainingRetrievalResponseDtoMapper
                                       trainingEntityToTrainingRetrievalResponseDtoMapper,
+                              @Qualifier("trainingIdService")
                               IdService idService) {
         this.trainingService = trainingService;
         this.traineeService = traineeService;

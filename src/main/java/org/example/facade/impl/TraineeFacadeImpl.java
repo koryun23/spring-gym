@@ -35,12 +35,8 @@ public class TraineeFacadeImpl implements TraineeFacade {
     private final TraineeUpdateRequestDtoToTraineeEntityMapper traineeUpdateRequestDtoToTraineeEntityMapper;
     private final TraineeEntityToTraineeUpdateResponseDtoMapperImpl traineeEntityToTraineeUpdateResponseDtoMapper;
     private final TraineeEntityToTraineeRetrievalResponseDtoMapper traineeEntityToTraineeRetrievalResponseDtoMapper;
-
-    @Qualifier("traineeUsernamePasswordService")
-    private UsernamePasswordService usernamePasswordService;
-
-    @Qualifier("traineeIdService")
-    private IdService idService;
+    private final UsernamePasswordService usernamePasswordService;
+    private final IdService idService;
 
     /**
      * Constructor.
@@ -55,7 +51,9 @@ public class TraineeFacadeImpl implements TraineeFacade {
                                      traineeEntityToTraineeUpdateResponseDtoMapper,
                              TraineeEntityToTraineeRetrievalResponseDtoMapper
                                      traineeEntityToTraineeRetrievalResponseDtoMapper,
+                             @Qualifier("traineeUsernamePasswordService")
                              UsernamePasswordService usernamePasswordService,
+                             @Qualifier("traineeIdService")
                              IdService idService) {
         this.traineeToTraineeCreationResponseDtoMapper = traineeToTraineeCreationResponseDtoMapper;
         this.traineeService = traineeService;
