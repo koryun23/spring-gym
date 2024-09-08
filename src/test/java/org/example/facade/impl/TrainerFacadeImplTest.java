@@ -6,6 +6,11 @@ import org.example.dto.request.TrainerUpdateRequestDto;
 import org.example.entity.SpecializationType;
 import org.example.entity.TrainerEntity;
 import org.example.facade.core.TrainerFacade;
+import org.example.mapper.trainer.TrainerCreationRequestDtoToTrainerEntityMapper;
+import org.example.mapper.trainer.TrainerEntityToTrainerCreationResponseDtoMapper;
+import org.example.mapper.trainer.TrainerEntityToTrainerRetrievalResponseDtoMapper;
+import org.example.mapper.trainer.TrainerEntityToTrainerUpdateResponseDtoMapper;
+import org.example.mapper.trainer.TrainerUpdateRequestDtoToTrainerEntityMapper;
 import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
@@ -20,7 +25,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
-class TrainerEntityFacadeImplTest {
+
+class TrainerFacadeImplTest {
 
     private TrainerFacade testSubject;
 
@@ -36,9 +42,33 @@ class TrainerEntityFacadeImplTest {
     @Mock
     private UsernamePasswordService usernamePasswordService;
 
+    @Mock
+    private TrainerCreationRequestDtoToTrainerEntityMapper trainerCreationRequestDtoToTrainerEntityMapper;
+
+    @Mock
+    private TrainerEntityToTrainerCreationResponseDtoMapper trainerEntityToTrainerCreationResponseDtoMapper;
+
+    @Mock
+    private TrainerUpdateRequestDtoToTrainerEntityMapper trainerUpdateRequestDtoToTrainerEntityMapper;
+
+    @Mock
+    private TrainerEntityToTrainerUpdateResponseDtoMapper trainerEntityToTrainerUpdateResponseDtoMapper;
+
+    @Mock
+    private TrainerEntityToTrainerRetrievalResponseDtoMapper trainerEntityToTrainerRetrievalResponseDtoMapper;
+
     @BeforeEach
     public void init() {
-        testSubject = new TrainerFacadeImpl(trainerService, traineeService, idService, usernamePasswordService);
+        testSubject = new TrainerFacadeImpl(
+            trainerService,
+            trainerCreationRequestDtoToTrainerEntityMapper,
+            trainerEntityToTrainerCreationResponseDtoMapper,
+            trainerUpdateRequestDtoToTrainerEntityMapper,
+            trainerEntityToTrainerUpdateResponseDtoMapper,
+            trainerEntityToTrainerRetrievalResponseDtoMapper,
+            usernamePasswordService,
+            idService
+        );
     }
 
     @Test

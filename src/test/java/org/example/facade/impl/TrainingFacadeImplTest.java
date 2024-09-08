@@ -5,6 +5,9 @@ import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.entity.TraineeEntity;
 import org.example.entity.TrainingType;
 import org.example.facade.core.TrainingFacade;
+import org.example.mapper.training.TrainingCreationRequestDtoToTrainingEntityMapper;
+import org.example.mapper.training.TrainingEntityToTrainingCreationResponseDtoMapper;
+import org.example.mapper.training.TrainingEntityToTrainingRetrievalResponseDtoMapper;
 import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
@@ -20,7 +23,7 @@ import java.sql.Date;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
-class TrainingEntityFacadeImplTest {
+class TrainingFacadeImplTest {
 
     private TrainingFacade testSubject;
 
@@ -36,9 +39,26 @@ class TrainingEntityFacadeImplTest {
     @Mock
     private TrainerService trainerService;
 
+    @Mock
+    private TrainingCreationRequestDtoToTrainingEntityMapper trainingCreationRequestDtoToTrainingEntityMapper;
+
+    @Mock
+    private TrainingEntityToTrainingCreationResponseDtoMapper trainingEntityToTrainingCreationResponseDtoMapper;
+
+    @Mock
+    private TrainingEntityToTrainingRetrievalResponseDtoMapper trainingEntityToTrainingRetrievalResponseDtoMapper;
+
     @BeforeEach
     public void init() {
-        testSubject = new TrainingFacadeImpl(trainingService, idService, traineeService, trainerService);
+        testSubject = new TrainingFacadeImpl(
+            trainingService,
+            traineeService,
+            trainerService,
+            trainingCreationRequestDtoToTrainingEntityMapper,
+            trainingEntityToTrainingCreationResponseDtoMapper,
+            trainingEntityToTrainingRetrievalResponseDtoMapper,
+            idService
+        );
     }
 
     @Test
@@ -81,7 +101,7 @@ class TrainingEntityFacadeImplTest {
                 TrainingType.AEROBIC,
                 Date.valueOf("2024-10-10"),
                 1000L
-        )).getErrors().getFirst()).isEqualTo("Cannot create a training: a trainee with an id of 1 does not exist");
+        )).getErrors().getFirst()).isEqualTo("Cannot create a trainingEntity: a trainee with an id of 1 does not exist");
     }
 
     @Test
@@ -104,7 +124,7 @@ class TrainingEntityFacadeImplTest {
                 TrainingType.AEROBIC,
                 Date.valueOf("2024-10-10"),
                 1000L
-        )).getErrors().getFirst()).isEqualTo("Cannot create a training: a trainer with an id of 1 does not exist");
+        )).getErrors().getFirst()).isEqualTo("Cannot create a trainingEntity: a trainer with an id of 1 does not exist");
     }
 
     @Test

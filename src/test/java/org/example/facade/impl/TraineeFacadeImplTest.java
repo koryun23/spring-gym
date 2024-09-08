@@ -3,8 +3,14 @@ package org.example.facade.impl;
 import org.assertj.core.api.Assertions;
 import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
+import org.example.dto.response.TraineeCreationResponseDto;
 import org.example.entity.TraineeEntity;
 import org.example.facade.core.TraineeFacade;
+import org.example.mapper.trainee.TraineeCreationRequestDtoToTraineeEntityMapper;
+import org.example.mapper.trainee.TraineeEntityToTraineeCreationResponseDtoMapper;
+import org.example.mapper.trainee.TraineeEntityToTraineeRetrievalResponseDtoMapper;
+import org.example.mapper.trainee.TraineeEntityToTraineeUpdateResponseDtoMapperImpl;
+import org.example.mapper.trainee.TraineeUpdateRequestDtoToTraineeEntityMapper;
 import org.example.service.core.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,9 +39,33 @@ class TraineeFacadeImplTest {
     @Mock
     private UsernamePasswordService usernamePasswordService;
 
+    @Mock
+    private TraineeCreationRequestDtoToTraineeEntityMapper traineeCreationRequestDtoToTraineeEntityMapper;
+
+    @Mock
+    private TraineeEntityToTraineeCreationResponseDtoMapper traineeToTraineeCreationResponseDtoMapper;
+
+    @Mock
+    private TraineeUpdateRequestDtoToTraineeEntityMapper traineeUpdateRequestDtoToTraineeEntityMapper;
+
+    @Mock
+    private TraineeEntityToTraineeUpdateResponseDtoMapperImpl traineeEntityToTraineeUpdateResponseDtoMapper;
+
+    @Mock
+    private TraineeEntityToTraineeRetrievalResponseDtoMapper traineeEntityToTraineeRetrievalResponseDtoMapper;
     @BeforeEach
     public void init() {
-        testSubject = new TraineeFacadeImpl(traineeService, trainerService, idService, usernamePasswordService);
+        testSubject = new TraineeFacadeImpl(
+            traineeService,
+            trainerService,
+            traineeCreationRequestDtoToTraineeEntityMapper,
+            traineeToTraineeCreationResponseDtoMapper,
+            traineeUpdateRequestDtoToTraineeEntityMapper,
+            traineeEntityToTraineeUpdateResponseDtoMapper,
+            traineeEntityToTraineeRetrievalResponseDtoMapper,
+            usernamePasswordService,
+            idService
+        );
     }
 
     @Test
@@ -46,6 +76,7 @@ class TraineeFacadeImplTest {
 
     @Test
     public void testCreateTraineeWhenTraineeWithIdExists() {
+        // given
         Mockito.when(idService.getId()).thenReturn(1L);
         Mockito.when(traineeService.findById(1L)).thenReturn(Optional.of(new TraineeEntity(
                 1L,
@@ -57,13 +88,18 @@ class TraineeFacadeImplTest {
                 Date.valueOf("2024-10-10"),
                 "manchester"
         )));
-        Assertions.assertThat(testSubject.createTrainee(new TraineeCreationRequestDto(
-                "first",
-                "last",
-                true,
-                Date.valueOf("2024-10-10"),
-                "manchester"
-        )).getErrors().getFirst()).isEqualTo("A trainee with the specified id - 1, already exists");
+
+        //when
+        TraineeCreationResponseDto response = testSubject.createTrainee(new TraineeCreationRequestDto(
+            "first",
+            "last",
+            true,
+            Date.valueOf("2024-10-10"),
+            "manchester"
+        ));
+
+        //then
+        Assertions.assertThat(response.getErrors().getFirst()).isEqualTo("A trainee with the specified id - 1, already exists");
     }
 
     @Test

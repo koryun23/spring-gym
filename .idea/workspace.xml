@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Committing all the checkstyle fixes, removing the autowired annotation from the constructors and injecting some of the dependencies through constructors instead of autowiring them">
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Applying checkstyle fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TraineeFacadeImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TraineeFacadeImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TrainerEntityFacadeImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TrainerFacadeImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TrainingEntityFacadeImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TrainingFacadeImplTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,30 +71,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Tests in 'gym-spring.test'.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.TraineeStorageImplTest.TestTraineeUpdate.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.TraineeStorageImplTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.TraineeTest.TestTrainee.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.TraineeTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.TrainerStorageImplTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.TrainerStorageImplTest.testGetWhenNull.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.TrainerStorageImplTest.testRemoveWhenExists.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.gym-spring [:Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Koryun/Desktop/Koryun/gym-spring/config/checkstyle/checkstyle.xml&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;org.infernus.idea.checkstyle.CheckStyleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Tests in 'gym-spring.test'.executor": "Run",
+    "Gradle.TraineeStorageImplTest.TestTraineeUpdate.executor": "Run",
+    "Gradle.TraineeStorageImplTest.executor": "Run",
+    "Gradle.TraineeTest.TestTrainee.executor": "Run",
+    "Gradle.TraineeTest.executor": "Run",
+    "Gradle.TrainerStorageImplTest.executor": "Run",
+    "Gradle.TrainerStorageImplTest.testGetWhenNull.executor": "Run",
+    "Gradle.TrainerStorageImplTest.testRemoveWhenExists.executor": "Run",
+    "Gradle.gym-spring [:Main.main()].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Koryun/Desktop/Koryun/gym-spring/config/checkstyle/checkstyle.xml",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Koryun\Desktop\Koryun\gym-spring\src\main\java\org\example\db" />
@@ -117,7 +117,7 @@
       <recent name="org.example.entity" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Gradle.Tests in 'gym-spring.test'">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
       <module name="gym-spring.main" />
@@ -243,22 +243,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00084" summary="Creating a separate class TrainingFileStorageImpl which handles the file interactions and is injected into TrainingStorageImpl which only handles the in-memory interactions.&#10;Also editing the return types of Config class methods to the interfaces rather than classes">
-      <option name="closed" value="true" />
-      <created>1725197221274</created>
-      <option name="number" value="00084" />
-      <option name="presentableId" value="LOCAL-00084" />
-      <option name="project" value="LOCAL" />
-      <updated>1725197221274</updated>
-    </task>
-    <task id="LOCAL-00085" summary="Resetting the content of the .txt files to the default state and fixing bugs in FileStorage implementation classes: returning the actual in memory storage instead of null.">
-      <option name="closed" value="true" />
-      <created>1725197737583</created>
-      <option name="number" value="00085" />
-      <option name="presentableId" value="LOCAL-00085" />
-      <option name="project" value="LOCAL" />
-      <updated>1725197737583</updated>
     </task>
     <task id="LOCAL-00086" summary="Adding an assertion to the update method">
       <option name="closed" value="true" />
@@ -636,7 +620,23 @@
       <option name="project" value="LOCAL" />
       <updated>1725802893051</updated>
     </task>
-    <option name="localTasksCounter" value="133" />
+    <task id="LOCAL-00133" summary="Moving the Qualifier annotations to the constructor parameters and fixing the logic of Username and Password generation">
+      <option name="closed" value="true" />
+      <created>1725820968385</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
+      <option name="project" value="LOCAL" />
+      <updated>1725820968389</updated>
+    </task>
+    <task id="LOCAL-00134" summary="Applying checkstyle fixes">
+      <option name="closed" value="true" />
+      <created>1725821083156</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
+      <option name="project" value="LOCAL" />
+      <updated>1725821083157</updated>
+    </task>
+    <option name="localTasksCounter" value="135" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -651,8 +651,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Changing the reference type of the dao from class name to interface name. Throwing an exception in delete method if trainee is not found" />
-    <MESSAGE value="Creating tests for testing the funcionality of TraineeServiceImpl class" />
     <MESSAGE value="Creating tests for testing the functionality of TraineeServiceImpl class" />
     <MESSAGE value="Adding validations to the TrainerServiceImpl class and creating tests for testing the functionality of the class" />
     <MESSAGE value="Crating tests for testing the functionality of TrainingServiceImpl" />
@@ -676,6 +674,8 @@
     <MESSAGE value="Adding the .idea folder to the gitignore" />
     <MESSAGE value="Applying the changes offered by checkstyle" />
     <MESSAGE value="Committing all the checkstyle fixes, removing the autowired annotation from the constructors and injecting some of the dependencies through constructors instead of autowiring them" />
-    <option name="LAST_COMMIT_MESSAGE" value="Committing all the checkstyle fixes, removing the autowired annotation from the constructors and injecting some of the dependencies through constructors instead of autowiring them" />
+    <MESSAGE value="Moving the Qualifier annotations to the constructor parameters and fixing the logic of Username and Password generation" />
+    <MESSAGE value="Applying checkstyle fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Applying checkstyle fixes" />
   </component>
 </project>
