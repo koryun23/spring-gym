@@ -4,15 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding tests for the trainee mappers">
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mapper/trainer/TrainerCreationRequestDtoToTrainerEntityMapperImplTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mapper/trainer/TrainerEntityToTrainerCreationResponseDtoMapperImplTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mapper/trainer/TrainerEntityToTrainerRetrievalResponseDtoMapperImplTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mapper/trainer/TrainerEntityToTrainerUpdateResponseDtoMapperImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainer/TrainerCreationRequestDtoToTrainerEntityMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainer/TrainerCreationRequestDtoToTrainerEntityMapperImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainer/TrainerEntityToTrainerCreationResponseDtoMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainer/TrainerEntityToTrainerCreationResponseDtoMapperImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainer/TrainerEntityToTrainerRetrievalResponseDtoMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainer/TrainerEntityToTrainerRetrievalResponseDtoMapperImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainer/TrainerEntityToTrainerUpdateResponseDtoMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainer/TrainerEntityToTrainerUpdateResponseDtoMapperImpl.java" afterDir="false" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding tests for the training mappers">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/UsernamePasswordServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/config/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/config/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TraineeUsernamePasswordServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainerUsernamePasswordServiceImpl.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,8 +47,8 @@
         <option value="AnnotationType" />
         <option value="Enum" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -91,7 +88,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "single__username__password__service__class",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Koryun/Desktop/Koryun/gym-spring/config/checkstyle/checkstyle.xml",
     "project.structure.last.edited": "Project",
@@ -115,11 +112,11 @@
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="org.example.mapper.training" />
       <recent name="org.example.mapper.trainer" />
       <recent name="org.example.mapper.trainee" />
       <recent name="org.example.facade.impl" />
       <recent name="org.example.service.impl" />
-      <recent name="org.example.dao.impl" />
     </key>
   </component>
   <component name="RunManager" selected="Gradle.Tests in 'gym-spring.test'">
@@ -259,22 +256,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00088" summary="Changing the logic of hashCode method in Trainer entity class">
-      <option name="closed" value="true" />
-      <created>1725201388418</created>
-      <option name="number" value="00088" />
-      <option name="presentableId" value="LOCAL-00088" />
-      <option name="project" value="LOCAL" />
-      <updated>1725201388418</updated>
-    </task>
-    <task id="LOCAL-00089" summary="Adding assertions to the TrainingStorageImpl">
-      <option name="closed" value="true" />
-      <created>1725201821969</created>
-      <option name="number" value="00089" />
-      <option name="presentableId" value="LOCAL-00089" />
-      <option name="project" value="LOCAL" />
-      <updated>1725201821969</updated>
     </task>
     <task id="LOCAL-00090" summary="Creating a TrainingNotFoundException">
       <option name="closed" value="true" />
@@ -652,7 +633,23 @@
       <option name="project" value="LOCAL" />
       <updated>1725825903530</updated>
     </task>
-    <option name="localTasksCounter" value="137" />
+    <task id="LOCAL-00137" summary="Adding tests for the trainer mappers">
+      <option name="closed" value="true" />
+      <created>1725829398180</created>
+      <option name="number" value="00137" />
+      <option name="presentableId" value="LOCAL-00137" />
+      <option name="project" value="LOCAL" />
+      <updated>1725829398185</updated>
+    </task>
+    <task id="LOCAL-00138" summary="Adding tests for the training mappers">
+      <option name="closed" value="true" />
+      <created>1725830242804</created>
+      <option name="number" value="00138" />
+      <option name="presentableId" value="LOCAL-00138" />
+      <option name="project" value="LOCAL" />
+      <updated>1725830242807</updated>
+    </task>
+    <option name="localTasksCounter" value="139" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -667,8 +664,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Crating tests for testing the functionality of TrainingServiceImpl" />
-    <MESSAGE value="Creating a new service for generating username and password for trainees and trainers" />
     <MESSAGE value="Registering UsernamePasswordService as a bean in the Configuration class" />
     <MESSAGE value="big fix: Adding format specifier" />
     <MESSAGE value="Creating tests for testing the functionality of TraineeFacadeImpl class" />
@@ -692,6 +687,8 @@
     <MESSAGE value="Applying checkstyle fixes" />
     <MESSAGE value="Fixing the facade tests: mocking mappers" />
     <MESSAGE value="Adding tests for the trainee mappers" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding tests for the trainee mappers" />
+    <MESSAGE value="Adding tests for the trainer mappers" />
+    <MESSAGE value="Adding tests for the training mappers" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding tests for the training mappers" />
   </component>
 </project>

@@ -44,13 +44,13 @@ public class TraineeFacadeImpl implements TraineeFacade {
     public TraineeFacadeImpl(TraineeService traineeService,
                              TrainerService trainerService,
                              TraineeCreationRequestDtoToTraineeEntityMapper
-                                     traineeCreationRequestDtoToTraineeEntityMapper,
+                                 traineeCreationRequestDtoToTraineeEntityMapper,
                              TraineeEntityToTraineeCreationResponseDtoMapper traineeToTraineeCreationResponseDtoMapper,
                              TraineeUpdateRequestDtoToTraineeEntityMapper traineeUpdateRequestDtoToTraineeEntityMapper,
                              TraineeEntityToTraineeUpdateResponseDtoMapperImpl
-                                     traineeEntityToTraineeUpdateResponseDtoMapper,
+                                 traineeEntityToTraineeUpdateResponseDtoMapper,
                              TraineeEntityToTraineeRetrievalResponseDtoMapper
-                                     traineeEntityToTraineeRetrievalResponseDtoMapper,
+                                 traineeEntityToTraineeRetrievalResponseDtoMapper,
                              @Qualifier("traineeUsernamePasswordService")
                              UsernamePasswordService usernamePasswordService,
                              @Qualifier("traineeIdService")
@@ -81,7 +81,8 @@ public class TraineeFacadeImpl implements TraineeFacade {
         String username = usernamePasswordService.username(
             requestDto.getFirstName(),
             requestDto.getLastName(),
-            traineeId
+            traineeId,
+            "trainee"
         );
 
         String password = usernamePasswordService.password();
