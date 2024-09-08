@@ -1,52 +1,29 @@
 package org.example.service.impl;
 
-import java.util.Optional;
-import java.util.UUID;
-import org.example.entity.TraineeEntity;
-import org.example.entity.TrainerEntity;
-import org.example.service.core.TraineeService;
-import org.example.service.core.TrainerService;
 import org.example.service.core.UsernamePasswordService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 @Service("trainerUsernamePasswordService")
 public class TrainerUsernamePasswordServiceImpl implements UsernamePasswordService {
 
-    private final TraineeService traineeService;
-    private final TrainerService trainerService;
+    private final UsernamePasswordService usernamePasswordService;
 
     /**
      * Constructor.
      */
-    public TrainerUsernamePasswordServiceImpl(TraineeService traineeService, TrainerService trainerService) {
-        Assert.notNull(traineeService, "TraineeEntity Service must not be null");
-        Assert.notNull(trainerService, "TrainerEntity Service must not be null");
-        this.traineeService = traineeService;
-        this.trainerService = trainerService;
+    public TrainerUsernamePasswordServiceImpl(
+        @Qualifier("usernamePasswordService") UsernamePasswordService usernamePasswordService) {
+        this.usernamePasswordService = usernamePasswordService;
     }
 
     @Override
-    public String username(String firstName, String lastName, Long id) {
-        String temporaryUsername = firstName + "." + lastName;
-        Optional<TrainerEntity> optionalTrainer = trainerService.findByUsername(temporaryUsername);
-        Optional<TraineeEntity> optionalTrainee = traineeService.findByUsername(temporaryUsername);
-
-        if (optionalTrainer.isEmpty() && optionalTrainee.isEmpty()) {
-            return temporaryUsername;
-        }
-
-        temporaryUsername += ("." + id);
-        optionalTrainee = traineeService.findByUsername(temporaryUsername);
-
-        if (optionalTrainee.isEmpty()) {
-            return temporaryUsername;
-        }
-        return temporaryUsername + ".trainer";
+    public String username(String firstName, String lastName, Long id, String uniqueSuffix) {
+        return usernamePasswordService.username(firstName, lastName, id, uniqueSuffix);
     }
 
     @Override
     public String password() {
-        return UUID.randomUUID().toString().substring(0, 10);
+        return usernamePasswordService.password();
     }
 }

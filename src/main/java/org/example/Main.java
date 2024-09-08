@@ -50,11 +50,5 @@ public class Main {
             dateConverter.stringToDate("2024-12-12"),
             1_000_000L
         ));
-        trainerFacade.createTrainer(new TrainerCreationRequestDto(
-            "John",
-            "Murray",
-            true,
-            SpecializationType.FITNESS
-        ));
     }
 }

@@ -38,11 +38,11 @@ public class TrainingFacadeImpl implements TrainingFacade {
                               TraineeService traineeService,
                               TrainerService trainerService,
                               TrainingCreationRequestDtoToTrainingEntityMapper
-                                      trainingCreationRequestDtoToTrainingEntityMapper,
+                                  trainingCreationRequestDtoToTrainingEntityMapper,
                               TrainingEntityToTrainingCreationResponseDtoMapper
-                                      trainingEntityToTrainingCreationResponseDtoMapper,
+                                  trainingEntityToTrainingCreationResponseDtoMapper,
                               TrainingEntityToTrainingRetrievalResponseDtoMapper
-                                      trainingEntityToTrainingRetrievalResponseDtoMapper,
+                                  trainingEntityToTrainingRetrievalResponseDtoMapper,
                               @Qualifier("trainingIdService")
                               IdService idService) {
         this.trainingService = trainingService;

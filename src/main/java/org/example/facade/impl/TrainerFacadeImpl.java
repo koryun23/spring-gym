@@ -42,12 +42,12 @@ public class TrainerFacadeImpl implements TrainerFacade {
                              TrainerCreationRequestDtoToTrainerEntityMapper
                                  trainerCreationRequestDtoToTrainerEntityMapper,
                              TrainerEntityToTrainerCreationResponseDtoMapper
-                                     trainerEntityToTrainerCreationResponseDtoMapper,
+                                 trainerEntityToTrainerCreationResponseDtoMapper,
                              TrainerUpdateRequestDtoToTrainerEntityMapper trainerUpdateRequestDtoToTrainerEntityMapper,
                              TrainerEntityToTrainerUpdateResponseDtoMapper
-                                     trainerEntityToTrainerUpdateResponseDtoMapper,
+                                 trainerEntityToTrainerUpdateResponseDtoMapper,
                              TrainerEntityToTrainerRetrievalResponseDtoMapper
-                                     trainerEntityToTrainerRetrievalResponseDtoMapper,
+                                 trainerEntityToTrainerRetrievalResponseDtoMapper,
                              @Qualifier("trainerUsernamePasswordService")
                              UsernamePasswordService usernamePasswordService,
                              @Qualifier("trainerIdService")
@@ -77,7 +77,8 @@ public class TrainerFacadeImpl implements TrainerFacade {
         String username = usernamePasswordService.username(
             requestDto.getFirstName(),
             requestDto.getLastName(),
-            trainerId
+            trainerId,
+            "trainer"
         );
 
         String password = usernamePasswordService.password();
