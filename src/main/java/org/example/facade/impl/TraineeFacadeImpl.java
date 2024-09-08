@@ -90,7 +90,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
         requestDto.setPassword(password);
 
         TraineeCreationResponseDto responseDto = traineeToTraineeCreationResponseDtoMapper.map(
-            traineeCreationRequestDtoToTraineeEntityMapper.map(requestDto));
+            traineeService.create(traineeCreationRequestDtoToTraineeEntityMapper.map(requestDto)));
 
         idService.autoIncrement();
 
@@ -110,7 +110,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
         }
 
         TraineeUpdateResponseDto responseDto = traineeEntityToTraineeUpdateResponseDtoMapper.map(
-            traineeUpdateRequestDtoToTraineeEntityMapper.map(requestDto));
+            traineeService.update(traineeUpdateRequestDtoToTraineeEntityMapper.map(requestDto)));
 
         LOGGER.info("Successfully updated a TraineeEntity based on the TraineeUpdateRequestDto - {}, response - {}",
             requestDto, responseDto);
