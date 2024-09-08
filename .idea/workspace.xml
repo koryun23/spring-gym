@@ -4,11 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Applying checkstyle fixes">
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Fixing the facade tests: mocking mappers">
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mapper/trainee/TraineeCreationRequestDtoToTraineeEntityMapperImplTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mapper/trainee/TraineeEntityToTraineeCreationResponseDtoMapperImplTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mapper/trainee/TraineeEntityToTraineeRetrievalResponseDtoMapperImplTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mapper/trainee/TraineeEntityToTraineeUpdateResponseDtoMapperImplTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mapper/trainee/TraineeUpdateRequestDtoToTraineeEntityMapperImplTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TraineeFacadeImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TraineeFacadeImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TrainerEntityFacadeImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TrainerFacadeImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TrainingEntityFacadeImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/facade/impl/TrainingFacadeImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainee/TraineeCreationRequestDtoToTraineeEntityMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainee/TraineeCreationRequestDtoToTraineeEntityMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainee/TraineeEntityToTraineeCreationResponseDtoMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainee/TraineeEntityToTraineeCreationResponseDtoMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainee/TraineeEntityToTraineeRetrievalResponseDtoMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainee/TraineeEntityToTraineeRetrievalResponseDtoMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainee/TraineeEntityToTraineeUpdateResponseDtoMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainee/TraineeEntityToTraineeUpdateResponseDtoMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainee/TraineeUpdateRequestDtoToTraineeEntityMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainee/TraineeUpdateRequestDtoToTraineeEntityMapperImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,9 +52,9 @@
       <list>
         <option value="AnnotationType" />
         <option value="Enum" />
-        <option value="JUnit5 Test Class" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -74,6 +81,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Gradle.Tests in 'gym-spring.test'.executor": "Run",
+    "Gradle.TraineeCreationRequestDtoToTraineeEntityMapperImplTest.executor": "Run",
     "Gradle.TraineeStorageImplTest.TestTraineeUpdate.executor": "Run",
     "Gradle.TraineeStorageImplTest.executor": "Run",
     "Gradle.TraineeTest.TestTrainee.executor": "Run",
@@ -110,27 +118,14 @@
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="org.example.mapper.trainee" />
       <recent name="org.example.facade.impl" />
       <recent name="org.example.service.impl" />
       <recent name="org.example.dao.impl" />
       <recent name="org.example.repository.impl" />
-      <recent name="org.example.entity" />
     </key>
   </component>
   <component name="RunManager" selected="Gradle.Tests in 'gym-spring.test'">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.Main" />
-      <module name="gym-spring.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Tests in 'gym-spring.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -143,6 +138,30 @@
         <option name="taskNames">
           <list>
             <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="TraineeCreationRequestDtoToTraineeEntityMapperImplTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.mapper.trainee.TraineeCreationRequestDtoToTraineeEntityMapperImplTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -228,10 +247,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.Tests in 'gym-spring.test'" />
+        <item itemvalue="Gradle.TraineeCreationRequestDtoToTraineeEntityMapperImplTest" />
         <item itemvalue="Gradle.TrainerStorageImplTest" />
         <item itemvalue="Gradle.TrainerStorageImplTest.testRemoveWhenExists" />
         <item itemvalue="Gradle.TrainerStorageImplTest.testGetWhenNull" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -243,14 +262,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00086" summary="Adding an assertion to the update method">
-      <option name="closed" value="true" />
-      <created>1725200375833</created>
-      <option name="number" value="00086" />
-      <option name="presentableId" value="LOCAL-00086" />
-      <option name="project" value="LOCAL" />
-      <updated>1725200375833</updated>
     </task>
     <task id="LOCAL-00087" summary="Implementing Unit tests for the TrainerStorageImpl">
       <option name="closed" value="true" />
@@ -636,7 +647,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725821083157</updated>
     </task>
-    <option name="localTasksCounter" value="135" />
+    <task id="LOCAL-00135" summary="Fixing the facade tests: mocking mappers">
+      <option name="closed" value="true" />
+      <created>1725824404347</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
+      <option name="project" value="LOCAL" />
+      <updated>1725824404349</updated>
+    </task>
+    <option name="localTasksCounter" value="136" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -651,7 +670,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Creating tests for testing the functionality of TraineeServiceImpl class" />
     <MESSAGE value="Adding validations to the TrainerServiceImpl class and creating tests for testing the functionality of the class" />
     <MESSAGE value="Crating tests for testing the functionality of TrainingServiceImpl" />
     <MESSAGE value="Creating a new service for generating username and password for trainees and trainers" />
@@ -676,6 +694,7 @@
     <MESSAGE value="Committing all the checkstyle fixes, removing the autowired annotation from the constructors and injecting some of the dependencies through constructors instead of autowiring them" />
     <MESSAGE value="Moving the Qualifier annotations to the constructor parameters and fixing the logic of Username and Password generation" />
     <MESSAGE value="Applying checkstyle fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Applying checkstyle fixes" />
+    <MESSAGE value="Fixing the facade tests: mocking mappers" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing the facade tests: mocking mappers" />
   </component>
 </project>
