@@ -14,6 +14,9 @@ public class TrainingCreationRequestDto {
     private Date trainingDate;
     private Long duration;
 
+    /**
+     * Constructor.
+     */
     public TrainingCreationRequestDto(Long traineeId, Long trainerId, String name,
                                       TrainingType trainingType, Date trainingDate, Long duration) {
         this.traineeId = traineeId;

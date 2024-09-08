@@ -136,6 +136,9 @@ public class TraineeFileStorageImpl implements FileStorage<TraineeEntity> {
         this.databasePathService = databasePathService;
     }
 
+    /**
+     * PostConstruct method.
+     */
     @PostConstruct
     public void init() {
         LOGGER.info("Entering the post construct method");

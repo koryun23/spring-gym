@@ -19,7 +19,6 @@ import org.example.service.core.TrainerService;
 import org.example.service.core.UsernamePasswordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -37,15 +36,15 @@ public class TraineeFacadeImpl implements TraineeFacade {
     private final TraineeEntityToTraineeUpdateResponseDtoMapperImpl traineeEntityToTraineeUpdateResponseDtoMapper;
     private final TraineeEntityToTraineeRetrievalResponseDtoMapper traineeEntityToTraineeRetrievalResponseDtoMapper;
 
-    @Autowired
     @Qualifier("traineeUsernamePasswordService")
     private UsernamePasswordService usernamePasswordService;
 
-    @Autowired
     @Qualifier("traineeIdService")
     private IdService idService;
 
-    @Autowired
+    /**
+     * Constructor.
+     */
     public TraineeFacadeImpl(TraineeService traineeService,
                              TrainerService trainerService,
                              TraineeCreationRequestDtoToTraineeEntityMapper
@@ -55,7 +54,9 @@ public class TraineeFacadeImpl implements TraineeFacade {
                              TraineeEntityToTraineeUpdateResponseDtoMapperImpl
                                      traineeEntityToTraineeUpdateResponseDtoMapper,
                              TraineeEntityToTraineeRetrievalResponseDtoMapper
-                                     traineeEntityToTraineeRetrievalResponseDtoMapper) {
+                                     traineeEntityToTraineeRetrievalResponseDtoMapper,
+                             UsernamePasswordService usernamePasswordService,
+                             IdService idService) {
         this.traineeToTraineeCreationResponseDtoMapper = traineeToTraineeCreationResponseDtoMapper;
         this.traineeService = traineeService;
         this.trainerService = trainerService;
@@ -63,6 +64,8 @@ public class TraineeFacadeImpl implements TraineeFacade {
         this.traineeUpdateRequestDtoToTraineeEntityMapper = traineeUpdateRequestDtoToTraineeEntityMapper;
         this.traineeEntityToTraineeUpdateResponseDtoMapper = traineeEntityToTraineeUpdateResponseDtoMapper;
         this.traineeEntityToTraineeRetrievalResponseDtoMapper = traineeEntityToTraineeRetrievalResponseDtoMapper;
+        this.usernamePasswordService = usernamePasswordService;
+        this.idService = idService;
     }
 
     @Override

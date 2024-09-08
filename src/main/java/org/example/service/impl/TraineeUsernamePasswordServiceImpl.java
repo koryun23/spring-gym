@@ -16,6 +16,9 @@ public class TraineeUsernamePasswordServiceImpl implements UsernamePasswordServi
     private final TraineeService traineeService;
     private final TrainerService trainerService;
 
+    /**
+     * Constructor.
+     */
     public TraineeUsernamePasswordServiceImpl(TraineeService traineeService, TrainerService trainerService) {
         Assert.notNull(traineeService, "TraineeEntity Service must not be null");
         Assert.notNull(trainerService, "TrainerEntity Service must not be null");

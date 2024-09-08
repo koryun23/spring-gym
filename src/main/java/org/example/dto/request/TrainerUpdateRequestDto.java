@@ -12,6 +12,9 @@ public class TrainerUpdateRequestDto {
     private boolean isActive;
     private SpecializationType specializationType;
 
+    /**
+     * Constructor.
+     */
     public TrainerUpdateRequestDto(Long userId, String firstName, String lastName, String username, String password,
                                    boolean isActive, SpecializationType specializationType) {
         this.userId = userId;

@@ -14,6 +14,9 @@ public class TraineeCreationRequestDto {
     private Date dateOfBirth;
     private String address;
 
+    /**
+     * Constructor.
+     */
     public TraineeCreationRequestDto(String firstName, String lastName, boolean isActive, Date dateOfBirth,
                                      String address) {
         this.firstName = firstName;

@@ -10,6 +10,9 @@ public class User {
     private String password;
     private boolean isActive;
 
+    /**
+     * Constructor.
+     */
     public User(String firstName, String lastName, String username, String password, boolean isActive) {
         this.firstName = firstName;
         this.lastName = lastName;

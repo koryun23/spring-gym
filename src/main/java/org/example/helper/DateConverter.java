@@ -12,6 +12,11 @@ public class DateConverter {
         this.dateFormat = dateFormat;
     }
 
+    /** A method for obtaining a Date object from the String representation of the date.
+     *
+     * @param date String representation of the given date
+     * @return Date object of the corresponding String representation
+     */
     public Date stringToDate(String date) {
         try {
             return dateFormat.parse(date);

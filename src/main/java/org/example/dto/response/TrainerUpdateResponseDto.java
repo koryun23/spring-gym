@@ -16,6 +16,9 @@ public class TrainerUpdateResponseDto {
 
     private List<String> errors;
 
+    /**
+     * Constructor.
+     */
     public TrainerUpdateResponseDto(Long userId,
                                     String firstName,
                                     String lastName,

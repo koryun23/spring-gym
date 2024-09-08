@@ -17,7 +17,6 @@ import org.example.service.core.TrainerService;
 import org.example.service.core.UsernamePasswordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -34,15 +33,15 @@ public class TrainerFacadeImpl implements TrainerFacade {
     private final TrainerEntityToTrainerUpdateResponseDtoMapper trainerEntityToTrainerUpdateResponseDtoMapper;
     private final TrainerEntityToTrainerRetrievalResponseDtoMapper trainerEntityToTrainerRetrievalResponseDtoMapper;
 
-    @Autowired
     @Qualifier("trainerUsernamePasswordService")
     private UsernamePasswordService usernamePasswordService;
 
-    @Autowired
     @Qualifier("trainerIdService")
     private IdService idService;
 
-    @Autowired
+    /**
+     * Constructor.
+     */
     public TrainerFacadeImpl(TrainerService trainerService,
                              TrainerCreationRequestDtoToTrainerEntityMapper
                                  trainerCreationRequestDtoToTrainerEntityMapper,
@@ -52,13 +51,17 @@ public class TrainerFacadeImpl implements TrainerFacade {
                              TrainerEntityToTrainerUpdateResponseDtoMapper
                                      trainerEntityToTrainerUpdateResponseDtoMapper,
                              TrainerEntityToTrainerRetrievalResponseDtoMapper
-                                     trainerEntityToTrainerRetrievalResponseDtoMapper) {
+                                     trainerEntityToTrainerRetrievalResponseDtoMapper,
+                             UsernamePasswordService usernamePasswordService,
+                             IdService idService) {
         this.trainerService = trainerService;
         this.trainerCreationRequestDtoToTrainerEntityMapper = trainerCreationRequestDtoToTrainerEntityMapper;
         this.trainerEntityToTrainerCreationResponseDtoMapper = trainerEntityToTrainerCreationResponseDtoMapper;
         this.trainerUpdateRequestDtoToTrainerEntityMapper = trainerUpdateRequestDtoToTrainerEntityMapper;
         this.trainerEntityToTrainerUpdateResponseDtoMapper = trainerEntityToTrainerUpdateResponseDtoMapper;
         this.trainerEntityToTrainerRetrievalResponseDtoMapper = trainerEntityToTrainerRetrievalResponseDtoMapper;
+        this.usernamePasswordService = usernamePasswordService;
+        this.idService = idService;
     }
 
     @Override

@@ -9,6 +9,9 @@ public class TraineeEntity extends User {
     private String address;
     private Long userId;
 
+    /**
+     * Constructor.
+     */
     public TraineeEntity(Long userId,
                          String firstName,
                          String lastName,

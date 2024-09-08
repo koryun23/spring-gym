@@ -7,7 +7,6 @@ import org.example.entity.TrainerEntity;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
 import org.example.service.core.UsernamePasswordService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -17,7 +16,9 @@ public class TrainerUsernamePasswordServiceImpl implements UsernamePasswordServi
     private final TraineeService traineeService;
     private final TrainerService trainerService;
 
-    @Autowired
+    /**
+     * Constructor.
+     */
     public TrainerUsernamePasswordServiceImpl(TraineeService traineeService, TrainerService trainerService) {
         Assert.notNull(traineeService, "TraineeEntity Service must not be null");
         Assert.notNull(trainerService, "TrainerEntity Service must not be null");

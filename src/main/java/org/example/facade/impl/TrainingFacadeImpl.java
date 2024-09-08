@@ -14,7 +14,6 @@ import org.example.service.core.TrainerService;
 import org.example.service.core.TrainingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -32,11 +31,12 @@ public class TrainingFacadeImpl implements TrainingFacade {
     private final TrainingEntityToTrainingCreationResponseDtoMapper trainingEntityToTrainingCreationResponseDtoMapper;
     private final TrainingEntityToTrainingRetrievalResponseDtoMapper trainingEntityToTrainingRetrievalResponseDtoMapper;
 
-    @Autowired
     @Qualifier("trainingIdService")
     private IdService idService;
 
-    @Autowired
+    /**
+     * Constructor.
+     */
     public TrainingFacadeImpl(TrainingService trainingService,
                               TraineeService traineeService,
                               TrainerService trainerService,
@@ -45,13 +45,15 @@ public class TrainingFacadeImpl implements TrainingFacade {
                               TrainingEntityToTrainingCreationResponseDtoMapper
                                       trainingEntityToTrainingCreationResponseDtoMapper,
                               TrainingEntityToTrainingRetrievalResponseDtoMapper
-                                      trainingEntityToTrainingRetrievalResponseDtoMapper) {
+                                      trainingEntityToTrainingRetrievalResponseDtoMapper,
+                              IdService idService) {
         this.trainingService = trainingService;
         this.traineeService = traineeService;
         this.trainerService = trainerService;
         this.trainingCreationRequestDtoToTrainingEntityMapper = trainingCreationRequestDtoToTrainingEntityMapper;
         this.trainingEntityToTrainingCreationResponseDtoMapper = trainingEntityToTrainingCreationResponseDtoMapper;
         this.trainingEntityToTrainingRetrievalResponseDtoMapper = trainingEntityToTrainingRetrievalResponseDtoMapper;
+        this.idService = idService;
     }
 
     @Override

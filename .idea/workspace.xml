@@ -4,35 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Adding the .idea folder to the gitignore">
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Applying the changes offered by checkstyle">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TraineeCreationRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TraineeCreationRequestDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TraineeUpdateRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TraineeUpdateRequestDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TrainerCreationRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TrainerCreationRequestDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TrainerUpdateRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TrainerUpdateRequestDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TrainingCreationRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/request/TrainingCreationRequestDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TraineeCreationResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TraineeCreationResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TraineeDeletionResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TraineeDeletionResponseDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TraineeRetrievalResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TraineeRetrievalResponseDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TraineeUpdateResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TraineeUpdateResponseDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainerCreationResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainerCreationResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainerRetrievalResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainerRetrievalResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainerUpdateResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainerUpdateResponseDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainingCreationResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainingCreationResponseDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainingRetrievalResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/response/TrainingRetrievalResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/TraineeEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/TraineeEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/TrainerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/TrainerEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/TrainingEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/TrainingEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainerFacadeImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainingFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TrainingFacadeImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/helper/DateConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/helper/DateConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mapper/Mapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/Mapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainer/TrainerEntityToTrainerUpdateResponseDtoMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/trainer/TrainerEntityToTrainerUpdateResponseDtoMapperImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mapper/training/TrainingEntityToTrainingRetrievalResponseDtoMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/training/TrainingEntityToTrainingRetrievalResponseDtoMapperImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/DatabasePathServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/DatabasePathServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeFileStorageImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/TraineeFileStorageImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainerUsernamePasswordServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TrainerUsernamePasswordServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,30 +87,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Tests in 'gym-spring.test'.executor": "Run",
-    "Gradle.TraineeStorageImplTest.TestTraineeUpdate.executor": "Run",
-    "Gradle.TraineeStorageImplTest.executor": "Run",
-    "Gradle.TraineeTest.TestTrainee.executor": "Run",
-    "Gradle.TraineeTest.executor": "Run",
-    "Gradle.TrainerStorageImplTest.executor": "Run",
-    "Gradle.TrainerStorageImplTest.testGetWhenNull.executor": "Run",
-    "Gradle.TrainerStorageImplTest.testRemoveWhenExists.executor": "Run",
-    "Gradle.gym-spring [:Main.main()].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Koryun/Desktop/Koryun/gym-spring/config/checkstyle/checkstyle.xml",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "org.infernus.idea.checkstyle.CheckStyleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Tests in 'gym-spring.test'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TraineeStorageImplTest.TestTraineeUpdate.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TraineeStorageImplTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TraineeTest.TestTrainee.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TraineeTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TrainerStorageImplTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TrainerStorageImplTest.testGetWhenNull.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TrainerStorageImplTest.testRemoveWhenExists.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.gym-spring [:Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Koryun/Desktop/Koryun/gym-spring/config/checkstyle/checkstyle.xml&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.infernus.idea.checkstyle.CheckStyleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Koryun\Desktop\Koryun\gym-spring\src\main\java\org\example\db" />
@@ -267,14 +259,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00082" summary="Removing the traineeStorage bean from the comments and changing its return type to TraineeStorage instead of TraineeStorageImpl">
-      <option name="closed" value="true" />
-      <created>1725196426706</created>
-      <option name="number" value="00082" />
-      <option name="presentableId" value="LOCAL-00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1725196426706</updated>
     </task>
     <task id="LOCAL-00083" summary="Creating a separate class TrainerFileStorageImpl which handles the file interactions and is injected into TrainerStorageImpl which only handles the in-memory interactions">
       <option name="closed" value="true" />
@@ -660,7 +644,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725716729858</updated>
     </task>
-    <option name="localTasksCounter" value="131" />
+    <task id="LOCAL-00131" summary="Applying the changes offered by checkstyle">
+      <option name="closed" value="true" />
+      <created>1725740561303</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1725740561303</updated>
+    </task>
+    <option name="localTasksCounter" value="132" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -675,7 +667,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Making the corresponding changes to the Config class" />
     <MESSAGE value="Adding validations to the TraineeServiceImpl class" />
     <MESSAGE value="Changing the reference type of the dao from class name to interface name. Throwing an exception in delete method if trainee is not found" />
     <MESSAGE value="Creating tests for testing the funcionality of TraineeServiceImpl class" />
@@ -700,6 +691,7 @@
     <MESSAGE value="Creating mappers for the TrainingFacadeImpl class" />
     <MESSAGE value="formatting all classes" />
     <MESSAGE value="Adding the .idea folder to the gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding the .idea folder to the gitignore" />
+    <MESSAGE value="Applying the changes offered by checkstyle" />
+    <option name="LAST_COMMIT_MESSAGE" value="Applying the changes offered by checkstyle" />
   </component>
 </project>

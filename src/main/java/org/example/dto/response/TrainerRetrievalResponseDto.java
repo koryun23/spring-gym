@@ -16,6 +16,9 @@ public class TrainerRetrievalResponseDto {
 
     private List<String> errors;
 
+    /**
+     * Constructor.
+     */
     public TrainerRetrievalResponseDto(Long userId,
                                        String firstName,
                                        String lastName,

@@ -13,6 +13,9 @@ public class TrainerCreationRequestDto {
     private boolean isActive;
     private SpecializationType specializationType;
 
+    /**
+     * Constructor.
+     */
     public TrainerCreationRequestDto(String firstName,
                                      String lastName,
                                      boolean isActive,
@@ -101,7 +104,8 @@ public class TrainerCreationRequestDto {
 
     @Override
     public String toString() {
-        return "TrainerCreationRequestDto{userId=%d, firstName='%s', lastName='%s', username='%s', password='%s', isActive=%s, specializationType=%s}".formatted(
+        return ("TrainerCreationRequestDto{userId=%d, firstName='%s', lastName='%s', username='%s', password='%s', "
+            + "isActive=%s, specializationType=%s}").formatted(
             userId, firstName, lastName, username, password, isActive, specializationType);
     }
 }

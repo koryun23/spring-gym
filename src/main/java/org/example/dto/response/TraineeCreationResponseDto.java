@@ -17,6 +17,9 @@ public class TraineeCreationResponseDto {
 
     private List<String> errors;
 
+    /**
+     * Constructor.
+     */
     public TraineeCreationResponseDto(Long userId,
                                       String firstName,
                                       String lastName,

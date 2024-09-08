@@ -14,6 +14,9 @@ public class TraineeUpdateRequestDto {
     private Date dateOfBirth;
     private String address;
 
+    /**
+     * Constructor.
+     */
     public TraineeUpdateRequestDto(Long userId, String firstName, String lastName, String username, String password,
                                    boolean isActive, Date dateOfBirth, String address) {
         this.userId = userId;

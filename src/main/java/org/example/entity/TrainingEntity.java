@@ -13,6 +13,9 @@ public class TrainingEntity {
     private Date trainingDate;
     private Long duration;
 
+    /**
+     * Constructor.
+     */
     public TrainingEntity(Long trainingId, Long traineeId, Long trainerId, String name, TrainingType trainingType,
                           Date trainingDate, Long duration) {
         this.trainingId = trainingId;

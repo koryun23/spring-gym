@@ -7,6 +7,9 @@ public class TrainerEntity extends User {
     private SpecializationType specialization;
     private Long userId;
 
+    /**
+     * Constructor.
+     */
     public TrainerEntity(Long userId,
                          String firstName,
                          String lastName,

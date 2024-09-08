@@ -17,6 +17,9 @@ public class TrainingCreationResponseDto {
 
     private List<String> errors;
 
+    /**
+     * Constructor.
+     */
     public TrainingCreationResponseDto(Long trainingId, Long traineeId, Long trainerId, String name,
                                        TrainingType trainingType, Date trainingDate, Long duration) {
         this.trainingId = trainingId;
