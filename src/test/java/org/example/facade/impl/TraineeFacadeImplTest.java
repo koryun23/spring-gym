@@ -110,7 +110,7 @@ class TraineeFacadeImplTest {
 
     @Test
     public void testUpdateTraineeWhenUserDoesNotExist() {
-        Mockito.when(traineeService.findByUsername("username")).thenReturn(Optional.empty());
+        Mockito.when(traineeService.findById(1L)).thenReturn(Optional.empty());
         Assertions.assertThat(testSubject.updateTrainee(new TraineeUpdateRequestDto(
                 1L,
                 "first",
@@ -120,7 +120,7 @@ class TraineeFacadeImplTest {
                 true,
                 Date.valueOf("2024-10-10"),
                 "manchester"
-                )).getErrors().getFirst()).isEqualTo("A user with specified username - username, does not exist");
+                )).getErrors().getFirst()).isEqualTo("A user with specified id - 1, does not exist");
     }
 
     @Test
