@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.UUID;
 import org.example.entity.TraineeEntity;
 import org.example.entity.TrainerEntity;
+import org.example.exception.InvalidIdException;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
 import org.example.service.core.UsernamePasswordService;
@@ -28,6 +29,16 @@ public class UsernamePasswordServiceImpl implements UsernamePasswordService {
 
     @Override
     public String username(String firstName, String lastName, Long id, String uniqueSuffix) {
+        Assert.notNull(firstName, "First Name must not be null");
+        Assert.hasText(firstName, "First name must not be empty");
+        Assert.notNull(lastName, "Last Name must not be null");
+        Assert.hasText(lastName, "Last Name must not be empty");
+        Assert.notNull(uniqueSuffix, "Unique Suffix must not be null");
+
+        if (id <= 0) {
+            throw new InvalidIdException(id);
+        }
+
         String temporaryUsername = firstName + "." + lastName;
         Optional<TraineeEntity> optionalTrainee = traineeService.findByUsername(temporaryUsername);
         Optional<TrainerEntity> optionalTrainer = trainerService.findByUsername(temporaryUsername);
@@ -38,11 +49,12 @@ public class UsernamePasswordServiceImpl implements UsernamePasswordService {
 
         temporaryUsername += ("." + id);
         optionalTrainer = trainerService.findByUsername(temporaryUsername);
+        optionalTrainee = traineeService.findByUsername(temporaryUsername);
 
-        if (optionalTrainer.isEmpty()) {
+        if (optionalTrainer.isEmpty() && optionalTrainee.isEmpty()) {
             return temporaryUsername;
         }
-        return temporaryUsername + uniqueSuffix;
+        return temporaryUsername + "." + uniqueSuffix;
     }
 
     @Override
