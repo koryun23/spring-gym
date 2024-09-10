@@ -142,7 +142,6 @@ public class TraineeFileStorageImpl implements FileStorage<TraineeEntity> {
     @PostConstruct
     public void init() {
         LOGGER.info("Entering the post construct method");
-        System.out.println(databasePathService);
         traineePath = databasePathService.getEntityPath();
         LOGGER.info("trainee path - {}", traineePath);
     }

@@ -5,6 +5,7 @@ import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.entity.TraineeEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.*;
 
 class TraineeCreationRequestDtoToTraineeEntityMapperImplTest {

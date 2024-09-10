@@ -4,7 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="Committing the changed txt files" />
+    <list default="true" id="7402f42b-9ab1-47ed-b821-1439ce10a0c2" name="Changes" comment="fixing the dependencies: removing the spring boot and adding spring core, spring context and jakarta annotation api">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/log4j.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/trainee-id.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/trainee-id.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/trainee.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/trainee.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/trainer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/trainer.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/training-id.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/training-id.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/training.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/training.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/facade/impl/TraineeFacadeImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/mapper/trainee/TraineeCreationRequestDtoToTraineeEntityMapperImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/mapper/trainee/TraineeCreationRequestDtoToTraineeEntityMapperImplTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,7 +62,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="single_username_password_service_class" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -78,17 +91,19 @@
     "Gradle.TrainerStorageImplTest.testGetWhenNull.executor": "Run",
     "Gradle.TrainerStorageImplTest.testRemoveWhenExists.executor": "Run",
     "Gradle.gym-spring [:Main.main()].executor": "Run",
+    "Gradle.gym-spring [dependencies].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "fix__logging",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Koryun/Desktop/Koryun/gym-spring/config/checkstyle/checkstyle.xml",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
+    "settings.editor.splitter.proportion": "0.27624872"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -149,30 +164,6 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="TraineeCreationRequestDtoToTraineeEntityMapperImplTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;org.example.mapper.trainee.TraineeCreationRequestDtoToTraineeEntityMapperImplTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
     <configuration name="TrainerStorageImplTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -221,13 +212,35 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="gym-spring [dependencies]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="dependencies" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.gym-spring [dependencies]" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Gradle.Tests in 'gym-spring.test'" />
         <item itemvalue="Gradle.TrainerStorageImplTest.testRemoveWhenExists" />
         <item itemvalue="Gradle.TrainerStorageImplTest" />
-        <item itemvalue="Gradle.TraineeCreationRequestDtoToTraineeEntityMapperImplTest" />
-        <item itemvalue="Gradle.Tests in 'gym-spring.test'" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -239,30 +252,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724270810497</updated>
-    </task>
-    <task id="LOCAL-00090" summary="Creating a TrainingNotFoundException">
-      <option name="closed" value="true" />
-      <created>1725202423836</created>
-      <option name="number" value="00090" />
-      <option name="presentableId" value="LOCAL-00090" />
-      <option name="project" value="LOCAL" />
-      <updated>1725202423836</updated>
-    </task>
-    <task id="LOCAL-00091" summary="Throwing an exception if the get method fails">
-      <option name="closed" value="true" />
-      <created>1725202568487</created>
-      <option name="number" value="00091" />
-      <option name="presentableId" value="LOCAL-00091" />
-      <option name="project" value="LOCAL" />
-      <updated>1725202568487</updated>
-    </task>
-    <task id="LOCAL-00092" summary="Finishing the implementation of the TrainingStorageImpl tests and finishing the tests for all the storages">
-      <option name="closed" value="true" />
-      <created>1725202602719</created>
-      <option name="number" value="00092" />
-      <option name="presentableId" value="LOCAL-00092" />
-      <option name="project" value="LOCAL" />
-      <updated>1725202602719</updated>
     </task>
     <task id="LOCAL-00093" summary="Adding validations to the TraineeDaoImpl class">
       <option name="closed" value="true" />
@@ -632,7 +621,31 @@
       <option name="project" value="LOCAL" />
       <updated>1725830242807</updated>
     </task>
-    <option name="localTasksCounter" value="139" />
+    <task id="LOCAL-00139" summary="Checking the existence of a trainee by id and not by username">
+      <option name="closed" value="true" />
+      <created>1725889520462</created>
+      <option name="number" value="00139" />
+      <option name="presentableId" value="LOCAL-00139" />
+      <option name="project" value="LOCAL" />
+      <updated>1725889520465</updated>
+    </task>
+    <task id="LOCAL-00140" summary="Removing spring boot dependencies">
+      <option name="closed" value="true" />
+      <created>1725893962523</created>
+      <option name="number" value="00140" />
+      <option name="presentableId" value="LOCAL-00140" />
+      <option name="project" value="LOCAL" />
+      <updated>1725893962524</updated>
+    </task>
+    <task id="LOCAL-00141" summary="fixing the dependencies: removing the spring boot and adding spring core, spring context and jakarta annotation api">
+      <option name="closed" value="true" />
+      <created>1725894816030</created>
+      <option name="number" value="00141" />
+      <option name="presentableId" value="LOCAL-00141" />
+      <option name="project" value="LOCAL" />
+      <updated>1725894816030</updated>
+    </task>
+    <option name="localTasksCounter" value="142" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -647,9 +660,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Registering UsernamePasswordService as a bean in the Configuration class" />
-    <MESSAGE value="big fix: Adding format specifier" />
-    <MESSAGE value="Creating tests for testing the functionality of TraineeFacadeImpl class" />
     <MESSAGE value="Adding validations to the TrainerFacadeImpl class and creating tests to test the functionality of the class" />
     <MESSAGE value="Adding validations to the TrainingFacadeImpl class and creating tests to test the functionality of the class" />
     <MESSAGE value="Adding tests testing the retrieval functionality of the TrainingFacadeImpl class" />
@@ -672,6 +682,9 @@
     <MESSAGE value="Adding tests for the trainee mappers" />
     <MESSAGE value="Adding tests for the trainer mappers" />
     <MESSAGE value="Adding tests for the training mappers" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding tests for the training mappers" />
+    <MESSAGE value="Checking the existence of a trainee by id and not by username" />
+    <MESSAGE value="Removing spring boot dependencies" />
+    <MESSAGE value="fixing the dependencies: removing the spring boot and adding spring core, spring context and jakarta annotation api" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixing the dependencies: removing the spring boot and adding spring core, spring context and jakarta annotation api" />
   </component>
 </project>
