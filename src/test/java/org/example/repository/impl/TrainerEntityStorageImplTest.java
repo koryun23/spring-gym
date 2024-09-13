@@ -1,5 +1,8 @@
 package org.example.repository.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.example.entity.SpecializationType;
 import org.example.entity.TrainerEntity;
@@ -9,10 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 class TrainerEntityStorageImplTest {

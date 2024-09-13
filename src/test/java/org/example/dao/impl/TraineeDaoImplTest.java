@@ -1,5 +1,7 @@
 package org.example.dao.impl;
 
+import java.sql.Date;
+import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.example.entity.TraineeEntity;
 import org.example.exception.TraineeNotFoundException;
@@ -10,9 +12,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.sql.Date;
-import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 class TraineeDaoImplTest {

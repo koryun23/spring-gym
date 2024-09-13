@@ -1,5 +1,7 @@
 package org.example.facade.impl;
 
+import java.sql.Date;
+import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
@@ -11,16 +13,16 @@ import org.example.mapper.trainee.TraineeEntityToTraineeCreationResponseDtoMappe
 import org.example.mapper.trainee.TraineeEntityToTraineeRetrievalResponseDtoMapper;
 import org.example.mapper.trainee.TraineeEntityToTraineeUpdateResponseDtoMapperImpl;
 import org.example.mapper.trainee.TraineeUpdateRequestDtoToTraineeEntityMapper;
-import org.example.service.core.*;
+import org.example.service.core.IdService;
+import org.example.service.core.TraineeService;
+import org.example.service.core.TrainerService;
+import org.example.service.core.UsernamePasswordService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.sql.Date;
-import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 class TraineeFacadeImplTest {
@@ -53,6 +55,7 @@ class TraineeFacadeImplTest {
 
     @Mock
     private TraineeEntityToTraineeRetrievalResponseDtoMapper traineeEntityToTraineeRetrievalResponseDtoMapper;
+
     @BeforeEach
     public void init() {
         testSubject = new TraineeFacadeImpl(
@@ -99,7 +102,8 @@ class TraineeFacadeImplTest {
         ));
 
         //then
-        Assertions.assertThat(response.getErrors().getFirst()).isEqualTo("A trainee with the specified id - 1, already exists");
+        Assertions.assertThat(response.getErrors().getFirst())
+            .isEqualTo("A trainee with the specified id - 1, already exists");
     }
 
     @Test

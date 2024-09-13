@@ -1,11 +1,9 @@
 package org.example.mapper.training;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.Date;
 import org.assertj.core.api.Assertions;
 import org.example.dto.request.TrainingCreationRequestDto;
-import org.example.entity.TrainerEntity;
 import org.example.entity.TrainingEntity;
 import org.example.entity.TrainingType;
 import org.junit.jupiter.api.BeforeEach;

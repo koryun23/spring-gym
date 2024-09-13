@@ -1,5 +1,6 @@
 package org.example.dao.impl;
 
+import java.sql.Date;
 import org.assertj.core.api.Assertions;
 import org.example.entity.TrainingEntity;
 import org.example.entity.TrainingType;
@@ -12,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.sql.Date;
 
 @ExtendWith(MockitoExtension.class)
 class TrainingEntityDaoImplTest {

@@ -1,6 +1,7 @@
 package org.example.mapper.trainee;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.sql.Date;
 import org.example.dto.response.TraineeCreationResponseDto;

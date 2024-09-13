@@ -1,5 +1,6 @@
 package org.example.facade.impl;
 
+import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.example.dto.request.TrainerCreationRequestDto;
 import org.example.dto.request.TrainerUpdateRequestDto;
@@ -21,8 +22,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 

@@ -1,7 +1,5 @@
 package org.example.mapper.trainer;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.assertj.core.api.Assertions;
 import org.example.dto.request.TrainerCreationRequestDto;
 import org.example.entity.SpecializationType;

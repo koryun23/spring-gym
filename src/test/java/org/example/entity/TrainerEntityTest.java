@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 class TrainerEntityTest {
 
     @Test
-    public void TestTrainerEquals() {
+    public void testTrainerEquals() {
         TrainerEntity trainerEntity1 = new TrainerEntity(
                 1L,
                 "first",
@@ -31,7 +31,7 @@ class TrainerEntityTest {
     }
 
     @Test
-    public void TestTrainerHashCode() {
+    public void testTrainerHashCode() {
         TrainerEntity trainerEntity1 = new TrainerEntity(
                 1L,
                 "first",

@@ -1,7 +1,5 @@
 package org.example.mapper.trainee;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.sql.Date;
 import org.assertj.core.api.Assertions;
 import org.example.dto.response.TraineeUpdateResponseDto;

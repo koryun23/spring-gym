@@ -1,14 +1,13 @@
 package org.example.entity;
 
+import java.sql.Date;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.sql.Date;
 
 class TraineeEntityTest {
 
     @Test
-    public void TestTraineeEquals() {
+    public void testTraineeEquals() {
 
         TraineeEntity trainee1 = new TraineeEntity(
                 1L,
@@ -36,7 +35,7 @@ class TraineeEntityTest {
     }
 
     @Test
-    public void TestTraineeHashCode() {
+    public void testTraineeHashCode() {
         TraineeEntity trainee1 = new TraineeEntity(
                 1L,
                 "first",

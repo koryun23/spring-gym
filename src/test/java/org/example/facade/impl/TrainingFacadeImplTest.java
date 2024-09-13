@@ -1,5 +1,7 @@
 package org.example.facade.impl;
 
+import java.sql.Date;
+import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.entity.TraineeEntity;
@@ -18,9 +20,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.sql.Date;
-import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 class TrainingFacadeImplTest {
@@ -101,7 +100,8 @@ class TrainingFacadeImplTest {
                 TrainingType.AEROBIC,
                 Date.valueOf("2024-10-10"),
                 1000L
-        )).getErrors().getFirst()).isEqualTo("Cannot create a trainingEntity: a trainee with an id of 1 does not exist");
+        )).getErrors().getFirst())
+            .isEqualTo("Cannot create a trainingEntity: a trainee with an id of 1 does not exist");
     }
 
     @Test
@@ -124,7 +124,8 @@ class TrainingFacadeImplTest {
                 TrainingType.AEROBIC,
                 Date.valueOf("2024-10-10"),
                 1000L
-        )).getErrors().getFirst()).isEqualTo("Cannot create a trainingEntity: a trainer with an id of 1 does not exist");
+        )).getErrors().getFirst())
+            .isEqualTo("Cannot create a trainingEntity: a trainer with an id of 1 does not exist");
     }
 
     @Test
