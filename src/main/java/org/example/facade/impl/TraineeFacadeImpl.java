@@ -1,7 +1,6 @@
 package org.example.facade.impl;
 
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
 import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
 import org.example.dto.response.TraineeCreationResponseDto;
@@ -105,7 +104,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
         Assert.notNull(requestDto, "TraineeUpdateRequestDto must not be null");
         LOGGER.info("Updating a TraineeEntity based on the TraineeUpdateRequestDto - {}", requestDto);
 
-        if(traineeService.findById(requestDto.getUserId()).isEmpty()) {
+        if (traineeService.findById(requestDto.getUserId()).isEmpty()) {
             return new TraineeUpdateResponseDto(List.of(
                 String.format("A user with specified id - %d, does not exist", requestDto.getUserId())));
         }
