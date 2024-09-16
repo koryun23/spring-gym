@@ -22,7 +22,7 @@ class TrainerEntityDaoImplTest {
     @BeforeEach
     public void init() {
         testSubject = new TrainerDaoImpl();
-        testSubject.setStorage(trainerStorage);
+        testSubject.setTrainerEntityRepository(trainerStorage);
     }
 
     @Test
