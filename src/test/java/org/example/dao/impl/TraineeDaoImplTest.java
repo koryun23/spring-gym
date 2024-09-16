@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.example.entity.TraineeEntity;
 import org.example.exception.TraineeNotFoundException;
-import org.example.repository.impl.TraineeStorageImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

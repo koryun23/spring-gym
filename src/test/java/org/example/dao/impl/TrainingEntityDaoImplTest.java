@@ -5,7 +5,6 @@ import org.assertj.core.api.Assertions;
 import org.example.entity.TrainingEntity;
 import org.example.entity.TrainingType;
 import org.example.exception.TrainingNotFoundException;
-import org.example.repository.impl.TrainingStorageImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -3,7 +3,6 @@ package org.example.dao.impl;
 import java.util.Optional;
 import org.example.dao.core.TrainingDao;
 import org.example.entity.TrainingEntity;
-import org.example.repository.impl.TrainingStorageImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
