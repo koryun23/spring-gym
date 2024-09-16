@@ -3,7 +3,6 @@ package org.example.service.impl;
 import java.sql.Date;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
-import org.example.entity.SpecializationType;
 import org.example.entity.TraineeEntity;
 import org.example.entity.TrainerEntity;
 import org.example.exception.InvalidIdException;

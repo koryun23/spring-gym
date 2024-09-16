@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
-import org.example.entity.SpecializationType;
 import org.example.entity.TrainerEntity;
 import org.example.exception.TrainerNotFoundException;
 import org.junit.jupiter.api.BeforeEach;

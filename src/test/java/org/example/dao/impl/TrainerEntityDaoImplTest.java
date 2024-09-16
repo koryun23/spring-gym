@@ -2,7 +2,6 @@ package org.example.dao.impl;
 
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
-import org.example.entity.SpecializationType;
 import org.example.entity.TrainerEntity;
 import org.example.exception.TrainerNotFoundException;
 import org.example.repository.impl.TrainerStorageImpl;

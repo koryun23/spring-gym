@@ -2,7 +2,6 @@ package org.example.mapper.trainer;
 
 import org.assertj.core.api.Assertions;
 import org.example.dto.response.TrainerCreationResponseDto;
-import org.example.entity.SpecializationType;
 import org.example.entity.TrainerEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

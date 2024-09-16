@@ -1,78 +1,57 @@
 package org.example.entity;
 
+import jakarta.persistence.ForeignKey;
 import java.util.Date;
-import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-public class TraineeEntity extends User {
+@Setter
+@Getter
+@EqualsAndHashCode
+@ToString
+@Entity
+@Table(name = "TRAINEE")
+public class TraineeEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TRAINEE_GENERATOR")
+    @SequenceGenerator(name = "TRAINEE_GENERATOR")
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private UserEntity user;
+
+    @Column(name = "date_of_birth", nullable = false)
     private Date dateOfBirth;
+
+    @Column(name = "address", nullable = false)
     private String address;
-    private Long userId;
+
+    /**
+     * No-arg constructor.
+     */
+    public TraineeEntity() {
+    }
 
     /**
      * Constructor.
      */
-    public TraineeEntity(Long userId,
-                         String firstName,
-                         String lastName,
-                         String username,
-                         String password,
-                         boolean isActive,
-                         Date dateOfBirth,
-                         String address) {
-        super(firstName, lastName, username, password, isActive);
+    public TraineeEntity(Long id, UserEntity user, Date dateOfBirth, String address) {
+        this.id = id;
+        this.user = user;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
-        this.userId = userId;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-        TraineeEntity that = (TraineeEntity) o;
-        return Objects.equals(dateOfBirth, that.dateOfBirth) && Objects.equals(address, that.address)
-            && Objects.equals(userId, that.userId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), dateOfBirth, address, userId);
-    }
-
-    @Override
-    public String toString() {
-        return "TraineeEntity{dateOfBirth=%s, address='%s', userId=%d}".formatted(dateOfBirth, address, userId);
     }
 }

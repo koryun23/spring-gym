@@ -4,7 +4,6 @@ import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.example.dto.request.TrainerCreationRequestDto;
 import org.example.dto.request.TrainerUpdateRequestDto;
-import org.example.entity.SpecializationType;
 import org.example.entity.TrainerEntity;
 import org.example.facade.core.TrainerFacade;
 import org.example.mapper.trainer.TrainerCreationRequestDtoToTrainerEntityMapper;
