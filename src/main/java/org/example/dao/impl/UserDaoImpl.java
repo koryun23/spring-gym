@@ -7,8 +7,10 @@ import org.example.exception.UserNotFoundException;
 import org.example.repository.core.UserEntityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+@Component
 public class UserDaoImpl implements UserDao {
 
     private static Logger LOGGER = LoggerFactory.getLogger(UserDaoImpl.class);

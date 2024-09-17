@@ -1,9 +1,13 @@
 package org.example.repository.core;
 
+import java.util.Optional;
 import org.example.entity.TrainingTypeEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface TrainingTypeEntityRepository extends JpaRepository<TrainingTypeEntity, Long> {
+public interface TrainingTypeEntityRepository {
+
+    Optional<TrainingTypeEntity> findById(Long id);
+
+    TrainingTypeEntity save(TrainingTypeEntity trainingTypeEntity);
+
+    void deleteById(Long id);
 }

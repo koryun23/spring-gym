@@ -7,8 +7,10 @@ import org.example.exception.TrainingTypeNotFoundException;
 import org.example.repository.core.TrainingTypeEntityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+@Component
 public class TrainingTypeDaoImpl implements TrainingTypeDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainingTypeDaoImpl.class);

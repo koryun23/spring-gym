@@ -2,11 +2,15 @@ package org.example.repository.core;
 
 import java.util.Optional;
 import org.example.entity.UserEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
+public interface UserEntityRepository {
 
     Optional<UserEntity> findByUsername(String username);
+
+    Optional<UserEntity> findById(Long id);
+
+    void deleteById(Long id);
+
+    UserEntity save(UserEntity user);
+
 }
