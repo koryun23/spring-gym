@@ -6,8 +6,10 @@ import org.example.entity.TrainingTypeEntity;
 import org.example.service.core.TrainingTypeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+@Service
 public class TrainingTypeServiceImpl implements TrainingTypeService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainingTypeServiceImpl.class);
