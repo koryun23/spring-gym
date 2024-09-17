@@ -23,16 +23,7 @@ public class TraineeServiceImpl implements TraineeService {
     public TraineeEntity create(TraineeEntity trainee) {
         Assert.notNull(trainee, "TraineeCreateParams must not be null");
         LOGGER.info("Creating a TraineeEntity based on TraineeCreateParams - {}", trainee);
-        TraineeEntity createdTrainee = traineeDao.save(new TraineeEntity(
-            trainee.getUserId(),
-            trainee.getFirstName(),
-            trainee.getLastName(),
-            trainee.getUsername(),
-            trainee.getPassword(),
-            trainee.isActive(),
-            trainee.getDateOfBirth(),
-            trainee.getAddress()
-        ));
+        TraineeEntity createdTrainee = traineeDao.save(trainee);
         LOGGER.info("Successfully created a TraineeEntity based on TraineeCreateParams - {}, result - {}", trainee,
             trainee);
         return createdTrainee;
@@ -42,16 +33,7 @@ public class TraineeServiceImpl implements TraineeService {
     public TraineeEntity update(TraineeEntity trainee) {
         Assert.notNull(trainee, "TraineeCreateParams must not be null");
         LOGGER.info("Updating a TraineeEntity based on TraineeUpdateParams - {}", trainee);
-        TraineeEntity updatedTrainee = traineeDao.update(new TraineeEntity(
-            trainee.getUserId(),
-            trainee.getFirstName(),
-            trainee.getLastName(),
-            trainee.getUsername(),
-            trainee.getPassword(),
-            trainee.isActive(),
-            trainee.getDateOfBirth(),
-            trainee.getAddress()
-        ));
+        TraineeEntity updatedTrainee = traineeDao.update(trainee);
         LOGGER.info("Successfully updated a TraineeEntity based on TraineeUpdateParams - {}, result - {}", trainee,
             trainee);
         return updatedTrainee;

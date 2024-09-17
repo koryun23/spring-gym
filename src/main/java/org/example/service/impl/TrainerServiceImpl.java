@@ -22,15 +22,7 @@ public class TrainerServiceImpl implements TrainerService {
     public TrainerEntity create(TrainerEntity trainerEntity) {
         Assert.notNull(trainerEntity, "TrainerCreateParams must not be null");
         LOGGER.info("Creating a TrainerEntity based on TrainerCreateParams - {}", trainerEntity);
-        TrainerEntity createdTrainerEntity = trainerDao.save(new TrainerEntity(
-            trainerEntity.getUserId(),
-            trainerEntity.getFirstName(),
-            trainerEntity.getLastName(),
-            trainerEntity.getUsername(),
-            trainerEntity.getPassword(),
-            trainerEntity.isActive(),
-            trainerEntity.getSpecialization()
-        ));
+        TrainerEntity createdTrainerEntity = trainerDao.save(trainerEntity);
         LOGGER.info("Successfully created a TrainerEntity based on TrainerCreateParams - {}, result - {}",
             trainerEntity,
             createdTrainerEntity);
@@ -41,15 +33,7 @@ public class TrainerServiceImpl implements TrainerService {
     public TrainerEntity update(TrainerEntity trainerEntity) {
         Assert.notNull(trainerEntity, "TrainerUpdateParams must not be null");
         LOGGER.info("Updating a TrainerEntity based on TrainerUpdateParams - {}", trainerEntity);
-        TrainerEntity updatedTrainerEntity = trainerDao.update(new TrainerEntity(
-            trainerEntity.getUserId(),
-            trainerEntity.getFirstName(),
-            trainerEntity.getLastName(),
-            trainerEntity.getUsername(),
-            trainerEntity.getPassword(),
-            trainerEntity.isActive(),
-            trainerEntity.getSpecialization()
-        ));
+        TrainerEntity updatedTrainerEntity = trainerDao.update(trainerEntity);
         LOGGER.info("Successfully updated a TrainerEntity based on TrainerUpdateParams - {}, result - {}",
             trainerEntity,
             updatedTrainerEntity);

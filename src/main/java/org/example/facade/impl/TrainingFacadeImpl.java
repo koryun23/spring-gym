@@ -26,7 +26,6 @@ public class TrainingFacadeImpl implements TrainingFacade {
     private final TrainingService trainingService;
     private final TraineeService traineeService;
     private final TrainerService trainerService;
-    private final IdService idService;
     private final TrainingCreationRequestDtoToTrainingEntityMapper trainingCreationRequestDtoToTrainingEntityMapper;
     private final TrainingEntityToTrainingCreationResponseDtoMapper trainingEntityToTrainingCreationResponseDtoMapper;
     private final TrainingEntityToTrainingRetrievalResponseDtoMapper trainingEntityToTrainingRetrievalResponseDtoMapper;
@@ -42,16 +41,13 @@ public class TrainingFacadeImpl implements TrainingFacade {
                               TrainingEntityToTrainingCreationResponseDtoMapper
                                   trainingEntityToTrainingCreationResponseDtoMapper,
                               TrainingEntityToTrainingRetrievalResponseDtoMapper
-                                  trainingEntityToTrainingRetrievalResponseDtoMapper,
-                              @Qualifier("trainingIdService")
-                              IdService idService) {
+                                  trainingEntityToTrainingRetrievalResponseDtoMapper) {
         this.trainingService = trainingService;
         this.traineeService = traineeService;
         this.trainerService = trainerService;
         this.trainingCreationRequestDtoToTrainingEntityMapper = trainingCreationRequestDtoToTrainingEntityMapper;
         this.trainingEntityToTrainingCreationResponseDtoMapper = trainingEntityToTrainingCreationResponseDtoMapper;
         this.trainingEntityToTrainingRetrievalResponseDtoMapper = trainingEntityToTrainingRetrievalResponseDtoMapper;
-        this.idService = idService;
     }
 
     @Override
@@ -81,11 +77,8 @@ public class TrainingFacadeImpl implements TrainingFacade {
                     requestDto.getTrainerId())));
         }
 
-        requestDto.setTrainingId(idService.getId());
-
         TrainingCreationResponseDto responseDto = trainingEntityToTrainingCreationResponseDtoMapper.map(
             trainingService.create(trainingCreationRequestDtoToTrainingEntityMapper.map(requestDto)));
-        idService.autoIncrement();
 
         LOGGER.info(
             "Successfully created a TrainingEntity according to the TrainingCreationRequestDto - {}, response - {}",

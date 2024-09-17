@@ -22,15 +22,7 @@ public class TrainingServiceImpl implements TrainingService {
     public TrainingEntity create(TrainingEntity trainingEntity) {
         Assert.notNull(trainingEntity, "TrainingCreateParams must not be null");
         LOGGER.info("Creating a TrainingEntity according to the TrainingCreateParams - {}", trainingEntity);
-        TrainingEntity createdTrainingEntity = trainingDao.save(new TrainingEntity(
-            trainingEntity.getTrainingId(),
-            trainingEntity.getTraineeId(),
-            trainingEntity.getTrainerId(),
-            trainingEntity.getName(),
-            trainingEntity.getTrainingType(),
-            trainingEntity.getTrainingDate(),
-            trainingEntity.getDuration()
-        ));
+        TrainingEntity createdTrainingEntity = trainingDao.save(trainingEntity);
         LOGGER.info(
             "Successfully created a TrainingEntity according to the TrainingEntity Create Params - {}, result - {}",
             trainingEntity, createdTrainingEntity);

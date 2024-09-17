@@ -1,6 +1,5 @@
 package org.example.dto.request;
 
-import java.util.Date;
 import java.util.Objects;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,7 +12,7 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class TraineeCreationRequestDto {
+public class UserUpdateRequestDto {
 
     private Long userId;
     private String firstName;
@@ -21,21 +20,14 @@ public class TraineeCreationRequestDto {
     private String username;
     private String password;
     private Boolean isActive;
-    private Date dateOfBirth;
-    private String address;
 
-    /**
-     * Constructor.
-     */
-    public TraineeCreationRequestDto(String firstName,
-                                     String lastName,
-                                     boolean isActive,
-                                     Date dateOfBirth,
-                                     String address) {
+    public UserUpdateRequestDto(Long userId, String firstName, String lastName, String username, String password,
+                                Boolean isActive) {
+        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.username = username;
+        this.password = password;
         this.isActive = isActive;
-        this.dateOfBirth = dateOfBirth;
-        this.address = address;
     }
 }

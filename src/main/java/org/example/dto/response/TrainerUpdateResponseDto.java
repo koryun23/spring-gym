@@ -2,37 +2,39 @@ package org.example.dto.response;
 
 import java.util.List;
 import java.util.Objects;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.example.dto.request.TrainerUpdateRequestDto;
 import org.example.entity.TrainingType;
 
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
 public class TrainerUpdateResponseDto {
 
+    private Long trainerId;
     private Long userId;
-    private String firstName;
-    private String lastName;
-    private String username;
-    private String password;
     private boolean isActive;
-    private TrainingType specializationType;
+    private Long trainingTypeId;
 
     private List<String> errors;
 
     /**
      * Constructor.
      */
-    public TrainerUpdateResponseDto(Long userId,
-                                    String firstName,
-                                    String lastName,
-                                    String username,
-                                    String password,
+    public TrainerUpdateResponseDto(Long trainerId,
+                                    Long userId,
                                     boolean isActive,
-                                    TrainingType specializationType) {
+                                    Long trainingTypeId) {
+        this.trainerId = trainerId;
         this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.username = username;
-        this.password = password;
         this.isActive = isActive;
-        this.specializationType = specializationType;
+        this.trainingTypeId = trainingTypeId;
     }
 
     /**

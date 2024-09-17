@@ -13,12 +13,8 @@ public class TraineeEntityToTraineeUpdateResponseDtoMapperImpl
     public TraineeUpdateResponseDto map(TraineeEntity trainee) {
         Assert.notNull(trainee, "TraineeEntity must not be null");
         return new TraineeUpdateResponseDto(
-            trainee.getUserId(),
-            trainee.getFirstName(),
-            trainee.getLastName(),
-            trainee.getUsername(),
-            trainee.getPassword(),
-            trainee.isActive(),
+            trainee.getId(),
+            trainee.getUser().getIsActive(),
             trainee.getDateOfBirth(),
             trainee.getAddress()
         );

@@ -13,12 +13,12 @@ public class TrainingEntityToTrainingCreationResponseDtoMapperImpl
     public TrainingCreationResponseDto map(TrainingEntity training) {
         Assert.notNull(training, "TrainingEntity must not be null");
         return new TrainingCreationResponseDto(
-            training.getTrainingId(),
-            training.getTraineeId(),
-            training.getTrainerId(),
+            training.getId(),
+            training.getTrainee().getId(),
+            training.getTrainer().getId(),
             training.getName(),
-            training.getTrainingType(),
-            training.getTrainingDate(),
+            training.getTrainingType().getId(),
+            training.getDate(),
             training.getDuration()
         );
     }

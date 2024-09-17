@@ -3,43 +3,35 @@ package org.example.dto.response;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.example.entity.TrainingType;
 
-@Setter
+@NoArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode
 @ToString
 public class TrainerCreationResponseDto {
 
+    private Long trainerId;
     private Long userId;
-    private String firstName;
-    private String lastName;
-    private String username;
-    private String password;
-    private boolean isActive;
-    private TrainingType specializationType;
+    private Boolean isActive;
+    private Long trainingTypeId;
 
     private List<String> errors;
 
     /**
      * Constructor.
      */
-    public TrainerCreationResponseDto(Long userId,
-                                      String firstName,
-                                      String lastName,
-                                      String username,
-                                      String password,
-                                      boolean isActive,
-                                      TrainingType specializationType) {
+    public TrainerCreationResponseDto(Long trainerId,
+                                      Long userId,
+                                      Boolean isActive,
+                                      Long trainingTypeId) {
+        this.trainerId = trainerId;
         this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.username = username;
-        this.password = password;
         this.isActive = isActive;
-        this.specializationType = specializationType;
+        this.trainingTypeId = trainingTypeId;
     }
 
     /**

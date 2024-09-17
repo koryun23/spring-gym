@@ -1,5 +1,6 @@
 package org.example.entity;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,11 +12,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Setter
+@NoArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode
 @ToString
 @Entity
@@ -33,19 +36,10 @@ public class TrainerEntity {
 
     @Column(name = "specialization", nullable = false)
     private TrainingTypeEntity specialization;
-
-    /**
-     * No-arg constructor.
-     */
-    public TrainerEntity() {
-
-    }
-
     /**
      * Constructor.
      */
-    public TrainerEntity(Long id, UserEntity user, TrainingTypeEntity specialization) {
-        this.id = id;
+    public TrainerEntity(UserEntity user, TrainingTypeEntity specialization) {
         this.user = user;
         this.specialization = specialization;
     }

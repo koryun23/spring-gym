@@ -83,10 +83,6 @@ public class TrainerFacadeImpl implements TrainerFacade {
 
         String password = usernamePasswordService.password();
 
-        requestDto.setUserId(trainerId);
-        requestDto.setUsername(username);
-        requestDto.setPassword(password);
-
         TrainerCreationResponseDto responseDto = trainerEntityToTrainerCreationResponseDtoMapper.map(
             trainerService.create(trainerCreationRequestDtoToTrainerEntityMapper.map(requestDto)));
         idService.autoIncrement();

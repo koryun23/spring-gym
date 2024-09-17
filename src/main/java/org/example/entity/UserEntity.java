@@ -1,5 +1,6 @@
 package org.example.entity;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,11 +10,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Setter
+@NoArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode
 @ToString
 @Entity
@@ -41,16 +44,9 @@ public class UserEntity {
     private Boolean isActive;
 
     /**
-     * Non-arg constructor.
-     */
-    public UserEntity() {
-    }
-
-    /**
      * Constructor.
      */
-    public UserEntity(Long id, String firstName, String lastName, String username, String password, Boolean isActive) {
-        this.id = id;
+    public UserEntity(String firstName, String lastName, String username, String password, Boolean isActive) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;

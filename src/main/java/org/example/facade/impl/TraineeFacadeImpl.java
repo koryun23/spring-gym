@@ -7,6 +7,7 @@ import org.example.dto.response.TraineeCreationResponseDto;
 import org.example.dto.response.TraineeDeletionResponseDto;
 import org.example.dto.response.TraineeRetrievalResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
+import org.example.entity.UserEntity;
 import org.example.facade.core.TraineeFacade;
 import org.example.mapper.trainee.TraineeCreationRequestDtoToTraineeEntityMapper;
 import org.example.mapper.trainee.TraineeEntityToTraineeCreationResponseDtoMapper;
@@ -16,6 +17,7 @@ import org.example.mapper.trainee.TraineeUpdateRequestDtoToTraineeEntityMapper;
 import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
+import org.example.service.core.UserService;
 import org.example.service.core.UsernamePasswordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,19 +32,20 @@ public class TraineeFacadeImpl implements TraineeFacade {
 
     private final TraineeService traineeService;
     private final TrainerService trainerService;
+    private final UserService userService;
     private final TraineeCreationRequestDtoToTraineeEntityMapper traineeCreationRequestDtoToTraineeEntityMapper;
     private final TraineeEntityToTraineeCreationResponseDtoMapper traineeToTraineeCreationResponseDtoMapper;
     private final TraineeUpdateRequestDtoToTraineeEntityMapper traineeUpdateRequestDtoToTraineeEntityMapper;
     private final TraineeEntityToTraineeUpdateResponseDtoMapperImpl traineeEntityToTraineeUpdateResponseDtoMapper;
     private final TraineeEntityToTraineeRetrievalResponseDtoMapper traineeEntityToTraineeRetrievalResponseDtoMapper;
     private final UsernamePasswordService usernamePasswordService;
-    private final IdService idService;
 
     /**
      * Constructor.
      */
     public TraineeFacadeImpl(TraineeService traineeService,
                              TrainerService trainerService,
+                             UserService userService,
                              TraineeCreationRequestDtoToTraineeEntityMapper
                                  traineeCreationRequestDtoToTraineeEntityMapper,
                              TraineeEntityToTraineeCreationResponseDtoMapper traineeToTraineeCreationResponseDtoMapper,
@@ -52,9 +55,8 @@ public class TraineeFacadeImpl implements TraineeFacade {
                              TraineeEntityToTraineeRetrievalResponseDtoMapper
                                  traineeEntityToTraineeRetrievalResponseDtoMapper,
                              @Qualifier("traineeUsernamePasswordService")
-                             UsernamePasswordService usernamePasswordService,
-                             @Qualifier("traineeIdService")
-                             IdService idService) {
+                             UsernamePasswordService usernamePasswordService) {
+        this.userService = userService;
         this.traineeToTraineeCreationResponseDtoMapper = traineeToTraineeCreationResponseDtoMapper;
         this.traineeService = traineeService;
         this.trainerService = trainerService;
@@ -63,36 +65,25 @@ public class TraineeFacadeImpl implements TraineeFacade {
         this.traineeEntityToTraineeUpdateResponseDtoMapper = traineeEntityToTraineeUpdateResponseDtoMapper;
         this.traineeEntityToTraineeRetrievalResponseDtoMapper = traineeEntityToTraineeRetrievalResponseDtoMapper;
         this.usernamePasswordService = usernamePasswordService;
-        this.idService = idService;
     }
 
     @Override
     public TraineeCreationResponseDto createTrainee(TraineeCreationRequestDto requestDto) {
         Assert.notNull(requestDto, "TraineeCreationRequestDto must not be null");
         LOGGER.info("Creating a TraineeEntity based on the TraineeCreationRequestDto - {}", requestDto);
-        Long traineeId = idService.getId();
 
-        if (!traineeService.findById(traineeId).isEmpty()) {
-            return new TraineeCreationResponseDto(
-                List.of(String.format("A trainee with the specified id - %d, already exists", traineeId)));
-        }
-
-        String username = usernamePasswordService.username(
+        UserEntity userEntity = userService.create(new UserEntity(
             requestDto.getFirstName(),
             requestDto.getLastName(),
-            traineeId,
-            "trainee"
-        );
+            requestDto.getUsername(),
+            requestDto.getPassword(),
+            requestDto.getIsActive()
+        ));
 
-        String password = usernamePasswordService.password();
-        requestDto.setUserId(traineeId);
-        requestDto.setUsername(username);
-        requestDto.setPassword(password);
+        requestDto.setUserId(userEntity.getId());
 
         TraineeCreationResponseDto responseDto = traineeToTraineeCreationResponseDtoMapper.map(
             traineeService.create(traineeCreationRequestDtoToTraineeEntityMapper.map(requestDto)));
-
-        idService.autoIncrement();
 
         LOGGER.info("Successfully created a TraineeEntity based on the TraineeCreationRequestDto - {}, response - {}",
             requestDto, responseDto);

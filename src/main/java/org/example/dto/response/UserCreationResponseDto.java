@@ -1,4 +1,4 @@
-package org.example.dto.request;
+package org.example.dto.response;
 
 import java.util.Objects;
 import lombok.EqualsAndHashCode;
@@ -12,25 +12,22 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class TrainerCreationRequestDto {
+public class UserCreationResponseDto {
 
+    private Long userId;
     private String firstName;
     private String lastName;
     private String username;
     private String password;
     private Boolean isActive;
-    private Long trainingTypeId;
 
-    /**
-     * Constructor.
-     */
-    public TrainerCreationRequestDto(String firstName,
-                                     String lastName,
-                                     Boolean isActive,
-                                     Long trainingTypeId) {
+    public UserCreationResponseDto(Long userId, String firstName, String lastName, String username, String password,
+                                   Boolean isActive) {
+        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.username = username;
+        this.password = password;
         this.isActive = isActive;
-        this.trainingTypeId = trainingTypeId;
     }
 }

@@ -3,35 +3,29 @@ package org.example.dto.request;
 import java.util.Objects;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.example.entity.TrainingType;
 
-@Setter
+@NoArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode
 @ToString
 public class TrainerUpdateRequestDto {
+
+    private Long trainerId;
     private Long userId;
-    private String firstName;
-    private String lastName;
-    private String username;
-    private String password;
-    private boolean isActive;
-    private TrainingType specializationType;
+    private Boolean isActive;
+    private Long trainingTypeId;
 
     /**
      * Constructor.
      */
-    public TrainerUpdateRequestDto(Long userId, String firstName, String lastName, String username, String password,
-                                   boolean isActive, TrainingType specializationType) {
+    public TrainerUpdateRequestDto(Long trainerId, Long userId, boolean isActive, Long trainingTypeId) {
+        this.trainerId = trainerId;
         this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.username = username;
-        this.password = password;
         this.isActive = isActive;
-        this.specializationType = specializationType;
+        this.trainingTypeId = trainingTypeId;
     }
-
 }

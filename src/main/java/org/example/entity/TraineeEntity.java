@@ -2,6 +2,7 @@ package org.example.entity;
 
 import jakarta.persistence.ForeignKey;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,11 +14,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Setter
+@NoArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode
 @ToString
 @Entity
@@ -40,16 +43,9 @@ public class TraineeEntity {
     private String address;
 
     /**
-     * No-arg constructor.
-     */
-    public TraineeEntity() {
-    }
-
-    /**
      * Constructor.
      */
-    public TraineeEntity(Long id, UserEntity user, Date dateOfBirth, String address) {
-        this.id = id;
+    public TraineeEntity(UserEntity user, Date dateOfBirth, String address) {
         this.user = user;
         this.dateOfBirth = dateOfBirth;
         this.address = address;

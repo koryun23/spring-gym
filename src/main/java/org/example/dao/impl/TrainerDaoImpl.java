@@ -4,7 +4,7 @@ import java.util.Optional;
 import org.example.dao.core.TrainerDao;
 import org.example.entity.TrainerEntity;
 import org.example.exception.TrainerNotFoundException;
-import org.example.repository.TrainerEntityRepository;
+import org.example.repository.core.TrainerEntityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
