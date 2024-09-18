@@ -27,7 +27,7 @@ public class TrainerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TRAINER_GENERATOR")
-    @SequenceGenerator(name = "TRAINER_GENERATOR")
+    @SequenceGenerator(name = "TRAINER_SEQUENCE")
     private Long id;
 
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)

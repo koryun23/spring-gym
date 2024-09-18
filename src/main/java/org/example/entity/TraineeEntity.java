@@ -31,7 +31,7 @@ public class TraineeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TRAINEE_GENERATOR")
-    @SequenceGenerator(name = "TRAINEE_GENERATOR")
+    @SequenceGenerator(name = "TRAINEE_SEQUENCE")
     private Long id;
 
     @OneToOne(fetch = FetchType.EAGER)
