@@ -13,13 +13,5 @@ public class Main {
      */
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
-
-        UserEntityRepository userEntityRepository = context.getBean(UserEntityRepository.class);
-//        userEntityRepository.save(new UserEntity(
-//            "first", "last", "username", "password", true
-//        ));
-        UserEntity userEntity =
-            userEntityRepository.findByUsername("username").orElseThrow(() -> new RuntimeException("User not found"));
-        System.out.println(userEntity);
     }
 }

@@ -1,17 +1,29 @@
 package org.example.entity;
 
-import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import java.util.List;
+import jakarta.persistence.Transient;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
 @Entity
 @Table(name = "TRAINING_TYPE")
 public class TrainingTypeEntity {
@@ -22,61 +34,16 @@ public class TrainingTypeEntity {
     private Long id;
 
     @Enumerated(value = EnumType.STRING)
-    @JoinColumn(name = "training_type")
-    @ManyToOne
+    @Column(name = "training_type")
     private TrainingType trainingType;
 
-    /**
-     * No-arg constructor.
-     */
-    public TrainingTypeEntity() {
-    }
+    @OneToMany(mappedBy = "trainingType", cascade = CascadeType.ALL)
+    private List<TrainingEntity> trainingEntityList;
 
-    /**
-     * Constructor.
-     */
+    @OneToMany(mappedBy = "specialization", cascade = CascadeType.ALL)
+    private List<TrainerEntity> trainerEntityList;
+
     public TrainingTypeEntity(TrainingType trainingType) {
         this.trainingType = trainingType;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public TrainingType getTrainingType() {
-        return trainingType;
-    }
-
-    public void setTrainingType(TrainingType trainingType) {
-        this.trainingType = trainingType;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        TrainingTypeEntity that = (TrainingTypeEntity) o;
-        return Objects.equals(id, that.id) && trainingType == that.trainingType;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, trainingType);
-    }
-
-    @Override
-    public String toString() {
-        return "TrainingTypeEntity{"
-            + "id=" + id
-            + ", trainingType=" + trainingType
-            + '}';
     }
 }

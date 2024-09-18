@@ -10,7 +10,12 @@
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password"> </property>
         <property name="hibernate.show_sql">true</property>
-        <property name="hibernate.ddl_auto">create-drop</property>
+        <property name="hibernate.hbm2ddl.auto">create-drop</property>
         <property name="hibernate.current_session_context_class">thread</property>
+        <mapping class="org.example.entity.UserEntity" />
+        <mapping class="org.example.entity.TrainerEntity" />
+        <mapping class="org.example.entity.TraineeEntity" />
+        <mapping class="org.example.entity.TrainingEntity"></mapping>
+        <mapping class="org.example.entity.TrainingTypeEntity"></mapping>
     </session-factory>
 </hibernate-configuration>

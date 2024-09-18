@@ -15,9 +15,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.Fetch;
 
 @NoArgsConstructor
 @Getter
@@ -48,13 +45,6 @@ public class UserEntity {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @Transient
-    @OneToOne(fetch = FetchType.EAGER)
-    private TraineeEntity trainee;
-
-    @Transient
-    @OneToOne(fetch = FetchType.EAGER)
-    private TrainerEntity trainer;
     /**
      * Constructor.
      */
