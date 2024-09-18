@@ -1,5 +1,7 @@
 package org.example.entity;
 
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToOne;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,7 +33,7 @@ public class TrainerEntity {
     private Long id;
 
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    @ManyToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private UserEntity user;
 
     @Column(name = "specialization", nullable = false)

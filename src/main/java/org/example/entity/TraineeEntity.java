@@ -1,6 +1,8 @@
 package org.example.entity;
 
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
+import jakarta.persistence.OneToOne;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -32,7 +34,7 @@ public class TraineeEntity {
     @SequenceGenerator(name = "TRAINEE_GENERATOR")
     private Long id;
 
-    @ManyToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private UserEntity user;
 

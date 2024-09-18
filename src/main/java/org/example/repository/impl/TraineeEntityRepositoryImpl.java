@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.example.entity.TraineeEntity;
+import org.example.exception.TraineeNotFoundException;
 import org.example.repository.core.TraineeEntityRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -29,22 +30,32 @@ public class TraineeEntityRepositoryImpl implements TraineeEntityRepository {
     }
 
     @Override
-    public Optional<TraineeEntity> findByUsername(String usernaem) {
-        return Optional.empty();
+    public Optional<TraineeEntity> findByUsername(String username) {
+        EntityManager entityManager = sessionFactory.unwrap(EntityManager.class);
+        TraineeEntity traineeEntity = entityManager.find(TraineeEntity.class, username);
+        entityManager.close();
+        return Optional.ofNullable(traineeEntity);
     }
 
     @Override
     public Optional<TraineeEntity> findById(Long id) {
-        return Optional.empty();
+        EntityManager entityManager = sessionFactory.unwrap(EntityManager.class);
+        TraineeEntity traineeEntity = entityManager.find(TraineeEntity.class, id);
+        entityManager.close();
+        return Optional.ofNullable(traineeEntity);
     }
 
     @Override
     public TraineeEntity save(TraineeEntity trainee) {
-        return null;
+        EntityManager entityManager = sessionFactory.unwrap(EntityManager.class);
+        entityManager.persist(trainee);
+        entityManager.close();
+        return trainee;
     }
 
     @Override
     public void deleteById(Long id) {
-
+        EntityManager entityManager = sessionFactory.unwrap(EntityManager.class);
+        entityManager.remove(findById(id).orElseThrow(() -> new TraineeNotFoundException(id)));
     }
 }

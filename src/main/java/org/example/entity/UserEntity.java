@@ -1,18 +1,23 @@
 package org.example.entity;
 
-import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
 
 @NoArgsConstructor
 @Getter
@@ -43,6 +48,13 @@ public class UserEntity {
     @Column(name = "is_active")
     private Boolean isActive;
 
+    @Transient
+    @OneToOne(fetch = FetchType.EAGER)
+    private TraineeEntity trainee;
+
+    @Transient
+    @OneToOne(fetch = FetchType.EAGER)
+    private TrainerEntity trainer;
     /**
      * Constructor.
      */
