@@ -1,12 +1,15 @@
 package org.example.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,6 +44,14 @@ public class UserEntity {
 
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
+
+    @Transient
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    private TraineeEntity traineeEntity;
+
+    @Transient
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    private TrainerEntity trainerEntity;
 
     /**
      * Constructor.

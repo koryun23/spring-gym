@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface TraineeEntityRepository extends CustomRepository<Long, TraineeEntity> {
 
     Optional<TraineeEntity> findByUsername(String username);
+
+    void deleteByUsername(String username);
 }

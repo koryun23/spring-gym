@@ -54,6 +54,16 @@ public class TraineeServiceImpl implements TraineeService {
     }
 
     @Override
+    public boolean delete(String username) {
+        Assert.notNull(username, "Username must not be null");
+        Assert.notNull(username, "Username must not be empty");
+        LOGGER.info("Deleting a Trainee with a username of {}", username);
+        traineeDao.deleteByUsername(username);
+        LOGGER.info("Successfully deleted a Trainee with a username of {}", username);
+        return true;
+    }
+
+    @Override
     public TraineeEntity select(Long traineeId) {
         Assert.notNull(traineeId, "TraineeEntity id must not be null");
         LOGGER.info("Selecting a TraineeEntity with an id of {}", traineeId);

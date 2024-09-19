@@ -47,6 +47,19 @@ public class TraineeEntityRepositoryImpl implements TraineeEntityRepository {
     }
 
     @Override
+    public void deleteByUsername(String username) {
+        TraineeEntity traineeEntity = findByUsername(username).orElseThrow(() -> new TraineeNotFoundException(username));
+
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        session.remove(traineeEntity);
+
+        transaction.commit();
+        session.close();
+    }
+
+    @Override
     public List<TraineeEntity> findAll() {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();

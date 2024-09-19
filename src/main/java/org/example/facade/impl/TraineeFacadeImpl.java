@@ -1,13 +1,20 @@
 package org.example.facade.impl;
 
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
 import org.example.dto.response.TraineeCreationResponseDto;
 import org.example.dto.response.TraineeDeletionResponseDto;
 import org.example.dto.response.TraineeRetrievalResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
+import org.example.dto.response.TrainingListRetrievalResponseDto;
+import org.example.dto.response.TrainingRetrievalResponseDto;
 import org.example.entity.TraineeEntity;
+import org.example.entity.TrainingEntity;
 import org.example.entity.UserEntity;
 import org.example.exception.TraineeNotFoundException;
 import org.example.exception.UserNotFoundException;
@@ -164,6 +171,28 @@ public class TraineeFacadeImpl implements TraineeFacade {
     }
 
     @Override
+    public TraineeRetrievalResponseDto retrieveTrainee(String username) {
+        Assert.notNull(username, "Username must not be null");
+        Assert.hasText(username, "Username must not be empty");
+        LOGGER.info("Retrieving a Trainee with a username of {}", username);
+
+        Optional<TraineeEntity> optionalTrainee = traineeService.findByUsername(username);
+
+        if(optionalTrainee.isEmpty()) {
+            return new TraineeRetrievalResponseDto(List.of(
+                String.format("Trainee with a username of %s not found", username)
+            ));
+        }
+
+        TraineeEntity traineeEntity = optionalTrainee.get();
+        TraineeRetrievalResponseDto responseDto =
+            traineeEntityToTraineeRetrievalResponseDtoMapper.map(traineeEntity);
+
+        LOGGER.info("Successfully retrieved a Trainee with a username of {}, result - {}", username, responseDto);
+        return responseDto;
+    }
+
+    @Override
     public TraineeDeletionResponseDto deleteTrainee(Long id) {
         Assert.notNull(id, "TraineeEntity id must not be null");
         if (id <= 0) {
@@ -181,5 +210,140 @@ public class TraineeFacadeImpl implements TraineeFacade {
         TraineeDeletionResponseDto responseDto = new TraineeDeletionResponseDto(success);
         LOGGER.info("Successfully deleted a TraineeEntity with an id of {}, response - {}", id, responseDto);
         return responseDto;
+    }
+
+    @Override
+    public TraineeDeletionResponseDto deleteTrainee(String username) {
+        Assert.notNull(username, "Username must not be null");
+        Assert.hasText(username, "Username must not be empty");
+        LOGGER.info("Deleting a Trainee with a username of {}", username);
+
+        traineeService.delete(username);
+
+        UserEntity userEntity =
+            userService.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
+
+        if(userEntity.getTraineeEntity() == null && userEntity.getTrainerEntity() == null) {
+            userService.delete(userEntity.getId());
+        }
+
+        LOGGER.info("Successfully deleted a Trainee with a username of {}", username);
+        return new TraineeDeletionResponseDto(true);
+
+    }
+
+    @Override
+    public TraineeUpdateResponseDto activateTrainee(Long id) {
+        Assert.notNull(id, "Id must not be null");
+        LOGGER.info("Activating a trainee with an id of {}", id);
+
+        TraineeEntity traineeEntity = traineeService.findById(id).orElseThrow(() -> new TraineeNotFoundException(id));
+        UserEntity user = traineeEntity.getUser();
+
+        TraineeUpdateResponseDto responseDto = updateTrainee(new TraineeUpdateRequestDto(
+            traineeEntity.getId(),
+            user.getFirstName(),
+            user.getLastName(),
+            user.getUsername(),
+            user.getPassword(),
+            true,
+            traineeEntity.getDateOfBirth(),
+            traineeEntity.getAddress()
+        ));
+
+        LOGGER.info("Successfully activated a Trainee with an id of {}", id);
+        return responseDto;
+    }
+
+    @Override
+    public TraineeUpdateResponseDto deActivateTrainee(Long id) {
+        Assert.notNull(id, "Id must not be null");
+        LOGGER.info("Deactivating a trainee with an id of {}", id);
+
+        TraineeEntity traineeEntity = traineeService.findById(id).orElseThrow(() -> new TraineeNotFoundException(id));
+        UserEntity user = traineeEntity.getUser();
+
+        TraineeUpdateResponseDto responseDto = updateTrainee(new TraineeUpdateRequestDto(
+            traineeEntity.getId(),
+            user.getFirstName(),
+            user.getLastName(),
+            user.getUsername(),
+            user.getPassword(),
+            false,
+            traineeEntity.getDateOfBirth(),
+            traineeEntity.getAddress()
+        ));
+
+        LOGGER.info("Successfully deactivated a Trainee with an id of {}", id);
+        return responseDto;
+    }
+
+    @Override
+    public TraineeUpdateResponseDto changePassword(Long id, String newPassword) {
+        Assert.notNull(id, "Id must not be null");
+        LOGGER.info("Changing the password of a trainee with an id of {}", id);
+
+        TraineeEntity traineeEntity = traineeService.findById(id).orElseThrow(() -> new TraineeNotFoundException(id));
+        UserEntity user = traineeEntity.getUser();
+
+        TraineeUpdateResponseDto responseDto = updateTrainee(new TraineeUpdateRequestDto(
+            traineeEntity.getId(),
+            user.getFirstName(),
+            user.getLastName(),
+            user.getUsername(),
+            newPassword,
+            user.getIsActive(),
+            traineeEntity.getDateOfBirth(),
+            traineeEntity.getAddress()
+        ));
+
+        LOGGER.info("Successfully changed the password of a Trainee with an id of {}", id);
+        return responseDto;
+    }
+
+    @Override
+    public TrainingListRetrievalResponseDto retrieveTrainingList(String traineeUsername) {
+        Assert.notNull(traineeUsername, "Username must not be null");
+        Assert.hasText(traineeUsername, "Username must not be empty");
+        LOGGER.info("Retrieving the list of trainings of a trainee with a username of {}", traineeUsername);
+
+        TraineeEntity traineeEntity = traineeService.findByUsername(traineeUsername)
+            .orElseThrow(() -> new TraineeNotFoundException(traineeUsername));
+        List<TrainingEntity> trainingEntityList = traineeEntity.getTrainingEntityList().stream()
+            .filter((trainingEntity) -> trainingEntity.getTrainee().getUser().getUsername().equals(traineeUsername))
+            .toList();
+        List<TrainingRetrievalResponseDto> trainingRetrievalResponseDtoList = trainingEntityList.stream()
+            .map((trainingEntity) -> new TrainingRetrievalResponseDto(
+                trainingEntity.getId(),
+                trainingEntity.getTrainee().getId(),
+                trainingEntity.getTrainer().getId(),
+                trainingEntity.getName(),
+                trainingEntity.getTrainingType().getId(),
+                trainingEntity.getDate(),
+                trainingEntity.getDuration()
+            )).toList();
+
+        TrainingListRetrievalResponseDto responseDto =
+            new TrainingListRetrievalResponseDto(traineeUsername, trainingRetrievalResponseDtoList);
+
+        LOGGER.info("Successfully retrieved the list of trainings of a trainee with a username of {}, result - {}",
+            traineeUsername, responseDto);
+        return responseDto;
+    }
+
+    @Override
+    public TrainingListRetrievalResponseDto retrieveTrainingList(String traineeUsername, Date from, Date to) {
+        return null;
+    }
+
+    @Override
+    public TrainingListRetrievalResponseDto retrieveTrainingList(String traineeUsername, Date from, Date to,
+                                                                 String trainerUsername) {
+        return null;
+    }
+
+    @Override
+    public TrainingListRetrievalResponseDto retrieveTrainingList(String traineeUsername, String trainerUsername) {
+        return null;
     }
 }

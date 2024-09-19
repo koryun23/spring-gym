@@ -1,6 +1,9 @@
 package org.example.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +13,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,6 +42,14 @@ public class TrainerEntity {
     @JoinColumn(name = "specialization_id", referencedColumnName = "id", nullable = false)
     @ManyToOne
     private TrainingTypeEntity specialization;
+
+    @Transient
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trainer")
+    private List<TrainingEntity> trainingEntityList;
+
+    @Transient
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "trainerEntityList")
+    private List<TraineeEntity> traineeEntityList;
     /**
      * Constructor.
      */

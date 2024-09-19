@@ -84,6 +84,16 @@ public class TraineeDaoImpl implements TraineeDao {
     }
 
     @Override
+    public boolean deleteByUsername(String username) {
+        Assert.notNull(username, "Username must not be null");
+        Assert.hasText(username, "Username must not be empty");
+        LOGGER.info("Deleting a Trainee with a username of {}", username);
+        traineeEntityRepository.deleteByUsername(username);
+        LOGGER.info("Successfully deleted a Trainee with a username of {}", username);
+        return true;
+    }
+
+    @Override
     public Optional<TraineeEntity> findById(Long id) {
         Assert.notNull(id, "TraineeEntity id must not be null");
         LOGGER.info("Retrieving an optional TraineeEntity with an id of {}", id);

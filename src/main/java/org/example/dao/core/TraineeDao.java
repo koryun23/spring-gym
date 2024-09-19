@@ -8,4 +8,6 @@ public interface TraineeDao extends Dao<TraineeEntity> {
     TraineeEntity getByUsername(String username);
 
     Optional<TraineeEntity> findByUsername(String username);
+
+    boolean deleteByUsername(String username);
 }

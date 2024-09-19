@@ -11,6 +11,8 @@ public interface TraineeService {
 
     boolean delete(Long traineeId);
 
+    boolean delete(String username);
+
     TraineeEntity select(Long traineeId);
 
     TraineeEntity selectByUsername(String username);

@@ -1,9 +1,14 @@
 package org.example.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Transient;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -44,6 +49,13 @@ public class TraineeEntity {
     @Column(name = "address", nullable = false)
     private String address;
 
+    @Transient
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trainee")
+    private List<TrainingEntity> trainingEntityList;
+
+    @Transient
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "traineeEntityList")
+    private List<TrainerEntity> trainerEntityList;
     /**
      * Constructor.
      */
