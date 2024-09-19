@@ -78,4 +78,9 @@ public class TrainingTypeEntityRepositoryImpl implements TrainingTypeEntityRepos
         transaction.commit();
         session.close();
     }
+
+    @Override
+    public TrainingTypeEntity update(TrainingTypeEntity entity) {
+        return null;
+    }
 }

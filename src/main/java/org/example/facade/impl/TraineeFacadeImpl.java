@@ -7,7 +7,10 @@ import org.example.dto.response.TraineeCreationResponseDto;
 import org.example.dto.response.TraineeDeletionResponseDto;
 import org.example.dto.response.TraineeRetrievalResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
+import org.example.entity.TraineeEntity;
 import org.example.entity.UserEntity;
+import org.example.exception.TraineeNotFoundException;
+import org.example.exception.UserNotFoundException;
 import org.example.facade.core.TraineeFacade;
 import org.example.mapper.trainee.TraineeCreationRequestDtoToTraineeEntityMapper;
 import org.example.mapper.trainee.TraineeEntityToTraineeCreationResponseDtoMapper;
@@ -39,6 +42,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
     private final TraineeEntityToTraineeUpdateResponseDtoMapperImpl traineeEntityToTraineeUpdateResponseDtoMapper;
     private final TraineeEntityToTraineeRetrievalResponseDtoMapper traineeEntityToTraineeRetrievalResponseDtoMapper;
     private final UsernamePasswordService usernamePasswordService;
+    private final IdService idService;
 
     /**
      * Constructor.
@@ -55,7 +59,9 @@ public class TraineeFacadeImpl implements TraineeFacade {
                              TraineeEntityToTraineeRetrievalResponseDtoMapper
                                  traineeEntityToTraineeRetrievalResponseDtoMapper,
                              @Qualifier("traineeUsernamePasswordService")
-                             UsernamePasswordService usernamePasswordService) {
+                             UsernamePasswordService usernamePasswordService,
+                             @Qualifier("traineeIdService")
+                             IdService idService) {
         this.userService = userService;
         this.traineeToTraineeCreationResponseDtoMapper = traineeToTraineeCreationResponseDtoMapper;
         this.traineeService = traineeService;
@@ -65,12 +71,18 @@ public class TraineeFacadeImpl implements TraineeFacade {
         this.traineeEntityToTraineeUpdateResponseDtoMapper = traineeEntityToTraineeUpdateResponseDtoMapper;
         this.traineeEntityToTraineeRetrievalResponseDtoMapper = traineeEntityToTraineeRetrievalResponseDtoMapper;
         this.usernamePasswordService = usernamePasswordService;
+        this.idService = idService;
     }
 
     @Override
     public TraineeCreationResponseDto createTrainee(TraineeCreationRequestDto requestDto) {
         Assert.notNull(requestDto, "TraineeCreationRequestDto must not be null");
         LOGGER.info("Creating a TraineeEntity based on the TraineeCreationRequestDto - {}", requestDto);
+
+        requestDto.setUsername(usernamePasswordService.username(
+            requestDto.getFirstName(), requestDto.getLastName(), idService.getId(), "trainee"
+        ));
+        requestDto.setPassword(usernamePasswordService.password());
 
         UserEntity userEntity = userService.create(new UserEntity(
             requestDto.getFirstName(),
@@ -85,6 +97,8 @@ public class TraineeFacadeImpl implements TraineeFacade {
         TraineeCreationResponseDto responseDto = traineeToTraineeCreationResponseDtoMapper.map(
             traineeService.create(traineeCreationRequestDtoToTraineeEntityMapper.map(requestDto)));
 
+        idService.autoIncrement();
+
         LOGGER.info("Successfully created a TraineeEntity based on the TraineeCreationRequestDto - {}, response - {}",
             requestDto, responseDto);
         return responseDto;
@@ -95,13 +109,32 @@ public class TraineeFacadeImpl implements TraineeFacade {
         Assert.notNull(requestDto, "TraineeUpdateRequestDto must not be null");
         LOGGER.info("Updating a TraineeEntity based on the TraineeUpdateRequestDto - {}", requestDto);
 
-        if (traineeService.findById(requestDto.getUserId()).isEmpty()) {
+        if (traineeService.findByUsername(requestDto.getUsername()).isEmpty()) {
             return new TraineeUpdateResponseDto(List.of(
-                String.format("A user with specified id - %d, does not exist", requestDto.getUserId())));
+                String.format("A user with specified username - %s, does not exist", requestDto.getUsername())));
         }
 
-        TraineeUpdateResponseDto responseDto = traineeEntityToTraineeUpdateResponseDtoMapper.map(
-            traineeService.update(traineeUpdateRequestDtoToTraineeEntityMapper.map(requestDto)));
+        Long userId = traineeService.findById(requestDto.getTraineeId())
+            .orElseThrow(() -> new TraineeNotFoundException(requestDto.getTraineeId())).getUser().getId();
+        LOGGER.info("User id of the trainee is {}", userId);
+        UserEntity userEntity = new UserEntity(
+            requestDto.getFirstName(),
+            requestDto.getLastName(),
+            requestDto.getUsername(),
+            requestDto.getPassword(),
+            requestDto.getIsActive()
+        );
+        userEntity.setId(userId);
+        userService.update(userEntity);
+
+        TraineeEntity traineeEntity = new TraineeEntity(
+            userEntity, requestDto.getDateOfBirth(), requestDto.getAddress()
+        );
+        traineeEntity.setId(requestDto.getTraineeId());
+
+        TraineeUpdateResponseDto responseDto = traineeEntityToTraineeUpdateResponseDtoMapper.map(traineeService.update(
+            traineeEntity
+        ));
 
         LOGGER.info("Successfully updated a TraineeEntity based on the TraineeUpdateRequestDto - {}, response - {}",
             requestDto, responseDto);

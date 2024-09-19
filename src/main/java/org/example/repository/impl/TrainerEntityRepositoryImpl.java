@@ -81,4 +81,9 @@ public class TrainerEntityRepositoryImpl implements TrainerEntityRepository {
         transaction.commit();
         session.close();
     }
+
+    @Override
+    public TrainerEntity update(TrainerEntity entity) {
+        return null;
+    }
 }

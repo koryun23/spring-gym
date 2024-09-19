@@ -65,7 +65,7 @@ public class UserDaoImpl implements UserDao {
     public UserEntity update(UserEntity userEntity) {
         Assert.notNull(userEntity, "User entity must not be null");
         LOGGER.info("Updating a user with an id of {}", userEntity.getId());
-        UserEntity updatedUserEntity = userEntityRepository.save(userEntity);
+        UserEntity updatedUserEntity = userEntityRepository.update(userEntity);
         LOGGER.info("Updated a user with an id of {}, result - {}", userEntity.getId(), updatedUserEntity);
         return updatedUserEntity;
     }

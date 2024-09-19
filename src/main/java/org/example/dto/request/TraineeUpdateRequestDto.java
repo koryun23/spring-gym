@@ -15,7 +15,10 @@ import lombok.ToString;
 public class TraineeUpdateRequestDto {
 
     private Long traineeId;
-    private Long userId;
+    private String firstName;
+    private String lastName;
+    private String username;
+    private String password;
     private Boolean isActive;
     private Date dateOfBirth;
     private String address;
@@ -24,12 +27,18 @@ public class TraineeUpdateRequestDto {
      * Constructor.
      */
     public TraineeUpdateRequestDto(Long traineeId,
-                                   Long userId,
+                                   String firstName,
+                                   String lastName,
+                                   String username,
+                                   String password,
                                    Boolean isActive,
                                    Date dateOfBirth,
                                    String address) {
         this.traineeId = traineeId;
-        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
         this.isActive = isActive;
         this.dateOfBirth = dateOfBirth;
         this.address = address;

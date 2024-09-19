@@ -13,4 +13,6 @@ public interface CustomRepository<T, E> {
 
     void deleteById(T id);
 
+    E update(E entity);
+
 }

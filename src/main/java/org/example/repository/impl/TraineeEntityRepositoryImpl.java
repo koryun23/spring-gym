@@ -12,6 +12,7 @@ import org.example.repository.core.TraineeEntityRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.id.uuid.StandardRandomStrategy;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,5 +92,21 @@ public class TraineeEntityRepositoryImpl implements TraineeEntityRepository {
         session.remove(findById(id).orElseThrow(() -> new TraineeNotFoundException(id)));
         transaction.commit();
         session.close();
+    }
+
+    @Override
+    public TraineeEntity update(TraineeEntity entity) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        TraineeEntity traineeEntityPersisted = session.get(TraineeEntity.class, entity.getId());
+        traineeEntityPersisted.setUser(entity.getUser());
+        traineeEntityPersisted.setAddress(entity.getAddress());
+        traineeEntityPersisted.setDateOfBirth(entity.getDateOfBirth());
+
+        transaction.commit();
+        session.close();
+
+        return traineeEntityPersisted;
     }
 }

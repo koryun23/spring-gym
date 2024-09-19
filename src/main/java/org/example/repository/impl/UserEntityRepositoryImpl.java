@@ -2,6 +2,7 @@ package org.example.repository.impl;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.CriteriaUpdate;
 import jakarta.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.hibernate.query.criteria.HibernateCriteriaBuilder;
 import org.springframework.stereotype.Repository;
 
 @Slf4j
@@ -36,6 +38,24 @@ public class UserEntityRepositoryImpl implements UserEntityRepository {
         }
         return Optional.empty();
 
+    }
+
+    @Override
+    public UserEntity update(UserEntity userEntity) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        UserEntity userEntityPersisted = session.get(UserEntity.class, userEntity.getId());
+        userEntityPersisted.setFirstName(userEntity.getFirstName());
+        userEntityPersisted.setLastName(userEntity.getLastName());
+        userEntityPersisted.setUsername(userEntity.getUsername());
+        userEntityPersisted.setPassword(userEntity.getPassword());
+        userEntityPersisted.setIsActive(userEntity.getIsActive());
+
+        transaction.commit();
+        session.close();
+
+        return userEntityPersisted;
     }
 
     @Override
@@ -80,7 +100,7 @@ public class UserEntityRepositoryImpl implements UserEntityRepository {
     public UserEntity save(UserEntity user) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.persist(user);
+        session.merge(user);
         transaction.commit();
         session.close();
         return user;

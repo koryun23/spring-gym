@@ -19,7 +19,7 @@ public class TraineeUpdateRequestDtoToTraineeEntityMapperImpl implements Trainee
     public TraineeEntity map(TraineeUpdateRequestDto requestDto) {
         Assert.notNull(requestDto, "TraineeUpdateRequestDto must not be null");
         return new TraineeEntity(
-            userDao.get(requestDto.getUserId()),
+            userDao.getByUsername(requestDto.getUsername()),
             requestDto.getDateOfBirth(),
             requestDto.getAddress()
         );
