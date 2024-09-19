@@ -1,15 +1,18 @@
 package org.example.repository.impl;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import org.example.entity.TraineeEntity;
 import org.example.exception.TraineeNotFoundException;
 import org.example.repository.core.TraineeEntityRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -32,36 +35,61 @@ public class TraineeEntityRepositoryImpl implements TraineeEntityRepository {
 
     @Override
     public Optional<TraineeEntity> findByUsername(String username) {
-        EntityManager entityManager = sessionFactory.unwrap(EntityManager.class);
-        TraineeEntity traineeEntity = entityManager.find(TraineeEntity.class, username);
-        entityManager.close();
-        return Optional.ofNullable(traineeEntity);
+        List<TraineeEntity> traineeEntityList = findAll();
+
+        for(TraineeEntity traineeEntity : traineeEntityList) {
+            if(traineeEntity.getUser().getUsername().equals(username)) {
+                return Optional.of(traineeEntity);
+            }
+        }
+        return Optional.empty();
     }
 
     @Override
     public List<TraineeEntity> findAll() {
-        return List.of();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<TraineeEntity> criteriaQuery = criteriaBuilder.createQuery(TraineeEntity.class);
+        Root<TraineeEntity> traineeRoot = criteriaQuery.from(TraineeEntity.class);
+        CriteriaQuery<TraineeEntity> select = criteriaQuery.select(traineeRoot);
+        Query<TraineeEntity> traineeEntityQuery = session.createQuery(select);
+
+        List<TraineeEntity> traineeEntityList = traineeEntityQuery.list();
+
+        transaction.commit();
+        session.close();
+
+        return traineeEntityList;
     }
 
     @Override
     public Optional<TraineeEntity> findById(Long id) {
-        EntityManager entityManager = sessionFactory.unwrap(EntityManager.class);
-        TraineeEntity traineeEntity = entityManager.find(TraineeEntity.class, id);
-        entityManager.close();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        TraineeEntity traineeEntity = session.find(TraineeEntity.class, id);
+        transaction.commit();
+        session.close();
         return Optional.ofNullable(traineeEntity);
     }
 
     @Override
     public TraineeEntity save(TraineeEntity trainee) {
-        EntityManager entityManager = sessionFactory.unwrap(EntityManager.class);
-        entityManager.persist(trainee);
-        entityManager.close();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.persist(trainee);
+        transaction.commit();
+        session.close();
         return trainee;
     }
 
     @Override
     public void deleteById(Long id) {
-        EntityManager entityManager = sessionFactory.unwrap(EntityManager.class);
-        entityManager.remove(findById(id).orElseThrow(() -> new TraineeNotFoundException(id)));
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.remove(findById(id).orElseThrow(() -> new TraineeNotFoundException(id)));
+        transaction.commit();
+        session.close();
     }
 }
