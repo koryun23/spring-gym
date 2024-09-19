@@ -6,6 +6,7 @@ import jakarta.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 import org.example.entity.TrainerEntity;
+import org.example.exception.TrainerNotFoundException;
 import org.example.repository.core.TrainerEntityRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -76,7 +77,7 @@ public class TrainerEntityRepositoryImpl implements TrainerEntityRepository {
     public void deleteById(Long id) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.remove(findById(id));
+        session.remove(findById(id).orElseThrow(() -> new TrainerNotFoundException(id)));
         transaction.commit();
         session.close();
     }
