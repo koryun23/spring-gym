@@ -30,7 +30,7 @@ public class TrainingTypeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TRAINING_TYPE_SEQUENCE")
-    @SequenceGenerator(name = "TRAINING_TYPE_SEQUENCE")
+    @SequenceGenerator(name = "TRAINING_TYPE_SEQUENCE", allocationSize = 1)
     private Long id;
 
     @Enumerated(value = EnumType.STRING)

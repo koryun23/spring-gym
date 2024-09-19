@@ -26,8 +26,8 @@ import lombok.ToString;
 public class TrainerEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TRAINER_GENERATOR")
-    @SequenceGenerator(name = "TRAINER_SEQUENCE")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TRAINER_SEQUENCE")
+    @SequenceGenerator(name = "TRAINER_SEQUENCE", allocationSize = 1)
     private Long id;
 
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)

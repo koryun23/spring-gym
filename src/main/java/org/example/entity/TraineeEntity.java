@@ -30,8 +30,8 @@ import lombok.ToString;
 public class TraineeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TRAINEE_GENERATOR")
-    @SequenceGenerator(name = "TRAINEE_SEQUENCE")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TRAINEE_SEQUENCE")
+    @SequenceGenerator(name = "TRAINEE_SEQUENCE", allocationSize = 1)
     private Long id;
 
     @OneToOne(fetch = FetchType.EAGER)
