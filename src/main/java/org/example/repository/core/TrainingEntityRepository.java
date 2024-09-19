@@ -4,11 +4,6 @@ import java.util.Optional;
 import org.example.entity.TrainingEntity;
 import org.springframework.stereotype.Repository;
 
-public interface TrainingEntityRepository {
+public interface TrainingEntityRepository extends CustomRepository<Long, TrainingEntity> {
 
-    Optional<TrainingEntity> findById(Long id);
-
-    TrainingEntity save(TrainingEntity training);
-
-    void deleteById(Long id);
 }

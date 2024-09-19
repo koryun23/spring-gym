@@ -1,6 +1,7 @@
 package org.example.repository.impl;
 
 import jakarta.annotation.PostConstruct;
+import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -35,6 +36,11 @@ public class TraineeEntityRepositoryImpl implements TraineeEntityRepository {
         TraineeEntity traineeEntity = entityManager.find(TraineeEntity.class, username);
         entityManager.close();
         return Optional.ofNullable(traineeEntity);
+    }
+
+    @Override
+    public List<TraineeEntity> findAll() {
+        return List.of();
     }
 
     @Override

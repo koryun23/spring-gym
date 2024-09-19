@@ -1,5 +1,6 @@
 package org.example.repository.impl;
 
+import java.util.List;
 import java.util.Optional;
 import org.example.entity.TrainerEntity;
 import org.example.repository.core.TrainerEntityRepository;
@@ -10,6 +11,11 @@ public class TrainerEntityRepositoryImpl implements TrainerEntityRepository {
     @Override
     public Optional<TrainerEntity> findByUsername(String username) {
         return Optional.empty();
+    }
+
+    @Override
+    public List<TrainerEntity> findAll() {
+        return List.of();
     }
 
     @Override

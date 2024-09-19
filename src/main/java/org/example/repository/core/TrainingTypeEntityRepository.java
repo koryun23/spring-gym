@@ -1,13 +1,7 @@
 package org.example.repository.core;
 
-import java.util.Optional;
 import org.example.entity.TrainingTypeEntity;
 
-public interface TrainingTypeEntityRepository {
+public interface TrainingTypeEntityRepository extends CustomRepository<Long, TrainingTypeEntity> {
 
-    Optional<TrainingTypeEntity> findById(Long id);
-
-    TrainingTypeEntity save(TrainingTypeEntity trainingTypeEntity);
-
-    void deleteById(Long id);
 }

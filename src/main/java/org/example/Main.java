@@ -15,7 +15,8 @@ public class Main {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
         UserEntityRepository repo = context.getBean(UserEntityRepository.class);
-        repo.save(new UserEntity("first", "last", "username", "password", true));
+        System.out.println(repo.findByUsername("username"));
+        //repo.save(new UserEntity("first", "last", "username", "password", true));
         //Optional<UserEntity> optionalUser = repo.findById(3L);
         //System.out.println(optionalUser);
 //        repo.save(new UserEntity(
