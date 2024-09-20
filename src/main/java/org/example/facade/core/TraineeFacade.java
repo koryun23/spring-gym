@@ -29,11 +29,5 @@ public interface TraineeFacade {
 
     TraineeUpdateResponseDto changePassword(Long id, String newPassword);
 
-    TrainingListRetrievalResponseDto retrieveTrainingList(String traineeUsername);
 
-    TrainingListRetrievalResponseDto retrieveTrainingList(String traineeUsername, Date from, Date to);
-
-    TrainingListRetrievalResponseDto retrieveTrainingList(String traineeUsername, Date from, Date to, String trainerUsername);
-
-    TrainingListRetrievalResponseDto retrieveTrainingList(String traineeUsername, String trainerUsername);
 }

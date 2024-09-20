@@ -301,49 +301,4 @@ public class TraineeFacadeImpl implements TraineeFacade {
         return responseDto;
     }
 
-    @Override
-    public TrainingListRetrievalResponseDto retrieveTrainingList(String traineeUsername) {
-        Assert.notNull(traineeUsername, "Username must not be null");
-        Assert.hasText(traineeUsername, "Username must not be empty");
-        LOGGER.info("Retrieving the list of trainings of a trainee with a username of {}", traineeUsername);
-
-        TraineeEntity traineeEntity = traineeService.findByUsername(traineeUsername)
-            .orElseThrow(() -> new TraineeNotFoundException(traineeUsername));
-        List<TrainingEntity> trainingEntityList = traineeEntity.getTrainingEntityList().stream()
-            .filter((trainingEntity) -> trainingEntity.getTrainee().getUser().getUsername().equals(traineeUsername))
-            .toList();
-        List<TrainingRetrievalResponseDto> trainingRetrievalResponseDtoList = trainingEntityList.stream()
-            .map((trainingEntity) -> new TrainingRetrievalResponseDto(
-                trainingEntity.getId(),
-                trainingEntity.getTrainee().getId(),
-                trainingEntity.getTrainer().getId(),
-                trainingEntity.getName(),
-                trainingEntity.getTrainingType().getId(),
-                trainingEntity.getDate(),
-                trainingEntity.getDuration()
-            )).toList();
-
-        TrainingListRetrievalResponseDto responseDto =
-            new TrainingListRetrievalResponseDto(traineeUsername, trainingRetrievalResponseDtoList);
-
-        LOGGER.info("Successfully retrieved the list of trainings of a trainee with a username of {}, result - {}",
-            traineeUsername, responseDto);
-        return responseDto;
-    }
-
-    @Override
-    public TrainingListRetrievalResponseDto retrieveTrainingList(String traineeUsername, Date from, Date to) {
-        return null;
-    }
-
-    @Override
-    public TrainingListRetrievalResponseDto retrieveTrainingList(String traineeUsername, Date from, Date to,
-                                                                 String trainerUsername) {
-        return null;
-    }
-
-    @Override
-    public TrainingListRetrievalResponseDto retrieveTrainingList(String traineeUsername, String trainerUsername) {
-        return null;
-    }
 }

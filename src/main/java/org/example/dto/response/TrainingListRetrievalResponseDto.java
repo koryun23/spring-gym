@@ -14,13 +14,13 @@ import lombok.ToString;
 @ToString
 public class TrainingListRetrievalResponseDto {
 
-    private String username;
+    private Boolean status;
     private List<TrainingRetrievalResponseDto> trainingList;
 
     private List<String> errors;
 
-    public TrainingListRetrievalResponseDto(String username, List<TrainingRetrievalResponseDto> trainingList) {
-        this.username = username;
+    public TrainingListRetrievalResponseDto(Boolean status, List<TrainingRetrievalResponseDto> trainingList) {
+        this.status = status;
         this.trainingList = trainingList;
     }
 

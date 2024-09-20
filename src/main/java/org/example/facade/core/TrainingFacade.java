@@ -12,5 +12,11 @@ public interface TrainingFacade {
 
     TrainingRetrievalResponseDto retrieveTraining(Long trainingId);
 
+    TrainingListRetrievalResponseDto retrieveTrainingListByTrainee(String traineeUsername);
 
+    TrainingListRetrievalResponseDto retrieveTrainingListByTraineeDate(String traineeUsername, Date from, Date to);
+
+    TrainingListRetrievalResponseDto retrieveTrainingListByTraineeTrainerDate(String traineeUsername, Date from, Date to, String trainerUsername);
+
+    TrainingListRetrievalResponseDto retrieveTrainingListByTraineeTrainer(String traineeUsername, String trainerUsername);
 }
