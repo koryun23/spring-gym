@@ -1,5 +1,6 @@
 package org.example.dao.impl;
 
+import java.util.List;
 import java.util.Optional;
 import org.example.dao.core.TrainerDao;
 import org.example.entity.TrainerEntity;
@@ -92,5 +93,13 @@ public class TrainerDaoImpl implements TrainerDao {
         LOGGER.info("Successfully retrieved an optional TrainerEntity with an id od {}, result - {}", id,
             optionalTrainer);
         return optionalTrainer;
+    }
+
+    @Override
+    public List<TrainerEntity> findAll() {
+        LOGGER.info("Retrieving a list of all Trainer Entities");
+        List<TrainerEntity> all = trainerEntityRepository.findAll();
+        LOGGER.info("Successfully retrieved a list of all Trainer Entities, result - {}", all);
+        return all;
     }
 }

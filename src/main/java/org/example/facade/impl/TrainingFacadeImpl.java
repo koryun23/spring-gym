@@ -3,6 +3,10 @@ package org.example.facade.impl;
 import java.util.Date;
 import java.util.List;
 import org.example.dto.request.TrainingCreationRequestDto;
+import org.example.dto.request.TrainingListRetrievalByTraineeDateRequestDto;
+import org.example.dto.request.TrainingListRetrievalByTraineeTrainerDateRequestDto;
+import org.example.dto.request.TrainingListRetrievalByTraineeTrainerRequestDto;
+import org.example.dto.request.TrainingListRetrievalByTrainerDateRequestDto;
 import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.dto.response.TrainingListRetrievalResponseDto;
 import org.example.dto.response.TrainingRetrievalResponseDto;
@@ -113,6 +117,23 @@ public class TrainingFacadeImpl implements TrainingFacade {
         return responseDto;
     }
 
+    @Override
+    public TrainingListRetrievalResponseDto retrieveTrainingListByTrainer(String trainerUsername) {
+        Assert.notNull(trainerUsername, "Trainer username must not be null");
+        LOGGER.info("Retrieving the list of all trainings of a trainer with a username of {}", trainerUsername);
+
+        List<TrainingRetrievalResponseDto> all = trainingService.findAllByTrainer(trainerUsername).stream()
+            .map(trainingEntityToTrainingRetrievalResponseDtoMapper::map)
+            .toList();
+
+        TrainingListRetrievalResponseDto responseDto = new TrainingListRetrievalResponseDto(true, all);
+
+        LOGGER.info("Successfully retrieved the list of all trainings of a trainer with a username of {}, result - {}",
+            trainerUsername, responseDto
+        );
+        return responseDto;
+    }
+
 
     @Override
     public TrainingListRetrievalResponseDto retrieveTrainingListByTrainee(String traineeUsername) {
@@ -120,139 +141,91 @@ public class TrainingFacadeImpl implements TrainingFacade {
         Assert.hasText(traineeUsername, "Username must not be empty");
         LOGGER.info("Retrieving the list of trainings of a trainee with a username of {}", traineeUsername);
 
-        TraineeEntity traineeEntity = traineeService.findByUsername(traineeUsername)
-            .orElseThrow(() -> new TraineeNotFoundException(traineeUsername));
-        List<TrainingEntity> trainingEntityList = traineeEntity.getTrainingEntityList().stream()
-            .filter((trainingEntity) -> trainingEntity.getTrainee().getUser().getUsername().equals(traineeUsername))
+        List<TrainingRetrievalResponseDto> all = trainingService.findAllByTrainee(traineeUsername).stream()
+            .map(trainingEntityToTrainingRetrievalResponseDtoMapper::map)
             .toList();
-        List<TrainingRetrievalResponseDto> trainingRetrievalResponseDtoList = trainingEntityList.stream()
-            .map((trainingEntity) -> new TrainingRetrievalResponseDto(
-                trainingEntity.getId(),
-                trainingEntity.getTrainee().getId(),
-                trainingEntity.getTrainer().getId(),
-                trainingEntity.getName(),
-                trainingEntity.getTrainingType().getId(),
-                trainingEntity.getDate(),
-                trainingEntity.getDuration()
-            )).toList();
 
-        TrainingListRetrievalResponseDto responseDto =
-            new TrainingListRetrievalResponseDto(true, trainingRetrievalResponseDtoList);
-
+        TrainingListRetrievalResponseDto responseDto = new TrainingListRetrievalResponseDto(true, all);
         LOGGER.info("Successfully retrieved the list of trainings of a trainee with a username of {}, result - {}",
             traineeUsername, responseDto);
         return responseDto;
     }
 
     @Override
-    public TrainingListRetrievalResponseDto retrieveTrainingListByTraineeDate(String traineeUsername, Date from, Date to) {
-        Assert.notNull(traineeUsername, "Username must not be null");
-        Assert.hasText(traineeUsername, "Username must not be empty");
-        Assert.notNull(from, "The starting date must not be null");
-        Assert.notNull(to, "Ending date must not be null");
+    public TrainingListRetrievalResponseDto retrieveTrainingListByTraineeDate(
+        TrainingListRetrievalByTraineeDateRequestDto requestDto) {
 
-        LOGGER.info("Retrieving a list of Trainings of a trainee with a username of {} between {} and to", from, to);
-        TraineeEntity traineeEntity = traineeService.findByUsername(traineeUsername)
-            .orElseThrow(() -> new TraineeNotFoundException(traineeUsername));
-        List<TrainingRetrievalResponseDto> trainingEntityList = traineeEntity.getTrainingEntityList()
+        Assert.notNull(requestDto, "TrainingListRetrievalByTraineeDateRequestDto must not be null");
+        LOGGER.info("Retrieving a list of all trainings according to the TrainingListRetrievalByTraineeDateRequestDto - {}", requestDto);
+
+        List<TrainingRetrievalResponseDto> all =
+            trainingService.findAllByTraineeDate(requestDto.getTraineeUsername(), requestDto.getFrom(),
+                    requestDto.getTo())
+                .stream()
+                .map(trainingEntityToTrainingRetrievalResponseDtoMapper::map)
+                .toList();
+
+        TrainingListRetrievalResponseDto responseDto = new TrainingListRetrievalResponseDto(true, all);
+        LOGGER.info("Successfully retrieved a list of all trainings according to the TrainingListRetrievalByTraineeDateRequestDto - {}, result - {}", requestDto, responseDto);
+        return responseDto;
+    }
+
+    @Override
+    public TrainingListRetrievalResponseDto retrieveTrainingListByTrainerDate(
+        TrainingListRetrievalByTrainerDateRequestDto requestDto) {
+
+        Assert.notNull(requestDto, "Request Dto must not be null");
+        LOGGER.info("Retreiving a training list according to the request dto - {}", requestDto);
+
+        List<TrainingRetrievalResponseDto> all =
+            trainingService.findAllByTrainerDate(requestDto.getTrainerUsername(), requestDto.getFrom(),
+                    requestDto.getTo())
+                .stream()
+                .map(trainingEntityToTrainingRetrievalResponseDtoMapper::map)
+                .toList();
+
+        TrainingListRetrievalResponseDto responseDto = new TrainingListRetrievalResponseDto(true, all);
+        LOGGER.info("Successfully retrieved a training list according to the request dto - {}, result - {}", requestDto, responseDto);
+
+        return responseDto;
+    }
+
+    @Override
+    public TrainingListRetrievalResponseDto retrieveTrainingListByTraineeTrainerDate(
+        TrainingListRetrievalByTraineeTrainerDateRequestDto requestDto) {
+        Assert.notNull(requestDto, "Request Dto must not be null");
+        LOGGER.info("Retrieving a training list according to the request dto - {}", requestDto);
+
+        List<TrainingRetrievalResponseDto> all = trainingService.findAllByTraineeTrainerDate(
+                requestDto.getTraineeUsername(), requestDto.getFrom(), requestDto.getTo(), requestDto.getTrainerUsername()
+                )
             .stream()
-            .filter((trainingEntity) -> trainingEntity.getDate().compareTo(from) >= 0 && trainingEntity.getDate().compareTo(to) <= 0)
-            .map((trainingEntity) -> new TrainingRetrievalResponseDto(
-                trainingEntity.getId(),
-                trainingEntity.getTrainee().getId(),
-                trainingEntity.getTrainer().getId(),
-                trainingEntity.getName(),
-                trainingEntity.getTrainingType().getId(),
-                trainingEntity.getDate(),
-                trainingEntity.getDuration()
-            ))
+            .map(trainingEntityToTrainingRetrievalResponseDtoMapper::map)
             .toList();
 
-        TrainingListRetrievalResponseDto responseDto =
-            new TrainingListRetrievalResponseDto(true, trainingEntityList);
+        TrainingListRetrievalResponseDto responseDto = new TrainingListRetrievalResponseDto(true, all);
 
-        LOGGER.info(
-            "Successfully retrieved a list of Trainings of a trainee with a username of {} between {} and {}, result - {}",
-            traineeUsername, from, to, responseDto
-        );
+        LOGGER.info("Successfully retrieved a training list according to the request dto - {}, result - {}", requestDto, responseDto);
         return responseDto;
     }
 
-    @Override
-    public TrainingListRetrievalResponseDto retrieveTrainingListByTraineeTrainerDate(String traineeUsername, Date from, Date to,
-                                                                 String trainerUsername) {
-        Assert.notNull(traineeUsername, "Trainee Username must not be null");
-        Assert.hasText(traineeUsername, "Trainee Username must not be empty");
-        Assert.notNull(trainerUsername, "Trainer username must not be null");
-        Assert.hasText(trainerUsername, "Trainer username must not be empty");
-        Assert.notNull(from, "Starting date must not be null");
-        Assert.notNull(to, "Ending date must not be null");
-
-        LOGGER.info(
-            "Retrieving a list of Trainings of a trainee with a username of {} between {} and {} with a trainer with a username of {}",
-            traineeUsername, from, to, trainerUsername
-        );
-
-        TraineeEntity traineeEntity = traineeService.findByUsername(traineeUsername)
-            .orElseThrow(() -> new TraineeNotFoundException(traineeUsername));
-
-        List<TrainingRetrievalResponseDto> trainingResponseDtoList = traineeEntity.getTrainingEntityList().stream()
-            .filter((trainingEntity) ->
-                trainingEntity.getTrainer().getUser().getUsername().equals(trainerUsername) &&
-                    trainingEntity.getDate().compareTo(from) >= 0 &&
-                    trainingEntity.getDate().compareTo(to) <= 0
-            )
-            .map((trainingEntity -> new TrainingRetrievalResponseDto(
-                trainingEntity.getId(),
-                trainingEntity.getTrainee().getId(),
-                trainingEntity.getTrainer().getId(),
-                trainingEntity.getName(),
-                trainingEntity.getTrainingType().getId(),
-                trainingEntity.getDate(),
-                trainingEntity.getDuration()
-            )))
-            .toList();
-        TrainingListRetrievalResponseDto responseDto =
-            new TrainingListRetrievalResponseDto(true, trainingResponseDtoList);
-
-        LOGGER.info("Successfully retrieved all trainings of a trainee with a username of {} between {} and {} with a trainer with a usrename of {}",
-            traineeUsername, from, to, trainerUsername);
-
-        return responseDto;
-
-    }
 
     @Override
-    public TrainingListRetrievalResponseDto retrieveTrainingListByTraineeTrainer(String traineeUsername, String trainerUsername) {
-        Assert.notNull(traineeUsername, "Trainee Username must not be null");
-        Assert.notNull(trainerUsername, "Trainer Username must not be null");
-        Assert.hasText(traineeUsername, "Trainee Username must not be empty");
-        Assert.hasText(trainerUsername, "Trainer Username must not be empty");
+    public TrainingListRetrievalResponseDto retrieveTrainingListByTraineeTrainer(
+        TrainingListRetrievalByTraineeTrainerRequestDto requestDto) {
 
-        LOGGER.info("Retrieving a list of Trainings of a trainee with a username of {} with a trainer with a username of {}",
-            traineeUsername, trainerUsername);
+        Assert.notNull(requestDto, "Request dto must not be null");
+        LOGGER.info("Retrieving a training list according to the request dto - {}", requestDto);
 
-        TraineeEntity traineeEntity =
-            traineeService.findByUsername(traineeUsername).orElseThrow(() -> new TraineeNotFoundException(traineeUsername));
+        List<TrainingRetrievalResponseDto> all =
+            trainingService.findAllByTraineeTrainer(requestDto.getTraineeUsername(), requestDto.getTrainerUsername())
+                .stream()
+                .map(trainingEntityToTrainingRetrievalResponseDtoMapper::map)
+                .toList();
 
-        List<TrainingRetrievalResponseDto> trainingRetrievalResponseDtoList = traineeEntity.getTrainingEntityList().stream()
-            .filter((trainingEntity) -> trainingEntity.getTrainer().getUser().getUsername().equals(trainerUsername))
-            .map((trainingEntity) -> new TrainingRetrievalResponseDto(
-                trainingEntity.getId(),
-                trainingEntity.getTrainee().getId(),
-                trainingEntity.getTrainer().getId(),
-                trainingEntity.getName(),
-                trainingEntity.getTrainingType().getId(),
-                trainingEntity.getDate(),
-                trainingEntity.getDuration()
-            ))
-            .toList();
+        TrainingListRetrievalResponseDto responseDto = new TrainingListRetrievalResponseDto(true, all);
 
-        TrainingListRetrievalResponseDto responseDto =
-            new TrainingListRetrievalResponseDto(true, trainingRetrievalResponseDtoList);
-
-        LOGGER.info("Successfully retrieved a list of Trainings of a trainee with a username of {} with a trainer with a username of {}", traineeUsername, trainerUsername);
-
+        LOGGER.info("Successfully retrieved a training list according to the request dto - {}, result - {}", requestDto, responseDto);
         return responseDto;
     }
 }

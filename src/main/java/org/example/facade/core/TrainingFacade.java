@@ -2,6 +2,10 @@ package org.example.facade.core;
 
 import java.util.Date;
 import org.example.dto.request.TrainingCreationRequestDto;
+import org.example.dto.request.TrainingListRetrievalByTraineeDateRequestDto;
+import org.example.dto.request.TrainingListRetrievalByTraineeTrainerDateRequestDto;
+import org.example.dto.request.TrainingListRetrievalByTraineeTrainerRequestDto;
+import org.example.dto.request.TrainingListRetrievalByTrainerDateRequestDto;
 import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.dto.response.TrainingListRetrievalResponseDto;
 import org.example.dto.response.TrainingRetrievalResponseDto;
@@ -12,11 +16,19 @@ public interface TrainingFacade {
 
     TrainingRetrievalResponseDto retrieveTraining(Long trainingId);
 
+    TrainingListRetrievalResponseDto retrieveTrainingListByTrainer(String trainerUsername);
+
     TrainingListRetrievalResponseDto retrieveTrainingListByTrainee(String traineeUsername);
 
-    TrainingListRetrievalResponseDto retrieveTrainingListByTraineeDate(String traineeUsername, Date from, Date to);
+    TrainingListRetrievalResponseDto retrieveTrainingListByTraineeDate(
+        TrainingListRetrievalByTraineeDateRequestDto requestDto);
 
-    TrainingListRetrievalResponseDto retrieveTrainingListByTraineeTrainerDate(String traineeUsername, Date from, Date to, String trainerUsername);
+    TrainingListRetrievalResponseDto retrieveTrainingListByTrainerDate(
+        TrainingListRetrievalByTrainerDateRequestDto requestDto);
 
-    TrainingListRetrievalResponseDto retrieveTrainingListByTraineeTrainer(String traineeUsername, String trainerUsername);
+    TrainingListRetrievalResponseDto retrieveTrainingListByTraineeTrainerDate(
+        TrainingListRetrievalByTraineeTrainerDateRequestDto requestDto);
+
+    TrainingListRetrievalResponseDto retrieveTrainingListByTraineeTrainer(
+        TrainingListRetrievalByTraineeTrainerRequestDto requestDto);
 }

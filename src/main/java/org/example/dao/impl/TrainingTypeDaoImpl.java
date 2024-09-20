@@ -1,5 +1,6 @@
 package org.example.dao.impl;
 
+import java.util.List;
 import java.util.Optional;
 import org.example.dao.core.TrainingTypeDao;
 import org.example.entity.TrainingTypeEntity;
@@ -68,5 +69,13 @@ public class TrainingTypeDaoImpl implements TrainingTypeDao {
         LOGGER.info("Successfully retrieved an optional training type with an id of {}, result - {}",
             id, optionalTrainingType);
         return optionalTrainingType;
+    }
+
+    @Override
+    public List<TrainingTypeEntity> findAll() {
+        LOGGER.info("Retrieving a list of all Training Type Entities");
+        List<TrainingTypeEntity> all = repository.findAll();
+        LOGGER.info("Successfully retrieved a list of all Training Type Entities, result - {}", all);
+        return all;
     }
 }

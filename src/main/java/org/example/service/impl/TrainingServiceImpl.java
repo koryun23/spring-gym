@@ -1,6 +1,9 @@
 package org.example.service.impl;
 
+import java.sql.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 import org.example.dao.core.TrainingDao;
 import org.example.entity.TrainingEntity;
 import org.example.service.core.TrainingService;
@@ -46,5 +49,115 @@ public class TrainingServiceImpl implements TrainingService {
         LOGGER.info("Successfully retrieved an optional TrainingEntity with an id of {}, result - {}", id,
             optionalTraining);
         return optionalTraining;
+    }
+
+    @Override
+    public List<TrainingEntity> findAll() {
+        LOGGER.info("Retrieving a list of all TrainingEntities");
+        List<TrainingEntity> all = trainingDao.findAll();
+        LOGGER.info("Successfully retrieved a list of all Training Entities, result - {}", all);
+        return all;
+    }
+
+    @Override
+    public List<TrainingEntity> findAllByTrainee(String traineeUsername) {
+        Assert.notNull(traineeUsername, "Trainee username must not be null");
+        Assert.hasText(traineeUsername, "Trainee username must not be empty");
+        LOGGER.info("Retrieving all trainings of a trainee with a username of {}", traineeUsername);
+        List<TrainingEntity> all = findAll().stream()
+            .filter(trainingEntity -> trainingEntity.getTrainee().getUser().getUsername().equals(traineeUsername))
+            .toList();
+        LOGGER.info("Successfully retrieved all trainings of a trainee with a username of {}, result - {}", traineeUsername, all);
+        return all;
+    }
+
+    @Override
+    public List<TrainingEntity> findAllByTrainer(String trainerUsername) {
+        Assert.notNull(trainerUsername, "Trainee username must not be null");
+        Assert.hasText(trainerUsername, "Trainee username must not be empty");
+        LOGGER.info("Retrieving all trainings of a trainer with a username of {}", trainerUsername);
+        List<TrainingEntity> all = findAll().stream()
+            .filter(trainingEntity -> trainingEntity.getTrainer().getUser().getUsername().equals(trainerUsername))
+            .toList();
+        LOGGER.info("Successfully retrieved all trainings of a trainer with a username of {}, result - {}", trainerUsername, all);
+        return all;
+    }
+
+    @Override
+    public List<TrainingEntity> findAllByTraineeTrainer(String traineeUsername, String trainerUsername) {
+        Assert.notNull(traineeUsername, "Trainee username must not be null");
+        Assert.hasText(traineeUsername, "Trainee username must not be empty");
+        Assert.notNull(trainerUsername, "Trainee username must not be null");
+        Assert.hasText(trainerUsername, "Trainee username must not be empty");
+        LOGGER.info("Retrieving all trainings of a trainee({}) with a trainer({})", traineeUsername, traineeUsername);
+
+        List<TrainingEntity> all = findAll().stream()
+            .filter(trainingEntity -> trainingEntity.getTrainee().getUser().getUsername().equals(traineeUsername) &&
+                trainingEntity.getTrainer().getUser().getUsername().equals(trainerUsername))
+            .toList();
+
+        LOGGER.info("Successfully retrieved all trainings of a trainee({}) with a trainer({}), result - {}", traineeUsername, trainerUsername, all);
+        return all;
+    }
+
+    @Override
+    public List<TrainingEntity> findAllByTraineeDate(String traineeUsername, Date from, Date to) {
+        Assert.notNull(traineeUsername, "Trainee username must not be null");
+        Assert.hasText(traineeUsername, "Trainee username must not be empty");
+        Assert.notNull(from, "Starting date must not be null");
+        Assert.notNull(to, "Ending date must not be null");
+        LOGGER.info("Retrieving all trainings with a trainee({}) between {} and {}", traineeUsername, from, to);
+
+        List<TrainingEntity> all = findAll().stream()
+            .filter(trainingEntity -> trainingEntity.getTrainee().getUser().getUsername().equals(traineeUsername) &&
+                trainingEntity.getDate().compareTo(from) >= 0 && trainingEntity.getDate().compareTo(to) <= 0)
+            .toList();
+
+        LOGGER.info("Successfully retrieved all trainings with a trainee({}) between {} and {}, result - {}",
+            traineeUsername, from, to, all);
+
+        return all;
+    }
+
+    @Override
+    public List<TrainingEntity> findAllByTrainerDate(String trainerUsername, Date from, Date to) {
+        Assert.notNull(trainerUsername, "Trainer username must not be null");
+        Assert.hasText(trainerUsername, "Trainer username must not be empty");
+        Assert.notNull(from, "Starting date must not be null");
+        Assert.notNull(to, "Ending date must not be null");
+        LOGGER.info("Retrieving all trainings with a trainer({}) between {} and {}", trainerUsername, from, to);
+
+        List<TrainingEntity> all = findAll().stream()
+            .filter(trainingEntity -> trainingEntity.getTrainer().getUser().getUsername().equals(trainerUsername) &&
+                trainingEntity.getDate().compareTo(from) >= 0 && trainingEntity.getDate().compareTo(to) <= 0)
+            .toList();
+
+        LOGGER.info("Successfully retrieved all trainings with a trainer({}) between {} and {}, result - {}",
+            trainerUsername, from, to, all);
+
+        return all;
+    }
+
+    @Override
+    public List<TrainingEntity> findAllByTraineeTrainerDate(String traineeUsername, Date from, Date to,
+                                                            String trainerUsername) {
+        Assert.notNull(traineeUsername, "Trainee username must not be null");
+        Assert.hasText(traineeUsername, "Trainee username must not be empty");
+        Assert.notNull(trainerUsername, "Trainee username must not be null");
+        Assert.hasText(trainerUsername, "Trainee username must not be empty");
+        Assert.notNull(from, "Starting date must not be null");
+        Assert.notNull(to, "Ending date must not be null");
+        LOGGER.info("Retrieving all trainings of a trainee({}) with trainer({}) between {} and {}",
+            traineeUsername, trainerUsername, from, to);
+
+        List<TrainingEntity> all = findAll().stream()
+            .filter(trainingEntity -> trainingEntity.getTrainee().getUser().getUsername().equals(traineeUsername) &&
+                trainingEntity.getTrainer().getUser().getUsername().equals(trainerUsername) &&
+                trainingEntity.getDate().compareTo(from) >= 0 && trainingEntity.getDate().compareTo(to) <= 0)
+            .toList();
+
+        LOGGER.info("Successfully retrieved all trainings of a trainee({}) with trainer({}) between {} and {}, result - {}",
+            traineeUsername, trainerUsername, from, to, all);
+        return all;
     }
 }

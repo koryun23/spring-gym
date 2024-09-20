@@ -1,5 +1,6 @@
 package org.example.dao.impl;
 
+import java.util.List;
 import java.util.Optional;
 import org.example.dao.core.UserDao;
 import org.example.entity.UserEntity;
@@ -86,5 +87,13 @@ public class UserDaoImpl implements UserDao {
         Optional<UserEntity> optionalUser = userEntityRepository.findById(id);
         LOGGER.info("Successfully retrieved an optional user with an id of {}, result - {}", id, optionalUser);
         return optionalUser;
+    }
+
+    @Override
+    public List<UserEntity> findAll() {
+        LOGGER.info("Retrieving a list of all User Entities");
+        List<UserEntity> all = userEntityRepository.findAll();
+        LOGGER.info("Successfully retrieved a list of all User Entities, result - {}", all);
+        return all;
     }
 }
