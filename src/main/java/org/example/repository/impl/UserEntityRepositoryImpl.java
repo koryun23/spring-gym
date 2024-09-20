@@ -2,7 +2,6 @@ package org.example.repository.impl;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.CriteriaUpdate;
 import jakarta.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
@@ -14,14 +13,13 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.hibernate.query.criteria.HibernateCriteriaBuilder;
 import org.springframework.stereotype.Repository;
 
 @Slf4j
 @Repository
 public class UserEntityRepositoryImpl implements UserEntityRepository {
 
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
     public UserEntityRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -29,15 +27,18 @@ public class UserEntityRepositoryImpl implements UserEntityRepository {
 
     @Override
     public Optional<UserEntity> findByUsername(String username) {
-        List<UserEntity> userEntityList = findAll();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
 
-        for(UserEntity userEntity : userEntityList) {
-            if(userEntity.getUsername().equals(username)) {
-                return Optional.of(userEntity);
-            }
-        }
-        return Optional.empty();
+        UserEntity userEntity =
+            session.createQuery("select u from users where u.username = :username", UserEntity.class)
+                .setParameter("username", username)
+                .uniqueResult();
 
+        transaction.commit();
+        session.close();
+
+        return Optional.ofNullable(userEntity);
     }
 
     @Override

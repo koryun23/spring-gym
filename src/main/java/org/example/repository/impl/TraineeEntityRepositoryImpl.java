@@ -36,14 +36,18 @@ public class TraineeEntityRepositoryImpl implements TraineeEntityRepository {
 
     @Override
     public Optional<TraineeEntity> findByUsername(String username) {
-        List<TraineeEntity> traineeEntityList = findAll();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
 
-        for(TraineeEntity traineeEntity : traineeEntityList) {
-            if(traineeEntity.getUser().getUsername().equals(username)) {
-                return Optional.of(traineeEntity);
-            }
-        }
-        return Optional.empty();
+        TraineeEntity traineeEntity =
+            session.createQuery("select u from users where u.username = :username", TraineeEntity.class)
+                .setParameter("username", username)
+                .uniqueResult();
+
+        transaction.commit();
+        session.close();
+
+        return Optional.ofNullable(traineeEntity);
     }
 
     @Override

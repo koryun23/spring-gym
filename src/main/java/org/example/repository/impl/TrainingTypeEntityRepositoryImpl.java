@@ -81,6 +81,14 @@ public class TrainingTypeEntityRepositoryImpl implements TrainingTypeEntityRepos
 
     @Override
     public TrainingTypeEntity update(TrainingTypeEntity entity) {
-        return null;
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        TrainingTypeEntity updatedEntity = session.merge(entity);
+
+        transaction.commit();
+        session.close();
+
+        return updatedEntity;
     }
 }
