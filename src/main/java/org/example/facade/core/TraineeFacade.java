@@ -28,6 +28,4 @@ public interface TraineeFacade {
     TraineeUpdateResponseDto deActivateTrainee(Long id);
 
     TraineeUpdateResponseDto changePassword(Long id, String newPassword);
-
-
 }

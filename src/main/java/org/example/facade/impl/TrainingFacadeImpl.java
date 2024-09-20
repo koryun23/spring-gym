@@ -2,15 +2,19 @@ package org.example.facade.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTraineeDateRequestDto;
+import org.example.dto.request.TrainingListRetrievalByTraineeRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTraineeTrainerDateRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTraineeTrainerRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTrainerDateRequestDto;
+import org.example.dto.request.TrainingListRetrievalByTrainerRequestDto;
 import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.dto.response.TrainingListRetrievalResponseDto;
 import org.example.dto.response.TrainingRetrievalResponseDto;
 import org.example.entity.TraineeEntity;
+import org.example.entity.TrainerEntity;
 import org.example.entity.TrainingEntity;
 import org.example.exception.TraineeNotFoundException;
 import org.example.facade.core.TrainingFacade;
@@ -118,9 +122,34 @@ public class TrainingFacadeImpl implements TrainingFacade {
     }
 
     @Override
-    public TrainingListRetrievalResponseDto retrieveTrainingListByTrainer(String trainerUsername) {
-        Assert.notNull(trainerUsername, "Trainer username must not be null");
-        LOGGER.info("Retrieving the list of all trainings of a trainer with a username of {}", trainerUsername);
+    public TrainingListRetrievalResponseDto retrieveTrainingListByTrainer(TrainingListRetrievalByTrainerRequestDto requestDto) {
+        Assert.notNull(requestDto, "Request Dto must not be null");
+        LOGGER.info("Retrieving the list of all trainings according to the request dto - {}", requestDto);
+
+        String retrieverUsername = requestDto.getRetrieverUsername();
+        String retrieverPassword = requestDto.getRetrieverPassword();
+
+        String trainerUsername = requestDto.getTrainerUsername();
+
+        if(!retrieverUsername.equals(trainerUsername)) {
+            return new TrainingListRetrievalResponseDto(
+                List.of("Authentication failed")
+            );
+        }
+
+        Optional<TrainerEntity> optionalRetriever = trainerService.findByUsername(retrieverUsername);
+        if(optionalRetriever.isEmpty()) {
+            return new TrainingListRetrievalResponseDto(
+                List.of(String.format("Trainer with a username of %s was not found", retrieverUsername))
+            );
+        }
+
+        TrainerEntity retriever = optionalRetriever.get();
+        if(!retriever.getUser().getPassword().equals(retrieverPassword)) {
+            return new TrainingListRetrievalResponseDto(
+                List.of("Authentication failed")
+            );
+        }
 
         List<TrainingRetrievalResponseDto> all = trainingService.findAllByTrainer(trainerUsername).stream()
             .map(trainingEntityToTrainingRetrievalResponseDtoMapper::map)
@@ -136,11 +165,33 @@ public class TrainingFacadeImpl implements TrainingFacade {
 
 
     @Override
-    public TrainingListRetrievalResponseDto retrieveTrainingListByTrainee(String traineeUsername) {
-        Assert.notNull(traineeUsername, "Username must not be null");
-        Assert.hasText(traineeUsername, "Username must not be empty");
-        LOGGER.info("Retrieving the list of trainings of a trainee with a username of {}", traineeUsername);
+    public TrainingListRetrievalResponseDto retrieveTrainingListByTrainee(TrainingListRetrievalByTraineeRequestDto requestDto) {
+        Assert.notNull(requestDto, "Request Dto must not be null");
+        LOGGER.info("Retrieving the list of trainings according to the request dto - {}", requestDto);
 
+        String retrieverUsername = requestDto.getRetrieverUsername();
+        String retrieverPassword = requestDto.getRetrieverPassword();
+
+        String traineeUsername = requestDto.getTraineeUsername();
+
+        if(!retrieverUsername.equals(traineeUsername)) {
+            return new TrainingListRetrievalResponseDto(
+                List.of("Authentication failed")
+            );
+        }
+
+        Optional<TraineeEntity> optionalTrainee = traineeService.findByUsername(retrieverUsername);
+        if(optionalTrainee.isEmpty()) {
+            return new TrainingListRetrievalResponseDto(
+                List.of(String.format("Trainee with a username of %s was not found", retrieverUsername))
+            );
+        }
+        TraineeEntity traineeEntity = optionalTrainee.get();
+        if(!traineeEntity.getUser().getPassword().equals(retrieverPassword)) {
+            return new TrainingListRetrievalResponseDto(
+                List.of("Authentication failed")
+            );
+        }
         List<TrainingRetrievalResponseDto> all = trainingService.findAllByTrainee(traineeUsername).stream()
             .map(trainingEntityToTrainingRetrievalResponseDtoMapper::map)
             .toList();

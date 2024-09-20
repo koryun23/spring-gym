@@ -1,6 +1,5 @@
 package org.example.dto.request;
 
-import java.sql.Date;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,13 +13,10 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class TrainingListRetrievalByTraineeTrainerDateRequestDto {
+public class TrainingListRetrievalByTrainerRequestDto {
 
     private String retrieverUsername;
     private String retrieverPassword;
-    private String traineeUsername;
-    private String trainerUsername;
-    private Date from;
-    private Date to;
 
+    private String trainerUsername;
 }

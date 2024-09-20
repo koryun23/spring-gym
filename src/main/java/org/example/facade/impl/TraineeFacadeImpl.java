@@ -301,4 +301,6 @@ public class TraineeFacadeImpl implements TraineeFacade {
         return responseDto;
     }
 
+
+
 }
