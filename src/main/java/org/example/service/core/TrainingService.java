@@ -21,4 +21,7 @@ public interface TrainingService {
     List<TrainingEntity> findAllByTrainerUsernameAndCriteria(String trainerUsername, Date from, Date to,
                                                              String traineeUsername);
 
+    void deleteAllByTraineeUsername(String traineeUsername);
+
+    void deleteAllByTrainerUsername(String trainerUsername);
 }

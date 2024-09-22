@@ -116,4 +116,24 @@ public class TrainingDaoImpl implements TrainingDao {
             trainerUsername, from, to, traineeUsername, all);
         return all;
     }
+
+    @Override
+    public void deleteAllByTraineeUsername(String traineeUsername) {
+        Assert.notNull(traineeUsername, "Trainee username must not be null");
+        LOGGER.info("Deleting all trainings of the trainee with a username of {}", traineeUsername);
+
+        trainingEntityRepository.deleteAllByTraineeUsername(traineeUsername);
+
+        LOGGER.info("Successfully deleted all trainings of the trainee with a username of {}", traineeUsername);
+    }
+
+    @Override
+    public void deleteAllByTrainerUsername(String trainerUsername) {
+        Assert.notNull(trainerUsername, "Trainer username must not be null");
+        LOGGER.info("Deleting all trainings of the trainer with a username of {}", trainerUsername);
+
+        trainingEntityRepository.deleteAllByTrainerUsername(trainerUsername);
+
+        LOGGER.info("Successfully deleted all trainings of the trainer with a username of {}", trainerUsername);
+    }
 }

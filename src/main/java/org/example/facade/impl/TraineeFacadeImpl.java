@@ -27,6 +27,7 @@ import org.example.mapper.trainee.TraineeUpdateRequestDtoToTraineeEntityMapper;
 import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
+import org.example.service.core.TrainingService;
 import org.example.service.core.UserService;
 import org.example.service.core.UsernamePasswordService;
 import org.slf4j.Logger;
@@ -42,6 +43,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
 
     private final TraineeService traineeService;
     private final TrainerService trainerService;
+    private final TrainingService trainingService;
     private final UserService userService;
     private final TraineeCreationRequestDtoToTraineeEntityMapper traineeCreationRequestDtoToTraineeEntityMapper;
     private final TraineeEntityToTraineeCreationResponseDtoMapper traineeToTraineeCreationResponseDtoMapper;
@@ -55,7 +57,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
      * Constructor.
      */
     public TraineeFacadeImpl(TraineeService traineeService,
-                             TrainerService trainerService,
+                             TrainerService trainerService, TrainingService trainingService,
                              UserService userService,
                              TraineeCreationRequestDtoToTraineeEntityMapper
                                  traineeCreationRequestDtoToTraineeEntityMapper,
@@ -69,6 +71,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
                              UsernamePasswordService usernamePasswordService,
                              @Qualifier("traineeIdService")
                              IdService idService) {
+        this.trainingService = trainingService;
         this.userService = userService;
         this.traineeToTraineeCreationResponseDtoMapper = traineeToTraineeCreationResponseDtoMapper;
         this.traineeService = traineeService;
@@ -218,15 +221,17 @@ public class TraineeFacadeImpl implements TraineeFacade {
         Assert.hasText(username, "Username must not be empty");
         LOGGER.info("Deleting a Trainee with a username of {}", username);
 
+        // delete trainings
+        // delete the trainee
+        // delete the user
+
+
         traineeService.delete(username);
 
         UserEntity userEntity =
             userService.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
 
-        if(userEntity.getTraineeEntity() == null && userEntity.getTrainerEntity() == null) {
-            userService.delete(userEntity.getId());
-        }
-
+        userService.delete(userEntity.getId());
         LOGGER.info("Successfully deleted a Trainee with a username of {}", username);
         return new TraineeDeletionResponseDto(true);
 

@@ -1,12 +1,11 @@
 package org.example.facade.core;
 
-import java.util.Date;
+import org.example.dto.request.SingleTrainingDeletionByTraineeRequestDto;
 import org.example.dto.request.TrainingCreationRequestDto;
-import org.example.dto.request.TrainingListRetrievalByTraineeDateRequestDto;
+import org.example.dto.response.MultipleTrainingDeletionByTraineeResponseDto;
+import org.example.dto.response.MultipleTrainingDeletionByTrainerResponseDto;
+import org.example.dto.response.SingleTrainingDeletionByTraineeResponseDto;
 import org.example.dto.request.TrainingListRetrievalByTraineeRequestDto;
-import org.example.dto.request.TrainingListRetrievalByTraineeTrainerDateRequestDto;
-import org.example.dto.request.TrainingListRetrievalByTraineeTrainerRequestDto;
-import org.example.dto.request.TrainingListRetrievalByTrainerDateRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTrainerRequestDto;
 import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.dto.response.TrainingListRetrievalResponseDto;
@@ -21,4 +20,9 @@ public interface TrainingFacade {
     TrainingListRetrievalResponseDto retrieveTrainingListByTrainer(TrainingListRetrievalByTrainerRequestDto requestDto);
 
     TrainingListRetrievalResponseDto retrieveTrainingListByTrainee(TrainingListRetrievalByTraineeRequestDto requestDto);
+
+    MultipleTrainingDeletionByTraineeResponseDto deleteMultpileTraineeTraining(String traineeUsername);
+
+    MultipleTrainingDeletionByTrainerResponseDto deleteMultipleTrainerTraining(String trainerUsername);
+
 }

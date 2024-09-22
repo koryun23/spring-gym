@@ -12,4 +12,8 @@ public interface TrainingEntityRepository extends CustomRepository<Long, Trainin
 
     List<TrainingEntity> findAllByTrainerUsernameAndCriteria(String trainerUsername, Date from, Date to,
                                                              String traineeUsername);
+
+    void deleteAllByTraineeUsername(String traineeUsername);
+
+    void deleteAllByTrainerUsername(String trainerUsername);
 }

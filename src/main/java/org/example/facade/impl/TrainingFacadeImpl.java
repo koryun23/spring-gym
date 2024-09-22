@@ -1,34 +1,26 @@
 package org.example.facade.impl;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+import org.example.dto.request.SingleTrainingDeletionByTraineeRequestDto;
 import org.example.dto.request.TrainingCreationRequestDto;
-import org.example.dto.request.TrainingListRetrievalByTraineeDateRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTraineeRequestDto;
-import org.example.dto.request.TrainingListRetrievalByTraineeTrainerDateRequestDto;
-import org.example.dto.request.TrainingListRetrievalByTraineeTrainerRequestDto;
-import org.example.dto.request.TrainingListRetrievalByTrainerDateRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTrainerRequestDto;
+import org.example.dto.response.MultipleTrainingDeletionByTraineeResponseDto;
+import org.example.dto.response.MultipleTrainingDeletionByTrainerResponseDto;
+import org.example.dto.response.SingleTrainingDeletionByTraineeResponseDto;
 import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.dto.response.TrainingListRetrievalResponseDto;
 import org.example.dto.response.TrainingRetrievalResponseDto;
-import org.example.entity.TraineeEntity;
-import org.example.entity.TrainerEntity;
-import org.example.entity.TrainingEntity;
-import org.example.exception.TraineeNotFoundException;
 import org.example.facade.core.TrainingFacade;
 import org.example.mapper.training.TrainingCreationRequestDtoToTrainingEntityMapper;
 import org.example.mapper.training.TrainingEntityToTrainingCreationResponseDtoMapper;
 import org.example.mapper.training.TrainingEntityToTrainingRetrievalResponseDtoMapper;
-import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
 import org.example.service.core.TrainingService;
 import org.example.service.core.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -198,5 +190,47 @@ public class TrainingFacadeImpl implements TrainingFacade {
 
         return responseDto;
 
+    }
+
+    @Override
+    public MultipleTrainingDeletionByTraineeResponseDto deleteMultpileTraineeTraining(String traineeUsername) {
+        Assert.notNull(traineeUsername, "Trainee username must not be null");
+        LOGGER.info("Deleting all trainings of a trainee with a username of {}", traineeUsername);
+
+        if(traineeService.findByUsername(traineeUsername).isEmpty()) {
+            return new MultipleTrainingDeletionByTraineeResponseDto(
+                List.of(String.format("A trainee with a username of %s does not exist", traineeUsername))
+            );
+        }
+
+        trainingService.deleteAllByTraineeUsername(traineeUsername);
+
+        MultipleTrainingDeletionByTraineeResponseDto responseDto =
+            new MultipleTrainingDeletionByTraineeResponseDto(traineeUsername);
+
+        LOGGER.info("Successfully deleted all trainings of a trainee with a username of {}, result - {}",
+            traineeUsername, responseDto);
+
+        return responseDto;
+    }
+
+    @Override
+    public MultipleTrainingDeletionByTrainerResponseDto deleteMultipleTrainerTraining(String trainerUsername) {
+        Assert.notNull(trainerUsername, "Trainer username must not be null");
+        LOGGER.info("Deleting all trainings of a trainer with a username of {}", trainerUsername);
+
+        if(trainerService.findByUsername(trainerUsername).isEmpty()) {
+            return new MultipleTrainingDeletionByTrainerResponseDto(List.of(String.format("A trainer with a username of %s does not exist", trainerUsername)));
+        }
+
+        trainingService.deleteAllByTrainerUsername(trainerUsername);
+
+        MultipleTrainingDeletionByTrainerResponseDto responseDto =
+            new MultipleTrainingDeletionByTrainerResponseDto(trainerUsername);
+
+        LOGGER.info("Successfully deleted all trainings of a trainer with a username of {}, result - {}",
+            trainerUsername, responseDto);
+
+        return responseDto;
     }
 }

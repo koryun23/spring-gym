@@ -7,12 +7,13 @@ import jakarta.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 import org.example.entity.TraineeEntity;
+import org.example.entity.TrainingEntity;
+import org.example.entity.UserEntity;
 import org.example.exception.TraineeNotFoundException;
 import org.example.repository.core.TraineeEntityRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.id.uuid.StandardRandomStrategy;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,6 +57,12 @@ public class TraineeEntityRepositoryImpl implements TraineeEntityRepository {
 
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
+
+        session.createQuery("delete from users where users.id = :userId", UserEntity.class)
+            .setParameter("userId", traineeEntity.getUser().getId());
+
+        session.createQuery("delete from training where training.trainee_id = :id", TrainingEntity.class)
+            .setParameter("id", traineeEntity.getId());
 
         session.remove(traineeEntity);
 
@@ -104,9 +111,19 @@ public class TraineeEntityRepositoryImpl implements TraineeEntityRepository {
 
     @Override
     public void deleteById(Long id) {
+        TraineeEntity traineeEntity = findById(id).orElseThrow(() -> new TraineeNotFoundException(id));
+
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
+
+        session.createQuery("delete from users where users.id = :userId", UserEntity.class)
+            .setParameter("userId", traineeEntity.getUser().getId());
+
+        session.createQuery("delete from training where training.trainee_id = :id", TrainingEntity.class)
+            .setParameter("id", id);
+
         session.remove(findById(id).orElseThrow(() -> new TraineeNotFoundException(id)));
+
         transaction.commit();
         session.close();
     }

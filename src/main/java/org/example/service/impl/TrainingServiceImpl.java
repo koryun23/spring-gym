@@ -93,5 +93,25 @@ public class TrainingServiceImpl implements TrainingService {
         return all;
     }
 
+    @Override
+    public void deleteAllByTraineeUsername(String traineeUsername) {
+        Assert.notNull(traineeUsername, "Trainee username must not be null");
+        LOGGER.info("Deleting all trainings of a trainee with a username of {}", traineeUsername);
+
+        trainingDao.deleteAllByTraineeUsername(traineeUsername);
+
+        LOGGER.info("Successfully deleted all trainings of a trainee with a username of {}", traineeUsername);
+    }
+
+    @Override
+    public void deleteAllByTrainerUsername(String trainerUsername) {
+        Assert.notNull(trainerUsername, "Trainer username must not be null");
+        LOGGER.info("Deleting all trainings of a trainer with a username of {}", trainerUsername);
+
+        trainingDao.deleteAllByTrainerUsername(trainerUsername);
+
+        LOGGER.info("Successfully deleted all trainings of a trainer with a username of {}", trainerUsername);
+    }
+
 
 }

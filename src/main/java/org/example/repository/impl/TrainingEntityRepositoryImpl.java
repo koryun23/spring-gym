@@ -166,6 +166,40 @@ public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
         return trainingEntityList;
     }
 
+    @Override
+    public void deleteAllByTraineeUsername(String traineeUsername) {
+        Assert.notNull(traineeUsername, "Trainee Username must not be null");
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        Long traineeId = session.createQuery(traineeIdFromUsernameQuery(), TraineeEntity.class)
+            .setParameter("traineeUsername", traineeUsername)
+            .uniqueResult().getId();
+
+        session.createQuery("delete from training where training.trainee_id = :traineeId", TrainingEntity.class)
+            .setParameter("traineeId", traineeId);
+
+        transaction.commit();
+        session.close();
+    }
+
+    @Override
+    public void deleteAllByTrainerUsername(String trainerUsername) {
+        Assert.notNull(trainerUsername, "Trainer Username must not be null");
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        Long trainerId = session.createQuery(trainerIdFromUsernameQuery(), TrainerEntity.class)
+            .setParameter("trainerUsername", trainerUsername)
+            .uniqueResult().getId();
+
+        session.createQuery("delete from training where training.trainer_id = :trainerId", TrainingEntity.class)
+            .setParameter("trainerId", trainerId);
+
+        transaction.commit();
+        session.close();
+    }
+
     private String trainerIdFromUsernameQuery() {
         return "select (trainer.id) from trainer JOIN users on users.id = trainer.user_id WHERE users.username = :trainerUsername";
     }
