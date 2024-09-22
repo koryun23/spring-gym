@@ -2,6 +2,7 @@ package org.example.service.impl;
 
 import java.util.Optional;
 import java.util.UUID;
+import lombok.extern.slf4j.Slf4j;
 import org.example.entity.TraineeEntity;
 import org.example.entity.TrainerEntity;
 import org.example.exception.InvalidIdException;
@@ -11,6 +12,7 @@ import org.example.service.core.UsernamePasswordService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+@Slf4j
 @Service("usernamePasswordService")
 public class UsernamePasswordServiceImpl implements UsernamePasswordService {
 
@@ -42,6 +44,8 @@ public class UsernamePasswordServiceImpl implements UsernamePasswordService {
         String temporaryUsername = firstName + "." + lastName;
         Optional<TraineeEntity> optionalTrainee = traineeService.findByUsername(temporaryUsername);
         Optional<TrainerEntity> optionalTrainer = trainerService.findByUsername(temporaryUsername);
+
+        log.info("Optional trainee - {}", optionalTrainee);
 
         if (optionalTrainee.isEmpty() && optionalTrainer.isEmpty()) {
             return temporaryUsername;

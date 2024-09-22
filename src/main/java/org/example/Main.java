@@ -14,19 +14,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class Main {
     /**
      * Main method.
-     *
-     * @param args Runtime Arguments.
      */
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
         TraineeFacade traineeFacade = context.getBean(TraineeFacade.class);
-        /*traineeFacade.createTrainee(new TraineeCreationRequestDto(
-            "jack", "grealish", true, Date.valueOf("2024-10-10"), "manchester"
-        ));
-
-        traineeFacade.updateTrainee(new TraineeUpdateRequestDto(
-            1L, "jack", "grealish", "jack.grealish", "updated password", false, Date.valueOf("2024-10-10"), "madrid"
-        ));*/
-        System.out.println(traineeFacade.retrieveTrainee("asdfadfs"));
+        traineeFacade.deleteTrainee("first.last.11");
     }
 }

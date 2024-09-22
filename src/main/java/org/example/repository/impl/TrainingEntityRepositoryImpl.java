@@ -105,11 +105,11 @@ public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
             .setParameter("traineeUsername", traineeUsername)
             .uniqueResult().getId(); // single selection, time complexity - log(n), where n is the number of records in trainee table
 
-        String query = String.format("SELECT * FROM training WHERE training.trainee_id = :traineeId "
-            + "%s training.trainer_id = :trainerId "
-            + "%s training.date >= :from "
-            + "%s training.date <= :to "
-            + "%s training.training_type_id = :trainingTypeId",
+        String query = String.format("select * from TrainingEntity t WHERE t.trainee.id = :traineeId "
+            + "%s t.trainer.id = :trainerId "
+            + "%s t.date >= :from "
+            + "%s t.date <= :to "
+            + "%s t.trainingType.id = :trainingTypeId",
             trainerUsername == null ? "OR" : "AND",
             from == null ? "OR" : "AND",
             to == null ? "OR" : "AND",
@@ -145,10 +145,10 @@ public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
             .setParameter("traineeUsername", traineeUsername)
             .uniqueResult().getId(); // single selection, time complexity - log(n), where n is the number of records in trainee table
 
-        String query = String.format("SELECT * FROM training WHERE training.trainer_id = :trainerId "
-            + "%s training.trainee_id = :traineeId "
-            + "%s training.date >= :from "
-            + "%s training.date <= :to",
+        String query = String.format("select * from TrainingEntity t WHERE t.trainer.id = :trainerId "
+            + "%s t.trainee.id = :traineeId "
+            + "%s t.date >= :from "
+            + "%s t.date <= :to",
             traineeUsername == null ? "OR" : "AND",
             from == null ? "OR" : "AND",
             to == null ? "OR" : "AND");
@@ -176,7 +176,7 @@ public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
             .setParameter("traineeUsername", traineeUsername)
             .uniqueResult().getId();
 
-        session.createQuery("delete from training where training.trainee_id = :traineeId", TrainingEntity.class)
+        session.createQuery("delete from TrainingEntity t where t.trainee.id = :traineeId", TrainingEntity.class)
             .setParameter("traineeId", traineeId);
 
         transaction.commit();
@@ -193,7 +193,7 @@ public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
             .setParameter("trainerUsername", trainerUsername)
             .uniqueResult().getId();
 
-        session.createQuery("delete from training where training.trainer_id = :trainerId", TrainingEntity.class)
+        session.createQuery("delete from TrainingEntity t where t.trainer.id = :trainerId", TrainingEntity.class)
             .setParameter("trainerId", trainerId);
 
         transaction.commit();
@@ -201,10 +201,10 @@ public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
     }
 
     private String trainerIdFromUsernameQuery() {
-        return "select (trainer.id) from trainer JOIN users on users.id = trainer.user_id WHERE users.username = :trainerUsername";
+        return "select (t.id) from TrainerEntity t JOIN UserEntity u on u.id = t.user.id WHERE u.username = :trainerUsername";
     }
 
     private String traineeIdFromUsernameQuery() {
-        return "select (trainee.id) from trainee JOIN users on users.id = trainee.user_id WHERE users.username = :traineeUsername";
+        return "select (t.id) from TraineeEntity t JOIN UserEntity u on u.id = t.user.id WHERE u.username = :traineeUsername";
     }
 }

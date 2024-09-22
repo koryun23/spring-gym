@@ -101,7 +101,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
             requestDto.getPassword(),
             requestDto.getIsActive()
         ));
-
+        LOGGER.info("currently added user - {}", userEntity);
         requestDto.setUserId(userEntity.getId());
 
         TraineeCreationResponseDto responseDto = traineeToTraineeCreationResponseDtoMapper.map(
@@ -119,10 +119,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
         Assert.notNull(requestDto, "TraineeUpdateRequestDto must not be null");
         LOGGER.info("Updating a TraineeEntity based on the TraineeUpdateRequestDto - {}", requestDto);
 
-        if (traineeService.findByUsername(requestDto.getUsername()).isEmpty()) {
-            return new TraineeUpdateResponseDto(List.of(
-                String.format("A user with specified username - %s, does not exist", requestDto.getUsername())));
-        }
+        // TODO: ADD VALIDATION
 
         Long userId = traineeService.findById(requestDto.getTraineeId())
             .orElseThrow(() -> new TraineeNotFoundException(requestDto.getTraineeId())).getUser().getId();
@@ -221,43 +218,11 @@ public class TraineeFacadeImpl implements TraineeFacade {
         Assert.hasText(username, "Username must not be empty");
         LOGGER.info("Deleting a Trainee with a username of {}", username);
 
-        // delete trainings
-        // delete the trainee
-        // delete the user
-
-
         traineeService.delete(username);
 
-        UserEntity userEntity =
-            userService.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
-
-        userService.delete(userEntity.getId());
         LOGGER.info("Successfully deleted a Trainee with a username of {}", username);
         return new TraineeDeletionResponseDto(true);
 
-    }
-
-    @Override
-    public TraineeUpdateResponseDto activateTrainee(Long id) {
-        Assert.notNull(id, "Id must not be null");
-        LOGGER.info("Activating a trainee with an id of {}", id);
-
-        TraineeEntity traineeEntity = traineeService.findById(id).orElseThrow(() -> new TraineeNotFoundException(id));
-        UserEntity user = traineeEntity.getUser();
-
-        TraineeUpdateResponseDto responseDto = updateTrainee(new TraineeUpdateRequestDto(
-            traineeEntity.getId(),
-            user.getFirstName(),
-            user.getLastName(),
-            user.getUsername(),
-            user.getPassword(),
-            true,
-            traineeEntity.getDateOfBirth(),
-            traineeEntity.getAddress()
-        ));
-
-        LOGGER.info("Successfully activated a Trainee with an id of {}", id);
-        return responseDto;
     }
 
     @Override

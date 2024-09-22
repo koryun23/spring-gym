@@ -31,7 +31,7 @@ public class UserEntityRepositoryImpl implements UserEntityRepository {
         Transaction transaction = session.beginTransaction();
 
         UserEntity userEntity =
-            session.createQuery("select u from users where u.username = :username", UserEntity.class)
+            session.createQuery("select u from UserEntity u where u.username = :username", UserEntity.class)
                 .setParameter("username", username)
                 .uniqueResult();
 
@@ -46,12 +46,7 @@ public class UserEntityRepositoryImpl implements UserEntityRepository {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        UserEntity userEntityPersisted = session.get(UserEntity.class, userEntity.getId());
-        userEntityPersisted.setFirstName(userEntity.getFirstName());
-        userEntityPersisted.setLastName(userEntity.getLastName());
-        userEntityPersisted.setUsername(userEntity.getUsername());
-        userEntityPersisted.setPassword(userEntity.getPassword());
-        userEntityPersisted.setIsActive(userEntity.getIsActive());
+        UserEntity userEntityPersisted = session.merge(userEntity);
 
         transaction.commit();
         session.close();
@@ -101,7 +96,7 @@ public class UserEntityRepositoryImpl implements UserEntityRepository {
     public UserEntity save(UserEntity user) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.merge(user);
+        session.persist(user);
         transaction.commit();
         session.close();
         return user;

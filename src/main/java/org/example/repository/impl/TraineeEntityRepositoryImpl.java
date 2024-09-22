@@ -1,6 +1,7 @@
 package org.example.repository.impl;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -41,7 +42,7 @@ public class TraineeEntityRepositoryImpl implements TraineeEntityRepository {
         Transaction transaction = session.beginTransaction();
 
         TraineeEntity traineeEntity =
-            session.createQuery("select u from users where u.username = :username", TraineeEntity.class)
+            session.createQuery("select t from TraineeEntity t join UserEntity u on t.user.id = u.id where u.username = :username", TraineeEntity.class)
                 .setParameter("username", username)
                 .uniqueResult();
 
@@ -58,13 +59,14 @@ public class TraineeEntityRepositoryImpl implements TraineeEntityRepository {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        session.createQuery("delete from users where users.id = :userId", UserEntity.class)
-            .setParameter("userId", traineeEntity.getUser().getId());
-
-        session.createQuery("delete from training where training.trainee_id = :id", TrainingEntity.class)
-            .setParameter("id", traineeEntity.getId());
+        if(traineeEntity.getTrainingEntityList() != null) {
+            for(TrainingEntity training : traineeEntity.getTrainingEntityList()) {
+                session.remove(training);
+            }
+        }
 
         session.remove(traineeEntity);
+        session.remove(traineeEntity.getUser());
 
         transaction.commit();
         session.close();
@@ -113,16 +115,18 @@ public class TraineeEntityRepositoryImpl implements TraineeEntityRepository {
     public void deleteById(Long id) {
         TraineeEntity traineeEntity = findById(id).orElseThrow(() -> new TraineeNotFoundException(id));
 
+        System.out.println(traineeEntity);
+
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        session.createQuery("delete from users where users.id = :userId", UserEntity.class)
-            .setParameter("userId", traineeEntity.getUser().getId());
-
-        session.createQuery("delete from training where training.trainee_id = :id", TrainingEntity.class)
-            .setParameter("id", id);
-
-        session.remove(findById(id).orElseThrow(() -> new TraineeNotFoundException(id)));
+        if(traineeEntity.getTrainingEntityList() != null) {
+            for(TrainingEntity training : traineeEntity.getTrainingEntityList()) {
+                session.remove(training);
+            }
+        }
+        session.remove(traineeEntity);
+        session.remove(traineeEntity.getUser());
 
         transaction.commit();
         session.close();

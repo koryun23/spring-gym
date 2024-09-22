@@ -95,13 +95,13 @@ public class TrainerEntityRepositoryImpl implements TrainerEntityRepository {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        String assignedTrainersQuery = "select training.trainer_id from training JOIN trainee ON trainee.id = training.trainee_id JOIN users ON users.id = trainee.user_id where users.username = :username";
+        String assignedTrainersQuery = "select training.trainer.id from TrainingEntity training JOIN TraineeEntity trainee ON trainee.id = training.trainee.id JOIN UserEntity u ON u.id = trainee.user.id where u.username = :username";
 
         List<Long> assignedTrainerIdList = session.createQuery(assignedTrainersQuery, Long.class)
             .setParameter("username", traineeUsername)
             .list();
 
-        String nonAssignedTrainersQuery = "select * from trainer where id not in (:assignedTrainers)";
+        String nonAssignedTrainersQuery = "select * from TrainerEntity t where t.id not in (:assignedTrainers)";
 
         List<TrainerEntity> nonAssignedTrainerIdList = session.createQuery(nonAssignedTrainersQuery, TrainerEntity.class)
             .setParameter("assignedTrainers", assignedTrainerIdList)
