@@ -1,5 +1,6 @@
 package org.example.service.core;
 
+import java.util.List;
 import java.util.Optional;
 import org.example.entity.TrainerEntity;
 
@@ -16,4 +17,6 @@ public interface TrainerService {
     Optional<TrainerEntity> findById(Long id);
 
     Optional<TrainerEntity> findByUsername(String username);
+
+    List<TrainerEntity> findAllNotAssignedTo(String traineeUsername);
 }

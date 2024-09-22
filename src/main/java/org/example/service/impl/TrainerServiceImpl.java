@@ -1,5 +1,6 @@
 package org.example.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 import org.example.dao.impl.TrainerDaoImpl;
 import org.example.entity.TrainerEntity;
@@ -74,10 +75,20 @@ public class TrainerServiceImpl implements TrainerService {
     public Optional<TrainerEntity> findByUsername(String username) {
         Assert.notNull(username, "TrainerEntity username must not be null");
         Assert.hasText(username, "TrainerEntity username must not be empty");
-        LOGGER.info("Retrieved an optional TrainerEntity with a username of {}", username);
+        LOGGER.info("Retrieving an optional TrainerEntity with a username of {}", username);
         Optional<TrainerEntity> optionalTrainer = trainerDao.findByUsername(username);
         LOGGER.info("Successfully retrieved an optional TrainerEntity with a username of {}, result - {}", username,
             optionalTrainer);
         return optionalTrainer;
+    }
+
+    @Override
+    public List<TrainerEntity> findAllNotAssignedTo(String traineeUsername) {
+        Assert.notNull(traineeUsername, "Trainee username must not be null");
+        Assert.hasText(traineeUsername, "Trainee username must not be empty");
+        LOGGER.info("Retrieving all trainers not assigned to trainee with a username of {}", traineeUsername);
+        List<TrainerEntity> all = trainerDao.findAllTrainersNotAssignedTo(traineeUsername);
+        LOGGER.info("Successfully retrieved all trainers not assigned to trainee with a username of {}, result - {}", traineeUsername, all);
+        return all;
     }
 }

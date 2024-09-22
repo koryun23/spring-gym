@@ -5,7 +5,9 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
+import org.example.entity.TraineeEntity;
 import org.example.entity.TrainerEntity;
+import org.example.exception.TraineeNotFoundException;
 import org.example.exception.TrainerNotFoundException;
 import org.example.repository.core.TrainerEntityRepository;
 import org.hibernate.Session;
@@ -85,5 +87,28 @@ public class TrainerEntityRepositoryImpl implements TrainerEntityRepository {
     @Override
     public TrainerEntity update(TrainerEntity entity) {
         return null;
+    }
+
+    @Override
+    public List<TrainerEntity> findAllTrainersNotAssignedTo(String traineeUsername) {
+
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        String assignedTrainersQuery = "select training.trainer_id from training JOIN trainee ON trainee.id = training.trainee_id JOIN users ON users.id = trainee.user_id where users.username = :username";
+
+        List<Long> assignedTrainerIdList = session.createQuery(assignedTrainersQuery, Long.class)
+            .setParameter("username", traineeUsername)
+            .list();
+
+        String nonAssignedTrainersQuery = "select * from trainer where id not in (:assignedTrainers)";
+
+        List<TrainerEntity> nonAssignedTrainerIdList = session.createQuery(nonAssignedTrainersQuery, TrainerEntity.class)
+            .setParameter("assignedTrainers", assignedTrainerIdList)
+            .list();
+
+        transaction.commit();
+        session.close();
+        return nonAssignedTrainerIdList;
     }
 }

@@ -86,6 +86,17 @@ public class TrainerDaoImpl implements TrainerDao {
     }
 
     @Override
+    public List<TrainerEntity> findAllTrainersNotAssignedTo(String traineeUsername) {
+        Assert.notNull(traineeUsername, "Trainee username must not be null");
+        Assert.hasText(traineeUsername, "Trainee username must not be empty");
+        LOGGER.info("Retrieving all Trainers that are not assigned to trainee with a username of {}", traineeUsername);
+        List<TrainerEntity> all =
+            trainerEntityRepository.findAllTrainersNotAssignedTo(traineeUsername);
+        LOGGER.info("Successfully retrieved all Trainers that are not assigned to trainee with a username of {}, result - {}", traineeUsername, all);
+        return all;
+    }
+
+    @Override
     public Optional<TrainerEntity> findById(Long id) {
         Assert.notNull(id, "TrainerEntity id must not be null");
         LOGGER.info("Retrieving an optional TrainerEntity with an id of {}", id);

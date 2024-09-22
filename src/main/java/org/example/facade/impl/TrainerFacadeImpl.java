@@ -4,6 +4,7 @@ import java.util.List;
 import org.example.dto.request.TrainerCreationRequestDto;
 import org.example.dto.request.TrainerUpdateRequestDto;
 import org.example.dto.response.TrainerCreationResponseDto;
+import org.example.dto.response.TrainerListRetrievalResponseDto;
 import org.example.dto.response.TrainerRetrievalResponseDto;
 import org.example.dto.response.TrainerUpdateResponseDto;
 import org.example.facade.core.TrainerFacade;
@@ -13,6 +14,7 @@ import org.example.mapper.trainer.TrainerEntityToTrainerRetrievalResponseDtoMapp
 import org.example.mapper.trainer.TrainerEntityToTrainerUpdateResponseDtoMapper;
 import org.example.mapper.trainer.TrainerUpdateRequestDtoToTrainerEntityMapper;
 import org.example.service.core.IdService;
+import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
 import org.example.service.core.UsernamePasswordService;
 import org.slf4j.Logger;
@@ -27,6 +29,7 @@ public class TrainerFacadeImpl implements TrainerFacade {
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainerFacadeImpl.class);
 
     private final TrainerService trainerService;
+    private final TraineeService traineeService;
     private final TrainerCreationRequestDtoToTrainerEntityMapper trainerCreationRequestDtoToTrainerEntityMapper;
     private final TrainerEntityToTrainerCreationResponseDtoMapper trainerEntityToTrainerCreationResponseDtoMapper;
     private final TrainerUpdateRequestDtoToTrainerEntityMapper trainerUpdateRequestDtoToTrainerEntityMapper;
@@ -38,7 +41,7 @@ public class TrainerFacadeImpl implements TrainerFacade {
     /**
      * Constructor.
      */
-    public TrainerFacadeImpl(TrainerService trainerService,
+    public TrainerFacadeImpl(TrainerService trainerService, TraineeService traineeService,
                              TrainerCreationRequestDtoToTrainerEntityMapper
                                  trainerCreationRequestDtoToTrainerEntityMapper,
                              TrainerEntityToTrainerCreationResponseDtoMapper
@@ -53,6 +56,7 @@ public class TrainerFacadeImpl implements TrainerFacade {
                              @Qualifier("trainerIdService")
                              IdService idService) {
         this.trainerService = trainerService;
+        this.traineeService = traineeService;
         this.trainerCreationRequestDtoToTrainerEntityMapper = trainerCreationRequestDtoToTrainerEntityMapper;
         this.trainerEntityToTrainerCreationResponseDtoMapper = trainerEntityToTrainerCreationResponseDtoMapper;
         this.trainerUpdateRequestDtoToTrainerEntityMapper = trainerUpdateRequestDtoToTrainerEntityMapper;
@@ -130,6 +134,30 @@ public class TrainerFacadeImpl implements TrainerFacade {
             trainerEntityToTrainerRetrievalResponseDtoMapper.map(trainerService.select(trainerId));
 
         LOGGER.info("Successfully retrieved a TrainerEntity with an id of {}, response - {}", trainerId, responseDto);
+        return responseDto;
+    }
+
+    @Override
+    public TrainerListRetrievalResponseDto retrieveAllTrainersNotAssignedToTrainee(String traineeUsername) {
+        Assert.notNull(traineeUsername, "Trainee username must not be null");
+        LOGGER.info("Retrieving trainers not assigned to a trainee with a username of {}", traineeUsername);
+
+        if (traineeService.findByUsername(traineeUsername).isEmpty()) {
+            return new TrainerListRetrievalResponseDto(List.of(String.format(
+                "Trainee with a username of %s does not exist", traineeUsername
+            )));
+        }
+
+        List<TrainerRetrievalResponseDto> all = trainerService.findAllNotAssignedTo(traineeUsername).stream()
+            .map(trainerEntityToTrainerRetrievalResponseDtoMapper::map)
+            .toList();
+
+        TrainerListRetrievalResponseDto responseDto =
+            new TrainerListRetrievalResponseDto(all, traineeUsername);
+
+        LOGGER.info("Successfully retrieved all trainers not assigned to trianee with a username of {}, result - {}",
+            traineeUsername, responseDto);
+
         return responseDto;
     }
 }
