@@ -25,7 +25,7 @@ public interface TraineeFacade {
 
     TraineeUpdateResponseDto activateTrainee(Long id);
 
-    TraineeUpdateResponseDto deActivateTrainee(Long id);
+    TraineeUpdateResponseDto switchActivationState(Long id);
 
     TraineeUpdateResponseDto changePassword(Long id, String newPassword);
 }

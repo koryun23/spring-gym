@@ -256,9 +256,9 @@ public class TraineeFacadeImpl implements TraineeFacade {
     }
 
     @Override
-    public TraineeUpdateResponseDto deActivateTrainee(Long id) {
+    public TraineeUpdateResponseDto switchActivationState(Long id) {
         Assert.notNull(id, "Id must not be null");
-        LOGGER.info("Deactivating a trainee with an id of {}", id);
+        LOGGER.info("Switching the activation state of a trainee with an id of {}", id);
 
         TraineeEntity traineeEntity = traineeService.findById(id).orElseThrow(() -> new TraineeNotFoundException(id));
         UserEntity user = traineeEntity.getUser();
@@ -269,12 +269,12 @@ public class TraineeFacadeImpl implements TraineeFacade {
             user.getLastName(),
             user.getUsername(),
             user.getPassword(),
-            false,
+            !user.getIsActive(),
             traineeEntity.getDateOfBirth(),
             traineeEntity.getAddress()
         ));
 
-        LOGGER.info("Successfully deactivated a Trainee with an id of {}", id);
+        LOGGER.info("Successfully switched the activation state of a Trainee with an id of {}", id);
         return responseDto;
     }
 
