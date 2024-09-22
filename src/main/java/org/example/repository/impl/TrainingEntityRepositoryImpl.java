@@ -3,8 +3,11 @@ package org.example.repository.impl;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
+import org.example.entity.TraineeEntity;
+import org.example.entity.TrainerEntity;
 import org.example.entity.TrainingEntity;
 import org.example.exception.TrainingNotFoundException;
 import org.example.repository.core.TrainingEntityRepository;
@@ -75,6 +78,81 @@ public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
 
     @Override
     public TrainingEntity update(TrainingEntity entity) {
-        return null;
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        TrainingEntity updatedTrainingEntity = session.merge(entity);
+
+        transaction.commit();
+        session.close();
+
+        return updatedTrainingEntity;
+    }
+
+    @Override
+    public List<TrainingEntity> findAllByTraineeUsernameAndCriteria(String traineeUsername, Date from, Date to,
+                                                                    String trainerUsername, Long trainingTypeId) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        Long trainerEntityId = session.createQuery(trainerIdFromUsernameQuery(), TrainerEntity.class)
+            .setParameter("trainerUsername", trainerUsername)
+            .uniqueResult().getId(); // single selection, time complexity - log(n), where n is the number of records in trainer table
+
+        Long traineeEntityId = session.createQuery(traineeIdFromUsernameQuery(), TraineeEntity.class)
+            .setParameter("traineeUsername", traineeUsername)
+            .uniqueResult().getId(); // single selection, time complexity - log(n), where n is the number of records in trainee table
+
+        String query = "SELECT * FROM training WHERE training.trainee_id = :traineeId AND training.trainer_id = :trainerId AND training.date >= :from AND training.date <= :to AND training.training_type_id = :trainingTypeId";
+
+        List<TrainingEntity> trainingEntityList = session.createQuery(query, TrainingEntity.class)
+            .setParameter("traineeId", traineeEntityId)
+            .setParameter("trainerId", trainerEntityId)
+            .setParameter("from", from)
+            .setParameter("to", to)
+            .setParameter("trainingTypeId", trainingTypeId)
+            .list();
+
+        transaction.commit();
+        session.close();
+
+        return trainingEntityList;
+    }
+
+    @Override
+    public List<TrainingEntity> findAllByTrainerUsernameAndCriteria(String trainerUsername, Date from, Date to,
+                                                                    String traineeUsername) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        Long trainerEntityId = session.createQuery(trainerIdFromUsernameQuery(), TrainerEntity.class)
+            .setParameter("trainerUsername", trainerUsername)
+            .uniqueResult().getId(); // single selection, time complexity - log(n), where n is the number of records in trainer table
+
+        Long traineeEntityId = session.createQuery(traineeIdFromUsernameQuery(), TraineeEntity.class)
+            .setParameter("traineeUsername", traineeUsername)
+            .uniqueResult().getId(); // single selection, time complexity - log(n), where n is the number of records in trainee table
+
+        String query = "SELECT * FROM training WHERE training.trainee_id = :traineeId AND training.trainer_id = :trainerId AND training.date >= :from AND training.date <= :to";
+
+        List<TrainingEntity> trainingEntityList = session.createQuery(query, TrainingEntity.class)
+            .setParameter("traineeId", traineeEntityId)
+            .setParameter("trainerId", trainerEntityId)
+            .setParameter("from", from)
+            .setParameter("to", to)
+            .list();
+
+        transaction.commit();
+        session.close();
+
+        return trainingEntityList;
+    }
+
+    private String trainerIdFromUsernameQuery() {
+        return "select (trainer.id) from trainer JOIN users on users.id = trainer.user_id WHERE users.username = :trainerUsername";
+    }
+
+    private String traineeIdFromUsernameQuery() {
+        return "select (trainee.id) from trainee JOIN users on users.id = trainee.user_id WHERE users.username = :traineeUsername";
     }
 }
