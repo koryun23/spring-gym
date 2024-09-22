@@ -18,4 +18,6 @@ public interface UserService {
     Optional<UserEntity> findByUsername(String username);
 
     Optional<UserEntity> findById(Long id);
+
+    boolean usernamePasswordMatching(String username, String password);
 }

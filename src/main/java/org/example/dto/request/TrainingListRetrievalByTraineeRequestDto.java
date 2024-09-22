@@ -1,5 +1,6 @@
 package org.example.dto.request;
 
+import java.sql.Date;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -19,4 +20,9 @@ public class TrainingListRetrievalByTraineeRequestDto {
     private String retrieverPassword;
 
     private String traineeUsername;
+
+    private Date from;
+    private Date to;
+    private String trainerUsername;
+    private Long trainingTypeId;
 }

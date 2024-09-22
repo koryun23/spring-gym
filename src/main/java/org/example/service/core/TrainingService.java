@@ -15,15 +15,10 @@ public interface TrainingService {
 
     List<TrainingEntity> findAll();
 
-    List<TrainingEntity> findAllByTrainee(String traineeUsername);
+    List<TrainingEntity> findAllByTraineeUsernameAndCriteria(String traineeUsername, Date from, Date to,
+                                                             String trainerUsername, Long trainingTypeId);
 
-    List<TrainingEntity> findAllByTrainer(String trainerUsername);
+    List<TrainingEntity> findAllByTrainerUsernameAndCriteria(String trainerUsername, Date from, Date to,
+                                                             String traineeUsername);
 
-    List<TrainingEntity> findAllByTraineeTrainer(String traineeUsername, String trainerUsername);
-
-    List<TrainingEntity> findAllByTraineeDate(String traineeUsername, Date from, Date to);
-
-    List<TrainingEntity> findAllByTrainerDate(String trainerUsername, Date from, Date to);
-
-    List<TrainingEntity> findAllByTraineeTrainerDate(String traineeUsername, Date from, Date to, String trainerUsername);
 }

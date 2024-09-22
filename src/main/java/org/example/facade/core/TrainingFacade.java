@@ -21,16 +21,4 @@ public interface TrainingFacade {
     TrainingListRetrievalResponseDto retrieveTrainingListByTrainer(TrainingListRetrievalByTrainerRequestDto requestDto);
 
     TrainingListRetrievalResponseDto retrieveTrainingListByTrainee(TrainingListRetrievalByTraineeRequestDto requestDto);
-
-    TrainingListRetrievalResponseDto retrieveTrainingListByTraineeDate(
-        TrainingListRetrievalByTraineeDateRequestDto requestDto);
-
-    TrainingListRetrievalResponseDto retrieveTrainingListByTrainerDate(
-        TrainingListRetrievalByTrainerDateRequestDto requestDto);
-
-    TrainingListRetrievalResponseDto retrieveTrainingListByTraineeTrainerDate(
-        TrainingListRetrievalByTraineeTrainerDateRequestDto requestDto);
-
-    TrainingListRetrievalResponseDto retrieveTrainingListByTraineeTrainer(
-        TrainingListRetrievalByTraineeTrainerRequestDto requestDto);
 }
