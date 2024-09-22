@@ -15,9 +15,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.hibernate.query.criteria.HibernateCriteriaBuilder;
-import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.Assert;
 
 @Repository
 public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
@@ -92,6 +91,9 @@ public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
     @Override
     public List<TrainingEntity> findAllByTraineeUsernameAndCriteria(String traineeUsername, Date from, Date to,
                                                                     String trainerUsername, Long trainingTypeId) {
+
+        Assert.notNull(traineeUsername, "Trainee Username must not be null");
+
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
@@ -103,7 +105,15 @@ public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
             .setParameter("traineeUsername", traineeUsername)
             .uniqueResult().getId(); // single selection, time complexity - log(n), where n is the number of records in trainee table
 
-        String query = "SELECT * FROM training WHERE training.trainee_id = :traineeId AND training.trainer_id = :trainerId AND training.date >= :from AND training.date <= :to AND training.training_type_id = :trainingTypeId";
+        String query = String.format("SELECT * FROM training WHERE training.trainee_id = :traineeId "
+            + "%s training.trainer_id = :trainerId "
+            + "%s training.date >= :from "
+            + "%s training.date <= :to "
+            + "%s training.training_type_id = :trainingTypeId",
+            trainerUsername == null ? "OR" : "AND",
+            from == null ? "OR" : "AND",
+            to == null ? "OR" : "AND",
+            trainingTypeId == null ? "OR" : "AND");
 
         List<TrainingEntity> trainingEntityList = session.createQuery(query, TrainingEntity.class)
             .setParameter("traineeId", traineeEntityId)
@@ -122,6 +132,8 @@ public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
     @Override
     public List<TrainingEntity> findAllByTrainerUsernameAndCriteria(String trainerUsername, Date from, Date to,
                                                                     String traineeUsername) {
+        Assert.notNull(trainerUsername, "Trainer Username must not be null");
+
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
@@ -133,7 +145,13 @@ public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
             .setParameter("traineeUsername", traineeUsername)
             .uniqueResult().getId(); // single selection, time complexity - log(n), where n is the number of records in trainee table
 
-        String query = "SELECT * FROM training WHERE training.trainee_id = :traineeId AND training.trainer_id = :trainerId AND training.date >= :from AND training.date <= :to";
+        String query = String.format("SELECT * FROM training WHERE training.trainer_id = :trainerId "
+            + "%s training.trainee_id = :traineeId "
+            + "%s training.date >= :from "
+            + "%s training.date <= :to",
+            traineeUsername == null ? "OR" : "AND",
+            from == null ? "OR" : "AND",
+            to == null ? "OR" : "AND");
 
         List<TrainingEntity> trainingEntityList = session.createQuery(query, TrainingEntity.class)
             .setParameter("traineeId", traineeEntityId)
