@@ -121,14 +121,14 @@ class TraineeFacadeImplTest {
 
     @Test
     public void testDeleteTraineeWhenNegative() {
-        Assertions.assertThat(testSubject.deleteTrainee(-1L).getErrors().getFirst())
+        Assertions.assertThat(testSubject.deleteTraineeByUsername(-1L).getErrors().getFirst())
             .isEqualTo("TraineeEntity id must be positive: -1 specified");
     }
 
     @Test
     public void testDeleteTraineeWhenUserDoesNotExist() {
         Mockito.when(traineeService.findById(1L)).thenReturn(Optional.empty());
-        Assertions.assertThat(testSubject.deleteTrainee(1L).getErrors().getFirst())
+        Assertions.assertThat(testSubject.deleteTraineeByUsername(1L).getErrors().getFirst())
             .isEqualTo("A TraineeEntity with an id - 1, does not exist");
     }
 }
