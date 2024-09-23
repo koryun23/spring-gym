@@ -47,7 +47,7 @@ public class TrainerDaoImpl implements TrainerDao {
     public TrainerEntity update(TrainerEntity trainerEntity) {
         Assert.notNull(trainerEntity, "TrainerEntity must not be null");
         LOGGER.info("Updating a TrainerEntity with an id of {}", trainerEntity.getId());
-        TrainerEntity updatedTrainerEntity = trainerEntityRepository.save(trainerEntity);
+        TrainerEntity updatedTrainerEntity = trainerEntityRepository.update(trainerEntity);
         LOGGER.info("Successfully updated a TrainerEntity with an id of {}, result - {}", trainerEntity.getId(),
             updatedTrainerEntity);
         return updatedTrainerEntity;

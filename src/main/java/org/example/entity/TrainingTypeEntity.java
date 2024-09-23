@@ -17,13 +17,11 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
 @Entity
 @Table(name = "TRAINING_TYPE")
 public class TrainingTypeEntity {
@@ -45,5 +43,13 @@ public class TrainingTypeEntity {
 
     public TrainingTypeEntity(TrainingType trainingType) {
         this.trainingType = trainingType;
+    }
+
+    @Override
+    public String toString() {
+        return "TrainingTypeEntity{" +
+            "trainingType=" + trainingType +
+            ", id=" + id +
+            '}';
     }
 }

@@ -12,7 +12,7 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">none</property>
         <property name="hibernate.current_session_context_class">thread</property>
-        <property name="hibernate.datasource.schema">classpath:/schema.sql</property>
+<!--        <property name="hibernate.default_schema">classpath:/schema.sql</property>-->
         <mapping class="org.example.entity.UserEntity" />
         <mapping class="org.example.entity.TrainerEntity" />
         <mapping class="org.example.entity.TraineeEntity" />

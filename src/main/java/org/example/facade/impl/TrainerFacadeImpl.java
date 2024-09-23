@@ -7,6 +7,9 @@ import org.example.dto.response.TrainerCreationResponseDto;
 import org.example.dto.response.TrainerListRetrievalResponseDto;
 import org.example.dto.response.TrainerRetrievalResponseDto;
 import org.example.dto.response.TrainerUpdateResponseDto;
+import org.example.entity.TrainerEntity;
+import org.example.entity.UserEntity;
+import org.example.exception.TrainerNotFoundException;
 import org.example.facade.core.TrainerFacade;
 import org.example.mapper.trainer.TrainerCreationRequestDtoToTrainerEntityMapper;
 import org.example.mapper.trainer.TrainerEntityToTrainerCreationResponseDtoMapper;
@@ -16,6 +19,9 @@ import org.example.mapper.trainer.TrainerUpdateRequestDtoToTrainerEntityMapper;
 import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
+import org.example.service.core.TrainingService;
+import org.example.service.core.TrainingTypeService;
+import org.example.service.core.UserService;
 import org.example.service.core.UsernamePasswordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +36,8 @@ public class TrainerFacadeImpl implements TrainerFacade {
 
     private final TrainerService trainerService;
     private final TraineeService traineeService;
+    private final TrainingTypeService trainingTypeService;
+    private final UserService userService;
     private final TrainerCreationRequestDtoToTrainerEntityMapper trainerCreationRequestDtoToTrainerEntityMapper;
     private final TrainerEntityToTrainerCreationResponseDtoMapper trainerEntityToTrainerCreationResponseDtoMapper;
     private final TrainerUpdateRequestDtoToTrainerEntityMapper trainerUpdateRequestDtoToTrainerEntityMapper;
@@ -42,6 +50,7 @@ public class TrainerFacadeImpl implements TrainerFacade {
      * Constructor.
      */
     public TrainerFacadeImpl(TrainerService trainerService, TraineeService traineeService,
+                             TrainingTypeService trainingTypeService, UserService userService,
                              TrainerCreationRequestDtoToTrainerEntityMapper
                                  trainerCreationRequestDtoToTrainerEntityMapper,
                              TrainerEntityToTrainerCreationResponseDtoMapper
@@ -57,6 +66,8 @@ public class TrainerFacadeImpl implements TrainerFacade {
                              IdService idService) {
         this.trainerService = trainerService;
         this.traineeService = traineeService;
+        this.trainingTypeService = trainingTypeService;
+        this.userService = userService;
         this.trainerCreationRequestDtoToTrainerEntityMapper = trainerCreationRequestDtoToTrainerEntityMapper;
         this.trainerEntityToTrainerCreationResponseDtoMapper = trainerEntityToTrainerCreationResponseDtoMapper;
         this.trainerUpdateRequestDtoToTrainerEntityMapper = trainerUpdateRequestDtoToTrainerEntityMapper;
@@ -71,21 +82,26 @@ public class TrainerFacadeImpl implements TrainerFacade {
         Assert.notNull(requestDto, "TrainerCreationRequestDto must not be null");
         LOGGER.info("Creating a TrainerEntity according to the TrainerCreationRequestDto - {}", requestDto);
 
-        Long trainerId = idService.getId();
-
-        if (!trainerService.findById(trainerId).isEmpty()) {
-            return new TrainerCreationResponseDto(
-                List.of(String.format("A TrainerEntity with the specified id - %d, already exists", trainerId)));
-        }
-
         String username = usernamePasswordService.username(
             requestDto.getFirstName(),
             requestDto.getLastName(),
-            trainerId,
+            idService.getId(),
             "trainer"
         );
 
         String password = usernamePasswordService.password();
+
+        requestDto.setUsername(username);
+        requestDto.setPassword(password);
+
+        UserEntity userEntity = userService.create(new UserEntity(
+            requestDto.getFirstName(),
+            requestDto.getLastName(),
+            requestDto.getUsername(),
+            requestDto.getPassword(),
+            requestDto.getIsActive()
+        ));
+        requestDto.setUserId(userEntity.getId());
 
         TrainerCreationResponseDto responseDto = trainerEntityToTrainerCreationResponseDtoMapper.map(
             trainerService.create(trainerCreationRequestDtoToTrainerEntityMapper.map(requestDto)));
@@ -102,13 +118,28 @@ public class TrainerFacadeImpl implements TrainerFacade {
         Assert.notNull(requestDto, "TrainerUpdateRequestDto must not be null");
         LOGGER.info("Updating a TrainerEntity according to the TrainerUpdateRequestDto - {}", requestDto);
 
-        if (trainerService.findById(requestDto.getUserId()).isEmpty()) {
+        if (trainerService.findById(requestDto.getTrainerId()).isEmpty()) {
             return new TrainerUpdateResponseDto(List.of(
-                String.format("TrainerEntity with the specified id of %d does not exist", requestDto.getUserId())));
+                String.format("TrainerEntity with the specified id of %d does not exist", requestDto.getTrainerId())));
         }
 
+        Long userId = trainerService.findById(requestDto.getTrainerId()).orElseThrow(() -> new TrainerNotFoundException(requestDto.getTrainerId())).getUser().getId();
+        // update user
+        UserEntity user = new UserEntity(
+            requestDto.getFirstName(),
+            requestDto.getLastName(),
+            requestDto.getUsername(),
+            requestDto.getPassword(),
+            requestDto.getIsActive()
+        );
+        user.setId(userId);
+        userService.update(user);
+
+        TrainerEntity trainer = new TrainerEntity(user, trainingTypeService.get(requestDto.getTrainingTypeId()));
+        trainer.setId(requestDto.getTrainerId());
+
         TrainerUpdateResponseDto responseDto = trainerEntityToTrainerUpdateResponseDtoMapper.map(
-            trainerService.update(trainerUpdateRequestDtoToTrainerEntityMapper.map(requestDto)));
+            trainerService.update(trainer));
 
         LOGGER.info("Successfully updated a TrainerEntity according to the TrainerUpdateRequestDto - {}, response - {}",
             requestDto, responseDto);

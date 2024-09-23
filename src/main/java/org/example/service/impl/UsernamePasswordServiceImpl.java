@@ -5,9 +5,11 @@ import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.example.entity.TraineeEntity;
 import org.example.entity.TrainerEntity;
+import org.example.entity.UserEntity;
 import org.example.exception.InvalidIdException;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
+import org.example.service.core.UserService;
 import org.example.service.core.UsernamePasswordService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -18,15 +20,18 @@ public class UsernamePasswordServiceImpl implements UsernamePasswordService {
 
     private final TraineeService traineeService;
     private final TrainerService trainerService;
+    private final UserService userService;
 
     /**
      * Constructor.
      */
-    public UsernamePasswordServiceImpl(TraineeService traineeService, TrainerService trainerService) {
+    public UsernamePasswordServiceImpl(TraineeService traineeService, TrainerService trainerService,
+                                       UserService userService) {
         Assert.notNull(traineeService, "TraineeEntity Service must not be null");
         Assert.notNull(trainerService, "TrainerEntity Service must not be null");
         this.traineeService = traineeService;
         this.trainerService = trainerService;
+        this.userService = userService;
     }
 
     @Override
@@ -42,20 +47,16 @@ public class UsernamePasswordServiceImpl implements UsernamePasswordService {
         }
 
         String temporaryUsername = firstName + "." + lastName;
-        Optional<TraineeEntity> optionalTrainee = traineeService.findByUsername(temporaryUsername);
-        Optional<TrainerEntity> optionalTrainer = trainerService.findByUsername(temporaryUsername);
+        Optional<UserEntity> optionalUser = userService.findByUsername(temporaryUsername);
 
-        log.info("Optional trainee - {}", optionalTrainee);
-
-        if (optionalTrainee.isEmpty() && optionalTrainer.isEmpty()) {
+        if (optionalUser.isEmpty()) {
             return temporaryUsername;
         }
 
         temporaryUsername += ("." + id);
-        optionalTrainer = trainerService.findByUsername(temporaryUsername);
-        optionalTrainee = traineeService.findByUsername(temporaryUsername);
+        optionalUser = userService.findByUsername(temporaryUsername);
 
-        if (optionalTrainer.isEmpty() && optionalTrainee.isEmpty()) {
+        if (optionalUser.isEmpty()) {
             return temporaryUsername;
         }
         return temporaryUsername + "." + uniqueSuffix;

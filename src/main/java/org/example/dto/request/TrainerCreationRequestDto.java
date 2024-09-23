@@ -14,6 +14,7 @@ import lombok.ToString;
 @ToString
 public class TrainerCreationRequestDto {
 
+    private Long userId;
     private String firstName;
     private String lastName;
     private String username;

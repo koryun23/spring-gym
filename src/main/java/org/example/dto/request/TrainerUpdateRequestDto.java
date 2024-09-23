@@ -15,16 +15,22 @@ import lombok.ToString;
 public class TrainerUpdateRequestDto {
 
     private Long trainerId;
-    private Long userId;
+    private String firstName;
+    private String lastName;
+    private String username;
+    private String password;
     private Boolean isActive;
     private Long trainingTypeId;
 
     /**
      * Constructor.
      */
-    public TrainerUpdateRequestDto(Long trainerId, Long userId, boolean isActive, Long trainingTypeId) {
+    public TrainerUpdateRequestDto(Long trainerId, String firstName, String lastName, String username, String password, boolean isActive, Long trainingTypeId) {
         this.trainerId = trainerId;
-        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
         this.isActive = isActive;
         this.trainingTypeId = trainingTypeId;
     }

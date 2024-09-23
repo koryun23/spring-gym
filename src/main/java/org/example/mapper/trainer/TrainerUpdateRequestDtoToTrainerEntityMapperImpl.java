@@ -24,7 +24,7 @@ public class TrainerUpdateRequestDtoToTrainerEntityMapperImpl implements Trainer
         Assert.notNull(requestDto, "TrainerUpdateRequestDto must not be null");
 
         return new TrainerEntity(
-            userDao.get(requestDto.getUserId()),
+            userDao.getByUsername(requestDto.getUsername()),
             trainingTypeDao.get(requestDto.getTrainingTypeId())
         );
     }

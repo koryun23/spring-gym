@@ -85,8 +85,13 @@ public class TrainerEntityRepositoryImpl implements TrainerEntityRepository {
     }
 
     @Override
-    public TrainerEntity update(TrainerEntity entity) {
-        return null;
+    public TrainerEntity update(TrainerEntity trainer) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        TrainerEntity updatedTrainer = session.merge(trainer);
+        transaction.commit();
+        session.close();
+        return updatedTrainer;
     }
 
     @Override
@@ -101,7 +106,7 @@ public class TrainerEntityRepositoryImpl implements TrainerEntityRepository {
             .setParameter("username", traineeUsername)
             .list();
 
-        String nonAssignedTrainersQuery = "select * from TrainerEntity t where t.id not in (:assignedTrainers)";
+        String nonAssignedTrainersQuery = "select t from TrainerEntity t where t.id not in (:assignedTrainers)";
 
         List<TrainerEntity> nonAssignedTrainerIdList = session.createQuery(nonAssignedTrainersQuery, TrainerEntity.class)
             .setParameter("assignedTrainers", assignedTrainerIdList)
