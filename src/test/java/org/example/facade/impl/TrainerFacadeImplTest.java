@@ -5,6 +5,9 @@ import org.assertj.core.api.Assertions;
 import org.example.dto.request.TrainerCreationRequestDto;
 import org.example.dto.request.TrainerUpdateRequestDto;
 import org.example.entity.TrainerEntity;
+import org.example.entity.TrainingType;
+import org.example.entity.TrainingTypeEntity;
+import org.example.entity.UserEntity;
 import org.example.facade.core.TrainerFacade;
 import org.example.mapper.trainer.TrainerCreationRequestDtoToTrainerEntityMapper;
 import org.example.mapper.trainer.TrainerEntityToTrainerCreationResponseDtoMapper;
@@ -14,6 +17,8 @@ import org.example.mapper.trainer.TrainerUpdateRequestDtoToTrainerEntityMapper;
 import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
+import org.example.service.core.TrainingTypeService;
+import org.example.service.core.UserService;
 import org.example.service.core.UsernamePasswordService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +28,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-
 class TrainerFacadeImplTest {
 
     private TrainerFacade testSubject;
@@ -36,6 +40,12 @@ class TrainerFacadeImplTest {
 
     @Mock
     private IdService idService;
+
+    @Mock
+    private TrainingTypeService trainingTypeService;
+
+    @Mock
+    private UserService userService;
 
     @Mock
     private UsernamePasswordService usernamePasswordService;
@@ -59,6 +69,9 @@ class TrainerFacadeImplTest {
     public void init() {
         testSubject = new TrainerFacadeImpl(
             trainerService,
+            traineeService,
+            trainingTypeService,
+            userService,
             trainerCreationRequestDtoToTrainerEntityMapper,
             trainerEntityToTrainerCreationResponseDtoMapper,
             trainerUpdateRequestDtoToTrainerEntityMapper,
@@ -73,27 +86,6 @@ class TrainerFacadeImplTest {
     public void testCreateTrainerWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.createTrainer(null))
                 .isExactlyInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    public void testCreateTrainerExceptionWhenUserWithIdExists() {
-        Mockito.when(idService.getId()).thenReturn(1L);
-        Mockito.when(trainerService.findById(1L)).thenReturn(Optional.of(new TrainerEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                SpecializationType.FITNESS
-        )));
-
-        Assertions.assertThat(testSubject.createTrainer(new TrainerCreationRequestDto(
-                "first",
-                "last",
-                true,
-                SpecializationType.FITNESS
-        )).getErrors().getFirst()).isEqualTo("A TrainerEntity with the specified id - 1, already exists");
     }
 
     @Test
@@ -112,7 +104,7 @@ class TrainerFacadeImplTest {
                 "username",
                 "password",
                 false,
-                SpecializationType.FITNESS
+                1L
         )).getErrors().getFirst()).isEqualTo("TrainerEntity with the specified id of 1 does not exist");
     }
 

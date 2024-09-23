@@ -9,23 +9,35 @@ class TrainingEntityTest {
     @Test
     public void testTrainingEquals() {
         TrainingEntity trainingEntity1 = new TrainingEntity(
-                1L,
-                1L,
-                1L,
-                "trainingEntity1",
-                TrainingType.AEROBIC,
+            new TraineeEntity(
+                new UserEntity("first", "last", "username", "password", true),
                 Date.valueOf("2024-10-10"),
-                1000L
+                "address"
+            ),
+            new TrainerEntity(
+                new UserEntity("f", "l", "u", "p", true),
+                new TrainingTypeEntity(TrainingType.WEIGHTLIFTING)
+            ),
+            "training",
+            new TrainingTypeEntity(TrainingType.WEIGHTLIFTING),
+            Date.valueOf("2024-10-10"),
+            1000L
         );
 
         TrainingEntity trainingEntity2 = new TrainingEntity(
-                1L,
-                1L,
-                1L,
-                "trainingEntity1",
-                TrainingType.AEROBIC,
+            new TraineeEntity(
+                new UserEntity("first", "last", "username", "password", true),
                 Date.valueOf("2024-10-10"),
-                1000L
+                "address"
+            ),
+            new TrainerEntity(
+                new UserEntity("f", "l", "u", "p", true),
+                new TrainingTypeEntity(TrainingType.WEIGHTLIFTING)
+            ),
+            "training",
+            new TrainingTypeEntity(TrainingType.WEIGHTLIFTING),
+            Date.valueOf("2024-10-10"),
+            1000L
         );
 
         Assertions.assertThat(trainingEntity1).isEqualTo(trainingEntity2);
@@ -34,23 +46,35 @@ class TrainingEntityTest {
     @Test
     public void testTrainingHashCode() {
         TrainingEntity trainingEntity1 = new TrainingEntity(
-                1L,
-                1L,
-                1L,
-                "trainingEntity1",
-                TrainingType.AEROBIC,
+            new TraineeEntity(
+                new UserEntity("first", "last", "username", "password", true),
                 Date.valueOf("2024-10-10"),
-                1000L
+                "address"
+            ),
+            new TrainerEntity(
+                new UserEntity("f", "l", "u", "p", true),
+                new TrainingTypeEntity(TrainingType.WEIGHTLIFTING)
+            ),
+            "training",
+            new TrainingTypeEntity(TrainingType.WEIGHTLIFTING),
+            Date.valueOf("2024-10-10"),
+            1000L
         );
 
         TrainingEntity trainingEntity2 = new TrainingEntity(
-                1L,
-                1L,
-                1L,
-                "trainingEntity1",
-                TrainingType.AEROBIC,
+            new TraineeEntity(
+                new UserEntity("first", "last", "username", "password", true),
                 Date.valueOf("2024-10-10"),
-                1000L
+                "address"
+            ),
+            new TrainerEntity(
+                new UserEntity("f", "l", "u", "p", true),
+                new TrainingTypeEntity(TrainingType.WEIGHTLIFTING)
+            ),
+            "training",
+            new TrainingTypeEntity(TrainingType.WEIGHTLIFTING),
+            Date.valueOf("2024-10-10"),
+            1000L
         );
 
         Assertions.assertThat(trainingEntity1.hashCode()).isEqualTo(trainingEntity2.hashCode());

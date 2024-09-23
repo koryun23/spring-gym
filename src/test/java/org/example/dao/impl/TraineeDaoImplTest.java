@@ -4,7 +4,9 @@ import java.sql.Date;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.example.entity.TraineeEntity;
+import org.example.entity.UserEntity;
 import org.example.exception.TraineeNotFoundException;
+import org.example.repository.core.TraineeEntityRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,12 +20,12 @@ class TraineeDaoImplTest {
     private TraineeDaoImpl testSubject;
 
     @Mock
-    private TraineeStorageImpl traineeStorage;
+    private TraineeEntityRepository traineeRepository;
 
     @BeforeEach
     public void init() {
         testSubject = new TraineeDaoImpl();
-        testSubject.setTraineeEntityRepository(traineeStorage);
+        testSubject.setTraineeEntityRepository(traineeRepository);
     }
 
     @Test
@@ -34,27 +36,17 @@ class TraineeDaoImplTest {
 
     @Test
     public void testGet() {
-        Mockito.when(traineeStorage.get(1L)).thenReturn(new TraineeEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                Date.valueOf("2024-10-10"),
-                "manchester"
-        ));
+        Mockito.when(traineeRepository.findById(1L)).thenReturn(Optional.of(new TraineeEntity(
+            new UserEntity("first", "last", "username", "password", true),
+            Date.valueOf("2024-10-10"),
+            "address"
+        )));
         Assertions.assertThat(testSubject.get(1L)).isEqualTo(new TraineeEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                Date.valueOf("2024-10-10"),
-                "manchester"
+            new UserEntity("first", "last", "username", "password", true),
+            Date.valueOf("2024-10-10"),
+            "address"
         ));
-        Mockito.verifyNoMoreInteractions(traineeStorage);
+        Mockito.verifyNoMoreInteractions(traineeRepository);
     }
 
     @Test
@@ -66,34 +58,19 @@ class TraineeDaoImplTest {
     @Test
     public void testSave() {
         testSubject.save(new TraineeEntity(
-                2L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                Date.valueOf("2024-10-10"),
-                "manchester"
+            new UserEntity("first", "last", "username", "password", true),
+            Date.valueOf("2024-10-10"),
+            "address"
         ));
-        Mockito.when(traineeStorage.get(2L)).thenReturn(new TraineeEntity(
-                2L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                Date.valueOf("2024-10-10"),
-                "manchester"
-        ));
+        Mockito.when(traineeRepository.findById(2L)).thenReturn(Optional.of(new TraineeEntity(
+            new UserEntity("first", "last", "username", "password", true),
+            Date.valueOf("2024-10-10"),
+            "address"
+        )));
         Assertions.assertThat(testSubject.get(2L)).isEqualTo(new TraineeEntity(
-                2L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                Date.valueOf("2024-10-10"),
-                "manchester"
+            new UserEntity("first", "last", "username", "password", true),
+            Date.valueOf("2024-10-10"),
+            "address"
         ));
     }
 
@@ -106,54 +83,29 @@ class TraineeDaoImplTest {
     @Test
     public void testUpdate() {
 
-        Mockito.when(traineeStorage.update(new TraineeEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                false,
-                Date.valueOf("2024-10-10"),
-                "manchester"
+        Mockito.when(traineeRepository.update(new TraineeEntity(
+            new UserEntity("first", "last", "username", "password", true),
+            Date.valueOf("2024-10-10"),
+            "address"
         ))).thenReturn(new TraineeEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                false,
-                Date.valueOf("2024-10-10"),
-                "manchester"
+            new UserEntity("first", "last", "username", "password", true),
+            Date.valueOf("2024-10-10"),
+            "address"
         ));
-        Mockito.when(traineeStorage.get(1L)).thenReturn(new TraineeEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                false,
-                Date.valueOf("2024-10-10"),
-                "manchester"
-        ));
+        Mockito.when(traineeRepository.findById(1L)).thenReturn(Optional.of(new TraineeEntity(
+            new UserEntity("first", "last", "username", "password", true),
+            Date.valueOf("2024-10-10"),
+            "address"
+        )));
         testSubject.update(new TraineeEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                false,
-                Date.valueOf("2024-10-10"),
-                "manchester"
+            new UserEntity("first", "last", "username", "password", true),
+            Date.valueOf("2024-10-10"),
+            "address"
         ));
         Assertions.assertThat(testSubject.get(1L)).isEqualTo(new TraineeEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                false,
-                Date.valueOf("2024-10-10"),
-                "manchester"
+            new UserEntity("first", "last", "username", "password", true),
+            Date.valueOf("2024-10-10"),
+            "address"
         ));
     }
 
@@ -165,18 +117,13 @@ class TraineeDaoImplTest {
 
     @Test
     public void testDelete() {
-        Mockito.when(traineeStorage.get(1L)).thenReturn(new TraineeEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                false,
-                Date.valueOf("2024-10-10"),
-                "manchester"
-        ));
+        Mockito.when(traineeRepository.findById(1L)).thenReturn(Optional.of(new TraineeEntity(
+            new UserEntity("first", "last", "username", "password", true),
+            Date.valueOf("2024-10-10"),
+            "address"
+        )));
         testSubject.delete(1L);
-        Mockito.when(traineeStorage.get(1L)).thenThrow(TraineeNotFoundException.class);
+        Mockito.when(traineeRepository.findById(1L)).thenThrow(TraineeNotFoundException.class);
         Assertions.assertThatThrownBy(() -> testSubject.get(1L))
                 .isExactlyInstanceOf(TraineeNotFoundException.class);
     }
@@ -195,25 +142,15 @@ class TraineeDaoImplTest {
 
     @Test
     public void testGetByUsername() {
-        Mockito.when(traineeStorage.getByUsername("username")).thenReturn(new TraineeEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                false,
-                Date.valueOf("2024-10-10"),
-                "manchester"
-        ));
+        Mockito.when(traineeRepository.findByUsername("username")).thenReturn(Optional.of(new TraineeEntity(
+            new UserEntity("first", "last", "username", "password", true),
+            Date.valueOf("2024-10-10"),
+            "address"
+        )));
         Assertions.assertThat(testSubject.getByUsername("username")).isEqualTo(new TraineeEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                false,
-                Date.valueOf("2024-10-10"),
-                "manchester"
+            new UserEntity("first", "last", "username", "password", true),
+            Date.valueOf("2024-10-10"),
+            "address"
         ));
     }
 
@@ -231,25 +168,15 @@ class TraineeDaoImplTest {
 
     @Test
     public void testFindByUsername() {
-        Mockito.when(traineeStorage.findByUsername("username")).thenReturn(Optional.of(new TraineeEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                false,
-                Date.valueOf("2024-10-10"),
-                "manchester"
+        Mockito.when(traineeRepository.findByUsername("username")).thenReturn(Optional.of(new TraineeEntity(
+            new UserEntity("first", "last", "username", "password", true),
+            Date.valueOf("2024-10-10"),
+            "address"
         )));
         Assertions.assertThat(testSubject.findByUsername("username")).isEqualTo(Optional.of(new TraineeEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                false,
-                Date.valueOf("2024-10-10"),
-                "manchester"
+            new UserEntity("first", "last", "username", "password", true),
+            Date.valueOf("2024-10-10"),
+            "address"
         )));
     }
 
@@ -261,25 +188,15 @@ class TraineeDaoImplTest {
 
     @Test
     public void testFindById() {
-        Mockito.when(traineeStorage.findById(1L)).thenReturn(Optional.of(new TraineeEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                false,
-                Date.valueOf("2024-10-10"),
-                "manchester"
+        Mockito.when(traineeRepository.findById(1L)).thenReturn(Optional.of(new TraineeEntity(
+            new UserEntity("first", "last", "username", "password", true),
+            Date.valueOf("2024-10-10"),
+            "address"
         )));
         Assertions.assertThat(testSubject.findById(1L)).isEqualTo(Optional.of(new TraineeEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                false,
-                Date.valueOf("2024-10-10"),
-                "manchester"
+            new UserEntity("first", "last", "username", "password", true),
+            Date.valueOf("2024-10-10"),
+            "address"
         )));
     }
 }

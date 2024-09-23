@@ -1,9 +1,14 @@
 package org.example.dao.impl;
 
+import java.sql.Date;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.example.entity.TrainerEntity;
+import org.example.entity.TrainingType;
+import org.example.entity.TrainingTypeEntity;
+import org.example.entity.UserEntity;
 import org.example.exception.TrainerNotFoundException;
+import org.example.repository.core.TrainerEntityRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,12 +22,12 @@ class TrainerEntityDaoImplTest {
     private TrainerDaoImpl testSubject;
 
     @Mock
-    private TrainerStorageImpl trainerStorage;
+    private TrainerEntityRepository trainerEntityRepository;
 
     @BeforeEach
     public void init() {
         testSubject = new TrainerDaoImpl();
-        testSubject.setTrainerEntityRepository(trainerStorage);
+        testSubject.setTrainerEntityRepository(trainerEntityRepository);
     }
 
     @Test
@@ -33,23 +38,13 @@ class TrainerEntityDaoImplTest {
 
     @Test
     public void testGet() {
-        Mockito.when(trainerStorage.get(1L)).thenReturn(new TrainerEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                SpecializationType.FITNESS
-        ));
+        Mockito.when(trainerEntityRepository.findById(1L)).thenReturn(Optional.of(new TrainerEntity(
+            new UserEntity("first", "last", "username", "password", true),
+            new TrainingTypeEntity(TrainingType.AEROBIC)
+        )));
         Assertions.assertThat(testSubject.get(1L)).isEqualTo(new TrainerEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                SpecializationType.FITNESS
+            new UserEntity("first", "last", "username", "password", true),
+            new TrainingTypeEntity(TrainingType.AEROBIC)
         ));
     }
 
@@ -61,34 +56,19 @@ class TrainerEntityDaoImplTest {
 
     @Test
     public void testSave() {
-        Mockito.when(trainerStorage.get(1L)).thenReturn(new TrainerEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                SpecializationType.FITNESS
-        ));
+        Mockito.when(trainerEntityRepository.findById(1L)).thenReturn(Optional.of(new TrainerEntity(
+            new UserEntity("first", "last", "username", "password", true),
+            new TrainingTypeEntity(TrainingType.AEROBIC)
+        )));
 
         testSubject.save(new TrainerEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                SpecializationType.FITNESS
+            new UserEntity("first", "last", "username", "password", true),
+            new TrainingTypeEntity(TrainingType.AEROBIC)
         ));
-        Assertions.assertThat(trainerStorage.get(1L)).isEqualTo(new TrainerEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                SpecializationType.FITNESS
-        ));
+        Assertions.assertThat(trainerEntityRepository.findById(1L)).isEqualTo(Optional.of(new TrainerEntity(
+            new UserEntity("first", "last", "username", "password", true),
+            new TrainingTypeEntity(TrainingType.AEROBIC)
+        )));
     }
 
     @Test
@@ -100,42 +80,22 @@ class TrainerEntityDaoImplTest {
     @Test
     public void testUpdate() {
         testSubject.save(new TrainerEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                SpecializationType.FITNESS
+            new UserEntity("first", "last", "username", "password", true),
+            new TrainingTypeEntity(TrainingType.AEROBIC)
         ));
-        Mockito.when(trainerStorage.get(1L)).thenReturn(new TrainerEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                SpecializationType.FITNESS
-        ));
+        Mockito.when(trainerEntityRepository.findById(1L)).thenReturn(Optional.of(new TrainerEntity(
+            new UserEntity("first", "last", "username", "password", true),
+            new TrainingTypeEntity(TrainingType.AEROBIC)
+        )));
         TrainerEntity initialTrainerEntity = testSubject.get(1L);
         testSubject.update(new TrainerEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                false,
-                SpecializationType.FITNESS
+            new UserEntity("first", "last", "username", "password", false),
+            new TrainingTypeEntity(TrainingType.AEROBIC)
         ));
-        Mockito.when(trainerStorage.get(1L)).thenReturn(new TrainerEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                false,
-                SpecializationType.FITNESS
-        ));
+        Mockito.when(trainerEntityRepository.findById(1L)).thenReturn(Optional.of(new TrainerEntity(
+            new UserEntity("first", "last", "username", "password", false),
+            new TrainingTypeEntity(TrainingType.AEROBIC)
+        )));
         Assertions.assertThat(testSubject.get(1L)).isNotEqualTo(initialTrainerEntity);
     }
 
@@ -147,17 +107,12 @@ class TrainerEntityDaoImplTest {
 
     @Test
     public void testDelete() {
-        Mockito.when(trainerStorage.get(1L)).thenReturn(new TrainerEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                SpecializationType.FITNESS
-        ));
+        Mockito.when(trainerEntityRepository.findById(1L)).thenReturn(Optional.of(new TrainerEntity(
+            new UserEntity("first", "last", "username", "password", true),
+            new TrainingTypeEntity(TrainingType.AEROBIC)
+        )));
         testSubject.delete(1L);
-        Mockito.when(trainerStorage.get(1L)).thenThrow(TrainerNotFoundException.class);
+        Mockito.when(trainerEntityRepository.findById(1L)).thenThrow(TrainerNotFoundException.class);
         Assertions.assertThatThrownBy(() -> testSubject.get(1L))
                 .isExactlyInstanceOf(TrainerNotFoundException.class);
     }
@@ -176,23 +131,13 @@ class TrainerEntityDaoImplTest {
 
     @Test
     public void testGetByUsername() {
-        Mockito.when(trainerStorage.getByUsername("username")).thenReturn(new TrainerEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                SpecializationType.FITNESS
-        ));
+        Mockito.when(trainerEntityRepository.findByUsername("username")).thenReturn(Optional.of(new TrainerEntity(
+            new UserEntity("first", "last", "username", "password", true),
+            new TrainingTypeEntity(TrainingType.AEROBIC)
+        )));
         Assertions.assertThat(testSubject.getByUsername("username")).isEqualTo(new TrainerEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                SpecializationType.FITNESS
+            new UserEntity("first", "last", "username", "password", true),
+            new TrainingTypeEntity(TrainingType.AEROBIC)
         ));
     }
 
@@ -210,23 +155,13 @@ class TrainerEntityDaoImplTest {
 
     @Test
     public void testFindByUsername() {
-        Mockito.when(trainerStorage.findByUsername("username")).thenReturn(Optional.of(new TrainerEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                SpecializationType.FITNESS
+        Mockito.when(trainerEntityRepository.findByUsername("username")).thenReturn(Optional.of(new TrainerEntity(
+            new UserEntity("first", "last", "username", "password", true),
+            new TrainingTypeEntity(TrainingType.AEROBIC)
         )));
         Assertions.assertThat(testSubject.findByUsername("username")).isEqualTo(Optional.of(new TrainerEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                SpecializationType.FITNESS
+            new UserEntity("first", "last", "username", "password", true),
+            new TrainingTypeEntity(TrainingType.AEROBIC)
         )));
     }
 
@@ -238,23 +173,13 @@ class TrainerEntityDaoImplTest {
 
     @Test
     public void testFindById() {
-        Mockito.when(trainerStorage.findById(1L)).thenReturn(Optional.of(new TrainerEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                SpecializationType.FITNESS
+        Mockito.when(trainerEntityRepository.findById(1L)).thenReturn(Optional.of(new TrainerEntity(
+            new UserEntity("first", "last", "username", "password", true),
+            new TrainingTypeEntity(TrainingType.AEROBIC)
         )));
         Assertions.assertThat(testSubject.findById(1L)).isEqualTo(Optional.of(new TrainerEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                SpecializationType.FITNESS
+            new UserEntity("first", "last", "username", "password", true),
+            new TrainingTypeEntity(TrainingType.AEROBIC)
         )));
     }
 }

@@ -6,6 +6,7 @@ import org.assertj.core.api.Assertions;
 import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.entity.TraineeEntity;
 import org.example.entity.TrainingType;
+import org.example.entity.UserEntity;
 import org.example.facade.core.TrainingFacade;
 import org.example.mapper.training.TrainingCreationRequestDtoToTrainingEntityMapper;
 import org.example.mapper.training.TrainingEntityToTrainingCreationResponseDtoMapper;
@@ -14,6 +15,7 @@ import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
 import org.example.service.core.TrainingService;
+import org.example.service.core.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,10 +32,10 @@ class TrainingFacadeImplTest {
     private TrainingService trainingService;
 
     @Mock
-    private IdService idService;
+    private TraineeService traineeService;
 
     @Mock
-    private TraineeService traineeService;
+    private UserService userService;
 
     @Mock
     private TrainerService trainerService;
@@ -53,10 +55,10 @@ class TrainingFacadeImplTest {
             trainingService,
             traineeService,
             trainerService,
+            userService,
             trainingCreationRequestDtoToTrainingEntityMapper,
             trainingEntityToTrainingCreationResponseDtoMapper,
-            trainingEntityToTrainingRetrievalResponseDtoMapper,
-            idService
+            trainingEntityToTrainingRetrievalResponseDtoMapper
         );
     }
 
@@ -72,7 +74,7 @@ class TrainingFacadeImplTest {
                 -1L,
                 1L,
                 "training",
-                TrainingType.AEROBIC,
+                1L,
                 Date.valueOf("2024-10-10"),
                 1000L
         )).getErrors().getFirst()).isEqualTo("The trainee id must be positive: -1 specified");
@@ -84,7 +86,7 @@ class TrainingFacadeImplTest {
                 1L,
                 -1L,
                 "training",
-                TrainingType.AEROBIC,
+                1L,
                 Date.valueOf("2024-10-10"),
                 1000L
         )).getErrors().getFirst()).isEqualTo("The trainer id must be positive: -1 specified");
@@ -97,7 +99,7 @@ class TrainingFacadeImplTest {
                 1L,
                 1L,
                 "training",
-                TrainingType.AEROBIC,
+                1L,
                 Date.valueOf("2024-10-10"),
                 1000L
         )).getErrors().getFirst())
@@ -108,20 +110,14 @@ class TrainingFacadeImplTest {
     public void testCreateTrainingWhenTrainerDoesNotExist() {
         Mockito.when(trainerService.findById(1L)).thenReturn(Optional.empty());
         Mockito.when(traineeService.findById(1L)).thenReturn(Optional.of(new TraineeEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                Date.valueOf("2024-10-10"),
-                "manchester"
+            new UserEntity("first", "last", "username", "password", true),
+            Date.valueOf("2024-10-10"), "address"
         )));
         Assertions.assertThat(testSubject.createTraining(new TrainingCreationRequestDto(
                 1L,
                 1L,
                 "training",
-                TrainingType.AEROBIC,
+                1L,
                 Date.valueOf("2024-10-10"),
                 1000L
         )).getErrors().getFirst())

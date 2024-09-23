@@ -4,6 +4,7 @@ import java.sql.Date;
 import org.assertj.core.api.Assertions;
 import org.example.dto.response.TraineeUpdateResponseDto;
 import org.example.entity.TraineeEntity;
+import org.example.entity.UserEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,21 +25,16 @@ class TraineeEntityToTraineeUpdateResponseDtoMapperImplTest {
 
     @Test
     public void testWhenValid() {
-        Assertions.assertThat(testSubject.map(new TraineeEntity(
-            1L,
-            "first",
-            "last",
-            "username",
-            "pwd",
-            true,
+        UserEntity user = new UserEntity("first", "last", "username", "password", true);
+        user.setId(1L);
+        TraineeEntity trainee = new TraineeEntity(
+            user,
             Date.valueOf("2024-10-10"),
             "address"
-        ))).isEqualTo(new TraineeUpdateResponseDto(
+        );
+        trainee.setId(1L);
+        Assertions.assertThat(testSubject.map(trainee)).isEqualTo(new TraineeUpdateResponseDto(
             1L,
-            "first",
-            "last",
-            "username",
-            "pwd",
             true,
             Date.valueOf("2024-10-10"),
             "address"

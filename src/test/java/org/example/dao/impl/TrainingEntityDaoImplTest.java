@@ -1,10 +1,16 @@
 package org.example.dao.impl;
 
 import java.sql.Date;
+import java.util.Optional;
 import org.assertj.core.api.Assertions;
+import org.example.entity.TraineeEntity;
+import org.example.entity.TrainerEntity;
 import org.example.entity.TrainingEntity;
 import org.example.entity.TrainingType;
+import org.example.entity.TrainingTypeEntity;
+import org.example.entity.UserEntity;
 import org.example.exception.TrainingNotFoundException;
+import org.example.repository.impl.TrainingEntityRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,12 +25,12 @@ class TrainingEntityDaoImplTest {
     private TrainingDaoImpl testSubject;
 
     @Mock
-    private TrainingStorageImpl trainingStorage;
+    private TrainingEntityRepositoryImpl trainingEntityRepository;
 
     @BeforeEach
     public void init() {
         testSubject = new TrainingDaoImpl();
-        testSubject.setStorage(trainingStorage);
+        testSubject.setStorage(trainingEntityRepository);
     }
 
     @Test
@@ -35,23 +41,35 @@ class TrainingEntityDaoImplTest {
 
     @Test
     public void testGet() {
-        Mockito.when(trainingStorage.get(1L)).thenReturn(new TrainingEntity(
-                1L,
-                1L,
-                1L,
-                "training",
-                TrainingType.AEROBIC,
+        Mockito.when(trainingEntityRepository.findById(1L)).thenReturn(Optional.of(new TrainingEntity(
+            new TraineeEntity(
+                new UserEntity("first", "last", "username", "password", true),
                 Date.valueOf("2024-10-10"),
-                1000L
-        ));
+                "address"
+            ),
+            new TrainerEntity(
+                new UserEntity("f", "l", "u", "p", true),
+                new TrainingTypeEntity(TrainingType.WEIGHTLIFTING)
+            ),
+            "training",
+            new TrainingTypeEntity(TrainingType.WEIGHTLIFTING),
+            Date.valueOf("2024-10-10"),
+            1000L
+        )));
         Assertions.assertThat(testSubject.get(1L)).isEqualTo(new TrainingEntity(
-                1L,
-                1L,
-                1L,
-                "training",
-                TrainingType.AEROBIC,
+            new TraineeEntity(
+                new UserEntity("first", "last", "username", "password", true),
                 Date.valueOf("2024-10-10"),
-                1000L
+                "address"
+            ),
+            new TrainerEntity(
+                new UserEntity("f", "l", "u", "p", true),
+                new TrainingTypeEntity(TrainingType.WEIGHTLIFTING)
+            ),
+            "training",
+            new TrainingTypeEntity(TrainingType.WEIGHTLIFTING),
+            Date.valueOf("2024-10-10"),
+            1000L
         ));
     }
 
@@ -64,31 +82,49 @@ class TrainingEntityDaoImplTest {
     @Test
     public void testSave() {
         testSubject.save(new TrainingEntity(
-                1L,
-                1L,
-                1L,
-                "training",
-                TrainingType.AEROBIC,
+            new TraineeEntity(
+                new UserEntity("first", "last", "username", "password", true),
                 Date.valueOf("2024-10-10"),
-                1000L
+                "address"
+            ),
+            new TrainerEntity(
+                new UserEntity("f", "l", "u", "p", true),
+                new TrainingTypeEntity(TrainingType.WEIGHTLIFTING)
+            ),
+            "training",
+            new TrainingTypeEntity(TrainingType.WEIGHTLIFTING),
+            Date.valueOf("2024-10-10"),
+            1000L
         ));
-        Mockito.when(trainingStorage.get(1L)).thenReturn(new TrainingEntity(
-                1L,
-                1L,
-                1L,
-                "training",
-                TrainingType.AEROBIC,
+        Mockito.when(trainingEntityRepository.findById(1L)).thenReturn(Optional.of(new TrainingEntity(
+            new TraineeEntity(
+                new UserEntity("first", "last", "username", "password", true),
                 Date.valueOf("2024-10-10"),
-                1000L
-        ));
+                "address"
+            ),
+            new TrainerEntity(
+                new UserEntity("f", "l", "u", "p", true),
+                new TrainingTypeEntity(TrainingType.WEIGHTLIFTING)
+            ),
+            "training",
+            new TrainingTypeEntity(TrainingType.WEIGHTLIFTING),
+            Date.valueOf("2024-10-10"),
+            1000L
+        )));
         Assertions.assertThat(testSubject.get(1L)).isEqualTo(new TrainingEntity(
-                1L,
-                1L,
-                1L,
-                "training",
-                TrainingType.AEROBIC,
+            new TraineeEntity(
+                new UserEntity("first", "last", "username", "password", true),
                 Date.valueOf("2024-10-10"),
-                1000L
+                "address"
+            ),
+            new TrainerEntity(
+                new UserEntity("f", "l", "u", "p", true),
+                new TrainingTypeEntity(TrainingType.WEIGHTLIFTING)
+            ),
+            "training",
+            new TrainingTypeEntity(TrainingType.WEIGHTLIFTING),
+            Date.valueOf("2024-10-10"),
+            1000L
         ));
     }
 
@@ -100,33 +136,51 @@ class TrainingEntityDaoImplTest {
 
     @Test
     public void testUpdate() {
-        Mockito.when(trainingStorage.get(1L)).thenReturn(new TrainingEntity(
-                1L,
-                1L,
-                1L,
-                "training",
-                TrainingType.AEROBIC,
+        Mockito.when(trainingEntityRepository.findById(1L)).thenReturn(Optional.of(new TrainingEntity(
+            new TraineeEntity(
+                new UserEntity("first", "last", "username", "password", true),
                 Date.valueOf("2024-10-10"),
-                1000L
-        ));
+                "address"
+            ),
+            new TrainerEntity(
+                new UserEntity("f", "l", "u", "p", true),
+                new TrainingTypeEntity(TrainingType.WEIGHTLIFTING)
+            ),
+            "training",
+            new TrainingTypeEntity(TrainingType.WEIGHTLIFTING),
+            Date.valueOf("2024-10-10"),
+            1000L
+        )));
         TrainingEntity initialTrainingEntity = testSubject.get(1L);
-        Mockito.when(trainingStorage.get(1L)).thenReturn(new TrainingEntity(
-                1L,
-                1L,
-                1L,
-                "training",
-                TrainingType.AEROBIC,
+        Mockito.when(trainingEntityRepository.findById(1L)).thenReturn(Optional.of(new TrainingEntity(
+            new TraineeEntity(
+                new UserEntity("first", "last", "username", "password", true),
                 Date.valueOf("2024-10-10"),
-                2000L
-        ));
+                "address"
+            ),
+            new TrainerEntity(
+                new UserEntity("f", "l", "u", "p", true),
+                new TrainingTypeEntity(TrainingType.WEIGHTLIFTING)
+            ),
+            "training-name",
+            new TrainingTypeEntity(TrainingType.WEIGHTLIFTING),
+            Date.valueOf("2024-10-10"),
+            1000L
+        )));
         testSubject.update(new TrainingEntity(
-                1L,
-                1L,
-                1L,
-                "training",
-                TrainingType.AEROBIC,
+            new TraineeEntity(
+                new UserEntity("first", "last", "username", "password", true),
                 Date.valueOf("2024-10-10"),
-                2000L
+                "address"
+            ),
+            new TrainerEntity(
+                new UserEntity("f", "l", "u", "p", true),
+                new TrainingTypeEntity(TrainingType.WEIGHTLIFTING)
+            ),
+            "training-name",
+            new TrainingTypeEntity(TrainingType.WEIGHTLIFTING),
+            Date.valueOf("2024-10-10"),
+            1000L
         ));
         Assertions.assertThat(testSubject.get(1L)).isNotEqualTo(initialTrainingEntity);
     }
@@ -140,17 +194,22 @@ class TrainingEntityDaoImplTest {
     @Test
     public void testDelete() {
         testSubject.save(new TrainingEntity(
-                1L,
-                1L,
-                1L,
-                "training",
-                TrainingType.AEROBIC,
+            new TraineeEntity(
+                new UserEntity("first", "last", "username", "password", true),
                 Date.valueOf("2024-10-10"),
-                1000L
+                "address"
+            ),
+            new TrainerEntity(
+                new UserEntity("f", "l", "u", "p", true),
+                new TrainingTypeEntity(TrainingType.WEIGHTLIFTING)
+            ),
+            "training",
+            new TrainingTypeEntity(TrainingType.WEIGHTLIFTING),
+            Date.valueOf("2024-10-10"),
+            1000L
         ));
-        Mockito.when(trainingStorage.remove(1L)).thenReturn(true);
         testSubject.delete(1L);
-        Mockito.when(trainingStorage.get(1L)).thenThrow(TrainingNotFoundException.class);
+        Mockito.when(trainingEntityRepository.findById(1L)).thenReturn(Optional.empty());
         Assertions.assertThatThrownBy(() -> testSubject.get(1L))
                 .isExactlyInstanceOf(TrainingNotFoundException.class);
     }

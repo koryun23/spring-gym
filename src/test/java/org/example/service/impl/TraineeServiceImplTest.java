@@ -36,12 +36,6 @@ class TraineeServiceImplTest {
     }
 
     @Test
-    public void testDeleteWhenNull() {
-        Assertions.assertThatThrownBy(() -> testSubject.delete(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
     public void testSelectWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.select(null))
                 .isExactlyInstanceOf(IllegalArgumentException.class);

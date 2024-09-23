@@ -10,25 +10,15 @@ class TraineeEntityTest {
     public void testTraineeEquals() {
 
         TraineeEntity trainee1 = new TraineeEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                Date.valueOf("2002-10-10"),
-                "manchester"
+            new UserEntity("first", "last", "username", "password", true),
+            Date.valueOf("2024-10-10"),
+            "address"
         );
 
         TraineeEntity trainee2 = new TraineeEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                Date.valueOf("2002-10-10"),
-                "manchester"
+            new UserEntity("first", "last", "username", "password", true),
+            Date.valueOf("2024-10-10"),
+            "address"
         );
 
         Assertions.assertThat(trainee1).isEqualTo(trainee2);
@@ -37,25 +27,15 @@ class TraineeEntityTest {
     @Test
     public void testTraineeHashCode() {
         TraineeEntity trainee1 = new TraineeEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                Date.valueOf("2002-10-10"),
-                "manchester"
+            new UserEntity("first", "last", "username", "password", true),
+            Date.valueOf("2024-10-10"),
+            "address"
         );
 
         TraineeEntity trainee2 = new TraineeEntity(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                Date.valueOf("2002-10-10"),
-                "manchester"
+            new UserEntity("first", "last", "username", "password", true),
+            Date.valueOf("2024-10-10"),
+            "address"
         );
 
         Assertions.assertThat(trainee1.hashCode()).isEqualTo(trainee2.hashCode());

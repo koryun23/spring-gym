@@ -3,6 +3,9 @@ package org.example.mapper.trainer;
 import org.assertj.core.api.Assertions;
 import org.example.dto.response.TrainerRetrievalResponseDto;
 import org.example.entity.TrainerEntity;
+import org.example.entity.TrainingType;
+import org.example.entity.TrainingTypeEntity;
+import org.example.entity.UserEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,22 +26,20 @@ class TrainerEntityToTrainerRetrievalResponseDtoMapperImplTest {
 
     @Test
     public void testWhenValid() {
-        Assertions.assertThat(testSubject.map(new TrainerEntity(
+        UserEntity user = new UserEntity("first", "last", "username", "password", true);
+        TrainingTypeEntity specialization = new TrainingTypeEntity(TrainingType.AEROBIC);
+        TrainerEntity trainer = new TrainerEntity(
+            user,
+            specialization
+        );
+        user.setId(1L);
+        specialization.setId(1L);
+        trainer.setId(1L);
+        Assertions.assertThat(testSubject.map(trainer)).isEqualTo(new TrainerRetrievalResponseDto(
             1L,
-            "first",
-            "last",
-            "username",
-            "password",
-            true,
-            SpecializationType.FITNESS
-        ))).isEqualTo(new TrainerRetrievalResponseDto(
             1L,
-            "first",
-            "last",
-            "username",
-            "password",
             true,
-            SpecializationType.FITNESS
+            1L
         ));
     }
 }

@@ -5,9 +5,13 @@ import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.example.entity.TraineeEntity;
 import org.example.entity.TrainerEntity;
+import org.example.entity.TrainingType;
+import org.example.entity.TrainingTypeEntity;
+import org.example.entity.UserEntity;
 import org.example.exception.InvalidIdException;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
+import org.example.service.core.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,9 +30,12 @@ class UsernamePasswordServiceImplTest {
     @Mock
     private TrainerService trainerService;
 
+    @Mock
+    private UserService userService;
+
     @BeforeEach
     public void init() {
-        testSubject = new UsernamePasswordServiceImpl(traineeService, trainerService);
+        testSubject = new UsernamePasswordServiceImpl(traineeService, trainerService, userService);
     }
 
     @Test
@@ -83,8 +90,7 @@ class UsernamePasswordServiceImplTest {
     @Test
     public void testGetUsernameWhenUserWithUsernameDoesNotExist() {
         //given
-        Mockito.when(traineeService.findByUsername("first.last")).thenReturn(Optional.empty());
-        Mockito.when(trainerService.findByUsername("first.last")).thenReturn(Optional.empty());
+        Mockito.when(userService.findByUsername("first.last")).thenReturn(Optional.empty());
 
         //when
         String username = testSubject.username("first", "last", 1L, "suffix");
@@ -96,11 +102,10 @@ class UsernamePasswordServiceImplTest {
     @Test
     public void testGetUsernameWhenTrainerDoesNotExist() {
         //given
-        Mockito.when(traineeService.findByUsername("first.last")).thenReturn(Optional.of(new TraineeEntity(
-            1L, "first", "last", "first.last", "password", true,
-            Date.valueOf("2024-10-10"), "address"
-        )));
-        Mockito.when(trainerService.findByUsername("first.last")).thenReturn(Optional.empty());
+        UserEntity user = new UserEntity("first", "last", "first.last", "password", true);
+        user.setId(1L);
+
+        Mockito.when(userService.findByUsername("first.last")).thenReturn(Optional.of(user));
 
         //when
         String username = testSubject.username("first", "last", 1L, "suffix");
@@ -112,11 +117,10 @@ class UsernamePasswordServiceImplTest {
     @Test
     public void testGetUsernameWhenTraineeDoesNotExist() {
         //given
-        Mockito.when(trainerService.findByUsername("first.last")).thenReturn(Optional.of(new TrainerEntity(
-            1L, "first", "last", "first.last", "password", true,
-            SpecializationType.FITNESS
-        )));
-        Mockito.when(traineeService.findByUsername("first.last")).thenReturn(Optional.empty());
+        UserEntity user = new UserEntity("first", "last", "first.last", "password", true);
+        user.setId(1L);
+
+        Mockito.when(userService.findByUsername("first.last")).thenReturn(Optional.of(user));
 
         //when
         String username = testSubject.username("first", "last", 1L, "suffix");
@@ -128,18 +132,16 @@ class UsernamePasswordServiceImplTest {
     @Test
     public void testGetUsernameWhenUserExists() {
         //given
-        Mockito.when(trainerService.findByUsername("first.last")).thenReturn(Optional.of(new TrainerEntity(
-            1L, "first", "last", "first.last", "password", true,
-            SpecializationType.FITNESS
-        )));
-        Mockito.when(traineeService.findByUsername("first.last")).thenReturn(Optional.of(new TraineeEntity(
-            2L, "first", "last", "first.last.2", "password", true,
-            Date.valueOf("2024-10-10"), "address"
-        )));
-        Mockito.when(trainerService.findByUsername("first.last.2")).thenReturn(Optional.empty());
-        Mockito.when(traineeService.findByUsername("first.last.2")).thenReturn(Optional.of(new TraineeEntity(
-            2L, "first", "last", "first.last.2", "password", true,
-            Date.valueOf("2024-10-10"), "address"
+        Mockito.when(userService.findByUsername("first.last")).thenReturn(
+            Optional.of(
+                new UserEntity(
+                    "first", "last", "first.last", "password", true
+                )
+            )
+        );
+
+        Mockito.when(userService.findByUsername("first.last.2")).thenReturn(Optional.of(new UserEntity(
+            "first", "last", "first.last.2", "password", true
         )));
 
         //when

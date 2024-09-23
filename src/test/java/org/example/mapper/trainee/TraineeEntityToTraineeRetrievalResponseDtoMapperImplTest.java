@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.sql.Date;
 import org.example.dto.response.TraineeRetrievalResponseDto;
 import org.example.entity.TraineeEntity;
+import org.example.entity.UserEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,21 +27,17 @@ class TraineeEntityToTraineeRetrievalResponseDtoMapperImplTest {
 
     @Test
     public void testWhenValid() {
-        assertThat(testSubject.map(new TraineeEntity(
-            1L,
-            "first",
-            "last",
-            "username",
-            "pwd",
-            true,
+        UserEntity user = new UserEntity("first", "last", "username", "password", true);
+        user.setId(1L);
+        TraineeEntity trainee = new TraineeEntity(
+            user,
             Date.valueOf("2024-10-10"),
             "address"
-        ))).isEqualTo(new TraineeRetrievalResponseDto(
+        );
+        trainee.setId(1L);
+        assertThat(testSubject.map(trainee)).isEqualTo(new TraineeRetrievalResponseDto(
             1L,
-            "first",
-            "last",
-            "username",
-            "pwd",
+            1L,
             true,
             Date.valueOf("2024-10-10"),
             "address"
