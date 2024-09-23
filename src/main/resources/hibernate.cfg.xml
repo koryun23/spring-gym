@@ -8,15 +8,15 @@
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:6432/postgres</property>
         <property name="hibernate.connection.username">postgres</property>
-        <property name="hibernate.connection.password"> </property>
+        <property name="hibernate.connection.password"></property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">none</property>
         <property name="hibernate.current_session_context_class">thread</property>
-<!--        <property name="hibernate.default_schema">classpath:/schema.sql</property>-->
-        <mapping class="org.example.entity.UserEntity" />
-        <mapping class="org.example.entity.TrainerEntity" />
-        <mapping class="org.example.entity.TraineeEntity" />
-        <mapping class="org.example.entity.TrainingEntity" />
-        <mapping class="org.example.entity.TrainingTypeEntity" />
+        <!--        <property name="hibernate.default_schema">classpath:/schema.sql</property>-->
+        <mapping class="org.example.entity.UserEntity"/>
+        <mapping class="org.example.entity.TrainerEntity"/>
+        <mapping class="org.example.entity.TraineeEntity"/>
+        <mapping class="org.example.entity.TrainingEntity"/>
+        <mapping class="org.example.entity.TrainingTypeEntity"/>
     </session-factory>
 </hibernate-configuration>

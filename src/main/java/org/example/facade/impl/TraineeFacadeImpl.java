@@ -155,7 +155,8 @@ public class TraineeFacadeImpl implements TraineeFacade {
         Assert.notNull(id, "TraineeEntity id must not be null");
         LOGGER.info("Retrieving a TraineeEntity with an id of {}", id);
 
-        if(!userService.usernamePasswordMatching(requestDto.getRetrieverUsername(), requestDto.getRetrieverPassword())) {
+        if (!userService.usernamePasswordMatching(requestDto.getRetrieverUsername(),
+            requestDto.getRetrieverPassword())) {
             return new TraineeRetrievalResponseDto(List.of("Authentication failed"));
         }
 
@@ -184,7 +185,8 @@ public class TraineeFacadeImpl implements TraineeFacade {
         Assert.hasText(username, "Username must not be empty");
         LOGGER.info("Retrieving a Trainee with a username of {}", username);
 
-        if (!userService.usernamePasswordMatching(requestDto.getRetrieverUsername(), requestDto.getRetrieverPassword())) {
+        if (!userService.usernamePasswordMatching(requestDto.getRetrieverUsername(),
+            requestDto.getRetrieverPassword())) {
             return new TraineeRetrievalResponseDto(List.of("Authentication failed"));
         }
         Optional<TraineeEntity> optionalTrainee = traineeService.findByUsername(username);
@@ -209,7 +211,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
         LOGGER.info("Deleting a trainee according to the TraineeDeletionByIdRequestDto - {}", requestDto);
         Assert.notNull(requestDto, "TraineeDeletionByIdRequestDto must not be null");
 
-        if(!userService.usernamePasswordMatching(requestDto.getDeleterUsername(), requestDto.getDeleterPassword())) {
+        if (!userService.usernamePasswordMatching(requestDto.getDeleterUsername(), requestDto.getDeleterPassword())) {
             return new TraineeDeletionResponseDto(List.of("Authentication failed"));
         }
 
@@ -241,7 +243,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
         Assert.hasText(username, "Username must not be empty");
         LOGGER.info("Deleting a Trainee with a username of {}", username);
 
-        if(!userService.usernamePasswordMatching(requestDto.getDeleterUsername(), requestDto.getDeleterPassword())) {
+        if (!userService.usernamePasswordMatching(requestDto.getDeleterUsername(), requestDto.getDeleterPassword())) {
             return new TraineeDeletionResponseDto(List.of("Authentication failed"));
         }
 
@@ -260,7 +262,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
         Assert.notNull(id, "Id must not be null");
         LOGGER.info("Switching the activation state of a trainee with an id of {}", id);
 
-        if(!userService.usernamePasswordMatching(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword())) {
+        if (!userService.usernamePasswordMatching(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword())) {
             return new TraineeUpdateResponseDto(List.of("Authentication failed"));
         }
 
