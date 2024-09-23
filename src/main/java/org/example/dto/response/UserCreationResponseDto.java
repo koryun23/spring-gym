@@ -1,6 +1,5 @@
 package org.example.dto.response;
 
-import java.util.Objects;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +20,9 @@ public class UserCreationResponseDto {
     private String password;
     private Boolean isActive;
 
+    /**
+     * Constructor.
+     */
     public UserCreationResponseDto(Long userId, String firstName, String lastName, String username, String password,
                                    Boolean isActive) {
         this.userId = userId;

@@ -31,7 +31,7 @@ class TraineeDaoImplTest {
     @Test
     public void testGetWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.get(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -52,7 +52,7 @@ class TraineeDaoImplTest {
     @Test
     public void testSaveWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.save(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -77,7 +77,7 @@ class TraineeDaoImplTest {
     @Test
     public void testUpdateWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.update(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -112,7 +112,7 @@ class TraineeDaoImplTest {
     @Test
     public void testDeleteWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.delete(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -125,19 +125,19 @@ class TraineeDaoImplTest {
         testSubject.delete(1L);
         Mockito.when(traineeRepository.findById(1L)).thenThrow(TraineeNotFoundException.class);
         Assertions.assertThatThrownBy(() -> testSubject.get(1L))
-                .isExactlyInstanceOf(TraineeNotFoundException.class);
+            .isExactlyInstanceOf(TraineeNotFoundException.class);
     }
 
     @Test
     public void testGetByUsernameWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.getByUsername(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void testGetByUsernameWhenEmpty() {
         Assertions.assertThatThrownBy(() -> testSubject.getByUsername(""))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -157,13 +157,13 @@ class TraineeDaoImplTest {
     @Test
     public void testFindByUsernameWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.findByUsername(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void testFindByUsernameWhenEmpty() {
         Assertions.assertThatThrownBy(() -> testSubject.findByUsername(""))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -183,7 +183,7 @@ class TraineeDaoImplTest {
     @Test
     public void testFindByIdWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.findById(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

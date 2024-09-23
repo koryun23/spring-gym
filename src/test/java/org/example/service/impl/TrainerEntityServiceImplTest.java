@@ -26,48 +26,48 @@ class TrainerEntityServiceImplTest {
     @Test
     public void testCreateWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.create(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void testUpdateWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.update(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void testSelectWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.select(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void testSelectByUsernameWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.selectByUsername(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void testSelectByUsernameWhenEmpty() {
         Assertions.assertThatThrownBy(() -> testSubject.selectByUsername(""))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void testFindByIdWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.findById(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void testFindByUsernameWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.findByUsername(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void testFindByUsernameWhenEmpty() {
         Assertions.assertThatThrownBy(() -> testSubject.findByUsername(""))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 }

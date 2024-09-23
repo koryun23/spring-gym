@@ -1,6 +1,5 @@
 package org.example.dto.request;
 
-import java.util.Objects;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +24,8 @@ public class TrainerUpdateRequestDto {
     /**
      * Constructor.
      */
-    public TrainerUpdateRequestDto(Long trainerId, String firstName, String lastName, String username, String password, boolean isActive, Long trainingTypeId) {
+    public TrainerUpdateRequestDto(Long trainerId, String firstName, String lastName, String username, String password,
+                                   boolean isActive, Long trainingTypeId) {
         this.trainerId = trainerId;
         this.firstName = firstName;
         this.lastName = lastName;

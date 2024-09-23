@@ -1,23 +1,16 @@
 package org.example.facade.impl;
 
-import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
 import org.example.dto.response.TraineeCreationResponseDto;
 import org.example.dto.response.TraineeDeletionResponseDto;
 import org.example.dto.response.TraineeRetrievalResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
-import org.example.dto.response.TrainingListRetrievalResponseDto;
-import org.example.dto.response.TrainingRetrievalResponseDto;
 import org.example.entity.TraineeEntity;
-import org.example.entity.TrainingEntity;
 import org.example.entity.UserEntity;
 import org.example.exception.TraineeNotFoundException;
-import org.example.exception.UserNotFoundException;
 import org.example.facade.core.TraineeFacade;
 import org.example.mapper.trainee.TraineeCreationRequestDtoToTraineeEntityMapper;
 import org.example.mapper.trainee.TraineeEntityToTraineeCreationResponseDtoMapper;
@@ -178,7 +171,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
 
         Optional<TraineeEntity> optionalTrainee = traineeService.findByUsername(username);
 
-        if(optionalTrainee.isEmpty()) {
+        if (optionalTrainee.isEmpty()) {
             return new TraineeRetrievalResponseDto(List.of(
                 String.format("Trainee with a username of %s not found", username)
             ));
@@ -270,7 +263,6 @@ public class TraineeFacadeImpl implements TraineeFacade {
         LOGGER.info("Successfully changed the password of a Trainee with an id of {}", id);
         return responseDto;
     }
-
 
 
 }

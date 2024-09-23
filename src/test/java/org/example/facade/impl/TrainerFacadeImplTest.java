@@ -2,12 +2,7 @@ package org.example.facade.impl;
 
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
-import org.example.dto.request.TrainerCreationRequestDto;
 import org.example.dto.request.TrainerUpdateRequestDto;
-import org.example.entity.TrainerEntity;
-import org.example.entity.TrainingType;
-import org.example.entity.TrainingTypeEntity;
-import org.example.entity.UserEntity;
 import org.example.facade.core.TrainerFacade;
 import org.example.mapper.trainer.TrainerCreationRequestDtoToTrainerEntityMapper;
 import org.example.mapper.trainer.TrainerEntityToTrainerCreationResponseDtoMapper;
@@ -85,45 +80,45 @@ class TrainerFacadeImplTest {
     @Test
     public void testCreateTrainerWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.createTrainer(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void testUpdateTrainerWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.updateTrainer(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void testUpdateTrainerWhenTrainerDoesNotExist() {
         Mockito.when(trainerService.findById(1L)).thenReturn(Optional.empty());
         Assertions.assertThat(testSubject.updateTrainer(new TrainerUpdateRequestDto(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                false,
-                1L
+            1L,
+            "first",
+            "last",
+            "username",
+            "password",
+            false,
+            1L
         )).getErrors().getFirst()).isEqualTo("TrainerEntity with the specified id of 1 does not exist");
     }
 
     @Test
     public void testRetrieveTrainerWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.retrieveTrainer(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void testRetrieveTrainerWhenNegative() {
         Assertions.assertThat(testSubject.retrieveTrainer(-1L).getErrors().getFirst())
-                .isEqualTo("TrainerEntity id must be positive: -1 specified");
+            .isEqualTo("TrainerEntity id must be positive: -1 specified");
     }
 
     @Test
     public void testRetrieveTrainerWhenDoesNotExist() {
         Mockito.when(trainerService.findById(1L)).thenReturn(Optional.empty());
         Assertions.assertThat(testSubject.retrieveTrainer(1L).getErrors().getFirst())
-                .isEqualTo("A TrainerEntity with a specified id of 1 not found");
+            .isEqualTo("A TrainerEntity with a specified id of 1 not found");
     }
 }

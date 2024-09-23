@@ -87,7 +87,7 @@ public class TrainingDaoImpl implements TrainingDao {
                                                                     String trainerUsername, Long trainingTypeId) {
         Assert.notNull(traineeUsername, "Trainee Username must not be null");
         LOGGER.info("Retrieving all Training Entities of a trainee({}) based on the following criteria - "
-            + "from = {}, to = {}, trainerUsername = {}, trainingTypeId = {}",
+                + "from = {}, to = {}, trainerUsername = {}, trainingTypeId = {}",
             traineeUsername, from, to, trainerUsername, trainingTypeId);
 
         List<TrainingEntity> all =

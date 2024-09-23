@@ -36,7 +36,7 @@ class TrainingEntityDaoImplTest {
     @Test
     public void testGetWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.get(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -76,7 +76,7 @@ class TrainingEntityDaoImplTest {
     @Test
     public void testSaveWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.save(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -131,7 +131,7 @@ class TrainingEntityDaoImplTest {
     @Test
     public void testUpdateWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.update(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -188,7 +188,7 @@ class TrainingEntityDaoImplTest {
     @Test
     public void testDeleteWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.delete(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -211,6 +211,6 @@ class TrainingEntityDaoImplTest {
         testSubject.delete(1L);
         Mockito.when(trainingEntityRepository.findById(1L)).thenReturn(Optional.empty());
         Assertions.assertThatThrownBy(() -> testSubject.get(1L))
-                .isExactlyInstanceOf(TrainingNotFoundException.class);
+            .isExactlyInstanceOf(TrainingNotFoundException.class);
     }
 }

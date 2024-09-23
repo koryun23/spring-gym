@@ -1,12 +1,7 @@
 package org.example.service.impl;
 
-import java.sql.Date;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
-import org.example.entity.TraineeEntity;
-import org.example.entity.TrainerEntity;
-import org.example.entity.TrainingType;
-import org.example.entity.TrainingTypeEntity;
 import org.example.entity.UserEntity;
 import org.example.exception.InvalidIdException;
 import org.example.service.core.TraineeService;
@@ -42,7 +37,7 @@ class UsernamePasswordServiceImplTest {
     public void testWhenFirstNameIsNull() {
         Assertions.assertThatThrownBy(() -> testSubject.username(
             null, "last", 1L, "suffix"
-            )).isExactlyInstanceOf(IllegalArgumentException.class);
+        )).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

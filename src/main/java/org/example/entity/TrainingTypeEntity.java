@@ -1,7 +1,5 @@
 package org.example.entity;
 
-import java.util.List;
-import jakarta.persistence.Transient;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,9 +8,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-import jakarta.persistence.OneToMany;
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,9 +46,9 @@ public class TrainingTypeEntity {
 
     @Override
     public String toString() {
-        return "TrainingTypeEntity{" +
-            "trainingType=" + trainingType +
-            ", id=" + id +
-            '}';
+        return "TrainingTypeEntity{"
+            + "trainingType=" + trainingType
+            + ", id=" + id
+            + '}';
     }
 }

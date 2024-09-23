@@ -1,6 +1,5 @@
 package org.example.dto.request;
 
-import java.util.Objects;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +19,9 @@ public class UserCreationRequestDto {
     private String password;
     private Boolean isActive;
 
+    /**
+     * Constructor.
+     */
     public UserCreationRequestDto(String firstName, String lastName, Boolean isActive) {
         this.firstName = firstName;
         this.lastName = lastName;

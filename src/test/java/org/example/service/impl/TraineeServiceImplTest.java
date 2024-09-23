@@ -26,18 +26,18 @@ class TraineeServiceImplTest {
     @Test
     public void testCreateWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.create(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void testUpdateWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.update(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void testSelectWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.select(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 }

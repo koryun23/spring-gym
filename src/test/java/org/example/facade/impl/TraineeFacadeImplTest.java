@@ -3,11 +3,7 @@ package org.example.facade.impl;
 import java.sql.Date;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
-import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
-import org.example.dto.response.TraineeCreationResponseDto;
-import org.example.entity.TraineeEntity;
-import org.example.entity.UserEntity;
 import org.example.exception.TraineeNotFoundException;
 import org.example.facade.core.TraineeFacade;
 import org.example.mapper.trainee.TraineeCreationRequestDtoToTraineeEntityMapper;
@@ -86,53 +82,53 @@ class TraineeFacadeImplTest {
     @Test
     public void testCreateTraineeWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.createTrainee(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void testUpdateTraineeWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.updateTrainee(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void testUpdateTraineeWhenUserDoesNotExist() {
         Mockito.when(traineeService.findById(1L)).thenReturn(Optional.empty());
         Assertions.assertThatThrownBy(() -> testSubject.updateTrainee(new TraineeUpdateRequestDto(
-                1L,
-                "first",
-                "last",
-                "username",
-                "password",
-                true,
-                Date.valueOf("2024-10-10"),
-                "manchester"
+            1L,
+            "first",
+            "last",
+            "username",
+            "password",
+            true,
+            Date.valueOf("2024-10-10"),
+            "manchester"
         ))).isExactlyInstanceOf(TraineeNotFoundException.class);
     }
 
     @Test
     public void testRetrieveTraineeWhenNegative() {
         Assertions.assertThat(testSubject.retrieveTrainee(-1L).getErrors().getFirst())
-                .isEqualTo("TraineeEntity id must be positive: -1 specified");
+            .isEqualTo("TraineeEntity id must be positive: -1 specified");
     }
 
     @Test
     public void testRetrieveTraineeWhenTraineeDoesNotExist() {
         Mockito.when(traineeService.findById(1L)).thenReturn(Optional.empty());
         Assertions.assertThat(testSubject.retrieveTrainee(1L).getErrors().getFirst())
-                .isEqualTo("A TraineeEntity with an id - 1, does not exist");
+            .isEqualTo("A TraineeEntity with an id - 1, does not exist");
     }
 
     @Test
     public void testDeleteTraineeWhenNegative() {
         Assertions.assertThat(testSubject.deleteTrainee(-1L).getErrors().getFirst())
-                .isEqualTo("TraineeEntity id must be positive: -1 specified");
+            .isEqualTo("TraineeEntity id must be positive: -1 specified");
     }
 
     @Test
     public void testDeleteTraineeWhenUserDoesNotExist() {
         Mockito.when(traineeService.findById(1L)).thenReturn(Optional.empty());
         Assertions.assertThat(testSubject.deleteTrainee(1L).getErrors().getFirst())
-                .isEqualTo("A TraineeEntity with an id - 1, does not exist");
+            .isEqualTo("A TraineeEntity with an id - 1, does not exist");
     }
 }

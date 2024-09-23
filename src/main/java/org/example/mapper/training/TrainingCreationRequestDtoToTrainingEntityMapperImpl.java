@@ -16,6 +16,9 @@ public class TrainingCreationRequestDtoToTrainingEntityMapperImpl
     private final TrainerDao trainerDao;
     private final TrainingTypeDao trainingTypeDao;
 
+    /**
+     * Constructor.
+     */
     public TrainingCreationRequestDtoToTrainingEntityMapperImpl(TraineeDao traineeDao, TrainerDao trainerDao,
                                                                 TrainingTypeDao trainingTypeDao) {
         this.traineeDao = traineeDao;

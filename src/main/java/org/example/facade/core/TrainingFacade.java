@@ -1,12 +1,10 @@
 package org.example.facade.core;
 
-import org.example.dto.request.SingleTrainingDeletionByTraineeRequestDto;
 import org.example.dto.request.TrainingCreationRequestDto;
-import org.example.dto.response.MultipleTrainingDeletionByTraineeResponseDto;
-import org.example.dto.response.MultipleTrainingDeletionByTrainerResponseDto;
-import org.example.dto.response.SingleTrainingDeletionByTraineeResponseDto;
 import org.example.dto.request.TrainingListRetrievalByTraineeRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTrainerRequestDto;
+import org.example.dto.response.MultipleTrainingDeletionByTraineeResponseDto;
+import org.example.dto.response.MultipleTrainingDeletionByTrainerResponseDto;
 import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.dto.response.TrainingListRetrievalResponseDto;
 import org.example.dto.response.TrainingRetrievalResponseDto;

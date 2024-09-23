@@ -92,7 +92,9 @@ public class TrainerDaoImpl implements TrainerDao {
         LOGGER.info("Retrieving all Trainers that are not assigned to trainee with a username of {}", traineeUsername);
         List<TrainerEntity> all =
             trainerEntityRepository.findAllTrainersNotAssignedTo(traineeUsername);
-        LOGGER.info("Successfully retrieved all Trainers that are not assigned to trainee with a username of {}, result - {}", traineeUsername, all);
+        LOGGER.info(
+            "Successfully retrieved all Trainers that are not assigned to trainee with a username of {}, result - {}",
+            traineeUsername, all);
         return all;
     }
 

@@ -95,7 +95,9 @@ public class UserServiceImpl implements UserService {
         LOGGER.info("Checking if the given username - {}, matches the given password - {}.", username, password);
 
         Optional<UserEntity> optionalUser = userDao.findByUsername(username);
-        if(optionalUser.isEmpty()) return false;
+        if (optionalUser.isEmpty()) {
+            return false;
+        }
 
         UserEntity userEntity = optionalUser.get();
         return userEntity.getPassword().equals(password);

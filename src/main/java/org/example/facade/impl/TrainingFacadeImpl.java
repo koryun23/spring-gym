@@ -1,13 +1,11 @@
 package org.example.facade.impl;
 
 import java.util.List;
-import org.example.dto.request.SingleTrainingDeletionByTraineeRequestDto;
 import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTraineeRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTrainerRequestDto;
 import org.example.dto.response.MultipleTrainingDeletionByTraineeResponseDto;
 import org.example.dto.response.MultipleTrainingDeletionByTrainerResponseDto;
-import org.example.dto.response.SingleTrainingDeletionByTraineeResponseDto;
 import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.dto.response.TrainingListRetrievalResponseDto;
 import org.example.dto.response.TrainingRetrievalResponseDto;
@@ -117,14 +115,15 @@ public class TrainingFacadeImpl implements TrainingFacade {
     }
 
     @Override
-    public TrainingListRetrievalResponseDto retrieveTrainingListByTrainer(TrainingListRetrievalByTrainerRequestDto requestDto) {
+    public TrainingListRetrievalResponseDto retrieveTrainingListByTrainer(
+        TrainingListRetrievalByTrainerRequestDto requestDto) {
         Assert.notNull(requestDto, "Request Dto must not be null");
         LOGGER.info("Retrieving the list of all trainings according to the request dto - {}", requestDto);
 
         String retrieverUsername = requestDto.getRetrieverUsername();
         String retrieverPassword = requestDto.getRetrieverPassword();
 
-        if(!userService.usernamePasswordMatching(retrieverUsername, retrieverPassword)) {
+        if (!userService.usernamePasswordMatching(retrieverUsername, retrieverPassword)) {
             return new TrainingListRetrievalResponseDto(List.of(String.format(
                 "The retriever's username(%s) does not match the retriever's password(%s)", retrieverUsername,
                 retrieverPassword
@@ -132,7 +131,7 @@ public class TrainingFacadeImpl implements TrainingFacade {
         }
 
         String trainerUsername = requestDto.getTrainerUsername();
-        if(userService.findByUsername(trainerUsername).isEmpty()) {
+        if (userService.findByUsername(trainerUsername).isEmpty()) {
             return new TrainingListRetrievalResponseDto(List.of(String.format(
                 "A trainer with a username of %s does not exist", trainerUsername
             )));
@@ -147,14 +146,16 @@ public class TrainingFacadeImpl implements TrainingFacade {
 
         TrainingListRetrievalResponseDto responseDto = new TrainingListRetrievalResponseDto(trainerUsername, all);
 
-        LOGGER.info("Successfully retrieved all trainings according to the request dto - {}, result - {}", requestDto, responseDto);
+        LOGGER.info("Successfully retrieved all trainings according to the request dto - {}, result - {}", requestDto,
+            responseDto);
 
         return responseDto;
     }
 
 
     @Override
-    public TrainingListRetrievalResponseDto retrieveTrainingListByTrainee(TrainingListRetrievalByTraineeRequestDto requestDto) {
+    public TrainingListRetrievalResponseDto retrieveTrainingListByTrainee(
+        TrainingListRetrievalByTraineeRequestDto requestDto) {
         Assert.notNull(requestDto, "Request Dto must not be null");
         LOGGER.info("Retrieving the list of trainings according to the request dto - {}", requestDto);
 
@@ -197,7 +198,7 @@ public class TrainingFacadeImpl implements TrainingFacade {
         Assert.notNull(traineeUsername, "Trainee username must not be null");
         LOGGER.info("Deleting all trainings of a trainee with a username of {}", traineeUsername);
 
-        if(traineeService.findByUsername(traineeUsername).isEmpty()) {
+        if (traineeService.findByUsername(traineeUsername).isEmpty()) {
             return new MultipleTrainingDeletionByTraineeResponseDto(
                 List.of(String.format("A trainee with a username of %s does not exist", traineeUsername))
             );
@@ -219,8 +220,9 @@ public class TrainingFacadeImpl implements TrainingFacade {
         Assert.notNull(trainerUsername, "Trainer username must not be null");
         LOGGER.info("Deleting all trainings of a trainer with a username of {}", trainerUsername);
 
-        if(trainerService.findByUsername(trainerUsername).isEmpty()) {
-            return new MultipleTrainingDeletionByTrainerResponseDto(List.of(String.format("A trainer with a username of %s does not exist", trainerUsername)));
+        if (trainerService.findByUsername(trainerUsername).isEmpty()) {
+            return new MultipleTrainingDeletionByTrainerResponseDto(
+                List.of(String.format("A trainer with a username of %s does not exist", trainerUsername)));
         }
 
         trainingService.deleteAllByTrainerUsername(trainerUsername);

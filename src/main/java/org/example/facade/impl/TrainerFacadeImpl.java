@@ -19,7 +19,6 @@ import org.example.mapper.trainer.TrainerUpdateRequestDtoToTrainerEntityMapper;
 import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
-import org.example.service.core.TrainingService;
 import org.example.service.core.TrainingTypeService;
 import org.example.service.core.UserService;
 import org.example.service.core.UsernamePasswordService;
@@ -123,7 +122,8 @@ public class TrainerFacadeImpl implements TrainerFacade {
                 String.format("TrainerEntity with the specified id of %d does not exist", requestDto.getTrainerId())));
         }
 
-        Long userId = trainerService.findById(requestDto.getTrainerId()).orElseThrow(() -> new TrainerNotFoundException(requestDto.getTrainerId())).getUser().getId();
+        Long userId = trainerService.findById(requestDto.getTrainerId())
+            .orElseThrow(() -> new TrainerNotFoundException(requestDto.getTrainerId())).getUser().getId();
         // update user
         UserEntity user = new UserEntity(
             requestDto.getFirstName(),

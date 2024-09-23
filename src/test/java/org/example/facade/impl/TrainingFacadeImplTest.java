@@ -5,13 +5,11 @@ import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.entity.TraineeEntity;
-import org.example.entity.TrainingType;
 import org.example.entity.UserEntity;
 import org.example.facade.core.TrainingFacade;
 import org.example.mapper.training.TrainingCreationRequestDtoToTrainingEntityMapper;
 import org.example.mapper.training.TrainingEntityToTrainingCreationResponseDtoMapper;
 import org.example.mapper.training.TrainingEntityToTrainingRetrievalResponseDtoMapper;
-import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
 import org.example.service.core.TrainingService;
@@ -65,30 +63,30 @@ class TrainingFacadeImplTest {
     @Test
     public void testCreateTrainingWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.createTraining(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void testCreateTrainingWhenTraineeIdNegative() {
         Assertions.assertThat(testSubject.createTraining(new TrainingCreationRequestDto(
-                -1L,
-                1L,
-                "training",
-                1L,
-                Date.valueOf("2024-10-10"),
-                1000L
+            -1L,
+            1L,
+            "training",
+            1L,
+            Date.valueOf("2024-10-10"),
+            1000L
         )).getErrors().getFirst()).isEqualTo("The trainee id must be positive: -1 specified");
     }
 
     @Test
     public void testCreateTrainingWhenTrainerIdNegative() {
         Assertions.assertThat(testSubject.createTraining(new TrainingCreationRequestDto(
-                1L,
-                -1L,
-                "training",
-                1L,
-                Date.valueOf("2024-10-10"),
-                1000L
+            1L,
+            -1L,
+            "training",
+            1L,
+            Date.valueOf("2024-10-10"),
+            1000L
         )).getErrors().getFirst()).isEqualTo("The trainer id must be positive: -1 specified");
     }
 
@@ -102,7 +100,7 @@ class TrainingFacadeImplTest {
                 1L,
                 Date.valueOf("2024-10-10"),
                 1000L
-        )).getErrors().getFirst())
+            )).getErrors().getFirst())
             .isEqualTo("Cannot create a trainingEntity: a trainee with an id of 1 does not exist");
     }
 
@@ -120,26 +118,26 @@ class TrainingFacadeImplTest {
                 1L,
                 Date.valueOf("2024-10-10"),
                 1000L
-        )).getErrors().getFirst())
+            )).getErrors().getFirst())
             .isEqualTo("Cannot create a trainingEntity: a trainer with an id of 1 does not exist");
     }
 
     @Test
     public void testRetrieveTrainingWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.retrieveTraining(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void testRetrieveTrainingWhenNegative() {
         Assertions.assertThat(testSubject.retrieveTraining(-1L).getErrors().getFirst())
-                .isEqualTo("TrainingEntity id must be positive: -1 specified");
+            .isEqualTo("TrainingEntity id must be positive: -1 specified");
     }
 
     @Test
     public void testRetrieveTrainingWhenDoesNotExist() {
         Mockito.when(trainingService.findById(1L)).thenReturn(Optional.empty());
         Assertions.assertThat(testSubject.retrieveTraining(1L).getErrors().getFirst())
-                .isEqualTo("TrainingEntity with a specified id of 1 does not exist");
+            .isEqualTo("TrainingEntity with a specified id of 1 does not exist");
     }
 }

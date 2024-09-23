@@ -24,19 +24,19 @@ class TrainingEntityServiceImplTest {
     @Test
     public void testCreateWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.create(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void selectWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.select(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void findByIdWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.findById(null))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
 

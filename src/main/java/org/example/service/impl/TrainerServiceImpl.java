@@ -88,7 +88,8 @@ public class TrainerServiceImpl implements TrainerService {
         Assert.hasText(traineeUsername, "Trainee username must not be empty");
         LOGGER.info("Retrieving all trainers not assigned to trainee with a username of {}", traineeUsername);
         List<TrainerEntity> all = trainerDao.findAllTrainersNotAssignedTo(traineeUsername);
-        LOGGER.info("Successfully retrieved all trainers not assigned to trainee with a username of {}, result - {}", traineeUsername, all);
+        LOGGER.info("Successfully retrieved all trainers not assigned to trainee with a username of {}, result - {}",
+            traineeUsername, all);
         return all;
     }
 }

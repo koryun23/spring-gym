@@ -97,19 +97,21 @@ public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
+        // single selection, time complexity - log(n), where n is the number of records in trainer table
         Long trainerEntityId = session.createQuery(trainerIdFromUsernameQuery(), Long.class)
             .setParameter("trainerUsername", trainerUsername)
-            .uniqueResult(); // single selection, time complexity - log(n), where n is the number of records in trainer table
+            .uniqueResult();
 
+        // single selection, time complexity - log(n), where n is the number of records in trainee table
         Long traineeEntityId = session.createQuery(traineeIdFromUsernameQuery(), Long.class)
             .setParameter("traineeUsername", traineeUsername)
-            .uniqueResult(); // single selection, time complexity - log(n), where n is the number of records in trainee table
+            .uniqueResult();
 
         String query = String.format("select t from TrainingEntity t WHERE t.trainee.id = :traineeId "
-            + "%s t.trainer.id = :trainerId "
-            + "%s t.date >= :from "
-            + "%s t.date <= :to "
-            + "%s t.trainingType.id = :trainingTypeId",
+                + "%s t.trainer.id = :trainerId "
+                + "%s t.date >= :from "
+                + "%s t.date <= :to "
+                + "%s t.trainingType.id = :trainingTypeId",
             trainerUsername == null ? "OR" : "AND",
             from == null ? "OR" : "AND",
             to == null ? "OR" : "AND",
@@ -139,16 +141,18 @@ public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
 
         Long trainerEntityId = session.createQuery(trainerIdFromUsernameQuery(), TrainerEntity.class)
             .setParameter("trainerUsername", trainerUsername)
-            .uniqueResult().getId(); // single selection, time complexity - log(n), where n is the number of records in trainer table
+            .uniqueResult()
+            .getId(); // single selection, time complexity - log(n), where n is the number of records in trainer table
 
         Long traineeEntityId = session.createQuery(traineeIdFromUsernameQuery(), TraineeEntity.class)
             .setParameter("traineeUsername", traineeUsername)
-            .uniqueResult().getId(); // single selection, time complexity - log(n), where n is the number of records in trainee table
+            .uniqueResult()
+            .getId(); // single selection, time complexity - log(n), where n is the number of records in trainee table
 
         String query = String.format("select * from TrainingEntity t WHERE t.trainer.id = :trainerId "
-            + "%s t.trainee.id = :traineeId "
-            + "%s t.date >= :from "
-            + "%s t.date <= :to",
+                + "%s t.trainee.id = :traineeId "
+                + "%s t.date >= :from "
+                + "%s t.date <= :to",
             traineeUsername == null ? "OR" : "AND",
             from == null ? "OR" : "AND",
             to == null ? "OR" : "AND");
@@ -176,8 +180,9 @@ public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
             .setParameter("traineeUsername", traineeUsername)
             .uniqueResult();
 
-        List<TrainingEntity> allTrainings = findAllByTraineeUsernameAndCriteria(traineeUsername, null, null, null, null);
-        for(TrainingEntity training : allTrainings) {
+        List<TrainingEntity> allTrainings =
+            findAllByTraineeUsernameAndCriteria(traineeUsername, null, null, null, null);
+        for (TrainingEntity training : allTrainings) {
             session.remove(training);
         }
 
@@ -197,7 +202,7 @@ public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
 
         List<TrainingEntity> allTrainings =
             findAllByTrainerUsernameAndCriteria(trainerUsername, null, null, null);
-        for(TrainingEntity training : allTrainings) {
+        for (TrainingEntity training : allTrainings) {
             session.remove(training);
         }
         transaction.commit();
@@ -205,10 +210,12 @@ public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
     }
 
     private String trainerIdFromUsernameQuery() {
-        return "select (t.id) from TrainerEntity t JOIN UserEntity u on u.id = t.user.id WHERE u.username = :trainerUsername";
+        return "select (t.id) from TrainerEntity t JOIN UserEntity u on u.id = t.user.id "
+            + "WHERE u.username = :trainerUsername";
     }
 
     private String traineeIdFromUsernameQuery() {
-        return "select (t.id) from TraineeEntity t JOIN UserEntity u on u.id = t.user.id WHERE u.username = :traineeUsername";
+        return "select (t.id) from TraineeEntity t JOIN UserEntity u on u.id = t.user.id "
+            + "WHERE u.username = :traineeUsername";
     }
 }

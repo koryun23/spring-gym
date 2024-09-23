@@ -3,7 +3,6 @@ package org.example.service.impl;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 import org.example.dao.core.TrainingDao;
 import org.example.entity.TrainingEntity;
 import org.example.service.core.TrainingService;

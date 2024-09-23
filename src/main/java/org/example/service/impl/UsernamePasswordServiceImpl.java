@@ -3,8 +3,6 @@ package org.example.service.impl;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
-import org.example.entity.TraineeEntity;
-import org.example.entity.TrainerEntity;
 import org.example.entity.UserEntity;
 import org.example.exception.InvalidIdException;
 import org.example.service.core.TraineeService;

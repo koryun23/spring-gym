@@ -20,6 +20,9 @@ public class UserUpdateResponseDto {
     private String password;
     private Boolean isActive;
 
+    /**
+     * Constructor.
+     */
     public UserUpdateResponseDto(Long userId, String firstName, String lastName, String username, String password,
                                  Boolean isActive) {
         this.userId = userId;

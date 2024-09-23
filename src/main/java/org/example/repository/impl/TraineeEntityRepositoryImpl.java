@@ -1,7 +1,6 @@
 package org.example.repository.impl;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -9,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 import org.example.entity.TraineeEntity;
 import org.example.entity.TrainingEntity;
-import org.example.entity.UserEntity;
 import org.example.exception.TraineeNotFoundException;
 import org.example.repository.core.TraineeEntityRepository;
 import org.hibernate.Session;
@@ -42,7 +40,9 @@ public class TraineeEntityRepositoryImpl implements TraineeEntityRepository {
         Transaction transaction = session.beginTransaction();
 
         TraineeEntity traineeEntity =
-            session.createQuery("select t from TraineeEntity t join UserEntity u on t.user.id = u.id where u.username = :username", TraineeEntity.class)
+            session.createQuery(
+                    "select t from TraineeEntity t join UserEntity u on t.user.id = u.id where u.username = :username",
+                    TraineeEntity.class)
                 .setParameter("username", username)
                 .uniqueResult();
 
@@ -54,13 +54,14 @@ public class TraineeEntityRepositoryImpl implements TraineeEntityRepository {
 
     @Override
     public void deleteByUsername(String username) {
-        TraineeEntity traineeEntity = findByUsername(username).orElseThrow(() -> new TraineeNotFoundException(username));
+        TraineeEntity traineeEntity =
+            findByUsername(username).orElseThrow(() -> new TraineeNotFoundException(username));
 
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        if(traineeEntity.getTrainingEntityList() != null) {
-            for(TrainingEntity training : traineeEntity.getTrainingEntityList()) {
+        if (traineeEntity.getTrainingEntityList() != null) {
+            for (TrainingEntity training : traineeEntity.getTrainingEntityList()) {
                 session.remove(training);
             }
         }
@@ -120,8 +121,8 @@ public class TraineeEntityRepositoryImpl implements TraineeEntityRepository {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        if(traineeEntity.getTrainingEntityList() != null) {
-            for(TrainingEntity training : traineeEntity.getTrainingEntityList()) {
+        if (traineeEntity.getTrainingEntityList() != null) {
+            for (TrainingEntity training : traineeEntity.getTrainingEntityList()) {
                 session.remove(training);
             }
         }

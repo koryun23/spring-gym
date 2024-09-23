@@ -5,16 +5,13 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
-import org.example.entity.TraineeEntity;
 import org.example.entity.TrainerEntity;
-import org.example.exception.TraineeNotFoundException;
 import org.example.exception.TrainerNotFoundException;
 import org.example.repository.core.TrainerEntityRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.hibernate.query.criteria.HibernateCriteriaBuilder;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -100,7 +97,10 @@ public class TrainerEntityRepositoryImpl implements TrainerEntityRepository {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        String assignedTrainersQuery = "select training.trainer.id from TrainingEntity training JOIN TraineeEntity trainee ON trainee.id = training.trainee.id JOIN UserEntity u ON u.id = trainee.user.id where u.username = :username";
+        String assignedTrainersQuery =
+            "select training.trainer.id from TrainingEntity training JOIN TraineeEntity trainee "
+                + "ON trainee.id = training.trainee.id JOIN UserEntity u ON u.id = trainee.user.id "
+                + "where u.username = :username";
 
         List<Long> assignedTrainerIdList = session.createQuery(assignedTrainersQuery, Long.class)
             .setParameter("username", traineeUsername)
@@ -108,9 +108,10 @@ public class TrainerEntityRepositoryImpl implements TrainerEntityRepository {
 
         String nonAssignedTrainersQuery = "select t from TrainerEntity t where t.id not in (:assignedTrainers)";
 
-        List<TrainerEntity> nonAssignedTrainerIdList = session.createQuery(nonAssignedTrainersQuery, TrainerEntity.class)
-            .setParameter("assignedTrainers", assignedTrainerIdList)
-            .list();
+        List<TrainerEntity> nonAssignedTrainerIdList =
+            session.createQuery(nonAssignedTrainersQuery, TrainerEntity.class)
+                .setParameter("assignedTrainers", assignedTrainerIdList)
+                .list();
 
         transaction.commit();
         session.close();
