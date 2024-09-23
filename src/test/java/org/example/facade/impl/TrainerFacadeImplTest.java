@@ -2,6 +2,7 @@ package org.example.facade.impl;
 
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
+import org.example.dto.request.TrainerRetrievalByIdRequestDto;
 import org.example.dto.request.TrainerUpdateRequestDto;
 import org.example.facade.core.TrainerFacade;
 import org.example.mapper.trainer.TrainerCreationRequestDtoToTrainerEntityMapper;
@@ -111,14 +112,16 @@ class TrainerFacadeImplTest {
 
     @Test
     public void testRetrieveTrainerWhenNegative() {
-        Assertions.assertThat(testSubject.retrieveTrainer(-1L).getErrors().getFirst())
-            .isEqualTo("TrainerEntity id must be positive: -1 specified");
+        Mockito.when(userService.usernamePasswordMatching("u", "p")).thenReturn(true);
+        Assertions.assertThat(testSubject.retrieveTrainer(new TrainerRetrievalByIdRequestDto("u", "p", -1L))
+                .getErrors().getFirst()).isEqualTo("TrainerEntity id must be positive: -1 specified");
     }
 
     @Test
     public void testRetrieveTrainerWhenDoesNotExist() {
         Mockito.when(trainerService.findById(1L)).thenReturn(Optional.empty());
-        Assertions.assertThat(testSubject.retrieveTrainer(1L).getErrors().getFirst())
-            .isEqualTo("A TrainerEntity with a specified id of 1 not found");
+        Mockito.when(userService.usernamePasswordMatching("u", "p")).thenReturn(true);
+        Assertions.assertThat(testSubject.retrieveTrainer(new TrainerRetrievalByIdRequestDto("u", "p", 1L))
+                .getErrors().getFirst()).isEqualTo("A TrainerEntity with a specified id of 1 not found");
     }
 }
