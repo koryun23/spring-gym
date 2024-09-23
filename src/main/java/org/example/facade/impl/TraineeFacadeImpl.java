@@ -242,7 +242,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
         LOGGER.info("Deleting a Trainee with a username of {}", username);
 
         if(!userService.usernamePasswordMatching(requestDto.getDeleterUsername(), requestDto.getDeleterPassword())) {
-            return new TraineeDeletionResponseDto(List.of("Authentication failed"))
+            return new TraineeDeletionResponseDto(List.of("Authentication failed"));
         }
 
         traineeService.delete(username);
