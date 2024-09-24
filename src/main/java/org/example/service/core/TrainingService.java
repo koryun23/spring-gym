@@ -11,6 +11,8 @@ public interface TrainingService {
 
     TrainingEntity select(Long id);
 
+    TrainingEntity update(TrainingEntity trainingEntity);
+
     Optional<TrainingEntity> findById(Long id);
 
     List<TrainingEntity> findAll();

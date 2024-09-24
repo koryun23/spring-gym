@@ -41,6 +41,20 @@ public class TrainingServiceImpl implements TrainingService {
     }
 
     @Override
+    public TrainingEntity update(TrainingEntity trainingEntity) {
+        Assert.notNull(trainingEntity, "Training Entity must not be null");
+        LOGGER.info("Updating a TrainingEntity with an id of {} according to {}", trainingEntity.getId(),
+            trainingEntity);
+
+        TrainingEntity updatedTrainingEntity = trainingDao.update(trainingEntity);
+
+        LOGGER.info("Successfully updated a TrainingEntity with an id of {}, result - {}", trainingEntity.getId(),
+            updatedTrainingEntity);
+
+        return updatedTrainingEntity;
+    }
+
+    @Override
     public Optional<TrainingEntity> findById(Long id) {
         Assert.notNull(id, "TrainingEntity id must not be null");
         LOGGER.info("Retrieving an optional TrainingEntity with an id of {}", id);

@@ -13,6 +13,7 @@ import org.example.mapper.training.TrainingEntityToTrainingRetrievalResponseDtoM
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
 import org.example.service.core.TrainingService;
+import org.example.service.core.TrainingTypeService;
 import org.example.service.core.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,9 @@ class TrainingFacadeImplTest {
 
     @Mock
     private TraineeService traineeService;
+
+    @Mock
+    private TrainingTypeService trainingTypeService;
 
     @Mock
     private UserService userService;
@@ -53,6 +57,7 @@ class TrainingFacadeImplTest {
             trainingService,
             traineeService,
             trainerService,
+            trainingTypeService,
             userService,
             trainingCreationRequestDtoToTrainingEntityMapper,
             trainingEntityToTrainingCreationResponseDtoMapper,

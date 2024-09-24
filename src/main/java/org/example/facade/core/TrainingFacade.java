@@ -3,11 +3,13 @@ package org.example.facade.core;
 import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTraineeRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTrainerRequestDto;
+import org.example.dto.request.TrainingUpdateRequestDto;
 import org.example.dto.response.MultipleTrainingDeletionByTraineeResponseDto;
 import org.example.dto.response.MultipleTrainingDeletionByTrainerResponseDto;
 import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.dto.response.TrainingListRetrievalResponseDto;
 import org.example.dto.response.TrainingRetrievalResponseDto;
+import org.example.dto.response.TrainingUpdateResponseDto;
 
 public interface TrainingFacade {
 
@@ -23,4 +25,5 @@ public interface TrainingFacade {
 
     MultipleTrainingDeletionByTrainerResponseDto deleteMultipleTrainerTraining(String trainerUsername);
 
+    TrainingUpdateResponseDto updateTraining(TrainingUpdateRequestDto requestDto);
 }

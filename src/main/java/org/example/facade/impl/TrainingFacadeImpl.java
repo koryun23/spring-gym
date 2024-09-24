@@ -4,11 +4,16 @@ import java.util.List;
 import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTraineeRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTrainerRequestDto;
+import org.example.dto.request.TrainingUpdateRequestDto;
 import org.example.dto.response.MultipleTrainingDeletionByTraineeResponseDto;
 import org.example.dto.response.MultipleTrainingDeletionByTrainerResponseDto;
 import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.dto.response.TrainingListRetrievalResponseDto;
 import org.example.dto.response.TrainingRetrievalResponseDto;
+import org.example.dto.response.TrainingUpdateResponseDto;
+import org.example.entity.TrainingEntity;
+import org.example.exception.TraineeNotFoundException;
+import org.example.exception.TrainerNotFoundException;
 import org.example.facade.core.TrainingFacade;
 import org.example.mapper.training.TrainingCreationRequestDtoToTrainingEntityMapper;
 import org.example.mapper.training.TrainingEntityToTrainingCreationResponseDtoMapper;
@@ -16,6 +21,7 @@ import org.example.mapper.training.TrainingEntityToTrainingRetrievalResponseDtoM
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
 import org.example.service.core.TrainingService;
+import org.example.service.core.TrainingTypeService;
 import org.example.service.core.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +36,7 @@ public class TrainingFacadeImpl implements TrainingFacade {
     private final TrainingService trainingService;
     private final TraineeService traineeService;
     private final TrainerService trainerService;
+    private final TrainingTypeService trainingTypeService;
     private final UserService userService;
     private final TrainingCreationRequestDtoToTrainingEntityMapper trainingCreationRequestDtoToTrainingEntityMapper;
     private final TrainingEntityToTrainingCreationResponseDtoMapper trainingEntityToTrainingCreationResponseDtoMapper;
@@ -40,7 +47,8 @@ public class TrainingFacadeImpl implements TrainingFacade {
      */
     public TrainingFacadeImpl(TrainingService trainingService,
                               TraineeService traineeService,
-                              TrainerService trainerService, UserService userService,
+                              TrainerService trainerService, TrainingTypeService trainingTypeService,
+                              UserService userService,
                               TrainingCreationRequestDtoToTrainingEntityMapper
                                   trainingCreationRequestDtoToTrainingEntityMapper,
                               TrainingEntityToTrainingCreationResponseDtoMapper
@@ -50,6 +58,7 @@ public class TrainingFacadeImpl implements TrainingFacade {
         this.trainingService = trainingService;
         this.traineeService = traineeService;
         this.trainerService = trainerService;
+        this.trainingTypeService = trainingTypeService;
         this.userService = userService;
         this.trainingCreationRequestDtoToTrainingEntityMapper = trainingCreationRequestDtoToTrainingEntityMapper;
         this.trainingEntityToTrainingCreationResponseDtoMapper = trainingEntityToTrainingCreationResponseDtoMapper;
@@ -234,5 +243,39 @@ public class TrainingFacadeImpl implements TrainingFacade {
             trainerUsername, responseDto);
 
         return responseDto;
+    }
+
+    @Override
+    public TrainingUpdateResponseDto updateTraining(TrainingUpdateRequestDto requestDto) {
+        Assert.notNull(requestDto, "TrainingUpdateRequestDto must not be null");
+        LOGGER.info("Updating a training according to the TrainingUpdateRequestDto - {}", requestDto);
+
+        if (!userService.usernamePasswordMatching(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword())) {
+            return new TrainingUpdateResponseDto(List.of("Authentication failed"));
+        }
+
+        TrainingEntity updatedTrainingEntity = trainingService.update(new TrainingEntity(
+            traineeService.findById(requestDto.getTraineeId())
+                .orElseThrow(() -> new TraineeNotFoundException(requestDto.getTraineeId())),
+            trainerService.findById(requestDto.getTrainerId())
+                .orElseThrow(() -> new TrainerNotFoundException(requestDto.getTrainerId())),
+            requestDto.getName(),
+            trainingTypeService.get(requestDto.getTrainingTypeId()),
+            requestDto.getDate(),
+            requestDto.getDuration()
+        ));
+        TrainingUpdateResponseDto responseDto = new TrainingUpdateResponseDto(
+            updatedTrainingEntity.getId(),
+            updatedTrainingEntity.getTrainee().getId(),
+            updatedTrainingEntity.getTrainer().getId(),
+            updatedTrainingEntity.getName(),
+            updatedTrainingEntity.getTrainingType().getId(),
+            updatedTrainingEntity.getDate(),
+            updatedTrainingEntity.getDuration()
+        );
+
+        LOGGER.info("Successfully updated a training according to the TrainingUpdateRequestDto - {}, result - {}",
+            requestDto, responseDto);
+        return null;
     }
 }
