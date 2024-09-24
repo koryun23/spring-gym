@@ -55,9 +55,8 @@ public class TraineeFacadeImpl implements TraineeFacade {
     /**
      * Constructor.
      */
-    public TraineeFacadeImpl(TraineeService traineeService,
-                             TrainerService trainerService, TrainingService trainingService,
-                             UserService userService,
+    public TraineeFacadeImpl(TraineeService traineeService, TrainerService trainerService,
+                             TrainingService trainingService, UserService userService,
                              TraineeCreationRequestDtoToTraineeEntityMapper
                                  traineeCreationRequestDtoToTraineeEntityMapper,
                              TraineeEntityToTraineeCreationResponseDtoMapper traineeToTraineeCreationResponseDtoMapper,
@@ -68,8 +67,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
                                  traineeEntityToTraineeRetrievalResponseDtoMapper,
                              @Qualifier("traineeUsernamePasswordService")
                              UsernamePasswordService usernamePasswordService,
-                             @Qualifier("traineeIdService")
-                             IdService idService) {
+                             @Qualifier("traineeIdService") IdService idService) {
         this.trainingService = trainingService;
         this.userService = userService;
         this.traineeToTraineeCreationResponseDtoMapper = traineeToTraineeCreationResponseDtoMapper;
@@ -88,18 +86,14 @@ public class TraineeFacadeImpl implements TraineeFacade {
         Assert.notNull(requestDto, "TraineeCreationRequestDto must not be null");
         LOGGER.info("Creating a TraineeEntity based on the TraineeCreationRequestDto - {}", requestDto);
 
-        requestDto.setUsername(usernamePasswordService.username(
-            requestDto.getFirstName(), requestDto.getLastName(), idService.getId(), "trainee"
-        ));
+        requestDto.setUsername(
+            usernamePasswordService.username(requestDto.getFirstName(), requestDto.getLastName(), idService.getId(),
+                "trainee"));
         requestDto.setPassword(usernamePasswordService.password());
 
-        UserEntity userEntity = userService.create(new UserEntity(
-            requestDto.getFirstName(),
-            requestDto.getLastName(),
-            requestDto.getUsername(),
-            requestDto.getPassword(),
-            requestDto.getIsActive()
-        ));
+        UserEntity userEntity = userService.create(
+            new UserEntity(requestDto.getFirstName(), requestDto.getLastName(), requestDto.getUsername(),
+                requestDto.getPassword(), requestDto.getIsActive()));
         LOGGER.info("currently added user - {}", userEntity);
         requestDto.setUserId(userEntity.getId());
 
@@ -118,29 +112,25 @@ public class TraineeFacadeImpl implements TraineeFacade {
         Assert.notNull(requestDto, "TraineeUpdateRequestDto must not be null");
         LOGGER.info("Updating a TraineeEntity based on the TraineeUpdateRequestDto - {}", requestDto);
 
-        // TODO: ADD VALIDATION
+        if (!userService.usernamePasswordMatching(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword())) {
+            return new TraineeUpdateResponseDto(List.of("Authentication failed"));
+        }
 
         Long userId = traineeService.findById(requestDto.getTraineeId())
             .orElseThrow(() -> new TraineeNotFoundException(requestDto.getTraineeId())).getUser().getId();
         LOGGER.info("User id of the trainee is {}", userId);
-        UserEntity userEntity = new UserEntity(
-            requestDto.getFirstName(),
-            requestDto.getLastName(),
-            requestDto.getUsername(),
-            requestDto.getPassword(),
-            requestDto.getIsActive()
-        );
+        UserEntity userEntity =
+            new UserEntity(requestDto.getFirstName(), requestDto.getLastName(), requestDto.getUsername(),
+                requestDto.getPassword(), requestDto.getIsActive());
         userEntity.setId(userId);
         userService.update(userEntity);
 
-        TraineeEntity traineeEntity = new TraineeEntity(
-            userEntity, requestDto.getDateOfBirth(), requestDto.getAddress()
-        );
+        TraineeEntity traineeEntity =
+            new TraineeEntity(userEntity, requestDto.getDateOfBirth(), requestDto.getAddress());
         traineeEntity.setId(requestDto.getTraineeId());
 
-        TraineeUpdateResponseDto responseDto = traineeEntityToTraineeUpdateResponseDtoMapper.map(traineeService.update(
-            traineeEntity
-        ));
+        TraineeUpdateResponseDto responseDto =
+            traineeEntityToTraineeUpdateResponseDtoMapper.map(traineeService.update(traineeEntity));
 
         LOGGER.info("Successfully updated a TraineeEntity based on the TraineeUpdateRequestDto - {}, response - {}",
             requestDto, responseDto);
@@ -192,14 +182,12 @@ public class TraineeFacadeImpl implements TraineeFacade {
         Optional<TraineeEntity> optionalTrainee = traineeService.findByUsername(username);
 
         if (optionalTrainee.isEmpty()) {
-            return new TraineeRetrievalResponseDto(List.of(
-                String.format("Trainee with a username of %s not found", username)
-            ));
+            return new TraineeRetrievalResponseDto(
+                List.of(String.format("Trainee with a username of %s not found", username)));
         }
 
         TraineeEntity traineeEntity = optionalTrainee.get();
-        TraineeRetrievalResponseDto responseDto =
-            traineeEntityToTraineeRetrievalResponseDtoMapper.map(traineeEntity);
+        TraineeRetrievalResponseDto responseDto = traineeEntityToTraineeRetrievalResponseDtoMapper.map(traineeEntity);
 
         LOGGER.info("Successfully retrieved a Trainee with a username of {}, result - {}", username, responseDto);
         return responseDto;
@@ -269,16 +257,10 @@ public class TraineeFacadeImpl implements TraineeFacade {
         TraineeEntity traineeEntity = traineeService.findById(id).orElseThrow(() -> new TraineeNotFoundException(id));
         UserEntity user = traineeEntity.getUser();
 
-        TraineeUpdateResponseDto responseDto = updateTrainee(new TraineeUpdateRequestDto(
-            traineeEntity.getId(),
-            user.getFirstName(),
-            user.getLastName(),
-            user.getUsername(),
-            user.getPassword(),
-            !user.getIsActive(),
-            traineeEntity.getDateOfBirth(),
-            traineeEntity.getAddress()
-        ));
+        TraineeUpdateResponseDto responseDto = updateTrainee(
+            new TraineeUpdateRequestDto(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword(),
+                traineeEntity.getId(), user.getFirstName(), user.getLastName(), user.getUsername(), user.getPassword(),
+                !user.getIsActive(), traineeEntity.getDateOfBirth(), traineeEntity.getAddress()));
 
         LOGGER.info("Successfully switched the activation state of a Trainee with an id of {}", id);
         return responseDto;
@@ -300,16 +282,10 @@ public class TraineeFacadeImpl implements TraineeFacade {
         TraineeEntity traineeEntity = traineeService.findById(id).orElseThrow(() -> new TraineeNotFoundException(id));
         UserEntity user = traineeEntity.getUser();
 
-        TraineeUpdateResponseDto responseDto = updateTrainee(new TraineeUpdateRequestDto(
-            traineeEntity.getId(),
-            user.getFirstName(),
-            user.getLastName(),
-            user.getUsername(),
-            newPassword,
-            user.getIsActive(),
-            traineeEntity.getDateOfBirth(),
-            traineeEntity.getAddress()
-        ));
+        TraineeUpdateResponseDto responseDto = updateTrainee(
+            new TraineeUpdateRequestDto(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword(),
+                traineeEntity.getId(), user.getFirstName(), user.getLastName(), user.getUsername(), newPassword,
+                user.getIsActive(), traineeEntity.getDateOfBirth(), traineeEntity.getAddress()));
 
         LOGGER.info("Successfully changed the password of a Trainee with an id of {}", id);
         return responseDto;

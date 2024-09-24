@@ -38,6 +38,8 @@ class TraineeUpdateRequestDtoToTraineeEntityMapperImplTest {
         user.setId(1L);
         Mockito.when(userDao.getByUsername("username")).thenReturn(user);
         Assertions.assertThat(testSubject.map(new TraineeUpdateRequestDto(
+            "u",
+            "p",
             1L,
             "first",
             "last",

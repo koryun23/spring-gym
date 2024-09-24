@@ -95,8 +95,11 @@ class TraineeFacadeImplTest {
 
     @Test
     public void testUpdateTraineeWhenUserDoesNotExist() {
+        Mockito.when(userService.usernamePasswordMatching("u", "p")).thenReturn(true);
         Mockito.when(traineeService.findById(1L)).thenReturn(Optional.empty());
         Assertions.assertThatThrownBy(() -> testSubject.updateTrainee(new TraineeUpdateRequestDto(
+            "u",
+            "p",
             1L,
             "first",
             "last",
