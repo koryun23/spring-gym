@@ -13,6 +13,9 @@ import lombok.ToString;
 @ToString
 public class TrainerUpdateRequestDto {
 
+    private String updaterUsername;
+    private String updaterPassword;
+
     private Long trainerId;
     private String firstName;
     private String lastName;
@@ -24,8 +27,11 @@ public class TrainerUpdateRequestDto {
     /**
      * Constructor.
      */
-    public TrainerUpdateRequestDto(Long trainerId, String firstName, String lastName, String username, String password,
+    public TrainerUpdateRequestDto(String updaterUsername, String updaterPassword, Long trainerId, String firstName,
+                                   String lastName, String username, String password,
                                    boolean isActive, Long trainingTypeId) {
+        this.updaterUsername = updaterUsername;
+        this.updaterPassword = updaterPassword;
         this.trainerId = trainerId;
         this.firstName = firstName;
         this.lastName = lastName;

@@ -94,6 +94,7 @@ class TrainerFacadeImplTest {
     public void testUpdateTrainerWhenTrainerDoesNotExist() {
         Mockito.when(trainerService.findById(1L)).thenReturn(Optional.empty());
         Assertions.assertThat(testSubject.updateTrainer(new TrainerUpdateRequestDto(
+            "u", "p",
             1L,
             "first",
             "last",

@@ -43,6 +43,7 @@ class TrainerUpdateRequestDtoToTrainerEntityMapperImplTest {
             .thenReturn(new UserEntity("first", "last", "username", "password", true));
         Mockito.when(trainingTypeDao.get(1L)).thenReturn(new TrainingTypeEntity(TrainingType.AEROBIC));
         Assertions.assertThat(testSubject.map(new TrainerUpdateRequestDto(
+            "u", "p",
             1L,
             "first",
             "last",
