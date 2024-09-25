@@ -5,9 +5,14 @@ import java.util.List;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.example.dto.request.TraineeDeletionByIdRequestDto;
+import org.example.dto.request.TraineeDeletionByUsernameRequestDto;
+import org.example.dto.request.TraineePasswordChangeRequestDto;
 import org.example.dto.request.TraineeRetrievalByIdRequestDto;
+import org.example.dto.request.TraineeRetrievalByUsernameRequestDto;
 import org.example.dto.request.TraineeSwitchActivationStateRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
+import org.example.dto.response.TraineeDeletionResponseDto;
+import org.example.dto.response.TraineeRetrievalResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
 import org.example.entity.TraineeEntity;
 import org.example.entity.UserEntity;
@@ -184,7 +189,55 @@ class TraineeFacadeImplTest {
     }
 
     @Test
-    public void testUpdate() {
+    public void testChangePasswordWhenNotAuthenticated() {
+        TraineePasswordChangeRequestDto requestDto =
+            new TraineePasswordChangeRequestDto("u", "p", 1L, "new-password");
 
+        Mockito.when(userService.usernamePasswordMatching("u", "p")).thenReturn(false);
+
+        TraineeUpdateResponseDto responseDto = testSubject.changePassword(requestDto);
+
+        Assertions.assertThat(responseDto.getErrors()).isEqualTo(List.of("Authentication failed"));
+    }
+
+    @Test
+    public void testDeleteByUsernameWhenNotAuthenticated() {
+        TraineeDeletionByUsernameRequestDto requestDto =
+            new TraineeDeletionByUsernameRequestDto("u", "p", "username");
+
+        Mockito.when(userService.usernamePasswordMatching("u", "p")).thenReturn(false);
+
+        TraineeDeletionResponseDto responseDto = testSubject.deleteTraineeByUsername(requestDto);
+
+        Assertions.assertThat(responseDto.getErrors()).isEqualTo(List.of("Authentication failed"));
+    }
+
+    @Test
+    public void testRetrieveTraineeByUsername() {
+        TraineeRetrievalByUsernameRequestDto requestDto =
+            new TraineeRetrievalByUsernameRequestDto("u", "p", "username");
+
+        UserEntity userEntity = new UserEntity("first", "last", "username", "password", true);
+        TraineeEntity traineeEntity = new TraineeEntity(userEntity, Date.valueOf("2024-10-10"), "address");
+        userEntity.setId(1L);
+        traineeEntity.setId(1L);
+
+        Mockito.when(userService.usernamePasswordMatching("u", "p")).thenReturn(true);
+        Mockito.when(traineeService.findByUsername("username")).thenReturn(Optional.of(traineeEntity));
+        Mockito.when(traineeEntityToTraineeRetrievalResponseDtoMapper.map(traineeEntity)).thenReturn(
+            new TraineeRetrievalResponseDto(
+                1L,
+                1L,
+                true,
+                Date.valueOf("2024-10-10"),
+                "address"
+            )
+        );
+
+        TraineeRetrievalResponseDto responseDto = testSubject.retrieveTrainee(requestDto);
+
+        Assertions.assertThat(responseDto).isEqualTo(new TraineeRetrievalResponseDto(
+            1L, 1L, true, Date.valueOf("2024-10-10"), "address"
+        ));
     }
 }
