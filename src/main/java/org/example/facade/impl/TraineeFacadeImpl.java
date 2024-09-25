@@ -256,11 +256,12 @@ public class TraineeFacadeImpl implements TraineeFacade {
 
         TraineeEntity traineeEntity = traineeService.findById(id).orElseThrow(() -> new TraineeNotFoundException(id));
         UserEntity user = traineeEntity.getUser();
+        user.setIsActive(!user.getIsActive());
+        userService.update(user);
 
-        TraineeUpdateResponseDto responseDto = updateTrainee(
-            new TraineeUpdateRequestDto(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword(),
-                traineeEntity.getId(), user.getFirstName(), user.getLastName(), user.getUsername(), user.getPassword(),
-                !user.getIsActive(), traineeEntity.getDateOfBirth(), traineeEntity.getAddress()));
+        TraineeUpdateResponseDto responseDto =
+            new TraineeUpdateResponseDto(traineeEntity.getId(), user.getIsActive(), traineeEntity.getDateOfBirth(),
+                traineeEntity.getAddress());
 
         LOGGER.info("Successfully switched the activation state of a Trainee with an id of {}", id);
         return responseDto;
@@ -276,18 +277,22 @@ public class TraineeFacadeImpl implements TraineeFacade {
             return new TraineeUpdateResponseDto(List.of("Authentication failed"));
         }
 
-        Long id = requestDto.getTraineeId();
-        String newPassword = requestDto.getNewPassword();
+        TraineeEntity traineeEntity = traineeService.findById(requestDto.getTraineeId())
+            .orElseThrow(() -> new TraineeNotFoundException(requestDto.getTraineeId()));
 
-        TraineeEntity traineeEntity = traineeService.findById(id).orElseThrow(() -> new TraineeNotFoundException(id));
         UserEntity user = traineeEntity.getUser();
+        user.setPassword(requestDto.getNewPassword());
+        userService.update(user);
 
-        TraineeUpdateResponseDto responseDto = updateTrainee(
-            new TraineeUpdateRequestDto(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword(),
-                traineeEntity.getId(), user.getFirstName(), user.getLastName(), user.getUsername(), newPassword,
-                user.getIsActive(), traineeEntity.getDateOfBirth(), traineeEntity.getAddress()));
+        TraineeUpdateResponseDto responseDto = new TraineeUpdateResponseDto(
+            traineeEntity.getId(),
+            user.getIsActive(),
+            traineeEntity.getDateOfBirth(),
+            traineeEntity.getAddress()
+        );
 
-        LOGGER.info("Successfully changed the password of a Trainee with an id of {}", id);
+        LOGGER.info("Successfully changed the password of a Trainee according to the request dto - {}, result - {}",
+            requestDto, responseDto);
         return responseDto;
     }
 }
