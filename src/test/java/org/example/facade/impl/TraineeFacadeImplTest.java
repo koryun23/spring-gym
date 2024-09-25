@@ -1,11 +1,18 @@
 package org.example.facade.impl;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Optional;
+import org.assertj.core.api.Assert;
 import org.assertj.core.api.Assertions;
 import org.example.dto.request.TraineeDeletionByIdRequestDto;
+import org.example.dto.request.TraineePasswordChangeRequestDto;
 import org.example.dto.request.TraineeRetrievalByIdRequestDto;
+import org.example.dto.request.TraineeSwitchActivationStateRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
+import org.example.dto.response.TraineeUpdateResponseDto;
+import org.example.entity.TraineeEntity;
+import org.example.entity.UserEntity;
 import org.example.exception.TraineeNotFoundException;
 import org.example.facade.core.TraineeFacade;
 import org.example.mapper.trainee.TraineeCreationRequestDtoToTraineeEntityMapper;
@@ -116,7 +123,7 @@ class TraineeFacadeImplTest {
         Mockito.when(userService.usernamePasswordMatching("u", "p")).thenReturn(true);
         Assertions.assertThat(testSubject.retrieveTrainee(
             new TraineeRetrievalByIdRequestDto("u", "p", -1L)).getErrors().getFirst()
-            ).isEqualTo("TraineeEntity id must be positive: -1 specified");
+        ).isEqualTo("TraineeEntity id must be positive: -1 specified");
     }
 
     @Test
@@ -125,7 +132,7 @@ class TraineeFacadeImplTest {
         Mockito.when(traineeService.findById(1L)).thenReturn(Optional.empty());
         Assertions.assertThat(testSubject.retrieveTrainee(
             new TraineeRetrievalByIdRequestDto("u", "p", 1L)).getErrors().getFirst()
-            ).isEqualTo("A TraineeEntity with an id - 1, does not exist");
+        ).isEqualTo("A TraineeEntity with an id - 1, does not exist");
     }
 
     @Test
@@ -142,6 +149,44 @@ class TraineeFacadeImplTest {
         Mockito.when(userService.usernamePasswordMatching("u", "p")).thenReturn(true);
         Assertions.assertThat(testSubject.deleteTraineeById(
             new TraineeDeletionByIdRequestDto("u", "p", 1L)).getErrors().getFirst()
-            ).isEqualTo("A TraineeEntity with an id - 1, does not exist");
+        ).isEqualTo("A TraineeEntity with an id - 1, does not exist");
+    }
+
+    @Test
+    public void testSwitchActivationState() {
+        TraineeSwitchActivationStateRequestDto requestDto =
+            new TraineeSwitchActivationStateRequestDto("u", "p", 1L);
+        UserEntity userEntity = new UserEntity("first", "last", "username", "password", true);
+        userEntity.setId(1L);
+        TraineeEntity traineeEntity = new TraineeEntity(userEntity, Date.valueOf("2024-10-10"), "address");
+        traineeEntity.setId(1L);
+
+        Mockito.when(userService.usernamePasswordMatching("u", "p")).thenReturn(true);
+        Mockito.when(traineeService.findById(1L)).thenReturn(Optional.of(traineeEntity));
+
+        testSubject.switchActivationState(requestDto);
+        UserEntity updatedUserEntity = new UserEntity("first", "last", "username", "password", true);
+        updatedUserEntity.setId(1L);
+        TraineeEntity updatedTraineeEntity =
+            new TraineeEntity(updatedUserEntity, Date.valueOf("2024-10-10"), "address");
+        updatedTraineeEntity.setId(1L);
+        Assertions.assertThat(traineeService.findById(1L)).isEqualTo(Optional.of(updatedTraineeEntity));
+    }
+
+    @Test
+    public void testSwitchActivationStateWhenNotAuthenticated() {
+        TraineeSwitchActivationStateRequestDto requestDto =
+            new TraineeSwitchActivationStateRequestDto("u", "p", 1L);
+
+        Mockito.when(userService.usernamePasswordMatching("u", "p")).thenReturn(false);
+
+        TraineeUpdateResponseDto responseDto = testSubject.switchActivationState(requestDto);
+
+        Assertions.assertThat(responseDto.getErrors()).isEqualTo(List.of("Authentication failed"));
+    }
+
+    @Test
+    public void testUpdate() {
+
     }
 }
