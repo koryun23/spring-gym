@@ -201,7 +201,8 @@ public class TrainerFacadeImpl implements TrainerFacade {
                 trainer.getSpecialization().getId());
 
         LOGGER.info(
-            "Successfully changed the password of a trainer according to the TrainerPasswordChangeRequestDto - {}, result - {}",
+            "Successfully changed the password of a trainer according to the TrainerPasswordChangeRequestDto - {}, "
+                + "result - {}",
             requestDto, responseDto);
 
         return responseDto;

@@ -1,7 +1,6 @@
 package org.example.facade.core;
 
 import org.example.dto.request.RetrieveAllTrainersNotAssignedToTraineeRequestDto;
-import org.example.dto.request.TraineePasswordChangeRequestDto;
 import org.example.dto.request.TrainerCreationRequestDto;
 import org.example.dto.request.TrainerPasswordChangeRequestDto;
 import org.example.dto.request.TrainerRetrievalByIdRequestDto;

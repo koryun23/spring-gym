@@ -3,10 +3,8 @@ package org.example.facade.impl;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
-import org.assertj.core.api.Assert;
 import org.assertj.core.api.Assertions;
 import org.example.dto.request.TraineeDeletionByIdRequestDto;
-import org.example.dto.request.TraineePasswordChangeRequestDto;
 import org.example.dto.request.TraineeRetrievalByIdRequestDto;
 import org.example.dto.request.TraineeSwitchActivationStateRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
@@ -165,7 +163,7 @@ class TraineeFacadeImplTest {
         Mockito.when(traineeService.findById(1L)).thenReturn(Optional.of(traineeEntity));
 
         testSubject.switchActivationState(requestDto);
-        UserEntity updatedUserEntity = new UserEntity("first", "last", "username", "password", true);
+        UserEntity updatedUserEntity = new UserEntity("first", "last", "username", "password", false);
         updatedUserEntity.setId(1L);
         TraineeEntity updatedTraineeEntity =
             new TraineeEntity(updatedUserEntity, Date.valueOf("2024-10-10"), "address");
