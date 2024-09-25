@@ -282,12 +282,6 @@ public class TrainerFacadeImpl implements TrainerFacade {
             return new TrainerListRetrievalResponseDto(List.of("Authentication failed"));
         }
 
-        if (traineeService.findByUsername(traineeUsername).isEmpty()) {
-            return new TrainerListRetrievalResponseDto(List.of(String.format(
-                "Trainee with a username of %s does not exist", traineeUsername
-            )));
-        }
-
         List<TrainerRetrievalResponseDto> all = trainerService.findAllNotAssignedTo(traineeUsername).stream()
             .map(trainerEntityToTrainerRetrievalResponseDtoMapper::map)
             .toList();
