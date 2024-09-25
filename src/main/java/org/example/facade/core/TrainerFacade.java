@@ -1,7 +1,9 @@
 package org.example.facade.core;
 
 import org.example.dto.request.RetrieveAllTrainersNotAssignedToTraineeRequestDto;
+import org.example.dto.request.TraineePasswordChangeRequestDto;
 import org.example.dto.request.TrainerCreationRequestDto;
+import org.example.dto.request.TrainerPasswordChangeRequestDto;
 import org.example.dto.request.TrainerRetrievalByIdRequestDto;
 import org.example.dto.request.TrainerRetrievalByUsernameRequestDto;
 import org.example.dto.request.TrainerSwitchActivationStateRequestDto;
@@ -18,6 +20,8 @@ public interface TrainerFacade {
     TrainerUpdateResponseDto updateTrainer(TrainerUpdateRequestDto requestDto);
 
     TrainerUpdateResponseDto switchActivationState(TrainerSwitchActivationStateRequestDto requestDto);
+
+    TrainerUpdateResponseDto changePassword(TrainerPasswordChangeRequestDto requestDto);
 
     TrainerRetrievalResponseDto retrieveTrainer(TrainerRetrievalByIdRequestDto requestDto);
 

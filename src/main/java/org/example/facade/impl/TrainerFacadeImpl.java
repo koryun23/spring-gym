@@ -3,6 +3,7 @@ package org.example.facade.impl;
 import java.util.List;
 import org.example.dto.request.RetrieveAllTrainersNotAssignedToTraineeRequestDto;
 import org.example.dto.request.TrainerCreationRequestDto;
+import org.example.dto.request.TrainerPasswordChangeRequestDto;
 import org.example.dto.request.TrainerRetrievalByIdRequestDto;
 import org.example.dto.request.TrainerRetrievalByUsernameRequestDto;
 import org.example.dto.request.TrainerSwitchActivationStateRequestDto;
@@ -181,6 +182,29 @@ public class TrainerFacadeImpl implements TrainerFacade {
             requestDto, responseDto);
         return responseDto;
 
+    }
+
+    @Override
+    public TrainerUpdateResponseDto changePassword(TrainerPasswordChangeRequestDto requestDto) {
+        Assert.notNull(requestDto, "TrainerPasswordChangeRequestDto must not be null");
+        LOGGER.info("Changing password of a trainer according to the TrainerPasswordChangeRequestDto - {}", requestDto);
+
+        TrainerEntity trainer = trainerService.findById(requestDto.getTrainerId())
+            .orElseThrow(() -> new TrainerNotFoundException(requestDto.getTrainerId()));
+
+        UserEntity user = trainer.getUser();
+        user.setPassword(requestDto.getNewPassword());
+        userService.update(user);
+
+        TrainerUpdateResponseDto responseDto =
+            new TrainerUpdateResponseDto(trainer.getId(), user.getId(), user.getIsActive(),
+                trainer.getSpecialization().getId());
+
+        LOGGER.info(
+            "Successfully changed the password of a trainer according to the TrainerPasswordChangeRequestDto - {}, result - {}",
+            requestDto, responseDto);
+
+        return responseDto;
     }
 
     @Override
