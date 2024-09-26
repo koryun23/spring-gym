@@ -214,8 +214,6 @@ class TraineeFacadeImplTest {
 
     @Test
     public void testRetrieveTraineeByUsername() {
-        TraineeRetrievalByUsernameRequestDto requestDto =
-            new TraineeRetrievalByUsernameRequestDto("u", "p", "username");
 
         UserEntity userEntity = new UserEntity("first", "last", "username", "password", true);
         TraineeEntity traineeEntity = new TraineeEntity(userEntity, Date.valueOf("2024-10-10"), "address");
@@ -233,6 +231,8 @@ class TraineeFacadeImplTest {
                 "address"
             )
         );
+        TraineeRetrievalByUsernameRequestDto requestDto =
+            new TraineeRetrievalByUsernameRequestDto("u", "p", "username");
 
         TraineeRetrievalResponseDto responseDto = testSubject.retrieveTrainee(requestDto);
 
