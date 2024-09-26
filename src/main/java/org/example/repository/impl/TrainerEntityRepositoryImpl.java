@@ -25,7 +25,17 @@ public class TrainerEntityRepositoryImpl implements TrainerEntityRepository {
 
     @Override
     public Optional<TrainerEntity> findByUsername(String username) {
-        return Optional.empty();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        TrainerEntity trainerEntity = session.createQuery(
+                "select t from TrainerEntity t join UserEntity u on t.user.id = u.id where u.username = :username", TrainerEntity.class)
+            .setParameter("username", username)
+            .uniqueResult();
+
+        transaction.commit();
+        session.close();
+        return Optional.ofNullable(trainerEntity);
     }
 
     @Override

@@ -28,7 +28,7 @@ create table if not exists TRAINEE (
 
 create table if not exists TRAINER (
     id bigint not null primary key DEFAULT nextval('trainer_sequence'),
-    specialization_id bigint not null unique,
+    specialization_id bigint not null,
     user_id bigint not null unique,
     foreign key (specialization_id) references training_type(id),
     foreign key (user_id) references users(id));
@@ -38,9 +38,9 @@ create table if not exists TRAINING (
     duration bigint not null,
     id bigint not null primary key DEFAULT nextval('training_sequence'),
     training_name varchar(255) not null,
-    trainee_id bigint unique not null,
+    trainee_id bigint not null,
     trainer_id bigint not null,
-    training_type_id bigint not null unique,
+    training_type_id bigint not null,
     foreign key (trainee_id) references trainee(id),
     foreign key (trainer_id) references trainer(id),
     foreign key (training_type_id) references training_type(id)
@@ -51,4 +51,3 @@ insert into TRAINING_TYPE (training_type) VALUES ('AEROBIC');
 insert into TRAINING_TYPE (training_type) VALUES ('BODYBUILDING');
 insert into TRAINING_TYPE (training_type) VALUES ('FLEXIBILITY_TRAINING');
 insert into TRAINING_TYPE (training_type) VALUES ('WEIGHTLIFTING');
-

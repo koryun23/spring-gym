@@ -122,7 +122,7 @@ public class TrainerFacadeImpl implements TrainerFacade {
         Assert.notNull(requestDto, "TrainerUpdateRequestDto must not be null");
         LOGGER.info("Updating a TrainerEntity according to the TrainerUpdateRequestDto - {}", requestDto);
 
-        if (userService.usernamePasswordMatching(requestDto.getUsername(), requestDto.getPassword())) {
+        if (!userService.usernamePasswordMatching(requestDto.getUsername(), requestDto.getPassword())) {
             return new TrainerUpdateResponseDto(List.of("Authentication failed."));
         }
 
@@ -166,17 +166,14 @@ public class TrainerFacadeImpl implements TrainerFacade {
 
         TrainerEntity trainerEntity = trainerService.selectByUsername(requestDto.getUsername());
         UserEntity userEntity = trainerEntity.getUser();
-        TrainerUpdateResponseDto responseDto = updateTrainer(new TrainerUpdateRequestDto(
-            requestDto.getUpdaterUsername(),
-            requestDto.getUpdaterPassword(),
-            trainerEntity.getId(),
-            userEntity.getFirstName(),
-            userEntity.getLastName(),
-            userEntity.getUsername(),
-            userEntity.getPassword(),
-            !userEntity.getIsActive(),
+        userEntity.setIsActive(!userEntity.getIsActive());
+        userService.update(userEntity);
+        trainerService.update(trainerEntity);
+
+        TrainerUpdateResponseDto responseDto = new TrainerUpdateResponseDto(
+            trainerEntity.getId(), userEntity.getId(), userEntity.getIsActive(),
             trainerEntity.getSpecialization().getId()
-        ));
+        );
 
         LOGGER.info("Successfully switched the activation state according to the {}, result - {}",
             requestDto, responseDto);

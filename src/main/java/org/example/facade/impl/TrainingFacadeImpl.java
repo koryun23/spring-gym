@@ -1,9 +1,12 @@
 package org.example.facade.impl;
 
 import java.util.List;
+import org.example.dto.request.MultipleTrainingDeletionByTraineeRequestDto;
+import org.example.dto.request.MultipleTrainingDeletionByTrainerRequestDto;
 import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTraineeRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTrainerRequestDto;
+import org.example.dto.request.TrainingRetrievalByIdRequestDto;
 import org.example.dto.request.TrainingUpdateRequestDto;
 import org.example.dto.response.MultipleTrainingDeletionByTraineeResponseDto;
 import org.example.dto.response.MultipleTrainingDeletionByTrainerResponseDto;
@@ -70,6 +73,10 @@ public class TrainingFacadeImpl implements TrainingFacade {
         Assert.notNull(requestDto, "TrainingCreationRequestDto");
         LOGGER.info("Creating a TrainingEntity according to the TrainingCreationRequestDto - {}", requestDto);
 
+        if (!userService.usernamePasswordMatching(requestDto.getCreatorUsername(), requestDto.getCreatorPassword())) {
+            return new TrainingCreationResponseDto(List.of("Authentication failed"));
+        }
+
         if (requestDto.getTraineeId() <= 0) {
             return new TrainingCreationResponseDto(
                 List.of(String.format("The trainee id must be positive: %d specified", requestDto.getTraineeId())));
@@ -102,9 +109,17 @@ public class TrainingFacadeImpl implements TrainingFacade {
     }
 
     @Override
-    public TrainingRetrievalResponseDto retrieveTraining(Long trainingId) {
+    public TrainingRetrievalResponseDto retrieveTraining(TrainingRetrievalByIdRequestDto requestDto) {
+        Assert.notNull(requestDto, "TrainingRetrievalByIdRequestDto must not be null");
+        Long trainingId = requestDto.getId();
+
         Assert.notNull(trainingId, "TrainingEntity id must not be null");
         LOGGER.info("Retrieving a TrainingEntity with an id of {}", trainingId);
+
+        if (!userService.usernamePasswordMatching(requestDto.getRetrieverUsername(),
+            requestDto.getRetrieverPassword())) {
+            return new TrainingRetrievalResponseDto(List.of("Authentication failed"));
+        }
 
         if (trainingId <= 0) {
             return new TrainingRetrievalResponseDto(
@@ -133,10 +148,7 @@ public class TrainingFacadeImpl implements TrainingFacade {
         String retrieverPassword = requestDto.getRetrieverPassword();
 
         if (!userService.usernamePasswordMatching(retrieverUsername, retrieverPassword)) {
-            return new TrainingListRetrievalResponseDto(List.of(String.format(
-                "The retriever's username(%s) does not match the retriever's password(%s)", retrieverUsername,
-                retrieverPassword
-            )));
+            return new TrainingListRetrievalResponseDto(List.of("Authentication failed"));
         }
 
         String trainerUsername = requestDto.getTrainerUsername();
@@ -172,10 +184,7 @@ public class TrainingFacadeImpl implements TrainingFacade {
         String retrieverPassword = requestDto.getRetrieverPassword();
 
         if (!userService.usernamePasswordMatching(retrieverUsername, retrieverPassword)) {
-            return new TrainingListRetrievalResponseDto(List.of(String.format(
-                "The retriever's username(%s) does not match the retriever's password(%s)", retrieverUsername,
-                retrieverPassword
-            )));
+            return new TrainingListRetrievalResponseDto(List.of("Authentication failed"));
         }
 
         if (userService.findByUsername(requestDto.getTraineeUsername()).isEmpty()) {
@@ -203,9 +212,17 @@ public class TrainingFacadeImpl implements TrainingFacade {
     }
 
     @Override
-    public MultipleTrainingDeletionByTraineeResponseDto deleteMultpileTraineeTraining(String traineeUsername) {
+    public MultipleTrainingDeletionByTraineeResponseDto deleteMultpileTraineeTraining(
+        MultipleTrainingDeletionByTraineeRequestDto requestDto) {
+
+        Assert.notNull(requestDto, "MultipleTrainingDeletionByTraineeRequestDto must not be null");
+        String traineeUsername = requestDto.getTraineeUsername();
         Assert.notNull(traineeUsername, "Trainee username must not be null");
         LOGGER.info("Deleting all trainings of a trainee with a username of {}", traineeUsername);
+
+        if (!userService.usernamePasswordMatching(requestDto.getDeleterUsername(), requestDto.getDeleterPassword())) {
+            return new MultipleTrainingDeletionByTraineeResponseDto(List.of("Authentication failed"));
+        }
 
         if (traineeService.findByUsername(traineeUsername).isEmpty()) {
             return new MultipleTrainingDeletionByTraineeResponseDto(
@@ -225,9 +242,17 @@ public class TrainingFacadeImpl implements TrainingFacade {
     }
 
     @Override
-    public MultipleTrainingDeletionByTrainerResponseDto deleteMultipleTrainerTraining(String trainerUsername) {
+    public MultipleTrainingDeletionByTrainerResponseDto deleteMultipleTrainerTraining(
+        MultipleTrainingDeletionByTrainerRequestDto requestDto) {
+
+        Assert.notNull(requestDto, "MultipleTrainingDeletionByTrainerRequestDto must not be null");
+        String trainerUsername = requestDto.getTrainerUsername();
         Assert.notNull(trainerUsername, "Trainer username must not be null");
         LOGGER.info("Deleting all trainings of a trainer with a username of {}", trainerUsername);
+
+        if (!userService.usernamePasswordMatching(requestDto.getDeleterUsername(), requestDto.getDeleterPassword())) {
+            return new MultipleTrainingDeletionByTrainerResponseDto(List.of("Authentication failed"));
+        }
 
         if (trainerService.findByUsername(trainerUsername).isEmpty()) {
             return new MultipleTrainingDeletionByTrainerResponseDto(
