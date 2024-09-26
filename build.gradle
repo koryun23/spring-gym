@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '3.3.2'
     id 'io.spring.dependency-management' version '1.1.6'
     id 'checkstyle'
+    id 'org.flywaydb.flyway' version '7.15.0'
 }
 
 group = 'com.example'
@@ -37,6 +38,9 @@ dependencies {
     implementation 'org.hibernate:hibernate-core:6.6.0.Final'
     implementation 'org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final'
     implementation 'org.postgresql:postgresql:42.7.3'
+    implementation 'org.flywaydb:flyway-core:7.15.0'
+    implementation 'org.springframework:spring-jdbc:6.1.12'
+
 }
 
 test {
@@ -47,4 +51,11 @@ checkstyle {
     ignoreFailures = false
     maxWarnings = 0
     configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+}
+
+flyway {
+    url = 'jdbc:postgresql://localhost:6432/postgres'
+    user = 'postgres'
+    password = ''
+    schemas = ['classpath:/db/migration/schema.sql']
 }
