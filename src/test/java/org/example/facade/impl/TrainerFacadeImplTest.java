@@ -103,6 +103,7 @@ class TrainerFacadeImplTest {
 
     @Test
     public void testUpdateTrainerWhenTrainerDoesNotExist() {
+        Mockito.when(userService.usernamePasswordMatching("username", "password")).thenReturn(true);
         Mockito.when(trainerService.findById(1L)).thenReturn(Optional.empty());
         Assertions.assertThat(testSubject.updateTrainer(new TrainerUpdateRequestDto(
             "u", "p",

@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.example.dto.request.TrainingCreationRequestDto;
+import org.example.dto.request.TrainingRetrievalByIdRequestDto;
 import org.example.entity.TraineeEntity;
 import org.example.entity.UserEntity;
 import org.example.facade.core.TrainingFacade;
@@ -73,7 +74,9 @@ class TrainingFacadeImplTest {
 
     @Test
     public void testCreateTrainingWhenTraineeIdNegative() {
+        Mockito.when(userService.usernamePasswordMatching("u", "p")).thenReturn(true);
         Assertions.assertThat(testSubject.createTraining(new TrainingCreationRequestDto(
+            "u", "p",
             -1L,
             1L,
             "training",
@@ -85,7 +88,9 @@ class TrainingFacadeImplTest {
 
     @Test
     public void testCreateTrainingWhenTrainerIdNegative() {
+        Mockito.when(userService.usernamePasswordMatching("u", "p")).thenReturn(true);
         Assertions.assertThat(testSubject.createTraining(new TrainingCreationRequestDto(
+            "u", "p",
             1L,
             -1L,
             "training",
@@ -97,8 +102,10 @@ class TrainingFacadeImplTest {
 
     @Test
     public void testCreateTrainingWhenTraineeDoesNotExist() {
+        Mockito.when(userService.usernamePasswordMatching("u", "p")).thenReturn(true);
         Mockito.when(traineeService.findById(1L)).thenReturn(Optional.empty());
         Assertions.assertThat(testSubject.createTraining(new TrainingCreationRequestDto(
+                "u", "p",
                 1L,
                 1L,
                 "training",
@@ -111,12 +118,14 @@ class TrainingFacadeImplTest {
 
     @Test
     public void testCreateTrainingWhenTrainerDoesNotExist() {
+        Mockito.when(userService.usernamePasswordMatching("u", "p")).thenReturn(true);
         Mockito.when(trainerService.findById(1L)).thenReturn(Optional.empty());
         Mockito.when(traineeService.findById(1L)).thenReturn(Optional.of(new TraineeEntity(
             new UserEntity("first", "last", "username", "password", true),
             Date.valueOf("2024-10-10"), "address"
         )));
         Assertions.assertThat(testSubject.createTraining(new TrainingCreationRequestDto(
+                "u", "p",
                 1L,
                 1L,
                 "training",
@@ -135,14 +144,18 @@ class TrainingFacadeImplTest {
 
     @Test
     public void testRetrieveTrainingWhenNegative() {
-        Assertions.assertThat(testSubject.retrieveTraining(-1L).getErrors().getFirst())
+        Mockito.when(userService.usernamePasswordMatching("u", "p")).thenReturn(true);
+        Assertions.assertThat(
+                testSubject.retrieveTraining(new TrainingRetrievalByIdRequestDto("u", "p", -1L)).getErrors().getFirst())
             .isEqualTo("TrainingEntity id must be positive: -1 specified");
     }
 
     @Test
     public void testRetrieveTrainingWhenDoesNotExist() {
+        Mockito.when(userService.usernamePasswordMatching("u", "p")).thenReturn(true);
         Mockito.when(trainingService.findById(1L)).thenReturn(Optional.empty());
-        Assertions.assertThat(testSubject.retrieveTraining(1L).getErrors().getFirst())
+        Assertions.assertThat(
+                testSubject.retrieveTraining(new TrainingRetrievalByIdRequestDto("u", "p", 1L)).getErrors().getFirst())
             .isEqualTo("TrainingEntity with a specified id of 1 does not exist");
     }
 }

@@ -48,6 +48,7 @@ class TrainingCreationRequestDtoToTrainingEntityMapperImplTest {
     @Test
     public void testWhenValid() {
         TrainingCreationRequestDto requestDto = new TrainingCreationRequestDto(
+            "u", "p",
             1L,
             1L,
             "name",

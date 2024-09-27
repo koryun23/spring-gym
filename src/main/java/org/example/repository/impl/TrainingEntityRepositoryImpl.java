@@ -6,8 +6,6 @@ import jakarta.persistence.criteria.Root;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
-import org.example.entity.TraineeEntity;
-import org.example.entity.TrainerEntity;
 import org.example.entity.TrainingEntity;
 import org.example.exception.TrainingNotFoundException;
 import org.example.repository.core.TrainingEntityRepository;
@@ -141,11 +139,13 @@ public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
 
         Long trainerEntityId = session.createQuery(trainerIdFromUsernameQuery(), Long.class)
             .setParameter("trainerUsername", trainerUsername)
-            .uniqueResult(); // single selection, time complexity - log(n), where n is the number of records in trainer table
+            .uniqueResult();
+        // single selection, time complexity - log(n), where n is the number of records in trainer table
 
         Long traineeEntityId = session.createQuery(traineeIdFromUsernameQuery(), Long.class)
             .setParameter("traineeUsername", traineeUsername)
-            .uniqueResult(); // single selection, time complexity - log(n), where n is the number of records in trainee table
+            .uniqueResult();
+        // single selection, time complexity - log(n), where n is the number of records in trainee table
 
         String query = String.format("select t from TrainingEntity t WHERE t.trainer.id = :trainerId "
                 + "%s t.trainee.id = :traineeId "

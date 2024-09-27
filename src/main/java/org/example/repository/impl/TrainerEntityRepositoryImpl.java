@@ -29,7 +29,8 @@ public class TrainerEntityRepositoryImpl implements TrainerEntityRepository {
         Transaction transaction = session.beginTransaction();
 
         TrainerEntity trainerEntity = session.createQuery(
-                "select t from TrainerEntity t join UserEntity u on t.user.id = u.id where u.username = :username", TrainerEntity.class)
+                "select t from TrainerEntity t join UserEntity u on t.user.id = u.id where u.username = :username",
+                TrainerEntity.class)
             .setParameter("username", username)
             .uniqueResult();
 
