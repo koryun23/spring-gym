@@ -19,6 +19,9 @@ public class TrainerServiceImpl implements TrainerService {
     @Autowired
     private TrainerDaoImpl trainerDao;
 
+    //TODO. All functions except Create Trainer/Trainee profile. Should be executed only after
+    // Trainee/Trainer authentication (on this step should be checked username and password
+    // matching).
     @Override
     public TrainerEntity create(TrainerEntity trainerEntity) {
         Assert.notNull(trainerEntity, "TrainerCreateParams must not be null");
