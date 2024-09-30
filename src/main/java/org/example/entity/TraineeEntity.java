@@ -16,6 +16,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import java.util.Date;
 import java.util.List;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode
 @ToString
+@Data
 @Entity
 @Table(name = "TRAINEE")
 public class TraineeEntity {
@@ -53,6 +55,10 @@ public class TraineeEntity {
     @Transient
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "traineeEntityList")
     private List<TrainerEntity> trainerEntityList;
+
+    //TODO - Problem: Lack of Builder pattern.
+    // Why: We are using Lombok in the project, which can simplify instance creation.
+    // What I offer: Use Lombok's @Builder to create a more readable and manageable way to instantiate the entity.
 
     /**
      * Constructor.

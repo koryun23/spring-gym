@@ -35,6 +35,13 @@ public class TrainerEntity {
     @SequenceGenerator(name = "TRAINER_SEQUENCE", allocationSize = 1)
     private Long id;
 
+    //TODO  - Problem: Using EAGER fetching for UserEntity.
+    // Why: EAGER fetching can lead to performance issues by loading all associated data immediately,
+    // resulting in unnecessary data retrieval and increased memory usage. This can slow down
+    // the application, especially if there are many entities involved or if the association is
+    // not always needed.
+    // What I offer: Consider switching to LAZY fetching, allowing data to be loaded only when
+    // it's actually needed, which can improve performance and reduce memory overhead.
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     @OneToOne(fetch = FetchType.EAGER)
     private UserEntity user;

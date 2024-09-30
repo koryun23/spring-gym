@@ -34,6 +34,8 @@ public class TraineeEntityRepositoryImpl implements TraineeEntityRepository {
         LOGGER.info("Session Factory - {}", sessionFactory);
     }
 
+
+    //TODO as far as I understand do not have gargantuan that transaction 100% want rollback or commit.
     @Override
     public Optional<TraineeEntity> findByUsername(String username) {
         Session session = sessionFactory.openSession();
@@ -85,7 +87,6 @@ public class TraineeEntityRepositoryImpl implements TraineeEntityRepository {
         Query<TraineeEntity> traineeEntityQuery = session.createQuery(select);
 
         List<TraineeEntity> traineeEntityList = traineeEntityQuery.list();
-
         transaction.commit();
         session.close();
 

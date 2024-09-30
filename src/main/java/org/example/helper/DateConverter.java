@@ -29,4 +29,9 @@ public class DateConverter {
     public String dateToString(Date date) {
         return dateFormat.format(date);
     }
+
+    // TODO: These methods are currently unused.
+    // Why: There may not yet be a need in the application to convert between Date and String representations.
+    // What I offer: Consider where these conversions might be useful (e.g., dto, database storage)
+    // and refactor code to utilize this helper where needed to avoid duplicated date handling logic.
 }

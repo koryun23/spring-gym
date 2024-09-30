@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+//TODO problem -if it is dao we can write @repository.
+
 @Component
 public class TrainerDaoImpl implements TrainerDao {
 

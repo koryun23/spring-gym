@@ -31,6 +31,8 @@ public class Main {
      * Main method.
      */
     public static void main(String[] args) {
+        //TODO app do not have error handling I think everywhere when trows RuntimeExceptions app want to stopped.
+
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
 
         TraineeFacade traineeFacade = context.getBean(TraineeFacade.class);
@@ -47,7 +49,7 @@ public class Main {
         TraineeRetrievalResponseDto errorResponseDto =
             traineeFacade.retrieveTrainee(new TraineeRetrievalByIdRequestDto("first.last.4", "asdfg", 1L));
         traineeFacade.changePassword(
-            new TraineePasswordChangeRequestDto("first.last.4", "872411bd-2", 1L, "password-4"));
+            new TraineePasswordChangeRequestDto("first.last.4", "872411bd-2", 150L, "password-4"));
         traineeFacade.switchActivationState(new TraineeSwitchActivationStateRequestDto(
             "first.last", "password-4", 2L
         ));

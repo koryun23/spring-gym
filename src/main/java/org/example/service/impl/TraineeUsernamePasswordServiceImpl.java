@@ -4,6 +4,9 @@ import org.example.service.core.UsernamePasswordService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+
+//TODO how i understand here TraineeUsernamePasswordServiceImpl and TrainerUsernamePasswordServiceImpl
+// do the same thing if like this we can use UsernamePasswordService without its.
 @Service("traineeUsernamePasswordService")
 public class TraineeUsernamePasswordServiceImpl implements UsernamePasswordService {
 

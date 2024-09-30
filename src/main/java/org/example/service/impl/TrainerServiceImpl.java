@@ -38,6 +38,7 @@ public class TrainerServiceImpl implements TrainerService {
         LOGGER.info("Successfully updated a TrainerEntity based on TrainerUpdateParams - {}, result - {}",
             trainerEntity,
             updatedTrainerEntity);
+
         return updatedTrainerEntity;
     }
 
