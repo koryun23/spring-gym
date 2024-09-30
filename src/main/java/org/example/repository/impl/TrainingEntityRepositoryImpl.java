@@ -2,8 +2,10 @@ package org.example.repository.impl;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import java.sql.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import org.example.entity.TrainingEntity;
@@ -93,35 +95,34 @@ public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
         Assert.notNull(traineeUsername, "Trainee Username must not be null");
 
         Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        final Transaction transaction = session.beginTransaction();
 
-        // single selection, time complexity - log(n), where n is the number of records in trainer table
-        Long trainerEntityId = session.createQuery(trainerIdFromUsernameQuery(), Long.class)
-            .setParameter("trainerUsername", trainerUsername)
-            .uniqueResult();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<TrainingEntity> criteriaQuery = criteriaBuilder.createQuery(TrainingEntity.class);
+        Root<TrainingEntity> root = criteriaQuery.from(TrainingEntity.class);
 
-        // single selection, time complexity - log(n), where n is the number of records in trainee table
-        Long traineeEntityId = session.createQuery(traineeIdFromUsernameQuery(), Long.class)
-            .setParameter("traineeUsername", traineeUsername)
-            .uniqueResult();
+        List<Predicate> predicateList = new LinkedList<>();
 
-        String query = String.format("select t from TrainingEntity t WHERE t.trainee.id = :traineeId "
-                + "%s t.trainer.id = :trainerId "
-                + "%s t.date >= :from "
-                + "%s t.date <= :to "
-                + "%s t.trainingType.id = :trainingTypeId",
-            trainerUsername == null ? "OR" : "AND",
-            from == null ? "OR" : "AND",
-            to == null ? "OR" : "AND",
-            trainingTypeId == null ? "OR" : "AND");
+        predicateList.add(criteriaBuilder.equal(root.get("trainee").get("user").get("username"), traineeUsername));
 
-        List<TrainingEntity> trainingEntityList = session.createQuery(query, TrainingEntity.class)
-            .setParameter("traineeId", traineeEntityId)
-            .setParameter("trainerId", trainerEntityId)
-            .setParameter("from", from)
-            .setParameter("to", to)
-            .setParameter("trainingTypeId", trainingTypeId)
-            .list();
+        if (trainerUsername != null) {
+            predicateList.add(criteriaBuilder.equal(root.get("trainer").get("user").get("username"), trainerUsername));
+        }
+
+        if (from != null) {
+            predicateList.add(criteriaBuilder.greaterThanOrEqualTo(root.get("date"), from));
+        }
+
+        if (to != null) {
+            predicateList.add(criteriaBuilder.lessThanOrEqualTo(root.get("date"), to));
+        }
+
+        if (trainingTypeId != null) {
+            predicateList.add(criteriaBuilder.equal(root.get("trainingType").get("id"), trainingTypeId));
+        }
+
+        criteriaQuery.where(predicateList.toArray(new Predicate[] {}));
+        List<TrainingEntity> trainingEntityList = session.createQuery(criteriaQuery).getResultList();
 
         transaction.commit();
         session.close();
@@ -135,32 +136,30 @@ public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
         Assert.notNull(trainerUsername, "Trainer Username must not be null");
 
         Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        final Transaction transaction = session.beginTransaction();
 
-        Long trainerEntityId = session.createQuery(trainerIdFromUsernameQuery(), Long.class)
-            .setParameter("trainerUsername", trainerUsername)
-            .uniqueResult();
-        // single selection, time complexity - log(n), where n is the number of records in trainer table
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<TrainingEntity> criteriaQuery = criteriaBuilder.createQuery(TrainingEntity.class);
+        Root<TrainingEntity> root = criteriaQuery.from(TrainingEntity.class);
 
-        Long traineeEntityId = session.createQuery(traineeIdFromUsernameQuery(), Long.class)
-            .setParameter("traineeUsername", traineeUsername)
-            .uniqueResult();
-        // single selection, time complexity - log(n), where n is the number of records in trainee table
+        List<Predicate> predicateList = new LinkedList<>();
 
-        String query = String.format("select t from TrainingEntity t WHERE t.trainer.id = :trainerId "
-                + "%s t.trainee.id = :traineeId "
-                + "%s t.date >= :from "
-                + "%s t.date <= :to",
-            traineeUsername == null ? "OR" : "AND",
-            from == null ? "OR" : "AND",
-            to == null ? "OR" : "AND");
+        predicateList.add(criteriaBuilder.equal(root.get("trainer").get("user").get("username"), trainerUsername));
 
-        List<TrainingEntity> trainingEntityList = session.createQuery(query, TrainingEntity.class)
-            .setParameter("traineeId", traineeEntityId)
-            .setParameter("trainerId", trainerEntityId)
-            .setParameter("from", from)
-            .setParameter("to", to)
-            .list();
+        if (traineeUsername != null) {
+            predicateList.add(criteriaBuilder.equal(root.get("trainee").get("user").get("username"), traineeUsername));
+        }
+
+        if (from != null) {
+            predicateList.add(criteriaBuilder.greaterThanOrEqualTo(root.get("date"), from));
+        }
+
+        if (to != null) {
+            predicateList.add(criteriaBuilder.lessThanOrEqualTo(root.get("date"), to));
+        }
+
+        criteriaQuery.where(predicateList.toArray(new Predicate[] {}));
+        List<TrainingEntity> trainingEntityList = session.createQuery(criteriaQuery).getResultList();
 
         transaction.commit();
         session.close();
