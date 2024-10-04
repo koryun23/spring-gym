@@ -14,24 +14,17 @@ import lombok.ToString;
 @ToString
 public class TrainerCreationResponseDto {
 
-    private Long trainerId;
-    private Long userId;
-    private Boolean isActive;
-    private Long trainingTypeId;
+    private String firstName;
+    private String lastName;
 
     private List<String> errors;
 
     /**
      * Constructor.
      */
-    public TrainerCreationResponseDto(Long trainerId,
-                                      Long userId,
-                                      Boolean isActive,
-                                      Long trainingTypeId) {
-        this.trainerId = trainerId;
-        this.userId = userId;
-        this.isActive = isActive;
-        this.trainingTypeId = trainingTypeId;
+    public TrainerCreationResponseDto(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     /**

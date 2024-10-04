@@ -62,10 +62,10 @@ public class Main {
         TrainerFacade trainerFacade = context.getBean(TrainerFacade.class);
         // TRAINER FACADE SCENARIO
         trainerFacade.createTrainer(new TrainerCreationRequestDto(
-            "travis", "stones", true, 1L
+            "travis", "stones", 1L
         ));
         trainerFacade.createTrainer(new TrainerCreationRequestDto(
-            "travis", "stones", true, 1L
+            "travis", "stones", 1L
         ));
         trainerFacade.switchActivationState(new TrainerSwitchActivationStateRequestDto(
             "travis.stones", "c355c787-1", "travis.stones"

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.util.Assert;
 
 @NoArgsConstructor
 @Getter
@@ -26,11 +27,13 @@ public class TrainerCreationRequestDto {
      */
     public TrainerCreationRequestDto(String firstName,
                                      String lastName,
-                                     Boolean isActive,
                                      Long trainingTypeId) {
+        Assert.notNull(firstName, "First name must not be null");
+        Assert.notNull(lastName, "Last name must not be null");
+        Assert.notNull(trainingTypeId, "Training Type Id must not be null");
         this.firstName = firstName;
         this.lastName = lastName;
-        this.isActive = isActive;
+        this.isActive = true;
         this.trainingTypeId = trainingTypeId;
     }
 }
