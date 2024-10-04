@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.util.Assert;
 
 @NoArgsConstructor
 @Getter
@@ -28,12 +29,13 @@ public class TraineeCreationRequestDto {
      */
     public TraineeCreationRequestDto(String firstName,
                                      String lastName,
-                                     boolean isActive,
                                      Date dateOfBirth,
                                      String address) {
+        Assert.notNull(firstName, "First name must not be null");
+        Assert.notNull(lastName, "Last name must not be null");
         this.firstName = firstName;
         this.lastName = lastName;
-        this.isActive = isActive;
+        this.isActive = true;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
     }

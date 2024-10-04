@@ -36,10 +36,10 @@ public class Main {
         TraineeFacade traineeFacade = context.getBean(TraineeFacade.class);
         // TRAINEE FACADE SCENARIO
         traineeFacade.createTrainee(new TraineeCreationRequestDto(
-            "first", "last", true, Date.valueOf("2024-10-10"), "address"
+            "first", "last", Date.valueOf("2024-10-10"), "address"
         ));
         traineeFacade.createTrainee(new TraineeCreationRequestDto(
-            "first", "last", true, Date.valueOf("2024-10-10"), "address"
+            "first", "last", Date.valueOf("2024-10-10"), "address"
         ));
 
         TraineeRetrievalResponseDto responseDto =
@@ -56,7 +56,7 @@ public class Main {
             "address"
         ));
         traineeFacade.createTrainee(new TraineeCreationRequestDto(
-            "first", "last", true, Date.valueOf("2024-10-10"), "address"
+            "first", "last", Date.valueOf("2024-10-10"), "address"
         ));
 
         TrainerFacade trainerFacade = context.getBean(TrainerFacade.class);
