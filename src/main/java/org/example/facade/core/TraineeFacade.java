@@ -19,8 +19,6 @@ public interface TraineeFacade {
 
     TraineeUpdateResponseDto updateTrainee(TraineeUpdateRequestDto requestDto);
 
-    TraineeRetrievalResponseDto retrieveTrainee(TraineeRetrievalByIdRequestDto requestDto);
-
     TraineeRetrievalResponseDto retrieveTrainee(TraineeRetrievalByUsernameRequestDto requestDto);
 
     TraineeDeletionResponseDto deleteTraineeById(TraineeDeletionByIdRequestDto requestDto);

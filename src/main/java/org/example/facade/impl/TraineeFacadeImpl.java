@@ -138,36 +138,6 @@ public class TraineeFacadeImpl implements TraineeFacade {
     }
 
     @Override
-    public TraineeRetrievalResponseDto retrieveTrainee(TraineeRetrievalByIdRequestDto requestDto) {
-
-        Assert.notNull(requestDto, "TraineeRetrievalByIdRequestDto must not be null");
-        Long id = requestDto.getId();
-        Assert.notNull(id, "TraineeEntity id must not be null");
-        LOGGER.info("Retrieving a TraineeEntity with an id of {}", id);
-
-        if (!userService.usernamePasswordMatching(requestDto.getRetrieverUsername(),
-            requestDto.getRetrieverPassword())) {
-            return new TraineeRetrievalResponseDto(List.of("Authentication failed"));
-        }
-
-        if (id <= 0) {
-            return new TraineeRetrievalResponseDto(
-                List.of(String.format("TraineeEntity id must be positive: %d specified", id)));
-        }
-
-        if (traineeService.findById(id).isEmpty()) {
-            return new TraineeRetrievalResponseDto(
-                List.of(String.format("A TraineeEntity with an id - %d, does not exist", id)));
-        }
-
-        TraineeRetrievalResponseDto responseDto =
-            traineeEntityToTraineeRetrievalResponseDtoMapper.map(traineeService.select(id));
-
-        LOGGER.info("Successfully retrieved a TraineeEntity with an id of {}, response - {}", id, responseDto);
-        return responseDto;
-    }
-
-    @Override
     public TraineeRetrievalResponseDto retrieveTrainee(TraineeRetrievalByUsernameRequestDto requestDto) {
         Assert.notNull(requestDto, "TraineeRetrievalByUsernameRequestDto must not be null");
         String username = requestDto.getUsername();

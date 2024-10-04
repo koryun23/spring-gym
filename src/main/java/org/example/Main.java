@@ -42,10 +42,6 @@ public class Main {
             "first", "last", Date.valueOf("2024-10-10"), "address"
         ));
 
-        TraineeRetrievalResponseDto responseDto =
-            traineeFacade.retrieveTrainee(new TraineeRetrievalByIdRequestDto("first.last.4", "872411bd-2", 1L));
-        TraineeRetrievalResponseDto errorResponseDto =
-            traineeFacade.retrieveTrainee(new TraineeRetrievalByIdRequestDto("first.last.4", "asdfg", 1L));
         traineeFacade.changePassword(
             new TraineePasswordChangeRequestDto("first.last.4", "872411bd-2", 1L, "password-4"));
         traineeFacade.switchActivationState(new TraineeSwitchActivationStateRequestDto(

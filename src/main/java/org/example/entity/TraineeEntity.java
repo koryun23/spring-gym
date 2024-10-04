@@ -14,7 +14,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

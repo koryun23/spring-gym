@@ -1,12 +1,13 @@
 package org.example.dto.response;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.example.dto.plain.TrainerDto;
 
 @NoArgsConstructor
 @Getter
@@ -15,27 +16,30 @@ import lombok.ToString;
 @ToString
 public class TraineeRetrievalResponseDto {
 
-    private Long traineeId;
-    private Long userId;
-    private boolean isActive;
+    private String firstName;
+    private String lastName;
     private Date dateOfBirth;
     private String address;
+    private Boolean isActive;
+    private List<TrainerDto> trainers;
 
     private List<String> errors;
 
     /**
      * Constructor.
      */
-    public TraineeRetrievalResponseDto(Long traineeId,
-                                       Long userId,
-                                       boolean isActive,
+    public TraineeRetrievalResponseDto(String firstName,
+                                       String lastName,
                                        Date dateOfBirth,
-                                       String address) {
-        this.traineeId = traineeId;
-        this.userId = userId;
-        this.isActive = isActive;
+                                       String address,
+                                       Boolean isActive,
+                                       List<TrainerDto> trainers) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
+        this.isActive = isActive;
+        this.trainers = trainers;
     }
 
     /**
