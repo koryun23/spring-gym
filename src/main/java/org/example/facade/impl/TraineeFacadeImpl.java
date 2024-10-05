@@ -2,6 +2,9 @@ package org.example.facade.impl;
 
 import java.util.List;
 import java.util.Optional;
+import org.example.dto.plain.TrainerDto;
+import org.example.dto.plain.TrainingTypeDto;
+import org.example.dto.plain.UserDto;
 import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TraineeDeletionByIdRequestDto;
 import org.example.dto.request.TraineeDeletionByUsernameRequestDto;
@@ -116,22 +119,41 @@ public class TraineeFacadeImpl implements TraineeFacade {
             return new TraineeUpdateResponseDto(List.of("Authentication failed"));
         }
 
-        Long userId = traineeService.findById(requestDto.getTraineeId())
-            .orElseThrow(() -> new TraineeNotFoundException(requestDto.getTraineeId())).getUser().getId();
-        LOGGER.info("User id of the trainee is {}", userId);
-        UserEntity userEntity =
-            new UserEntity(requestDto.getFirstName(), requestDto.getLastName(), requestDto.getUsername(),
-                requestDto.getPassword(), requestDto.getIsActive());
-        userEntity.setId(userId);
+        TraineeEntity traineeEntity = traineeService.findByUsername(requestDto.getUsername())
+            .orElseThrow(() -> new TraineeNotFoundException(requestDto.getUsername()));
+
+        UserEntity userEntity = traineeEntity.getUser();
+
+        userEntity.setFirstName(requestDto.getFirstName());
+        userEntity.setLastName(requestDto.getLastName());
+        userEntity.setIsActive(requestDto.getIsActive());
+
+        traineeEntity.setAddress(requestDto.getAddress());
+        traineeEntity.setAddress(requestDto.getAddress());
+
+        traineeService.update(traineeEntity);
         userService.update(userEntity);
 
-        TraineeEntity traineeEntity =
-            new TraineeEntity(userEntity, requestDto.getDateOfBirth(), requestDto.getAddress());
-        traineeEntity.setId(requestDto.getTraineeId());
-
-        TraineeUpdateResponseDto responseDto =
-            traineeEntityToTraineeUpdateResponseDtoMapper.map(traineeService.update(traineeEntity));
-
+        TraineeUpdateResponseDto responseDto = new TraineeUpdateResponseDto(
+            userEntity.getUsername(),
+            userEntity.getFirstName(),
+            userEntity.getLastName(),
+            traineeEntity.getDateOfBirth(),
+            traineeEntity.getAddress(),
+            userEntity.getIsActive(),
+            traineeEntity.getTrainerEntityList().stream()
+                .map(trainerEntity -> new TrainerDto(
+                    new UserDto(
+                        trainerEntity.getUser().getFirstName(),
+                        trainerEntity.getUser().getLastName(),
+                        trainerEntity.getUser().getUsername(),
+                        trainerEntity.getUser().getPassword(),
+                        trainerEntity.getUser().getIsActive()
+                    ),
+                    new TrainingTypeDto(trainerEntity.getSpecialization().getTrainingType())
+                ))
+                .toList()
+        );
         LOGGER.info("Successfully updated a TraineeEntity based on the TraineeUpdateRequestDto - {}, response - {}",
             requestDto, responseDto);
         return responseDto;
@@ -230,8 +252,26 @@ public class TraineeFacadeImpl implements TraineeFacade {
         userService.update(user);
 
         TraineeUpdateResponseDto responseDto =
-            new TraineeUpdateResponseDto(traineeEntity.getId(), user.getIsActive(), traineeEntity.getDateOfBirth(),
-                traineeEntity.getAddress());
+            new TraineeUpdateResponseDto(
+                user.getUsername(),
+                user.getFirstName(),
+                user.getLastName(),
+                traineeEntity.getDateOfBirth(),
+                traineeEntity.getAddress(),
+                user.getIsActive(),
+                traineeEntity.getTrainerEntityList().stream()
+                    .map(trainerEntity -> new TrainerDto(
+                        new UserDto(
+                            trainerEntity.getUser().getFirstName(),
+                            trainerEntity.getUser().getPassword(),
+                            trainerEntity.getUser().getUsername(),
+                            trainerEntity.getUser().getPassword(),
+                            trainerEntity.getUser().getIsActive()
+                        ),
+                        new TrainingTypeDto(trainerEntity.getSpecialization().getTrainingType())
+                    )).toList()
+            );
+        // TODO: Add a mapper for the plain dtos
 
         LOGGER.info("Successfully switched the activation state of a Trainee with an id of {}", id);
         return responseDto;
@@ -255,10 +295,23 @@ public class TraineeFacadeImpl implements TraineeFacade {
         userService.update(user);
 
         TraineeUpdateResponseDto responseDto = new TraineeUpdateResponseDto(
-            traineeEntity.getId(),
-            user.getIsActive(),
+            user.getUsername(),
+            user.getFirstName(),
+            user.getLastName(),
             traineeEntity.getDateOfBirth(),
-            traineeEntity.getAddress()
+            traineeEntity.getAddress(),
+            user.getIsActive(),
+            traineeEntity.getTrainerEntityList().stream()
+                .map(trainerEntity -> new TrainerDto(
+                    new UserDto(
+                        trainerEntity.getUser().getFirstName(),
+                        trainerEntity.getUser().getPassword(),
+                        trainerEntity.getUser().getUsername(),
+                        trainerEntity.getUser().getPassword(),
+                        trainerEntity.getUser().getIsActive()
+                    ),
+                    new TrainingTypeDto(trainerEntity.getSpecialization().getTrainingType())
+                )).toList()
         );
 
         LOGGER.info("Successfully changed the password of a Trainee according to the request dto - {}, result - {}",

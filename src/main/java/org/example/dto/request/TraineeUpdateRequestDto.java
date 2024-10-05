@@ -20,7 +20,6 @@ public class TraineeUpdateRequestDto {
     private String firstName;
     private String lastName;
     private String username;
-    private String password;
     private Boolean isActive;
     private Date dateOfBirth;
     private String address;
