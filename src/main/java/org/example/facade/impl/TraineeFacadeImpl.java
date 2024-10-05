@@ -35,6 +35,7 @@ import org.example.service.core.UsernamePasswordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -186,36 +187,6 @@ public class TraineeFacadeImpl implements TraineeFacade {
     }
 
     @Override
-    public TraineeDeletionResponseDto deleteTraineeById(TraineeDeletionByIdRequestDto requestDto) {
-
-        LOGGER.info("Deleting a trainee according to the TraineeDeletionByIdRequestDto - {}", requestDto);
-        Assert.notNull(requestDto, "TraineeDeletionByIdRequestDto must not be null");
-
-        if (!userService.usernamePasswordMatching(requestDto.getDeleterUsername(), requestDto.getDeleterPassword())) {
-            return new TraineeDeletionResponseDto(List.of("Authentication failed"));
-        }
-
-        Long id = requestDto.getId();
-        Assert.notNull(id, "TraineeEntity id must not be null");
-
-        if (id <= 0) {
-            return new TraineeDeletionResponseDto(
-                List.of(String.format("TraineeEntity id must be positive: %d specified", id)));
-        }
-
-        if (traineeService.findById(id).isEmpty()) {
-            return new TraineeDeletionResponseDto(
-                List.of(String.format("A TraineeEntity with an id - %d, does not exist", id)));
-        }
-
-        LOGGER.info("Deleting a TraineeEntity with an id of {}", id);
-        boolean success = traineeService.delete(id);
-        TraineeDeletionResponseDto responseDto = new TraineeDeletionResponseDto(success);
-        LOGGER.info("Successfully deleted a TraineeEntity with an id of {}, response - {}", id, responseDto);
-        return responseDto;
-    }
-
-    @Override
     public TraineeDeletionResponseDto deleteTraineeByUsername(TraineeDeletionByUsernameRequestDto requestDto) {
 
         String username = requestDto.getUsername();
@@ -230,8 +201,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
         traineeService.delete(username);
 
         LOGGER.info("Successfully deleted a Trainee with a username of {}", username);
-        return new TraineeDeletionResponseDto(true);
-
+        return new TraineeDeletionResponseDto(HttpStatus.OK);
     }
 
     @Override

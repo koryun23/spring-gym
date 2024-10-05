@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.http.HttpStatus;
 
 @NoArgsConstructor
 @Getter
@@ -14,11 +15,11 @@ import lombok.ToString;
 @ToString
 public class TraineeDeletionResponseDto {
 
-    private boolean status;
+    private HttpStatus status;
 
     private List<String> errors;
 
-    public TraineeDeletionResponseDto(boolean status) {
+    public TraineeDeletionResponseDto(HttpStatus status) {
         this.status = status;
     }
 
