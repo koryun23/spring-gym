@@ -111,9 +111,5 @@ public class Main {
         trainingFacade.deleteMultipleTrainerTraining(new MultipleTrainingDeletionByTrainerRequestDto(
             "travis.stones", "password-1", "travis.stones"
         ));
-
-        // DELETING ALL DATA FROM TRAINEE
-        traineeFacade.deleteTraineeById(new TraineeDeletionByIdRequestDto("travis.stones", "password-1", 1L));
-        traineeFacade.deleteTraineeById(new TraineeDeletionByIdRequestDto("travis.stones", "password-1", 2L));
     }
 }
