@@ -48,7 +48,7 @@ public class Main {
             "first.last", "password-4", 2L
         ));
         traineeFacade.updateTrainee(new TraineeUpdateRequestDto(
-            "first.last", "password-4", 2L, "john", "doe", "john.doe", "johndoepwd", true, Date.valueOf("2024-10-10"),
+            "john", "doe", "john.doe", true, Date.valueOf("2024-10-10"),
             "address"
         ));
         traineeFacade.createTrainee(new TraineeCreationRequestDto(

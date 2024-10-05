@@ -17,7 +17,6 @@ public class TraineeUpdateRequestDto {
     private String updaterUsername;
     private String updaterPassword;
 
-    private Long traineeId;
     private String firstName;
     private String lastName;
     private String username;
@@ -29,23 +28,15 @@ public class TraineeUpdateRequestDto {
     /**
      * Constructor.
      */
-    public TraineeUpdateRequestDto(String updaterUsername,
-                                   String updaterPassword,
-                                   Long traineeId,
-                                   String firstName,
+    public TraineeUpdateRequestDto(String firstName,
                                    String lastName,
                                    String username,
-                                   String password,
                                    Boolean isActive,
                                    Date dateOfBirth,
                                    String address) {
-        this.updaterUsername = updaterUsername;
-        this.updaterPassword = updaterPassword;
-        this.traineeId = traineeId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
-        this.password = password;
         this.isActive = isActive;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
