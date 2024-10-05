@@ -200,8 +200,10 @@ public class TraineeFacadeImpl implements TraineeFacade {
 
         traineeService.delete(username);
 
-        LOGGER.info("Successfully deleted a Trainee with a username of {}", username);
-        return new TraineeDeletionResponseDto(HttpStatus.OK);
+        TraineeDeletionResponseDto responseDto = new TraineeDeletionResponseDto(HttpStatus.OK);
+
+        LOGGER.info("Successfully deleted a Trainee with a username of {}, result - {}", username, responseDto);
+        return responseDto;
     }
 
     @Override
