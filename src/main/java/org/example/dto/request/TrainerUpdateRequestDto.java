@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.example.dto.plain.TrainingTypeDto;
 
 @NoArgsConstructor
 @Getter
@@ -16,28 +17,24 @@ public class TrainerUpdateRequestDto {
     private String updaterUsername;
     private String updaterPassword;
 
-    private Long trainerId;
+    private String username;
     private String firstName;
     private String lastName;
-    private String username;
-    private String password;
+    private TrainingTypeDto specialization;
     private Boolean isActive;
-    private Long trainingTypeId;
 
     /**
      * Constructor.
      */
-    public TrainerUpdateRequestDto(String updaterUsername, String updaterPassword, Long trainerId, String firstName,
-                                   String lastName, String username, String password,
-                                   boolean isActive, Long trainingTypeId) {
-        this.updaterUsername = updaterUsername;
-        this.updaterPassword = updaterPassword;
-        this.trainerId = trainerId;
+    public TrainerUpdateRequestDto(String username,
+                                   String firstName,
+                                   String lastName,
+                                   TrainingTypeDto specialization,
+                                   Boolean isActive) {
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.username = username;
-        this.password = password;
+        this.specialization = specialization;
         this.isActive = isActive;
-        this.trainingTypeId = trainingTypeId;
     }
 }

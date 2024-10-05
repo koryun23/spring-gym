@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.example.dto.plain.TraineeDto;
+import org.example.dto.plain.TrainingTypeDto;
 
 @NoArgsConstructor
 @Getter
@@ -14,24 +16,30 @@ import lombok.ToString;
 @ToString
 public class TrainerUpdateResponseDto {
 
-    private Long trainerId;
-    private Long userId;
-    private boolean isActive;
-    private Long trainingTypeId;
+    private String username;
+    private String firstName;
+    private String lastName;
+    private TrainingTypeDto specialization;
+    private Boolean isActive;
+    private List<TraineeDto> trainees;
 
     private List<String> errors;
 
     /**
      * Constructor.
      */
-    public TrainerUpdateResponseDto(Long trainerId,
-                                    Long userId,
-                                    boolean isActive,
-                                    Long trainingTypeId) {
-        this.trainerId = trainerId;
-        this.userId = userId;
+    public TrainerUpdateResponseDto(String username,
+                                    String firstName,
+                                    String lastName,
+                                    TrainingTypeDto specialization,
+                                    Boolean isActive,
+                                    List<TraineeDto> trainees) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.specialization = specialization;
         this.isActive = isActive;
-        this.trainingTypeId = trainingTypeId;
+        this.trainees = trainees;
     }
 
     /**

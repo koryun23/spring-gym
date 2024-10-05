@@ -16,6 +16,7 @@ import org.example.dto.response.TrainerListRetrievalResponseDto;
 import org.example.dto.response.TrainerRetrievalResponseDto;
 import org.example.dto.response.TrainerUpdateResponseDto;
 import org.example.entity.TrainerEntity;
+import org.example.entity.TrainingTypeEntity;
 import org.example.entity.UserEntity;
 import org.example.exception.TrainerNotFoundException;
 import org.example.facade.core.TrainerFacade;
@@ -125,33 +126,39 @@ public class TrainerFacadeImpl implements TrainerFacade {
         Assert.notNull(requestDto, "TrainerUpdateRequestDto must not be null");
         LOGGER.info("Updating a TrainerEntity according to the TrainerUpdateRequestDto - {}", requestDto);
 
-        if (!userService.usernamePasswordMatching(requestDto.getUsername(), requestDto.getPassword())) {
+        if (!userService.usernamePasswordMatching(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword())) {
             return new TrainerUpdateResponseDto(List.of("Authentication failed."));
         }
 
-        if (trainerService.findById(requestDto.getTrainerId()).isEmpty()) {
-            return new TrainerUpdateResponseDto(List.of(
-                String.format("TrainerEntity with the specified id of %d does not exist", requestDto.getTrainerId())));
-        }
+        TrainerEntity trainerEntity = trainerService.findByUsername(requestDto.getUsername())
+            .orElseThrow(() -> new TrainerNotFoundException(requestDto.getUsername()));
+        UserEntity userEntity = trainerEntity.getUser();
 
-        Long userId = trainerService.findById(requestDto.getTrainerId())
-            .orElseThrow(() -> new TrainerNotFoundException(requestDto.getTrainerId())).getUser().getId();
-        // update user
-        UserEntity user = new UserEntity(
-            requestDto.getFirstName(),
-            requestDto.getLastName(),
-            requestDto.getUsername(),
-            requestDto.getPassword(),
-            requestDto.getIsActive()
+        userEntity.setFirstName(requestDto.getFirstName());
+        userEntity.setLastName(requestDto.getLastName());
+        userEntity.setIsActive(requestDto.getIsActive());
+
+        trainerEntity.setSpecialization(new TrainingTypeEntity(requestDto.getSpecialization().getTrainingType()));
+
+        TrainerUpdateResponseDto responseDto = new TrainerUpdateResponseDto(
+            userEntity.getUsername(),
+            userEntity.getFirstName(),
+            userEntity.getLastName(),
+            new TrainingTypeDto(trainerEntity.getSpecialization().getTrainingType()),
+            userEntity.getIsActive(),
+            trainerEntity.getTraineeEntityList().stream()
+                .map(traineeEntity -> new TraineeDto(
+                    new UserDto(
+                        traineeEntity.getUser().getFirstName(),
+                        traineeEntity.getUser().getLastName(),
+                        traineeEntity.getUser().getUsername(),
+                        traineeEntity.getUser().getPassword(),
+                        traineeEntity.getUser().getIsActive()
+                    ),
+                    traineeEntity.getDateOfBirth(),
+                    traineeEntity.getAddress()
+                )).toList()
         );
-        user.setId(userId);
-        userService.update(user);
-
-        TrainerEntity trainer = new TrainerEntity(user, trainingTypeService.get(requestDto.getTrainingTypeId()));
-        trainer.setId(requestDto.getTrainerId());
-
-        TrainerUpdateResponseDto responseDto = trainerEntityToTrainerUpdateResponseDtoMapper.map(
-            trainerService.update(trainer));
 
         LOGGER.info("Successfully updated a TrainerEntity according to the TrainerUpdateRequestDto - {}, response - {}",
             requestDto, responseDto);
@@ -174,8 +181,23 @@ public class TrainerFacadeImpl implements TrainerFacade {
         trainerService.update(trainerEntity);
 
         TrainerUpdateResponseDto responseDto = new TrainerUpdateResponseDto(
-            trainerEntity.getId(), userEntity.getId(), userEntity.getIsActive(),
-            trainerEntity.getSpecialization().getId()
+            userEntity.getUsername(),
+            userEntity.getFirstName(),
+            userEntity.getLastName(),
+            new TrainingTypeDto(trainerEntity.getSpecialization().getTrainingType()),
+            userEntity.getIsActive(),
+            trainerEntity.getTraineeEntityList().stream()
+                .map(traineeEntity -> new TraineeDto(
+                    new UserDto(
+                        traineeEntity.getUser().getFirstName(),
+                        traineeEntity.getUser().getLastName(),
+                        traineeEntity.getUser().getUsername(),
+                        traineeEntity.getUser().getPassword(),
+                        traineeEntity.getUser().getIsActive()
+                    ),
+                    traineeEntity.getDateOfBirth(),
+                    traineeEntity.getAddress()
+                )).toList()
         );
 
         LOGGER.info("Successfully switched the activation state according to the {}, result - {}",
@@ -189,16 +211,32 @@ public class TrainerFacadeImpl implements TrainerFacade {
         Assert.notNull(requestDto, "TrainerPasswordChangeRequestDto must not be null");
         LOGGER.info("Changing password of a trainer according to the TrainerPasswordChangeRequestDto - {}", requestDto);
 
-        TrainerEntity trainer = trainerService.findById(requestDto.getTrainerId())
+        TrainerEntity trainerEntity = trainerService.findById(requestDto.getTrainerId())
             .orElseThrow(() -> new TrainerNotFoundException(requestDto.getTrainerId()));
 
-        UserEntity user = trainer.getUser();
-        user.setPassword(requestDto.getNewPassword());
-        userService.update(user);
+        UserEntity userEntity = trainerEntity.getUser();
+        userEntity.setPassword(requestDto.getNewPassword());
+        userService.update(userEntity);
 
-        TrainerUpdateResponseDto responseDto =
-            new TrainerUpdateResponseDto(trainer.getId(), user.getId(), user.getIsActive(),
-                trainer.getSpecialization().getId());
+        TrainerUpdateResponseDto responseDto = new TrainerUpdateResponseDto(
+            userEntity.getUsername(),
+            userEntity.getFirstName(),
+            userEntity.getLastName(),
+            new TrainingTypeDto(trainerEntity.getSpecialization().getTrainingType()),
+            userEntity.getIsActive(),
+            trainerEntity.getTraineeEntityList().stream()
+                .map(traineeEntity -> new TraineeDto(
+                    new UserDto(
+                        traineeEntity.getUser().getFirstName(),
+                        traineeEntity.getUser().getLastName(),
+                        traineeEntity.getUser().getUsername(),
+                        traineeEntity.getUser().getPassword(),
+                        traineeEntity.getUser().getIsActive()
+                    ),
+                    traineeEntity.getDateOfBirth(),
+                    traineeEntity.getAddress()
+                )).toList()
+        );
 
         LOGGER.info(
             "Successfully changed the password of a trainer according to the TrainerPasswordChangeRequestDto - {}, "

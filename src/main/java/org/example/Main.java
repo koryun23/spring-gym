@@ -72,9 +72,6 @@ public class Main {
         System.out.println(trainerFacade.retrieveTrainerByUsername(new TrainerRetrievalByUsernameRequestDto(
             "travis.stones"
         )));
-        trainerFacade.updateTrainer(new TrainerUpdateRequestDto(
-            "travis.stones", "password-1", 1L, "travis", "stones", "travis.stones", "password-1", true, 1L
-        ));
 
         TrainingFacade trainingFacade = context.getBean(TrainingFacade.class);
         // TRAINING FACADE SCENARIO
