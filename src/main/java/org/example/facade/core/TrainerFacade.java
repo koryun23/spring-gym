@@ -22,8 +22,6 @@ public interface TrainerFacade {
 
     TrainerUpdateResponseDto changePassword(TrainerPasswordChangeRequestDto requestDto);
 
-    TrainerRetrievalResponseDto retrieveTrainer(TrainerRetrievalByIdRequestDto requestDto);
-
     TrainerRetrievalResponseDto retrieveTrainerByUsername(TrainerRetrievalByUsernameRequestDto requestDto);
 
     TrainerListRetrievalResponseDto retrieveAllTrainersNotAssignedToTrainee(

@@ -70,10 +70,7 @@ public class Main {
             "travis.stones", "c355c787-1", 1L, "password-1"
         ));
         System.out.println(trainerFacade.retrieveTrainerByUsername(new TrainerRetrievalByUsernameRequestDto(
-            "travis.stones", "password-1", "travis.stones"
-        )));
-        System.out.println(trainerFacade.retrieveTrainer(new TrainerRetrievalByIdRequestDto(
-            "travis.stones", "password-1", 1L
+            "travis.stones"
         )));
         trainerFacade.updateTrainer(new TrainerUpdateRequestDto(
             "travis.stones", "password-1", 1L, "travis", "stones", "travis.stones", "password-1", true, 1L

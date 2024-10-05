@@ -8,7 +8,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -19,4 +18,8 @@ public class TrainerRetrievalByUsernameRequestDto {
     private String retrieverPassword;
 
     private String username;
+
+    public TrainerRetrievalByUsernameRequestDto(String username) {
+        this.username = username;
+    }
 }

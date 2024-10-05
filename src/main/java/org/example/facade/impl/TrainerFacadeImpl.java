@@ -1,6 +1,9 @@
 package org.example.facade.impl;
 
 import java.util.List;
+import org.example.dto.plain.TraineeDto;
+import org.example.dto.plain.TrainingTypeDto;
+import org.example.dto.plain.UserDto;
 import org.example.dto.request.RetrieveAllTrainersNotAssignedToTraineeRequestDto;
 import org.example.dto.request.TrainerCreationRequestDto;
 import org.example.dto.request.TrainerPasswordChangeRequestDto;
@@ -221,45 +224,28 @@ public class TrainerFacadeImpl implements TrainerFacade {
             trainerService.findByUsername(username).orElseThrow(() -> new TrainerNotFoundException(username));
 
         TrainerRetrievalResponseDto responseDto = new TrainerRetrievalResponseDto(
-            trainerEntity.getId(),
-            trainerEntity.getUser().getId(),
+            trainerEntity.getUser().getFirstName(),
+            trainerEntity.getUser().getLastName(),
+            new TrainingTypeDto(trainerEntity.getSpecialization().getTrainingType()),
             trainerEntity.getUser().getIsActive(),
-            trainerEntity.getSpecialization().getId()
+            trainerEntity.getTraineeEntityList().stream()
+                .map(traineeEntity -> new TraineeDto(
+                    new UserDto(
+                        traineeEntity.getUser().getFirstName(),
+                        traineeEntity.getUser().getLastName(),
+                        traineeEntity.getUser().getUsername(),
+                        traineeEntity.getUser().getPassword(),
+                        traineeEntity.getUser().getIsActive()
+                    ),
+                    traineeEntity.getDateOfBirth(),
+                    traineeEntity.getAddress()
+                )).toList()
         );
+
         LOGGER.info(
             "Successfully retrieved a trainer according to the TrainerRetrievalByUsernameRequestDto - {}, result - {}",
             requestDto, responseDto);
 
-        return responseDto;
-
-    }
-
-    @Override
-    public TrainerRetrievalResponseDto retrieveTrainer(TrainerRetrievalByIdRequestDto requestDto) {
-        Assert.notNull(requestDto, "TrainerRetrievalByIdRequestDto must not be null");
-        Long trainerId = requestDto.getId();
-        Assert.notNull(trainerId, "TrainerEntity id must not be null");
-        LOGGER.info("Retrieving a TrainerEntity with an id of {}", trainerId);
-
-        if (!userService.usernamePasswordMatching(
-            requestDto.getRetrieverUsername(), requestDto.getRetrieverPassword())
-        ) {
-            return new TrainerRetrievalResponseDto(List.of("Authentication failed"));
-        }
-        if (trainerId <= 0) {
-            return new TrainerRetrievalResponseDto(
-                List.of(String.format("TrainerEntity id must be positive: %d specified", trainerId)));
-        }
-
-        if (trainerService.findById(trainerId).isEmpty()) {
-            return new TrainerRetrievalResponseDto(
-                List.of(String.format("A TrainerEntity with a specified id of %d not found", trainerId)));
-        }
-
-        TrainerRetrievalResponseDto responseDto =
-            trainerEntityToTrainerRetrievalResponseDtoMapper.map(trainerService.select(trainerId));
-
-        LOGGER.info("Successfully retrieved a TrainerEntity with an id of {}, response - {}", trainerId, responseDto);
         return responseDto;
     }
 
