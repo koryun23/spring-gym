@@ -262,6 +262,7 @@ public class TrainerFacadeImpl implements TrainerFacade {
             trainerService.findByUsername(username).orElseThrow(() -> new TrainerNotFoundException(username));
 
         TrainerRetrievalResponseDto responseDto = new TrainerRetrievalResponseDto(
+            trainerEntity.getUser().getUsername(),
             trainerEntity.getUser().getFirstName(),
             trainerEntity.getUser().getLastName(),
             new TrainingTypeDto(trainerEntity.getSpecialization().getTrainingType()),

@@ -16,6 +16,7 @@ import org.example.dto.plain.TrainingTypeDto;
 @ToString
 public class TrainerRetrievalResponseDto {
 
+    private String username;
     private String firstName;
     private String lastName;
     private TrainingTypeDto trainingTypeDto;
@@ -27,11 +28,13 @@ public class TrainerRetrievalResponseDto {
     /**
      * Constructor.
      */
-    public TrainerRetrievalResponseDto(String firstName,
+    public TrainerRetrievalResponseDto(String username,
+                                       String firstName,
                                        String lastName,
                                        TrainingTypeDto trainingTypeDto,
                                        Boolean isActive,
                                        List<TraineeDto> trainees) {
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.trainingTypeDto = trainingTypeDto;
