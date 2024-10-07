@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.example.dto.plain.TrainerDto;
 
 @NoArgsConstructor
 @Getter
@@ -15,11 +16,13 @@ import lombok.ToString;
 public class TrainerListRetrievalResponseDto {
 
     private String username;
-    private List<TrainerRetrievalResponseDto> trainers;
+    private String firstName;
+    private String lastName;
+    private List<TrainerDto> trainers;
 
     private List<String> errors;
 
-    public TrainerListRetrievalResponseDto(List<TrainerRetrievalResponseDto> trainers, String username) {
+    public TrainerListRetrievalResponseDto(List<TrainerDto> trainers, String username) {
         this.trainers = trainers;
         this.username = username;
     }

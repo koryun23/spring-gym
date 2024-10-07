@@ -2,6 +2,7 @@ package org.example.facade.impl;
 
 import java.util.List;
 import org.example.dto.plain.TraineeDto;
+import org.example.dto.plain.TrainerDto;
 import org.example.dto.plain.TrainingTypeDto;
 import org.example.dto.plain.UserDto;
 import org.example.dto.request.RetrieveAllTrainersNotAssignedToTraineeRequestDto;
@@ -307,14 +308,23 @@ public class TrainerFacadeImpl implements TrainerFacade {
             return new TrainerListRetrievalResponseDto(List.of("Authentication failed"));
         }
 
-        List<TrainerRetrievalResponseDto> all = trainerService.findAllNotAssignedTo(traineeUsername).stream()
-            .map(trainerEntityToTrainerRetrievalResponseDtoMapper::map)
+        List<TrainerDto> all = trainerService.findAllNotAssignedTo(traineeUsername).stream()
+            .map(trainerEntity -> new TrainerDto(
+                new UserDto(
+                    trainerEntity.getUser().getFirstName(),
+                    trainerEntity.getUser().getLastName(),
+                    trainerEntity.getUser().getUsername(),
+                    trainerEntity.getUser().getPassword(),
+                    trainerEntity.getUser().getIsActive()
+                ),
+                new TrainingTypeDto(trainerEntity.getSpecialization().getTrainingType())
+            ))
             .toList();
 
         TrainerListRetrievalResponseDto responseDto =
             new TrainerListRetrievalResponseDto(all, traineeUsername);
 
-        LOGGER.info("Successfully retrieved all trainers not assigned to trianee with a username of {}, result - {}",
+        LOGGER.info("Successfully retrieved all trainers not assigned to trainee with a username of {}, result - {}",
             traineeUsername, responseDto);
 
         return responseDto;
