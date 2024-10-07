@@ -6,10 +6,8 @@ import org.example.dto.plain.TrainerDto;
 import org.example.dto.plain.TrainingTypeDto;
 import org.example.dto.plain.UserDto;
 import org.example.dto.request.TraineeCreationRequestDto;
-import org.example.dto.request.TraineeDeletionByIdRequestDto;
 import org.example.dto.request.TraineeDeletionByUsernameRequestDto;
 import org.example.dto.request.TraineePasswordChangeRequestDto;
-import org.example.dto.request.TraineeRetrievalByIdRequestDto;
 import org.example.dto.request.TraineeRetrievalByUsernameRequestDto;
 import org.example.dto.request.TraineeSwitchActivationStateRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
@@ -210,16 +208,18 @@ public class TraineeFacadeImpl implements TraineeFacade {
     public TraineeUpdateResponseDto switchActivationState(TraineeSwitchActivationStateRequestDto requestDto) {
         Assert.notNull(requestDto, "TraineeSwitchActivationStateRequestDto must not be null");
 
-        Long id = requestDto.getId();
-        Assert.notNull(id, "Id must not be null");
-        LOGGER.info("Switching the activation state of a trainee with an id of {}", id);
+        String username = requestDto.getUsername();
+        Assert.notNull(username, "Username must not be null");
+        LOGGER.info("Switching the activation state of a trainee with a username of {}", username);
 
         if (!userService.usernamePasswordMatching(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword())) {
             return new TraineeUpdateResponseDto(List.of("Authentication failed"));
         }
 
-        TraineeEntity traineeEntity = traineeService.findById(id).orElseThrow(() -> new TraineeNotFoundException(id));
+        TraineeEntity traineeEntity =
+            traineeService.findByUsername(username).orElseThrow(() -> new TraineeNotFoundException(username));
         UserEntity user = traineeEntity.getUser();
+
         user.setIsActive(!user.getIsActive());
         userService.update(user);
 
@@ -245,7 +245,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
             );
         // TODO: Add a mapper for the plain dtos
 
-        LOGGER.info("Successfully switched the activation state of a Trainee with an id of {}", id);
+        LOGGER.info("Successfully switched the activation state of a Trainee with a username of {}", username);
         return responseDto;
     }
 
