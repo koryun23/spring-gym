@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.example.dto.plain.TrainingTypeDto;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,5 +25,5 @@ public class TrainingListRetrievalByTraineeRequestDto {
     private Date from;
     private Date to;
     private String trainerUsername;
-    private Long trainingTypeId;
+    private TrainingTypeDto trainingTypeDto;
 }

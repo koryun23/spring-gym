@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 import org.example.entity.TrainingEntity;
+import org.example.entity.TrainingType;
 
 public interface TrainingService {
 
@@ -18,7 +19,7 @@ public interface TrainingService {
     List<TrainingEntity> findAll();
 
     List<TrainingEntity> findAllByTraineeUsernameAndCriteria(String traineeUsername, Date from, Date to,
-                                                             String trainerUsername, Long trainingTypeId);
+                                                             String trainerUsername, TrainingType trainingType);
 
     List<TrainingEntity> findAllByTrainerUsernameAndCriteria(String trainerUsername, Date from, Date to,
                                                              String traineeUsername);

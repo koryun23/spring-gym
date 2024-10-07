@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import org.example.dao.core.TrainingDao;
 import org.example.entity.TrainingEntity;
+import org.example.entity.TrainingType;
 import org.example.service.core.TrainingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,18 +75,18 @@ public class TrainingServiceImpl implements TrainingService {
 
     @Override
     public List<TrainingEntity> findAllByTraineeUsernameAndCriteria(String traineeUsername, Date from, Date to,
-                                                                    String trainerUsername, Long trainingTypeId) {
+                                                                    String trainerUsername, TrainingType trainingType) {
         Assert.notNull(traineeUsername, "Trainee Username must not be null");
         LOGGER.info("Retrieving all Training Entities of a trainee({}) based on the following criteria - "
-                + "from = {}, to = {}, trainerUsername = {}, trainingTypeId = {}",
-            traineeUsername, from, to, trainerUsername, trainingTypeId);
+                + "from = {}, to = {}, trainerUsername = {}, trainingType = {}",
+            traineeUsername, from, to, trainerUsername, trainingType);
 
         List<TrainingEntity> all = trainingDao.findAllByTraineeUsernameAndCriteria(traineeUsername, from, to,
-            trainerUsername, trainingTypeId);
+            trainerUsername, trainingType);
 
         LOGGER.info("Successfully retrieved all Training Entities of a trainee({}) based on the following criteria - "
-                + "from = {}, to = {}, trainerUsername = {}, trainingTypeId = {}. Result of the query - {}",
-            traineeUsername, from, to, trainerUsername, trainingTypeId, all);
+                + "from = {}, to = {}, trainerUsername = {}, trainingType = {}. Result of the query - {}",
+            traineeUsername, from, to, trainerUsername, trainingType, all);
         return all;
     }
 

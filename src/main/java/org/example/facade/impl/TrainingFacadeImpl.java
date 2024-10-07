@@ -1,6 +1,7 @@
 package org.example.facade.impl;
 
 import java.util.List;
+import org.example.dto.plain.TrainingTypeDto;
 import org.example.dto.request.MultipleTrainingDeletionByTraineeRequestDto;
 import org.example.dto.request.MultipleTrainingDeletionByTrainerRequestDto;
 import org.example.dto.request.TrainingCreationRequestDto;
@@ -198,7 +199,7 @@ public class TrainingFacadeImpl implements TrainingFacade {
             requestDto.getFrom(),
             requestDto.getTo(),
             requestDto.getTrainerUsername(),
-            requestDto.getTrainingTypeId()
+            requestDto.getTrainingTypeDto().getTrainingType()
         ).stream().map(trainingEntityToTrainingRetrievalResponseDtoMapper::map).toList();
 
         TrainingListRetrievalResponseDto responseDto =

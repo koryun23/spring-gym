@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import org.example.entity.TrainingEntity;
+import org.example.entity.TrainingType;
 import org.example.exception.TrainingNotFoundException;
 import org.example.repository.core.TrainingEntityRepository;
 import org.hibernate.Session;
@@ -90,7 +91,7 @@ public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
 
     @Override
     public List<TrainingEntity> findAllByTraineeUsernameAndCriteria(String traineeUsername, Date from, Date to,
-                                                                    String trainerUsername, Long trainingTypeId) {
+                                                                    String trainerUsername, TrainingType trainingType) {
 
         Assert.notNull(traineeUsername, "Trainee Username must not be null");
 
@@ -117,8 +118,8 @@ public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
             predicateList.add(criteriaBuilder.lessThanOrEqualTo(root.get("date"), to));
         }
 
-        if (trainingTypeId != null) {
-            predicateList.add(criteriaBuilder.equal(root.get("trainingType").get("id"), trainingTypeId));
+        if (trainingType != null) {
+            predicateList.add(criteriaBuilder.equal(root.get("trainingType").get("trainingType"), trainingType));
         }
 
         criteriaQuery.where(predicateList.toArray(new Predicate[] {}));
