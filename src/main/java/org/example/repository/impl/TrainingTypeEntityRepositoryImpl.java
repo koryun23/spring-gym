@@ -5,7 +5,9 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
+import org.example.entity.TrainingType;
 import org.example.entity.TrainingTypeEntity;
+import org.example.entity.UserEntity;
 import org.example.repository.core.TrainingTypeEntityRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -89,5 +91,22 @@ public class TrainingTypeEntityRepositoryImpl implements TrainingTypeEntityRepos
         session.close();
 
         return updatedEntity;
+    }
+
+    @Override
+    public TrainingTypeEntity getByTrainingType(TrainingType trainingType) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        TrainingTypeEntity trainingTypeEntity =
+            session.createQuery("select t from TrainingTypeEntity u where t.trainingType = :trainingType",
+                    TrainingTypeEntity.class)
+                .setParameter("trainingType", trainingType)
+                .uniqueResult();
+
+        transaction.commit();
+        session.close();
+
+        return trainingTypeEntity;
     }
 }

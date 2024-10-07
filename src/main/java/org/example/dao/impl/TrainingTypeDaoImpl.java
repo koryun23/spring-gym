@@ -3,6 +3,7 @@ package org.example.dao.impl;
 import java.util.List;
 import java.util.Optional;
 import org.example.dao.core.TrainingTypeDao;
+import org.example.entity.TrainingType;
 import org.example.entity.TrainingTypeEntity;
 import org.example.exception.TrainingTypeNotFoundException;
 import org.example.repository.core.TrainingTypeEntityRepository;
@@ -30,6 +31,18 @@ public class TrainingTypeDaoImpl implements TrainingTypeDao {
             repository.findById(id).orElseThrow(() -> new TrainingTypeNotFoundException(id));
         LOGGER.info("Successfully retrieved a training type with an id of {}, result - {}",
             id, trainingTypeEntity);
+        return trainingTypeEntity;
+    }
+
+    @Override
+    public TrainingTypeEntity getByTrainingType(TrainingType trainingType) {
+        Assert.notNull(trainingType, "Training type must not be null");
+        LOGGER.info("Retrieving a Training Type Entity {}", trainingType);
+
+        TrainingTypeEntity trainingTypeEntity = repository.getByTrainingType(trainingType);
+
+        LOGGER.info("Successfully retrieved {}", trainingTypeEntity);
+
         return trainingTypeEntity;
     }
 

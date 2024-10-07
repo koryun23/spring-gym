@@ -25,7 +25,7 @@ public class TrainerUpdateRequestDtoToTrainerEntityMapperImpl implements Trainer
 
         return new TrainerEntity(
             userDao.getByUsername(requestDto.getUsername()),
-            trainingTypeDao.get(requestDto.getTrainingTypeId())
+            trainingTypeDao.getByTrainingType(requestDto.getSpecialization().getTrainingType())
         );
     }
 }
