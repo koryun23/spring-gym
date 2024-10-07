@@ -1,5 +1,6 @@
 package org.example.service.core;
 
+import java.util.List;
 import java.util.Optional;
 import org.example.entity.TrainingTypeEntity;
 
@@ -14,4 +15,6 @@ public interface TrainingTypeService {
     TrainingTypeEntity get(Long id);
 
     Optional<TrainingTypeEntity> findById(Long id);
+
+    List<TrainingTypeEntity> findAll();
 }
