@@ -7,7 +7,9 @@ import org.example.dto.response.TrainingTypeListRetrievalResponseDto;
 import org.example.entity.TrainingTypeEntity;
 import org.example.facade.core.TrainingTypeFacade;
 import org.example.service.core.TrainingTypeService;
+import org.springframework.stereotype.Component;
 
+@Component
 @Slf4j
 public class TrainingTypeFacadeImpl implements TrainingTypeFacade {
 

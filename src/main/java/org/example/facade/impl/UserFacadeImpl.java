@@ -10,8 +10,10 @@ import org.example.entity.UserEntity;
 import org.example.facade.core.UserFacade;
 import org.example.service.core.UserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+@Component
 @Slf4j
 public class UserFacadeImpl implements UserFacade {
 
