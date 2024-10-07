@@ -11,6 +11,7 @@ import org.example.dto.request.TraineeUpdateRequestDto;
 import org.example.dto.response.TraineeCreationResponseDto;
 import org.example.dto.response.TraineeDeletionResponseDto;
 import org.example.dto.response.TraineeRetrievalResponseDto;
+import org.example.dto.response.TraineeSwitchActivationStateResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
 
 public interface TraineeFacade {
@@ -23,7 +24,7 @@ public interface TraineeFacade {
 
     TraineeDeletionResponseDto deleteTraineeByUsername(TraineeDeletionByUsernameRequestDto requestDto);
 
-    TraineeUpdateResponseDto switchActivationState(TraineeSwitchActivationStateRequestDto requestDto);
+    TraineeSwitchActivationStateResponseDto switchActivationState(TraineeSwitchActivationStateRequestDto requestDto);
 
     TraineeUpdateResponseDto changePassword(TraineePasswordChangeRequestDto requestDto);
 }

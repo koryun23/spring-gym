@@ -14,6 +14,7 @@ import org.example.dto.request.TraineeUpdateRequestDto;
 import org.example.dto.response.TraineeCreationResponseDto;
 import org.example.dto.response.TraineeDeletionResponseDto;
 import org.example.dto.response.TraineeRetrievalResponseDto;
+import org.example.dto.response.TraineeSwitchActivationStateResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
 import org.example.entity.TraineeEntity;
 import org.example.entity.UserEntity;
@@ -205,7 +206,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
     }
 
     @Override
-    public TraineeUpdateResponseDto switchActivationState(TraineeSwitchActivationStateRequestDto requestDto) {
+    public TraineeSwitchActivationStateResponseDto switchActivationState(TraineeSwitchActivationStateRequestDto requestDto) {
         Assert.notNull(requestDto, "TraineeSwitchActivationStateRequestDto must not be null");
 
         String username = requestDto.getUsername();
@@ -213,7 +214,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
         LOGGER.info("Switching the activation state of a trainee with a username of {}", username);
 
         if (!userService.usernamePasswordMatching(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword())) {
-            return new TraineeUpdateResponseDto(List.of("Authentication failed"));
+            return new TraineeSwitchActivationStateResponseDto(List.of("Authentication failed"));
         }
 
         TraineeEntity traineeEntity =
@@ -223,27 +224,8 @@ public class TraineeFacadeImpl implements TraineeFacade {
         user.setIsActive(!user.getIsActive());
         userService.update(user);
 
-        TraineeUpdateResponseDto responseDto =
-            new TraineeUpdateResponseDto(
-                user.getUsername(),
-                user.getFirstName(),
-                user.getLastName(),
-                traineeEntity.getDateOfBirth(),
-                traineeEntity.getAddress(),
-                user.getIsActive(),
-                traineeEntity.getTrainerEntityList().stream()
-                    .map(trainerEntity -> new TrainerDto(
-                        new UserDto(
-                            trainerEntity.getUser().getFirstName(),
-                            trainerEntity.getUser().getPassword(),
-                            trainerEntity.getUser().getUsername(),
-                            trainerEntity.getUser().getPassword(),
-                            trainerEntity.getUser().getIsActive()
-                        ),
-                        new TrainingTypeDto(trainerEntity.getSpecialization().getTrainingType())
-                    )).toList()
-            );
-        // TODO: Add a mapper for the plain dtos
+        TraineeSwitchActivationStateResponseDto responseDto =
+            new TraineeSwitchActivationStateResponseDto(HttpStatus.OK);
 
         LOGGER.info("Successfully switched the activation state of a Trainee with a username of {}", username);
         return responseDto;
