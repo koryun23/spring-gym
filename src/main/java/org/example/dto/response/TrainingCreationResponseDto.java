@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.http.HttpStatus;
 
 @NoArgsConstructor
 @Getter
@@ -15,33 +16,15 @@ import lombok.ToString;
 @ToString
 public class TrainingCreationResponseDto {
 
-    private Long trainingId;
-    private Long traineeId;
-    private Long trainerId;
-    private String name;
-    private Long trainingTypeId;
-    private Date trainingDate;
-    private Long duration;
+    private HttpStatus httpStatus;
 
     private List<String> errors;
 
     /**
      * Constructor.
      */
-    public TrainingCreationResponseDto(Long trainingId,
-                                       Long traineeId,
-                                       Long trainerId,
-                                       String name,
-                                       Long trainingTypeId,
-                                       Date trainingDate,
-                                       Long duration) {
-        this.trainingId = trainingId;
-        this.traineeId = traineeId;
-        this.trainerId = trainerId;
-        this.name = name;
-        this.trainingTypeId = trainingTypeId;
-        this.trainingDate = trainingDate;
-        this.duration = duration;
+    public TrainingCreationResponseDto(HttpStatus httpStatus) {
+        this.httpStatus = httpStatus;
     }
 
     public TrainingCreationResponseDto(List<String> errors) {

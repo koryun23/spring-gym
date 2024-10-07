@@ -78,28 +78,6 @@ public class TrainingFacadeImpl implements TrainingFacade {
             return new TrainingCreationResponseDto(List.of("Authentication failed"));
         }
 
-        if (requestDto.getTraineeId() <= 0) {
-            return new TrainingCreationResponseDto(
-                List.of(String.format("The trainee id must be positive: %d specified", requestDto.getTraineeId())));
-        }
-
-        if (requestDto.getTrainerId() <= 0) {
-            return new TrainingCreationResponseDto(
-                List.of(String.format("The trainer id must be positive: %d specified", requestDto.getTrainerId())));
-
-        }
-        if (traineeService.findById(requestDto.getTraineeId()).isEmpty()) {
-            return new TrainingCreationResponseDto(List.of(
-                String.format("Cannot create a trainingEntity: a trainee with an id of %d does not exist",
-                    requestDto.getTraineeId())));
-        }
-
-        if (trainerService.findById(requestDto.getTrainerId()).isEmpty()) {
-            return new TrainingCreationResponseDto(List.of(
-                String.format("Cannot create a trainingEntity: a trainer with an id of %d does not exist",
-                    requestDto.getTrainerId())));
-        }
-
         TrainingCreationResponseDto responseDto = trainingEntityToTrainingCreationResponseDtoMapper.map(
             trainingService.create(trainingCreationRequestDtoToTrainingEntityMapper.map(requestDto)));
 

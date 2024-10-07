@@ -17,25 +17,21 @@ public class TrainingCreationRequestDto {
     private String creatorUsername;
     private String creatorPassword;
 
-    private Long traineeId;
-    private Long trainerId;
-    private String name;
-    private Long trainingTypeId;
+    private String traineeUsername;
+    private String trainerUsername;
+    private String trainingName;
     private Date trainingDate;
-    private Long duration;
+    private Long trainingDuration;
 
     /**
      * Constructor.
      */
-    public TrainingCreationRequestDto(String creatorUsername, String creatorPassword, Long traineeId, Long trainerId,
-                                      String name, Long trainingTypeId, Date trainingDate, Long duration) {
-        this.creatorUsername = creatorUsername;
-        this.creatorPassword = creatorPassword;
-        this.traineeId = traineeId;
-        this.trainerId = trainerId;
-        this.name = name;
-        this.trainingTypeId = trainingTypeId;
+    public TrainingCreationRequestDto(String traineeUsername, String trainerUsername,
+                                      String trainingName, Date trainingDate, Long trainingDuration) {
+        this.traineeUsername = traineeUsername;
+        this.trainerUsername = trainerUsername;
+        this.trainingName = trainingName;
         this.trainingDate = trainingDate;
-        this.duration = duration;
+        this.trainingDuration = trainingDuration;
     }
 }
