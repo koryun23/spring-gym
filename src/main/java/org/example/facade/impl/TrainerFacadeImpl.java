@@ -8,13 +8,13 @@ import org.example.dto.plain.UserDto;
 import org.example.dto.request.RetrieveAllTrainersNotAssignedToTraineeRequestDto;
 import org.example.dto.request.TrainerCreationRequestDto;
 import org.example.dto.request.TrainerPasswordChangeRequestDto;
-import org.example.dto.request.TrainerRetrievalByIdRequestDto;
 import org.example.dto.request.TrainerRetrievalByUsernameRequestDto;
 import org.example.dto.request.TrainerSwitchActivationStateRequestDto;
 import org.example.dto.request.TrainerUpdateRequestDto;
 import org.example.dto.response.TrainerCreationResponseDto;
 import org.example.dto.response.TrainerListRetrievalResponseDto;
 import org.example.dto.response.TrainerRetrievalResponseDto;
+import org.example.dto.response.TrainerSwitchActivationStateResponseDto;
 import org.example.dto.response.TrainerUpdateResponseDto;
 import org.example.entity.TrainerEntity;
 import org.example.entity.TrainingTypeEntity;
@@ -35,6 +35,7 @@ import org.example.service.core.UsernamePasswordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -170,12 +171,13 @@ public class TrainerFacadeImpl implements TrainerFacade {
     }
 
     @Override
-    public TrainerUpdateResponseDto switchActivationState(TrainerSwitchActivationStateRequestDto requestDto) {
+    public TrainerSwitchActivationStateResponseDto switchActivationState(
+        TrainerSwitchActivationStateRequestDto requestDto) {
         Assert.notNull(requestDto, "TrainerSwitchActivationStateRequestDto must not be null");
         LOGGER.info("Switching activation state according to the {}", requestDto);
 
         if (!userService.usernamePasswordMatching(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword())) {
-            return new TrainerUpdateResponseDto(List.of("Authentication failed"));
+            return new TrainerSwitchActivationStateResponseDto(List.of("Authentication failed"));
         }
 
         TrainerEntity trainerEntity = trainerService.selectByUsername(requestDto.getUsername());
@@ -184,25 +186,8 @@ public class TrainerFacadeImpl implements TrainerFacade {
         userService.update(userEntity);
         trainerService.update(trainerEntity);
 
-        TrainerUpdateResponseDto responseDto = new TrainerUpdateResponseDto(
-            userEntity.getUsername(),
-            userEntity.getFirstName(),
-            userEntity.getLastName(),
-            new TrainingTypeDto(trainerEntity.getSpecialization().getTrainingType()),
-            userEntity.getIsActive(),
-            trainerEntity.getTraineeEntityList().stream()
-                .map(traineeEntity -> new TraineeDto(
-                    new UserDto(
-                        traineeEntity.getUser().getFirstName(),
-                        traineeEntity.getUser().getLastName(),
-                        traineeEntity.getUser().getUsername(),
-                        traineeEntity.getUser().getPassword(),
-                        traineeEntity.getUser().getIsActive()
-                    ),
-                    traineeEntity.getDateOfBirth(),
-                    traineeEntity.getAddress()
-                )).toList()
-        );
+        TrainerSwitchActivationStateResponseDto responseDto =
+            new TrainerSwitchActivationStateResponseDto(HttpStatus.OK);
 
         LOGGER.info("Successfully switched the activation state according to the {}, result - {}",
             requestDto, responseDto);
