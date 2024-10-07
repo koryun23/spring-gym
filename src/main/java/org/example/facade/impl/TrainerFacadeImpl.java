@@ -140,6 +140,9 @@ public class TrainerFacadeImpl implements TrainerFacade {
 
         trainerEntity.setSpecialization(new TrainingTypeEntity(requestDto.getSpecialization().getTrainingType()));
 
+        userService.update(userEntity);
+        trainerService.update(trainerEntity);
+
         TrainerUpdateResponseDto responseDto = new TrainerUpdateResponseDto(
             userEntity.getUsername(),
             userEntity.getFirstName(),
