@@ -15,6 +15,7 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import java.util.List;
+import java.util.Set;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,9 +48,8 @@ public class TrainerEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "trainer")
     private List<TrainingEntity> trainingEntityList;
 
-    @Transient
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "trainerEntityList")
-    private List<TraineeEntity> traineeEntityList;
+    private Set<TraineeEntity> traineeEntityList;
 
     /**
      * Constructor.

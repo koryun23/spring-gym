@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -16,6 +17,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,9 +52,13 @@ public class TraineeEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "trainee")
     private List<TrainingEntity> trainingEntityList;
 
-    @Transient
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "traineeEntityList")
-    private List<TrainerEntity> trainerEntityList;
+    @ManyToMany
+    @JoinTable(
+        name = "trainee_trainer",
+        joinColumns = @JoinColumn(name = "trainee_id"),
+        inverseJoinColumns = @JoinColumn(name = "trainer_id")
+    )
+    private Set<TrainerEntity> trainerEntityList;
 
     /**
      * Constructor.

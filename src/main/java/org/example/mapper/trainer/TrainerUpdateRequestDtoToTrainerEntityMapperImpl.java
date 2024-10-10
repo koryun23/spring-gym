@@ -1,21 +1,22 @@
 package org.example.mapper.trainer;
 
-import org.example.dao.core.TrainingTypeDao;
-import org.example.dao.core.UserDao;
 import org.example.dto.request.TrainerUpdateRequestDto;
 import org.example.entity.TrainerEntity;
+import org.example.repository.core.TrainingTypeEntityRepository;
+import org.example.service.core.UserService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 @Component
 public class TrainerUpdateRequestDtoToTrainerEntityMapperImpl implements TrainerUpdateRequestDtoToTrainerEntityMapper {
 
-    private final UserDao userDao;
-    private final TrainingTypeDao trainingTypeDao;
+    private final UserService userService;
+    private final TrainingTypeEntityRepository trainingTypeEntityRepository;
 
-    public TrainerUpdateRequestDtoToTrainerEntityMapperImpl(UserDao userDao, TrainingTypeDao trainingTypeDao) {
-        this.userDao = userDao;
-        this.trainingTypeDao = trainingTypeDao;
+    public TrainerUpdateRequestDtoToTrainerEntityMapperImpl(UserService userService,
+                                                            TrainingTypeEntityRepository trainingTypeEntityRepository) {
+        this.userService = userService;
+        this.trainingTypeEntityRepository = trainingTypeEntityRepository;
     }
 
 
@@ -24,8 +25,8 @@ public class TrainerUpdateRequestDtoToTrainerEntityMapperImpl implements Trainer
         Assert.notNull(requestDto, "TrainerUpdateRequestDto must not be null");
 
         return new TrainerEntity(
-            userDao.getByUsername(requestDto.getUsername()),
-            trainingTypeDao.getByTrainingType(requestDto.getSpecialization().getTrainingType())
+            userService.getByUsername(requestDto.getUsername()),
+            trainingTypeEntityRepository.getByTrainingType(requestDto.getSpecialization().getTrainingType())
         );
     }
 }

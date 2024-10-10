@@ -1,8 +1,8 @@
 package org.example.mapper.trainee;
 
-import org.example.dao.core.UserDao;
 import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.entity.TraineeEntity;
+import org.example.service.core.UserService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -10,9 +10,9 @@ import org.springframework.util.Assert;
 public class TraineeCreationRequestDtoToTraineeEntityMapperImpl
     implements TraineeCreationRequestDtoToTraineeEntityMapper {
 
-    private UserDao userDao;
+    private UserService userDao;
 
-    public TraineeCreationRequestDtoToTraineeEntityMapperImpl(UserDao userDao) {
+    public TraineeCreationRequestDtoToTraineeEntityMapperImpl(UserService userDao) {
         this.userDao = userDao;
     }
 
@@ -20,7 +20,7 @@ public class TraineeCreationRequestDtoToTraineeEntityMapperImpl
     public TraineeEntity map(TraineeCreationRequestDto requestDto) {
         Assert.notNull(requestDto, "TraineeCreationRequestDto must not be null");
         return new TraineeEntity(
-            userDao.get(requestDto.getUserId()),
+            userDao.getByUsername(requestDto.getUsername()),
             requestDto.getDateOfBirth(),
             requestDto.getAddress()
         );
