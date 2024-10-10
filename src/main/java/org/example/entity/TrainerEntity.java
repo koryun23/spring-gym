@@ -48,8 +48,8 @@ public class TrainerEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "trainer")
     private List<TrainingEntity> trainingEntityList;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "trainerEntityList")
-    private Set<TraineeEntity> traineeEntityList;
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "trainerEntities")
+    private Set<TraineeEntity> traineeEntities;
 
     /**
      * Constructor.

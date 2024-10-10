@@ -21,7 +21,7 @@ public class TraineeEntityToTraineeRetrievalResponseDtoMapperImpl
             trainee.getDateOfBirth(),
             trainee.getAddress(),
             trainee.getUser().getIsActive(),
-            trainee.getTrainerEntityList().stream().map(trainerEntity -> new TrainerDto(
+            trainee.getTrainerEntities().stream().map(trainerEntity -> new TrainerDto(
                 new UserDto(
                     trainerEntity.getUser().getFirstName(),
                     trainerEntity.getUser().getLastName(),

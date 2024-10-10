@@ -58,7 +58,7 @@ public class TraineeEntity {
         joinColumns = @JoinColumn(name = "trainee_id"),
         inverseJoinColumns = @JoinColumn(name = "trainer_id")
     )
-    private Set<TrainerEntity> trainerEntityList;
+    private Set<TrainerEntity> trainerEntities;
 
     /**
      * Constructor.

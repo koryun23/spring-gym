@@ -1,16 +1,19 @@
 package org.example.facade.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import org.example.dto.plain.TraineeDto;
 import org.example.dto.plain.TrainerDto;
 import org.example.dto.plain.TrainingTypeDto;
 import org.example.dto.plain.UserDto;
 import org.example.dto.request.RetrieveAllTrainersNotAssignedToTraineeRequestDto;
+import org.example.dto.request.TraineeTrainerListUpdateRequestDto;
 import org.example.dto.request.TrainerCreationRequestDto;
 import org.example.dto.request.TrainerPasswordChangeRequestDto;
 import org.example.dto.request.TrainerRetrievalByUsernameRequestDto;
 import org.example.dto.request.TrainerSwitchActivationStateRequestDto;
 import org.example.dto.request.TrainerUpdateRequestDto;
+import org.example.dto.response.TraineeTrainerListUpdateResponseDto;
 import org.example.dto.response.TrainerCreationResponseDto;
 import org.example.dto.response.TrainerListRetrievalResponseDto;
 import org.example.dto.response.TrainerRetrievalResponseDto;
@@ -151,7 +154,7 @@ public class TrainerFacadeImpl implements TrainerFacade {
             userEntity.getLastName(),
             new TrainingTypeDto(trainerEntity.getSpecialization().getTrainingType()),
             userEntity.getIsActive(),
-            trainerEntity.getTraineeEntityList().stream()
+            trainerEntity.getTraineeEntities().stream()
                 .map(traineeEntity -> new TraineeDto(
                     new UserDto(
                         traineeEntity.getUser().getFirstName(),
@@ -213,7 +216,7 @@ public class TrainerFacadeImpl implements TrainerFacade {
             userEntity.getLastName(),
             new TrainingTypeDto(trainerEntity.getSpecialization().getTrainingType()),
             userEntity.getIsActive(),
-            trainerEntity.getTraineeEntityList().stream()
+            trainerEntity.getTraineeEntities().stream()
                 .map(traineeEntity -> new TraineeDto(
                     new UserDto(
                         traineeEntity.getUser().getFirstName(),
@@ -256,7 +259,7 @@ public class TrainerFacadeImpl implements TrainerFacade {
             trainerEntity.getUser().getLastName(),
             new TrainingTypeDto(trainerEntity.getSpecialization().getTrainingType()),
             trainerEntity.getUser().getIsActive(),
-            trainerEntity.getTraineeEntityList().stream()
+            trainerEntity.getTraineeEntities().stream()
                 .map(traineeEntity -> new TraineeDto(
                     new UserDto(
                         traineeEntity.getUser().getFirstName(),
@@ -313,5 +316,39 @@ public class TrainerFacadeImpl implements TrainerFacade {
             traineeUsername, responseDto);
 
         return responseDto;
+    }
+
+    @Override
+    public TraineeTrainerListUpdateResponseDto updateTraineeTrainerList(TraineeTrainerListUpdateRequestDto requestDto) {
+        Assert.notNull(requestDto, "TraineeTrainerListUpdateRequestDto must not be null");
+        LOGGER.info(
+            "Updating the list of trainers of a trainee according to the TraineeTrainerListUpdateRequestDto - {}",
+            requestDto);
+
+        // TODO: ADD A MAPPER
+        List<TrainerEntity> trainerEntities =
+            trainerService.updateTrainersAssignedTo(requestDto.getTraineeUsername(),
+                requestDto.getTrainerDtoList().stream()
+                    .map(trainerDto -> new TrainerEntity(
+                        new UserEntity(
+                            trainerDto.getUserDto().getFirstName(),
+                            trainerDto.getUserDto().getLastName(),
+                            trainerDto.getUserDto().getUsername(),
+                            trainerDto.getUserDto().getPassword(),
+                            trainerDto.getUserDto().getIsActive()
+                        ),
+                        new TrainingTypeEntity(trainerDto.getTrainingTypeDto().getTrainingType())
+                    )).collect(Collectors.toSet())).stream().toList();
+
+        TraineeTrainerListUpdateResponseDto responseDto =
+            new TraineeTrainerListUpdateResponseDto(requestDto.getTrainerDtoList());
+
+        LOGGER.info("Successfully updated the list of trainers of a trainee according to "
+                + "the TraineeTrainerListUpdateRequestDto - {}, response - {}",
+            requestDto, responseDto);
+
+        return responseDto;
+
+
     }
 }

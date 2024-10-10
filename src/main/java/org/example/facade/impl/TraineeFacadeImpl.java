@@ -141,7 +141,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
             traineeEntity.getDateOfBirth(),
             traineeEntity.getAddress(),
             userEntity.getIsActive(),
-            traineeEntity.getTrainerEntityList().stream()
+            traineeEntity.getTrainerEntities().stream()
                 .map(trainerEntity -> new TrainerDto(
                     new UserDto(
                         trainerEntity.getUser().getFirstName(),
@@ -255,7 +255,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
             traineeEntity.getDateOfBirth(),
             traineeEntity.getAddress(),
             user.getIsActive(),
-            traineeEntity.getTrainerEntityList().stream()
+            traineeEntity.getTrainerEntities().stream()
                 .map(trainerEntity -> new TrainerDto(
                     new UserDto(
                         trainerEntity.getUser().getFirstName(),

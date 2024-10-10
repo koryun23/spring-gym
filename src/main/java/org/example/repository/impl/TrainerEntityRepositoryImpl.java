@@ -113,7 +113,7 @@ public class TrainerEntityRepositoryImpl implements TrainerEntityRepository {
 //                + "ON trainee.id = training.trainee.id JOIN UserEntity u ON u.id = trainee.user.id "
 //                + "where u.username = :username";
         String assignedTrainersQuery =
-            "select trainer.id from Trainee trainee join t.trainerEntityList trainer where trainee.username = :username";
+            "select trainer.id from Trainee trainee join t.trainerEntities trainer where trainee.username = :username";
 
         List<Long> assignedTrainerIdList = session.createQuery(assignedTrainersQuery, Long.class)
             .setParameter("username", traineeUsername)

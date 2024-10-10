@@ -2,8 +2,12 @@ package org.example.service.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import org.example.entity.TraineeEntity;
 import org.example.entity.TrainerEntity;
+import org.example.exception.TraineeNotFoundException;
 import org.example.exception.TrainerNotFoundException;
+import org.example.repository.core.TraineeEntityRepository;
 import org.example.repository.core.TrainerEntityRepository;
 import org.example.service.core.TrainerService;
 import org.slf4j.Logger;
@@ -19,6 +23,9 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Autowired
     private TrainerEntityRepository trainerDao;
+
+    @Autowired
+    private TraineeEntityRepository traineeDao;
 
     @Override
     public TrainerEntity create(TrainerEntity trainerEntity) {
@@ -94,5 +101,27 @@ public class TrainerServiceImpl implements TrainerService {
         LOGGER.info("Successfully retrieved all trainers not assigned to trainee with a username of {}, result - {}",
             traineeUsername, all);
         return all;
+    }
+
+    @Override
+    public Set<TrainerEntity> updateTrainersAssignedTo(String traineeUsername, Set<TrainerEntity> trainerEntities) {
+        Assert.notNull(traineeUsername, "Trainee username must not be null");
+        Assert.hasText(traineeUsername, "Trainee username must not be empty");
+        Assert.notNull(trainerEntities, "Trainer Entity List must not be null");
+        LOGGER.info("Updating the list of trainers of a trainee with a username of {} to be {}", traineeUsername,
+            trainerEntities);
+
+        TraineeEntity traineeEntity =
+            traineeDao.findByUsername(traineeUsername).orElseThrow(() -> new TraineeNotFoundException(traineeUsername));
+
+        traineeEntity.setTrainerEntities(trainerEntities);
+        traineeDao.update(traineeEntity);
+
+        Set<TrainerEntity> updatedTrainerEntities = traineeEntity.getTrainerEntities();
+        LOGGER.info("Successfully updated the list of trainers of a trainee with a username of {} to be {}",
+            traineeUsername, updatedTrainerEntities);
+
+        return updatedTrainerEntities;
+
     }
 }

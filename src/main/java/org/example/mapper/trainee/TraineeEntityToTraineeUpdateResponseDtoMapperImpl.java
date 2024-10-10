@@ -22,7 +22,7 @@ public class TraineeEntityToTraineeUpdateResponseDtoMapperImpl
             trainee.getDateOfBirth(),
             trainee.getAddress(),
             trainee.getUser().getIsActive(),
-            trainee.getTrainerEntityList().stream()
+            trainee.getTrainerEntities().stream()
                 .map(trainerEntity -> new TrainerDto(
                     new UserDto(
                         trainerEntity.getUser().getFirstName(),

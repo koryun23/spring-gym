@@ -1,17 +1,17 @@
 package org.example.mapper.trainee;
 
-import org.example.dao.core.UserDao;
 import org.example.dto.request.TraineeUpdateRequestDto;
 import org.example.entity.TraineeEntity;
+import org.example.service.core.UserService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 @Component
 public class TraineeUpdateRequestDtoToTraineeEntityMapperImpl implements TraineeUpdateRequestDtoToTraineeEntityMapper {
 
-    private final UserDao userDao;
+    private final UserService userDao;
 
-    public TraineeUpdateRequestDtoToTraineeEntityMapperImpl(UserDao userDao) {
+    public TraineeUpdateRequestDtoToTraineeEntityMapperImpl(UserService userDao) {
         this.userDao = userDao;
     }
 

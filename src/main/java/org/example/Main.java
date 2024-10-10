@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.config.Config;
+import org.example.config.WebConfig;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {

@@ -22,7 +22,7 @@ public class TrainerEntityToTrainerRetrievalResponseDtoMapperImpl
             trainer.getUser().getLastName(),
             new TrainingTypeDto(trainer.getSpecialization().getTrainingType()),
             trainer.getUser().getIsActive(),
-            trainer.getTraineeEntityList().stream()
+            trainer.getTraineeEntities().stream()
                 .map(traineeEntity -> new TraineeDto(
                     new UserDto(
                         traineeEntity.getUser().getFirstName(),
