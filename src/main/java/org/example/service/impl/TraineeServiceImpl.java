@@ -1,9 +1,9 @@
 package org.example.service.impl;
 
 import java.util.Optional;
-import org.example.dao.core.TraineeDao;
 import org.example.entity.TraineeEntity;
 import org.example.exception.TraineeNotFoundException;
+import org.example.repository.core.TraineeEntityRepository;
 import org.example.service.core.TraineeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +17,7 @@ public class TraineeServiceImpl implements TraineeService {
     private static final Logger LOGGER = LoggerFactory.getLogger(TraineeServiceImpl.class);
 
     @Autowired
-    private TraineeDao traineeDao;
+    private TraineeEntityRepository traineeDao;
 
     @Override
     public TraineeEntity create(TraineeEntity trainee) {
@@ -43,14 +43,9 @@ public class TraineeServiceImpl implements TraineeService {
     public boolean delete(Long traineeId) {
         Assert.notNull(traineeId, "TraineeEntity id must not be null");
         LOGGER.info("Deleting a TraineeEntity with an id of {}", traineeId);
-        boolean success = traineeDao.delete(traineeId);
-        if (success) {
-            LOGGER.info("Successfully deleted a trainee with an id of {}", traineeId);
-        } else {
-            LOGGER.error("Failed to delete a trainee with an id of {}", traineeId);
-            throw new TraineeNotFoundException(traineeId);
-        }
-        return success;
+        traineeDao.deleteById(traineeId);
+        LOGGER.info("Successfully deleted a trainee with an id of {}", traineeId);
+        return true;
     }
 
     @Override
@@ -67,7 +62,8 @@ public class TraineeServiceImpl implements TraineeService {
     public TraineeEntity select(Long traineeId) {
         Assert.notNull(traineeId, "TraineeEntity id must not be null");
         LOGGER.info("Selecting a TraineeEntity with an id of {}", traineeId);
-        TraineeEntity trainee = traineeDao.get(traineeId);
+        TraineeEntity trainee =
+            traineeDao.findById(traineeId).orElseThrow(() -> new TraineeNotFoundException(traineeId));
         LOGGER.info("Successfully selected a TraineeEntity with an id of {}, result - {}", traineeId, trainee);
         return trainee;
     }
@@ -77,7 +73,8 @@ public class TraineeServiceImpl implements TraineeService {
         Assert.notNull(username, "TraineeEntity username must not be null");
         Assert.hasText(username, "TraineeEntity username must not be empty");
         LOGGER.info("Selecting a TraineeEntity with a username of {}", username);
-        TraineeEntity trainee = traineeDao.getByUsername(username);
+        TraineeEntity trainee =
+            traineeDao.findByUsername(username).orElseThrow(() -> new TraineeNotFoundException(username));
         LOGGER.info("Successfully selected a trainee with a username of {}, result - {}", username, trainee);
         return trainee;
     }

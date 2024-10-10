@@ -5,8 +5,6 @@ import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.example.entity.UserEntity;
 import org.example.exception.InvalidIdException;
-import org.example.service.core.TraineeService;
-import org.example.service.core.TrainerService;
 import org.example.service.core.UserService;
 import org.example.service.core.UsernamePasswordService;
 import org.springframework.stereotype.Service;
@@ -16,19 +14,12 @@ import org.springframework.util.Assert;
 @Service("usernamePasswordService")
 public class UsernamePasswordServiceImpl implements UsernamePasswordService {
 
-    private final TraineeService traineeService;
-    private final TrainerService trainerService;
     private final UserService userService;
 
     /**
      * Constructor.
      */
-    public UsernamePasswordServiceImpl(TraineeService traineeService, TrainerService trainerService,
-                                       UserService userService) {
-        Assert.notNull(traineeService, "TraineeEntity Service must not be null");
-        Assert.notNull(trainerService, "TrainerEntity Service must not be null");
-        this.traineeService = traineeService;
-        this.trainerService = trainerService;
+    public UsernamePasswordServiceImpl(UserService userService) {
         this.userService = userService;
     }
 

@@ -3,9 +3,10 @@ package org.example.service.impl;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
-import org.example.dao.core.TrainingDao;
 import org.example.entity.TrainingEntity;
 import org.example.entity.TrainingType;
+import org.example.exception.TrainingNotFoundException;
+import org.example.repository.core.TrainingEntityRepository;
 import org.example.service.core.TrainingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,13 +20,13 @@ public class TrainingServiceImpl implements TrainingService {
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainingServiceImpl.class);
 
     @Autowired
-    private TrainingDao trainingDao;
+    private TrainingEntityRepository trainingEntityRepository;
 
     @Override
     public TrainingEntity create(TrainingEntity trainingEntity) {
         Assert.notNull(trainingEntity, "TrainingCreateParams must not be null");
         LOGGER.info("Creating a TrainingEntity according to the TrainingCreateParams - {}", trainingEntity);
-        TrainingEntity createdTrainingEntity = trainingDao.save(trainingEntity);
+        TrainingEntity createdTrainingEntity = trainingEntityRepository.save(trainingEntity);
         LOGGER.info(
             "Successfully created a TrainingEntity according to the TrainingEntity Create Params - {}, result - {}",
             trainingEntity, createdTrainingEntity);
@@ -36,7 +37,8 @@ public class TrainingServiceImpl implements TrainingService {
     public TrainingEntity select(Long id) {
         Assert.notNull(id, "TrainingEntity Id must not be null");
         LOGGER.info("Selecting a TrainingEntity with an id of {}", id);
-        TrainingEntity trainingEntity = trainingDao.get(id);
+        TrainingEntity trainingEntity =
+            trainingEntityRepository.findById(id).orElseThrow(() -> new TrainingNotFoundException(id));
         LOGGER.info("Successfully selected a TrainingEntity with an id of {}, result - {}", id, trainingEntity);
         return trainingEntity;
     }
@@ -47,7 +49,7 @@ public class TrainingServiceImpl implements TrainingService {
         LOGGER.info("Updating a TrainingEntity with an id of {} according to {}", trainingEntity.getId(),
             trainingEntity);
 
-        TrainingEntity updatedTrainingEntity = trainingDao.update(trainingEntity);
+        TrainingEntity updatedTrainingEntity = trainingEntityRepository.update(trainingEntity);
 
         LOGGER.info("Successfully updated a TrainingEntity with an id of {}, result - {}", trainingEntity.getId(),
             updatedTrainingEntity);
@@ -59,7 +61,7 @@ public class TrainingServiceImpl implements TrainingService {
     public Optional<TrainingEntity> findById(Long id) {
         Assert.notNull(id, "TrainingEntity id must not be null");
         LOGGER.info("Retrieving an optional TrainingEntity with an id of {}", id);
-        Optional<TrainingEntity> optionalTraining = trainingDao.findById(id);
+        Optional<TrainingEntity> optionalTraining = trainingEntityRepository.findById(id);
         LOGGER.info("Successfully retrieved an optional TrainingEntity with an id of {}, result - {}", id,
             optionalTraining);
         return optionalTraining;
@@ -68,7 +70,7 @@ public class TrainingServiceImpl implements TrainingService {
     @Override
     public List<TrainingEntity> findAll() {
         LOGGER.info("Retrieving a list of all TrainingEntities");
-        List<TrainingEntity> all = trainingDao.findAll();
+        List<TrainingEntity> all = trainingEntityRepository.findAll();
         LOGGER.info("Successfully retrieved a list of all Training Entities, result - {}", all);
         return all;
     }
@@ -81,8 +83,9 @@ public class TrainingServiceImpl implements TrainingService {
                 + "from = {}, to = {}, trainerUsername = {}, trainingType = {}",
             traineeUsername, from, to, trainerUsername, trainingType);
 
-        List<TrainingEntity> all = trainingDao.findAllByTraineeUsernameAndCriteria(traineeUsername, from, to,
-            trainerUsername, trainingType);
+        List<TrainingEntity> all =
+            trainingEntityRepository.findAllByTraineeUsernameAndCriteria(traineeUsername, from, to,
+                trainerUsername, trainingType);
 
         LOGGER.info("Successfully retrieved all Training Entities of a trainee({}) based on the following criteria - "
                 + "from = {}, to = {}, trainerUsername = {}, trainingType = {}. Result of the query - {}",
@@ -98,8 +101,9 @@ public class TrainingServiceImpl implements TrainingService {
                 + "from = {}, to = {}, traineeUsername = {}",
             trainerUsername, from, to, traineeUsername);
 
-        List<TrainingEntity> all = trainingDao.findAllByTrainerUsernameAndCriteria(trainerUsername, from, to,
-            traineeUsername);
+        List<TrainingEntity> all =
+            trainingEntityRepository.findAllByTrainerUsernameAndCriteria(trainerUsername, from, to,
+                traineeUsername);
 
         LOGGER.info("Successfully retrieved all Training Entities of a trainer({}) based on the following criteria - "
                 + "from = {}, to = {}, traineeUsername = {}. Result of the query - {}",
@@ -112,7 +116,7 @@ public class TrainingServiceImpl implements TrainingService {
         Assert.notNull(traineeUsername, "Trainee username must not be null");
         LOGGER.info("Deleting all trainings of a trainee with a username of {}", traineeUsername);
 
-        trainingDao.deleteAllByTraineeUsername(traineeUsername);
+        trainingEntityRepository.deleteAllByTraineeUsername(traineeUsername);
 
         LOGGER.info("Successfully deleted all trainings of a trainee with a username of {}", traineeUsername);
     }
@@ -122,7 +126,7 @@ public class TrainingServiceImpl implements TrainingService {
         Assert.notNull(trainerUsername, "Trainer username must not be null");
         LOGGER.info("Deleting all trainings of a trainer with a username of {}", trainerUsername);
 
-        trainingDao.deleteAllByTrainerUsername(trainerUsername);
+        trainingEntityRepository.deleteAllByTrainerUsername(trainerUsername);
 
         LOGGER.info("Successfully deleted all trainings of a trainer with a username of {}", trainerUsername);
     }

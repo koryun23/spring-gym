@@ -2,8 +2,9 @@ package org.example.service.impl;
 
 import java.util.List;
 import java.util.Optional;
-import org.example.dao.impl.TrainerDaoImpl;
 import org.example.entity.TrainerEntity;
+import org.example.exception.TrainerNotFoundException;
+import org.example.repository.core.TrainerEntityRepository;
 import org.example.service.core.TrainerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,7 @@ public class TrainerServiceImpl implements TrainerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainerServiceImpl.class);
 
     @Autowired
-    private TrainerDaoImpl trainerDao;
+    private TrainerEntityRepository trainerDao;
 
     @Override
     public TrainerEntity create(TrainerEntity trainerEntity) {
@@ -45,7 +46,8 @@ public class TrainerServiceImpl implements TrainerService {
     public TrainerEntity select(Long trainerId) {
         Assert.notNull(trainerId, "TrainerEntity id must not be null");
         LOGGER.info("Selecting a TrainerEntity with an id of {}", trainerId);
-        TrainerEntity trainerEntity = trainerDao.get(trainerId);
+        TrainerEntity trainerEntity =
+            trainerDao.findById(trainerId).orElseThrow(() -> new TrainerNotFoundException(trainerId));
         LOGGER.info("Successfully selected a TrainerEntity with an id of {}, result - {}", trainerId, trainerEntity);
         return trainerEntity;
     }
@@ -55,7 +57,8 @@ public class TrainerServiceImpl implements TrainerService {
         Assert.notNull(username, "TrainerEntity username must not be null");
         Assert.hasText(username, "TrainerEntity username must not be empty");
         LOGGER.info("Selecting a TrainerEntity with a username of {}", username);
-        TrainerEntity trainerEntity = trainerDao.getByUsername(username);
+        TrainerEntity trainerEntity =
+            trainerDao.findByUsername(username).orElseThrow(() -> new TrainerNotFoundException(username));
         LOGGER.info("Successfully selected a TrainerEntity with a username of {}, result - {}", username,
             trainerEntity);
         return trainerEntity;

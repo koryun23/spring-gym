@@ -2,8 +2,9 @@ package org.example.service.impl;
 
 import java.util.List;
 import java.util.Optional;
-import org.example.dao.core.TrainingTypeDao;
 import org.example.entity.TrainingTypeEntity;
+import org.example.exception.TrainingTypeNotFoundException;
+import org.example.repository.core.TrainingTypeEntityRepository;
 import org.example.service.core.TrainingTypeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +16,9 @@ public class TrainingTypeServiceImpl implements TrainingTypeService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainingTypeServiceImpl.class);
 
-    private final TrainingTypeDao trainingTypeDao;
+    private final TrainingTypeEntityRepository trainingTypeDao;
 
-    public TrainingTypeServiceImpl(TrainingTypeDao trainingTypeDao) {
+    public TrainingTypeServiceImpl(TrainingTypeEntityRepository trainingTypeDao) {
         this.trainingTypeDao = trainingTypeDao;
     }
 
@@ -44,7 +45,7 @@ public class TrainingTypeServiceImpl implements TrainingTypeService {
     public boolean delete(Long id) {
         Assert.notNull(id, "Id must not be null");
         LOGGER.info("Deleting a Training Type Entity with an id of {}", id);
-        trainingTypeDao.delete(id);
+        trainingTypeDao.deleteById(id);
         LOGGER.info("Successfully deleted a Training Type Entity with an id of {}", id);
         return true;
     }
@@ -53,7 +54,8 @@ public class TrainingTypeServiceImpl implements TrainingTypeService {
     public TrainingTypeEntity get(Long id) {
         Assert.notNull(id, "Id must not be null");
         LOGGER.info("Retrieving a Training Type Entity with an id of {}", id);
-        TrainingTypeEntity trainingTypeEntity = trainingTypeDao.get(id);
+        TrainingTypeEntity trainingTypeEntity =
+            trainingTypeDao.findById(id).orElseThrow(() -> new TrainingTypeNotFoundException(id));
         LOGGER.info("Successfully retrieved a Training Type Entity with an id of {}, result - {}",
             id, trainingTypeEntity);
         return trainingTypeEntity;
