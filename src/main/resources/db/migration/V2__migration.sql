@@ -3,6 +3,7 @@ create sequence if not exists TRAINER_SEQUENCE start with 1 increment by 1;
 create sequence if not exists TRAINING_SEQUENCE start with 1 increment by 1;
 create sequence if not exists TRAINING_TYPE_SEQUENCE start with 1 increment by 1;
 create sequence if not exists USER_SEQUENCE start with 1 increment by 1;
+create sequence if not exists TRAINEE_TRAINER_SEQUENCE start with 1 increment by 1;
 
 create table if not exists USERS (
     is_active boolean,
@@ -32,6 +33,14 @@ create table if not exists TRAINER (
     user_id bigint not null unique,
     foreign key (specialization_id) references training_type(id),
     foreign key (user_id) references users(id));
+
+create table if not exists TRAINEE_TRAINER (
+    id bigint not null primary key DEFAULT nextval('trainee_trainer_sequence'),
+    trainee_id bigint not null,
+    trainer_id bigint not null,
+    foreign key (trainee_id) references trainee(id),
+    foreign key (trainer_id) references trainer(id)
+);
 
 create table if not exists TRAINING (
     date timestamp(6) not null,
