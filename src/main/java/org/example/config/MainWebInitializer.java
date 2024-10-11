@@ -2,7 +2,6 @@ package org.example.config;
 
 import jakarta.servlet.FilterRegistration;
 import jakarta.servlet.ServletContext;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRegistration;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
@@ -13,11 +12,12 @@ import org.springframework.web.servlet.DispatcherServlet;
 public class MainWebInitializer implements WebApplicationInitializer {
 
     @Override
-    public void onStartup(ServletContext servletContext) throws ServletException {
+    public void onStartup(ServletContext servletContext) {
 
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
         rootContext.register(WebConfig.class);
         rootContext.setConfigLocation("org.example.config");
+        rootContext.setServletContext(servletContext);
 
         servletContext.addListener(new ContextLoaderListener(rootContext));
 
