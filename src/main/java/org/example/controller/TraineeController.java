@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/trainees")
+@RequestMapping(value = "/trainees")
 public class TraineeController {
 
     private TraineeFacade traineeFacade;

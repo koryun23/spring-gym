@@ -32,7 +32,7 @@ public class UserFacadeImpl implements UserFacade {
         UserRetrievalResponseDto responseDto = new UserRetrievalResponseDto(
             optionalUser.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
 
-        log.info("Successfully selected a user based on UserRetrievalRequestDto - {}, result - {}", requestDto,
+        log.info("UserRetrievalRequestDto - {}, result - {}", requestDto,
             responseDto);
         return responseDto;
     }
