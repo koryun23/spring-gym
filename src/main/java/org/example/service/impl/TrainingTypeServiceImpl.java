@@ -2,6 +2,7 @@ package org.example.service.impl;
 
 import java.util.List;
 import java.util.Optional;
+import org.example.entity.TrainingType;
 import org.example.entity.TrainingTypeEntity;
 import org.example.exception.TrainingTypeNotFoundException;
 import org.example.repository.core.TrainingTypeEntityRepository;
@@ -79,5 +80,19 @@ public class TrainingTypeServiceImpl implements TrainingTypeService {
 
         LOGGER.info("Successfully retrieved all training types, result - {}", all);
         return all;
+    }
+
+    @Override
+    public Optional<TrainingTypeEntity> findByTrainingType(TrainingType trainingType) {
+        Assert.notNull(trainingType, "Training Type must not be null");
+        LOGGER.info("Retrieving an optional Training Type entity of type {}", trainingType);
+
+        Optional<TrainingTypeEntity> optionalTrainingType =
+            Optional.ofNullable(trainingTypeDao.getByTrainingType(trainingType));
+
+        LOGGER.info("Successfully retrieved an optional Training Type {}", optionalTrainingType);
+
+        return optionalTrainingType;
+
     }
 }

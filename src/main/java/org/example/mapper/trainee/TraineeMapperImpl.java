@@ -1,4 +1,4 @@
-package org.example.mapper;
+package org.example.mapper.trainee;
 
 import org.example.dto.plain.TrainerDto;
 import org.example.dto.plain.TrainingTypeDto;

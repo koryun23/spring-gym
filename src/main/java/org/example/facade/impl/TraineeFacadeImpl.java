@@ -20,7 +20,7 @@ import org.example.entity.TraineeEntity;
 import org.example.entity.UserEntity;
 import org.example.exception.TraineeNotFoundException;
 import org.example.facade.core.TraineeFacade;
-import org.example.mapper.TraineeMapper;
+import org.example.mapper.trainee.TraineeMapper;
 import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;

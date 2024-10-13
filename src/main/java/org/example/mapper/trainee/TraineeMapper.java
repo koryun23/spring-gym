@@ -1,4 +1,4 @@
-package org.example.mapper;
+package org.example.mapper.trainee;
 
 import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
