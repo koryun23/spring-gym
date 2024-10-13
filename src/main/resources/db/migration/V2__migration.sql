@@ -6,7 +6,7 @@ create sequence if not exists USER_SEQUENCE start with 1 increment by 1;
 create sequence if not exists TRAINEE_TRAINER_SEQUENCE start with 1 increment by 1;
 
 create table if not exists USERS (
-    is_active boolean,
+    is_active boolean not null,
     id bigint not null primary key DEFAULT nextval('user_sequence'),
     first_name varchar(255) not null,
     last_name varchar(255) not null,
@@ -20,10 +20,10 @@ create table if not exists TRAINING_TYPE (
 );
 
 create table if not exists TRAINEE (
-    date_of_birth timestamp(6) not null,
+    date_of_birth timestamp(6),
     id bigint not null primary key DEFAULT nextval('trainee_sequence'),
     user_id bigint not null unique,
-    address varchar(255) not null,
+    address varchar(255),
     foreign key (user_id) references users(id)
 );
 

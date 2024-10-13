@@ -77,7 +77,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
 
         UserEntity userEntity = userService.create(
             new UserEntity(requestDto.getFirstName(), requestDto.getLastName(), requestDto.getUsername(),
-                requestDto.getPassword(), requestDto.getIsActive()));
+                requestDto.getPassword(), true));
         LOGGER.info("currently added user - {}", userEntity);
         requestDto.setUserId(userEntity.getId());
 
