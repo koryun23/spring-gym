@@ -1,7 +1,6 @@
 package org.example.facade.impl;
 
 import java.util.List;
-import org.example.dto.plain.TrainingTypeDto;
 import org.example.dto.request.MultipleTrainingDeletionByTraineeRequestDto;
 import org.example.dto.request.MultipleTrainingDeletionByTrainerRequestDto;
 import org.example.dto.request.TrainingCreationRequestDto;
@@ -19,9 +18,7 @@ import org.example.entity.TrainingEntity;
 import org.example.exception.TraineeNotFoundException;
 import org.example.exception.TrainerNotFoundException;
 import org.example.facade.core.TrainingFacade;
-import org.example.mapper.training.TrainingCreationRequestDtoToTrainingEntityMapper;
-import org.example.mapper.training.TrainingEntityToTrainingCreationResponseDtoMapper;
-import org.example.mapper.training.TrainingEntityToTrainingRetrievalResponseDtoMapper;
+import org.example.mapper.training.TrainingMapper;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
 import org.example.service.core.TrainingService;
@@ -42,9 +39,7 @@ public class TrainingFacadeImpl implements TrainingFacade {
     private final TrainerService trainerService;
     private final TrainingTypeService trainingTypeService;
     private final UserService userService;
-    private final TrainingCreationRequestDtoToTrainingEntityMapper trainingCreationRequestDtoToTrainingEntityMapper;
-    private final TrainingEntityToTrainingCreationResponseDtoMapper trainingEntityToTrainingCreationResponseDtoMapper;
-    private final TrainingEntityToTrainingRetrievalResponseDtoMapper trainingEntityToTrainingRetrievalResponseDtoMapper;
+    private final TrainingMapper trainingMapper;
 
     /**
      * Constructor.
@@ -53,20 +48,13 @@ public class TrainingFacadeImpl implements TrainingFacade {
                               TraineeService traineeService,
                               TrainerService trainerService, TrainingTypeService trainingTypeService,
                               UserService userService,
-                              TrainingCreationRequestDtoToTrainingEntityMapper
-                                  trainingCreationRequestDtoToTrainingEntityMapper,
-                              TrainingEntityToTrainingCreationResponseDtoMapper
-                                  trainingEntityToTrainingCreationResponseDtoMapper,
-                              TrainingEntityToTrainingRetrievalResponseDtoMapper
-                                  trainingEntityToTrainingRetrievalResponseDtoMapper) {
+                              TrainingMapper trainingMapper) {
         this.trainingService = trainingService;
         this.traineeService = traineeService;
         this.trainerService = trainerService;
         this.trainingTypeService = trainingTypeService;
         this.userService = userService;
-        this.trainingCreationRequestDtoToTrainingEntityMapper = trainingCreationRequestDtoToTrainingEntityMapper;
-        this.trainingEntityToTrainingCreationResponseDtoMapper = trainingEntityToTrainingCreationResponseDtoMapper;
-        this.trainingEntityToTrainingRetrievalResponseDtoMapper = trainingEntityToTrainingRetrievalResponseDtoMapper;
+        this.trainingMapper = trainingMapper;
     }
 
     @Override
@@ -78,8 +66,8 @@ public class TrainingFacadeImpl implements TrainingFacade {
             return new TrainingCreationResponseDto(List.of("Authentication failed"));
         }
 
-        TrainingCreationResponseDto responseDto = trainingEntityToTrainingCreationResponseDtoMapper.map(
-            trainingService.create(trainingCreationRequestDtoToTrainingEntityMapper.map(requestDto)));
+        TrainingCreationResponseDto responseDto = trainingMapper.mapTrainingEntityToTrainingCreationResponseDto(
+            trainingService.create(trainingMapper.mapTrainingCreationRequestDtoToTrainingEntity(requestDto)));
 
         LOGGER.info(
             "Successfully created a TrainingEntity according to the TrainingCreationRequestDto - {}, response - {}",
@@ -111,7 +99,7 @@ public class TrainingFacadeImpl implements TrainingFacade {
         }
 
         TrainingRetrievalResponseDto responseDto =
-            trainingEntityToTrainingRetrievalResponseDtoMapper.map(trainingService.select(trainingId));
+            trainingMapper.mapTrainingEntityToTrainingRetrievalResponseDto(trainingService.select(trainingId));
 
         LOGGER.info("Successfully retrieved a TrainingEntity with an id of {}, response - {}", trainingId, responseDto);
         return responseDto;
@@ -142,7 +130,7 @@ public class TrainingFacadeImpl implements TrainingFacade {
             requestDto.getFrom(),
             requestDto.getTo(),
             requestDto.getTraineeUsername()
-        ).stream().map(trainingEntityToTrainingRetrievalResponseDtoMapper::map).toList();
+        ).stream().map(trainingMapper::mapTrainingEntityToTrainingRetrievalResponseDto).toList();
 
         TrainingListRetrievalResponseDto responseDto = new TrainingListRetrievalResponseDto(trainerUsername, all);
 
@@ -178,7 +166,7 @@ public class TrainingFacadeImpl implements TrainingFacade {
             requestDto.getTo(),
             requestDto.getTrainerUsername(),
             requestDto.getTrainingTypeDto().getTrainingType()
-        ).stream().map(trainingEntityToTrainingRetrievalResponseDtoMapper::map).toList();
+        ).stream().map(trainingMapper::mapTrainingEntityToTrainingRetrievalResponseDto).toList();
 
         TrainingListRetrievalResponseDto responseDto =
             new TrainingListRetrievalResponseDto(requestDto.getTraineeUsername(), all);
