@@ -18,13 +18,7 @@ public class TraineeSwitchActivationStateResponseDto {
 
     private HttpStatus httpStatus;
 
-    private List<String> errors;
-
     public TraineeSwitchActivationStateResponseDto(HttpStatus httpStatus) {
         this.httpStatus = httpStatus;
-    }
-
-    public TraineeSwitchActivationStateResponseDto(List<String> errors) {
-        this.errors = errors;
     }
 }

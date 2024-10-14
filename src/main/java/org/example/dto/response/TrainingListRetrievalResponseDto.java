@@ -17,14 +17,8 @@ public class TrainingListRetrievalResponseDto {
     private String username;
     private List<TrainingRetrievalResponseDto> trainingList;
 
-    private List<String> errors;
-
     public TrainingListRetrievalResponseDto(String username, List<TrainingRetrievalResponseDto> trainingList) {
         this.username = username;
         this.trainingList = trainingList;
-    }
-
-    public TrainingListRetrievalResponseDto(List<String> errors) {
-        this.errors = errors;
     }
 }

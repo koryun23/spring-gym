@@ -17,20 +17,11 @@ public class TrainerCreationResponseDto {
     private String firstName;
     private String lastName;
 
-    private List<String> errors;
-
     /**
      * Constructor.
      */
     public TrainerCreationResponseDto(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-
-    /**
-     * Constructor.
-     */
-    public TrainerCreationResponseDto(List<String> errors) {
-        this.errors = errors;
     }
 }

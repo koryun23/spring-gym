@@ -23,8 +23,6 @@ public class TrainerUpdateResponseDto {
     private Boolean isActive;
     private List<TraineeDto> trainees;
 
-    private List<String> errors;
-
     /**
      * Constructor.
      */
@@ -40,12 +38,5 @@ public class TrainerUpdateResponseDto {
         this.specialization = specialization;
         this.isActive = isActive;
         this.trainees = trainees;
-    }
-
-    /**
-     * Constructor.
-     */
-    public TrainerUpdateResponseDto(List<String> errors) {
-        this.errors = errors;
     }
 }

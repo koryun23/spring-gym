@@ -18,20 +18,11 @@ public class TraineeCreationResponseDto {
     private String firstName;
     private String lastName;
 
-    private List<String> errors;
-
     /**
      * Constructor.
      */
     public TraineeCreationResponseDto(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-
-    /**
-     * Constructor.
-     */
-    public TraineeCreationResponseDto(List<String> errors) {
-        this.errors = errors;
     }
 }

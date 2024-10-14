@@ -7,13 +7,7 @@ public class TrainerSwitchActivationStateResponseDto {
 
     private HttpStatus httpStatus;
 
-    private List<String> errors;
-
     public TrainerSwitchActivationStateResponseDto(HttpStatus httpStatus) {
         this.httpStatus = httpStatus;
-    }
-
-    public TrainerSwitchActivationStateResponseDto(List<String> errors) {
-        this.errors = errors;
     }
 }

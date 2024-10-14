@@ -1,5 +1,6 @@
 package org.example.facade.core;
 
+import org.example.dto.RestResponse;
 import org.example.dto.request.MultipleTrainingDeletionByTraineeRequestDto;
 import org.example.dto.request.MultipleTrainingDeletionByTrainerRequestDto;
 import org.example.dto.request.TrainingCreationRequestDto;
@@ -16,19 +17,19 @@ import org.example.dto.response.TrainingUpdateResponseDto;
 
 public interface TrainingFacade {
 
-    TrainingCreationResponseDto createTraining(TrainingCreationRequestDto requestDto);
+    RestResponse<TrainingCreationResponseDto> createTraining(TrainingCreationRequestDto requestDto);
 
-    TrainingRetrievalResponseDto retrieveTraining(TrainingRetrievalByIdRequestDto requestDto);
+    RestResponse<TrainingRetrievalResponseDto> retrieveTraining(TrainingRetrievalByIdRequestDto requestDto);
 
-    TrainingListRetrievalResponseDto retrieveTrainingListByTrainer(TrainingListRetrievalByTrainerRequestDto requestDto);
+    RestResponse<TrainingListRetrievalResponseDto> retrieveTrainingListByTrainer(TrainingListRetrievalByTrainerRequestDto requestDto);
 
-    TrainingListRetrievalResponseDto retrieveTrainingListByTrainee(TrainingListRetrievalByTraineeRequestDto requestDto);
+    RestResponse<TrainingListRetrievalResponseDto> retrieveTrainingListByTrainee(TrainingListRetrievalByTraineeRequestDto requestDto);
 
-    MultipleTrainingDeletionByTraineeResponseDto deleteMultpileTraineeTraining(
+    RestResponse<MultipleTrainingDeletionByTraineeResponseDto> deleteMultpileTraineeTraining(
         MultipleTrainingDeletionByTraineeRequestDto requestDto);
 
-    MultipleTrainingDeletionByTrainerResponseDto deleteMultipleTrainerTraining(
+    RestResponse<MultipleTrainingDeletionByTrainerResponseDto> deleteMultipleTrainerTraining(
         MultipleTrainingDeletionByTrainerRequestDto requestDto);
 
-    TrainingUpdateResponseDto updateTraining(TrainingUpdateRequestDto requestDto);
+    RestResponse<TrainingUpdateResponseDto> updateTraining(TrainingUpdateRequestDto requestDto);
 }

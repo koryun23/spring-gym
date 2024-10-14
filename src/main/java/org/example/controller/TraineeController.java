@@ -2,6 +2,7 @@ package org.example.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.example.dto.RestResponse;
 import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.response.TraineeCreationResponseDto;
 import org.example.facade.core.TraineeFacade;
@@ -24,11 +25,11 @@ public class TraineeController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<TraineeCreationResponseDto> register(@RequestBody TraineeCreationRequestDto requestDto,
-                                                               HttpServletRequest httpServletRequest) {
-        log.info("Attempting a registration of a user according to the request - {}", requestDto);
-        TraineeCreationResponseDto responseDto = traineeFacade.createTrainee(requestDto);
-        ResponseEntity<TraineeCreationResponseDto> responseEntity = new ResponseEntity<>(responseDto, HttpStatus.OK);
+    public ResponseEntity<RestResponse<TraineeCreationResponseDto>> register(@RequestBody TraineeCreationRequestDto requestDto,
+                                                                             HttpServletRequest httpServletRequest) {
+        log.info("Attempting a registration of a trainee according to the request - {}", requestDto);
+        RestResponse<TraineeCreationResponseDto> response = traineeFacade.createTrainee(requestDto);
+        ResponseEntity<RestResponse<TraineeCreationResponseDto>> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
         log.info("Successfully registered a user according to the request - {}", requestDto);
         return responseEntity;
     }

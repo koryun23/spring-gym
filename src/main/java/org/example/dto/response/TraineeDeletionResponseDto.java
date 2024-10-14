@@ -17,13 +17,7 @@ public class TraineeDeletionResponseDto {
 
     private HttpStatus status;
 
-    private List<String> errors;
-
     public TraineeDeletionResponseDto(HttpStatus status) {
         this.status = status;
-    }
-
-    public TraineeDeletionResponseDto(List<String> errors) {
-        this.errors = errors;
     }
 }

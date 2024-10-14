@@ -1,7 +1,9 @@
-package org.example.dto.response;
+package org.example.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,18 +12,15 @@ import lombok.ToString;
 import org.springframework.http.HttpStatus;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
-public class TrainingCreationResponseDto {
+public class RestResponse<T> {
 
+    private T payload;
     private HttpStatus httpStatus;
-
-    /**
-     * Constructor.
-     */
-    public TrainingCreationResponseDto(HttpStatus httpStatus) {
-        this.httpStatus = httpStatus;
-    }
+    private LocalDateTime timestamp;
+    private List<String> messages;
 }

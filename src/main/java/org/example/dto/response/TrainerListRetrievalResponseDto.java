@@ -20,14 +20,8 @@ public class TrainerListRetrievalResponseDto {
     private String lastName;
     private List<TrainerDto> trainers;
 
-    private List<String> errors;
-
     public TrainerListRetrievalResponseDto(List<TrainerDto> trainers, String username) {
         this.trainers = trainers;
         this.username = username;
-    }
-
-    public TrainerListRetrievalResponseDto(List<String> errors) {
-        this.errors = errors;
     }
 }

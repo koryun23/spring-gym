@@ -16,13 +16,7 @@ public class MultipleTrainingDeletionByTraineeResponseDto {
 
     private String traineeUsername;
 
-    private List<String> errors;
-
     public MultipleTrainingDeletionByTraineeResponseDto(String traineeUsername) {
         this.traineeUsername = traineeUsername;
-    }
-
-    public MultipleTrainingDeletionByTraineeResponseDto(List<String> errors) {
-        this.errors = errors;
     }
 }

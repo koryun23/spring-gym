@@ -1,7 +1,11 @@
 package org.example.facade.impl;
 
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import org.example.dto.RestResponse;
 import org.example.dto.plain.TrainerDto;
 import org.example.dto.plain.TrainingTypeDto;
 import org.example.dto.plain.UserDto;
@@ -66,10 +70,11 @@ public class TraineeFacadeImpl implements TraineeFacade {
     }
 
     @Override
-    public TraineeCreationResponseDto createTrainee(TraineeCreationRequestDto requestDto) {
+    public RestResponse<TraineeCreationResponseDto> createTrainee(TraineeCreationRequestDto requestDto) {
         Assert.notNull(requestDto, "TraineeCreationRequestDto must not be null");
         LOGGER.info("Creating a TraineeEntity based on the TraineeCreationRequestDto - {}", requestDto);
 
+        List<String> errors = new LinkedList<>();
         requestDto.setUsername(
             usernamePasswordService.username(requestDto.getFirstName(), requestDto.getLastName(), idService.getId(),
                 "trainee"));
@@ -86,18 +91,23 @@ public class TraineeFacadeImpl implements TraineeFacade {
 
         idService.autoIncrement();
 
+        RestResponse<TraineeCreationResponseDto> restResponse = new RestResponse<>(
+            responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList()
+        );
         LOGGER.info("Successfully created a TraineeEntity based on the TraineeCreationRequestDto - {}, response - {}",
-            requestDto, responseDto);
-        return responseDto;
+            requestDto, restResponse);
+        return restResponse;
     }
 
     @Override
-    public TraineeUpdateResponseDto updateTrainee(TraineeUpdateRequestDto requestDto) {
+    public RestResponse<TraineeUpdateResponseDto> updateTrainee(TraineeUpdateRequestDto requestDto) {
         Assert.notNull(requestDto, "TraineeUpdateRequestDto must not be null");
         LOGGER.info("Updating a TraineeEntity based on the TraineeUpdateRequestDto - {}", requestDto);
 
         if (!userService.usernamePasswordMatching(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword())) {
-            return new TraineeUpdateResponseDto(List.of("Authentication failed"));
+            return new RestResponse<>(
+                null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(), List.of("Authentication failed")
+            );
         }
 
         TraineeEntity traineeEntity = traineeService.findByUsername(requestDto.getUsername())
@@ -135,13 +145,16 @@ public class TraineeFacadeImpl implements TraineeFacade {
                 ))
                 .toList()
         );
+        RestResponse<TraineeUpdateResponseDto> restResponse = new RestResponse<>(
+            responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList()
+        );
         LOGGER.info("Successfully updated a TraineeEntity based on the TraineeUpdateRequestDto - {}, response - {}",
-            requestDto, responseDto);
-        return responseDto;
+            requestDto, restResponse);
+        return restResponse;
     }
 
     @Override
-    public TraineeRetrievalResponseDto retrieveTrainee(TraineeRetrievalByUsernameRequestDto requestDto) {
+    public RestResponse<TraineeRetrievalResponseDto> retrieveTrainee(TraineeRetrievalByUsernameRequestDto requestDto) {
         Assert.notNull(requestDto, "TraineeRetrievalByUsernameRequestDto must not be null");
         String username = requestDto.getUsername();
         Assert.notNull(username, "Username must not be null");
@@ -150,12 +163,14 @@ public class TraineeFacadeImpl implements TraineeFacade {
 
         if (!userService.usernamePasswordMatching(requestDto.getRetrieverUsername(),
             requestDto.getRetrieverPassword())) {
-            return new TraineeRetrievalResponseDto(List.of("Authentication failed"));
+            return new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                List.of("Authentication failed"));
         }
         Optional<TraineeEntity> optionalTrainee = traineeService.findByUsername(username);
 
         if (optionalTrainee.isEmpty()) {
-            return new TraineeRetrievalResponseDto(
+            return new RestResponse<>(
+                null, HttpStatus.NOT_FOUND, LocalDateTime.now(),
                 List.of(String.format("Trainee with a username of %s not found", username)));
         }
 
@@ -163,12 +178,16 @@ public class TraineeFacadeImpl implements TraineeFacade {
         TraineeRetrievalResponseDto responseDto =
             traineeMapper.mapTraineeEntityToTraineeRetrievalResponseDto(traineeEntity);
 
-        LOGGER.info("Successfully retrieved a Trainee with a username of {}, result - {}", username, responseDto);
-        return responseDto;
+        RestResponse<TraineeRetrievalResponseDto> restResponse = new RestResponse<>(
+            responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList()
+        );
+        LOGGER.info("Successfully retrieved a Trainee with a username of {}, result - {}", username, restResponse);
+        return restResponse;
     }
 
     @Override
-    public TraineeDeletionResponseDto deleteTraineeByUsername(TraineeDeletionByUsernameRequestDto requestDto) {
+    public RestResponse<TraineeDeletionResponseDto> deleteTraineeByUsername(
+        TraineeDeletionByUsernameRequestDto requestDto) {
 
         String username = requestDto.getUsername();
         Assert.notNull(username, "Username must not be null");
@@ -176,19 +195,24 @@ public class TraineeFacadeImpl implements TraineeFacade {
         LOGGER.info("Deleting a Trainee with a username of {}", username);
 
         if (!userService.usernamePasswordMatching(requestDto.getDeleterUsername(), requestDto.getDeleterPassword())) {
-            return new TraineeDeletionResponseDto(List.of("Authentication failed"));
+            return new RestResponse<>(
+                null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                List.of("Authentication failed"));
         }
 
         traineeService.delete(username);
 
         TraineeDeletionResponseDto responseDto = new TraineeDeletionResponseDto(HttpStatus.OK);
 
-        LOGGER.info("Successfully deleted a Trainee with a username of {}, result - {}", username, responseDto);
-        return responseDto;
+        RestResponse<TraineeDeletionResponseDto> restResponse = new RestResponse<>(
+            responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList()
+        );
+        LOGGER.info("Successfully deleted a Trainee with a username of {}, result - {}", username, restResponse);
+        return restResponse;
     }
 
     @Override
-    public TraineeSwitchActivationStateResponseDto switchActivationState(
+    public RestResponse<TraineeSwitchActivationStateResponseDto> switchActivationState(
         TraineeSwitchActivationStateRequestDto requestDto) {
         Assert.notNull(requestDto, "TraineeSwitchActivationStateRequestDto must not be null");
 
@@ -197,7 +221,9 @@ public class TraineeFacadeImpl implements TraineeFacade {
         LOGGER.info("Switching the activation state of a trainee with a username of {}", username);
 
         if (!userService.usernamePasswordMatching(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword())) {
-            return new TraineeSwitchActivationStateResponseDto(List.of("Authentication failed"));
+            return new RestResponse<>(
+                null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                List.of("Authentication failed"));
         }
 
         TraineeEntity traineeEntity =
@@ -210,18 +236,24 @@ public class TraineeFacadeImpl implements TraineeFacade {
         TraineeSwitchActivationStateResponseDto responseDto =
             new TraineeSwitchActivationStateResponseDto(HttpStatus.OK);
 
+        RestResponse<TraineeSwitchActivationStateResponseDto> restResponse =
+            new RestResponse<>(
+                responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList()
+            );
+
         LOGGER.info("Successfully switched the activation state of a Trainee with a username of {}", username);
-        return responseDto;
+        return restResponse;
     }
 
     @Override
-    public TraineeUpdateResponseDto changePassword(TraineePasswordChangeRequestDto requestDto) {
+    public RestResponse<TraineeUpdateResponseDto> changePassword(TraineePasswordChangeRequestDto requestDto) {
         Assert.notNull(requestDto, "TraineePasswordChangeRequestDto must not be null");
         LOGGER.info("Changing the password of a trainee according to the TraineePasswordChangeRequestDto - {}",
             requestDto);
 
         if (!userService.usernamePasswordMatching(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword())) {
-            return new TraineeUpdateResponseDto(List.of("Authentication failed"));
+            return new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                List.of("Authentication failed"));
         }
 
         TraineeEntity traineeEntity = traineeService.findById(requestDto.getTraineeId())
@@ -233,8 +265,10 @@ public class TraineeFacadeImpl implements TraineeFacade {
 
         TraineeUpdateResponseDto responseDto = traineeMapper.mapTraineeEntityToTraineeUpdateResponseDto(traineeEntity);
 
+        RestResponse<TraineeUpdateResponseDto> restResponse =
+            new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
         LOGGER.info("Successfully changed the password of a Trainee according to the request dto - {}, result - {}",
-            requestDto, responseDto);
-        return responseDto;
+            requestDto, restResponse);
+        return restResponse;
     }
 }

@@ -1,6 +1,9 @@
 package org.example.facade.impl;
 
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+import org.example.dto.RestResponse;
 import org.example.dto.request.MultipleTrainingDeletionByTraineeRequestDto;
 import org.example.dto.request.MultipleTrainingDeletionByTrainerRequestDto;
 import org.example.dto.request.TrainingCreationRequestDto;
@@ -26,6 +29,7 @@ import org.example.service.core.TrainingTypeService;
 import org.example.service.core.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -58,25 +62,28 @@ public class TrainingFacadeImpl implements TrainingFacade {
     }
 
     @Override
-    public TrainingCreationResponseDto createTraining(TrainingCreationRequestDto requestDto) {
+    public RestResponse<TrainingCreationResponseDto> createTraining(TrainingCreationRequestDto requestDto) {
         Assert.notNull(requestDto, "TrainingCreationRequestDto");
         LOGGER.info("Creating a TrainingEntity according to the TrainingCreationRequestDto - {}", requestDto);
 
         if (!userService.usernamePasswordMatching(requestDto.getCreatorUsername(), requestDto.getCreatorPassword())) {
-            return new TrainingCreationResponseDto(List.of("Authentication failed"));
+            return new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                List.of("Authentication failed"));
         }
 
         TrainingCreationResponseDto responseDto = trainingMapper.mapTrainingEntityToTrainingCreationResponseDto(
             trainingService.create(trainingMapper.mapTrainingCreationRequestDtoToTrainingEntity(requestDto)));
 
+        RestResponse<TrainingCreationResponseDto> restResponse =
+            new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
         LOGGER.info(
             "Successfully created a TrainingEntity according to the TrainingCreationRequestDto - {}, response - {}",
-            requestDto, responseDto);
-        return responseDto;
+            requestDto, restResponse);
+        return restResponse;
     }
 
     @Override
-    public TrainingRetrievalResponseDto retrieveTraining(TrainingRetrievalByIdRequestDto requestDto) {
+    public RestResponse<TrainingRetrievalResponseDto> retrieveTraining(TrainingRetrievalByIdRequestDto requestDto) {
         Assert.notNull(requestDto, "TrainingRetrievalByIdRequestDto must not be null");
         Long trainingId = requestDto.getId();
 
@@ -85,28 +92,34 @@ public class TrainingFacadeImpl implements TrainingFacade {
 
         if (!userService.usernamePasswordMatching(requestDto.getRetrieverUsername(),
             requestDto.getRetrieverPassword())) {
-            return new TrainingRetrievalResponseDto(List.of("Authentication failed"));
+            return new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                List.of("Authentication failed"));
         }
 
         if (trainingId <= 0) {
-            return new TrainingRetrievalResponseDto(
+            return new RestResponse<>(
+                null, HttpStatus.NOT_FOUND, LocalDateTime.now(),
                 List.of(String.format("TrainingEntity id must be positive: %d specified", trainingId)));
         }
 
         if (trainingService.findById(trainingId).isEmpty()) {
-            return new TrainingRetrievalResponseDto(
+            return new RestResponse<>(
+                null, HttpStatus.NOT_FOUND, LocalDateTime.now(),
                 List.of(String.format("TrainingEntity with a specified id of %d does not exist", trainingId)));
         }
 
         TrainingRetrievalResponseDto responseDto =
             trainingMapper.mapTrainingEntityToTrainingRetrievalResponseDto(trainingService.select(trainingId));
 
-        LOGGER.info("Successfully retrieved a TrainingEntity with an id of {}, response - {}", trainingId, responseDto);
-        return responseDto;
+        RestResponse<TrainingRetrievalResponseDto> restResponse =
+            new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        LOGGER.info("Successfully retrieved a TrainingEntity with an id of {}, response - {}", trainingId,
+            restResponse);
+        return restResponse;
     }
 
     @Override
-    public TrainingListRetrievalResponseDto retrieveTrainingListByTrainer(
+    public RestResponse<TrainingListRetrievalResponseDto> retrieveTrainingListByTrainer(
         TrainingListRetrievalByTrainerRequestDto requestDto) {
         Assert.notNull(requestDto, "Request Dto must not be null");
         LOGGER.info("Retrieving the list of all trainings according to the request dto - {}", requestDto);
@@ -115,12 +128,13 @@ public class TrainingFacadeImpl implements TrainingFacade {
         String retrieverPassword = requestDto.getRetrieverPassword();
 
         if (!userService.usernamePasswordMatching(retrieverUsername, retrieverPassword)) {
-            return new TrainingListRetrievalResponseDto(List.of("Authentication failed"));
+            return new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                List.of("Authentication failed"));
         }
 
         String trainerUsername = requestDto.getTrainerUsername();
         if (userService.findByUsername(trainerUsername).isEmpty()) {
-            return new TrainingListRetrievalResponseDto(List.of(String.format(
+            return new RestResponse<>(null, HttpStatus.NOT_FOUND, LocalDateTime.now(), List.of(String.format(
                 "A trainer with a username of %s does not exist", trainerUsername
             )));
         }
@@ -134,15 +148,18 @@ public class TrainingFacadeImpl implements TrainingFacade {
 
         TrainingListRetrievalResponseDto responseDto = new TrainingListRetrievalResponseDto(trainerUsername, all);
 
-        LOGGER.info("Successfully retrieved all trainings according to the request dto - {}, result - {}", requestDto,
-            responseDto);
+        RestResponse<TrainingListRetrievalResponseDto> restResponse =
+            new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
-        return responseDto;
+        LOGGER.info("Successfully retrieved all trainings according to the request dto - {}, result - {}", requestDto,
+            restResponse);
+
+        return restResponse;
     }
 
 
     @Override
-    public TrainingListRetrievalResponseDto retrieveTrainingListByTrainee(
+    public RestResponse<TrainingListRetrievalResponseDto> retrieveTrainingListByTrainee(
         TrainingListRetrievalByTraineeRequestDto requestDto) {
         Assert.notNull(requestDto, "Request Dto must not be null");
         LOGGER.info("Retrieving the list of trainings according to the request dto - {}", requestDto);
@@ -151,11 +168,12 @@ public class TrainingFacadeImpl implements TrainingFacade {
         String retrieverPassword = requestDto.getRetrieverPassword();
 
         if (!userService.usernamePasswordMatching(retrieverUsername, retrieverPassword)) {
-            return new TrainingListRetrievalResponseDto(List.of("Authentication failed"));
+            return new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                List.of("Authentication failed"));
         }
 
         if (userService.findByUsername(requestDto.getTraineeUsername()).isEmpty()) {
-            return new TrainingListRetrievalResponseDto(List.of(String.format(
+            return new RestResponse<>(null, HttpStatus.NOT_FOUND, LocalDateTime.now(), List.of(String.format(
                 "A trainee with a username %s does not exist"
             )));
         }
@@ -171,15 +189,18 @@ public class TrainingFacadeImpl implements TrainingFacade {
         TrainingListRetrievalResponseDto responseDto =
             new TrainingListRetrievalResponseDto(requestDto.getTraineeUsername(), all);
 
-        LOGGER.info("Successfully retrieved all trainings according to the request dto - {}, result - {}",
-            requestDto, responseDto);
+        RestResponse<TrainingListRetrievalResponseDto> restResponse =
+            new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
-        return responseDto;
+        LOGGER.info("Successfully retrieved all trainings according to the request dto - {}, result - {}",
+            requestDto, restResponse);
+
+        return restResponse;
 
     }
 
     @Override
-    public MultipleTrainingDeletionByTraineeResponseDto deleteMultpileTraineeTraining(
+    public RestResponse<MultipleTrainingDeletionByTraineeResponseDto> deleteMultpileTraineeTraining(
         MultipleTrainingDeletionByTraineeRequestDto requestDto) {
 
         Assert.notNull(requestDto, "MultipleTrainingDeletionByTraineeRequestDto must not be null");
@@ -188,11 +209,13 @@ public class TrainingFacadeImpl implements TrainingFacade {
         LOGGER.info("Deleting all trainings of a trainee with a username of {}", traineeUsername);
 
         if (!userService.usernamePasswordMatching(requestDto.getDeleterUsername(), requestDto.getDeleterPassword())) {
-            return new MultipleTrainingDeletionByTraineeResponseDto(List.of("Authentication failed"));
+            return new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                List.of("Authentication failed"));
         }
 
         if (traineeService.findByUsername(traineeUsername).isEmpty()) {
-            return new MultipleTrainingDeletionByTraineeResponseDto(
+            return new RestResponse<>(
+                null, HttpStatus.NOT_FOUND, LocalDateTime.now(),
                 List.of(String.format("A trainee with a username of %s does not exist", traineeUsername))
             );
         }
@@ -202,14 +225,17 @@ public class TrainingFacadeImpl implements TrainingFacade {
         MultipleTrainingDeletionByTraineeResponseDto responseDto =
             new MultipleTrainingDeletionByTraineeResponseDto(traineeUsername);
 
-        LOGGER.info("Successfully deleted all trainings of a trainee with a username of {}, result - {}",
-            traineeUsername, responseDto);
+        RestResponse<MultipleTrainingDeletionByTraineeResponseDto> restResponse =
+            new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
-        return responseDto;
+        LOGGER.info("Successfully deleted all trainings of a trainee with a username of {}, result - {}",
+            traineeUsername, restResponse);
+
+        return restResponse;
     }
 
     @Override
-    public MultipleTrainingDeletionByTrainerResponseDto deleteMultipleTrainerTraining(
+    public RestResponse<MultipleTrainingDeletionByTrainerResponseDto> deleteMultipleTrainerTraining(
         MultipleTrainingDeletionByTrainerRequestDto requestDto) {
 
         Assert.notNull(requestDto, "MultipleTrainingDeletionByTrainerRequestDto must not be null");
@@ -218,11 +244,12 @@ public class TrainingFacadeImpl implements TrainingFacade {
         LOGGER.info("Deleting all trainings of a trainer with a username of {}", trainerUsername);
 
         if (!userService.usernamePasswordMatching(requestDto.getDeleterUsername(), requestDto.getDeleterPassword())) {
-            return new MultipleTrainingDeletionByTrainerResponseDto(List.of("Authentication failed"));
+            return new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                List.of("Authentication failed"));
         }
 
         if (trainerService.findByUsername(trainerUsername).isEmpty()) {
-            return new MultipleTrainingDeletionByTrainerResponseDto(
+            return new RestResponse<>(null, HttpStatus.NOT_FOUND, LocalDateTime.now(),
                 List.of(String.format("A trainer with a username of %s does not exist", trainerUsername)));
         }
 
@@ -231,19 +258,23 @@ public class TrainingFacadeImpl implements TrainingFacade {
         MultipleTrainingDeletionByTrainerResponseDto responseDto =
             new MultipleTrainingDeletionByTrainerResponseDto(trainerUsername);
 
-        LOGGER.info("Successfully deleted all trainings of a trainer with a username of {}, result - {}",
-            trainerUsername, responseDto);
+        RestResponse<MultipleTrainingDeletionByTrainerResponseDto> restResponse =
+            new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
-        return responseDto;
+        LOGGER.info("Successfully deleted all trainings of a trainer with a username of {}, result - {}",
+            trainerUsername, restResponse);
+
+        return restResponse;
     }
 
     @Override
-    public TrainingUpdateResponseDto updateTraining(TrainingUpdateRequestDto requestDto) {
+    public RestResponse<TrainingUpdateResponseDto> updateTraining(TrainingUpdateRequestDto requestDto) {
         Assert.notNull(requestDto, "TrainingUpdateRequestDto must not be null");
         LOGGER.info("Updating a training according to the TrainingUpdateRequestDto - {}", requestDto);
 
         if (!userService.usernamePasswordMatching(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword())) {
-            return new TrainingUpdateResponseDto(List.of("Authentication failed"));
+            return new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                List.of("Authentication failed"));
         }
 
         TrainingEntity updatedTrainingEntity = trainingService.update(new TrainingEntity(
@@ -266,8 +297,11 @@ public class TrainingFacadeImpl implements TrainingFacade {
             updatedTrainingEntity.getDuration()
         );
 
+        RestResponse<TrainingUpdateResponseDto> restResponse =
+            new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
         LOGGER.info("Successfully updated a training according to the TrainingUpdateRequestDto - {}, result - {}",
-            requestDto, responseDto);
-        return null;
+            requestDto, restResponse);
+
+        return restResponse;
     }
 }

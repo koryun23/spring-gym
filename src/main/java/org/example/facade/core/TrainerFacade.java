@@ -1,5 +1,6 @@
 package org.example.facade.core;
 
+import org.example.dto.RestResponse;
 import org.example.dto.request.RetrieveAllTrainersNotAssignedToTraineeRequestDto;
 import org.example.dto.request.TraineeTrainerListUpdateRequestDto;
 import org.example.dto.request.TrainerCreationRequestDto;
@@ -17,18 +18,18 @@ import org.example.dto.response.TrainerUpdateResponseDto;
 
 public interface TrainerFacade {
 
-    TrainerCreationResponseDto createTrainer(TrainerCreationRequestDto requestDto);
+    RestResponse<TrainerCreationResponseDto> createTrainer(TrainerCreationRequestDto requestDto);
 
-    TrainerUpdateResponseDto updateTrainer(TrainerUpdateRequestDto requestDto);
+    RestResponse<TrainerUpdateResponseDto> updateTrainer(TrainerUpdateRequestDto requestDto);
 
-    TrainerSwitchActivationStateResponseDto switchActivationState(TrainerSwitchActivationStateRequestDto requestDto);
+    RestResponse<TrainerSwitchActivationStateResponseDto> switchActivationState(TrainerSwitchActivationStateRequestDto requestDto);
 
-    TrainerUpdateResponseDto changePassword(TrainerPasswordChangeRequestDto requestDto);
+    RestResponse<TrainerUpdateResponseDto> changePassword(TrainerPasswordChangeRequestDto requestDto);
 
-    TrainerRetrievalResponseDto retrieveTrainerByUsername(TrainerRetrievalByUsernameRequestDto requestDto);
+    RestResponse<TrainerRetrievalResponseDto> retrieveTrainerByUsername(TrainerRetrievalByUsernameRequestDto requestDto);
 
-    TrainerListRetrievalResponseDto retrieveAllTrainersNotAssignedToTrainee(
+    RestResponse<TrainerListRetrievalResponseDto> retrieveAllTrainersNotAssignedToTrainee(
         RetrieveAllTrainersNotAssignedToTraineeRequestDto requestDto);
 
-    TraineeTrainerListUpdateResponseDto updateTraineeTrainerList(TraineeTrainerListUpdateRequestDto requestDto);
+    RestResponse<TraineeTrainerListUpdateResponseDto> updateTraineeTrainerList(TraineeTrainerListUpdateRequestDto requestDto);
 }

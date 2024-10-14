@@ -21,8 +21,6 @@ public class TrainingUpdateResponseDto {
     private Date date;
     private Long duration;
 
-    private List<String> errors;
-
     /**
      * Constructor.
      */
@@ -40,9 +38,5 @@ public class TrainingUpdateResponseDto {
         this.trainingTypeId = trainingTypeId;
         this.date = date;
         this.duration = duration;
-    }
-
-    public TrainingUpdateResponseDto(List<String> errors) {
-        this.errors = errors;
     }
 }
