@@ -24,8 +24,6 @@ public interface TrainerFacade {
 
     RestResponse<TrainerSwitchActivationStateResponseDto> switchActivationState(TrainerSwitchActivationStateRequestDto requestDto);
 
-    RestResponse<TrainerUpdateResponseDto> changePassword(TrainerPasswordChangeRequestDto requestDto);
-
     RestResponse<TrainerRetrievalResponseDto> retrieveTrainerByUsername(TrainerRetrievalByUsernameRequestDto requestDto);
 
     RestResponse<TrainerListRetrievalResponseDto> retrieveAllTrainersNotAssignedToTrainee(

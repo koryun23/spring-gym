@@ -244,31 +244,4 @@ public class TraineeFacadeImpl implements TraineeFacade {
         LOGGER.info("Successfully switched the activation state of a Trainee with a username of {}", username);
         return restResponse;
     }
-
-    @Override
-    public RestResponse<TraineeUpdateResponseDto> changePassword(TraineePasswordChangeRequestDto requestDto) {
-        Assert.notNull(requestDto, "TraineePasswordChangeRequestDto must not be null");
-        LOGGER.info("Changing the password of a trainee according to the TraineePasswordChangeRequestDto - {}",
-            requestDto);
-
-        if (!userService.usernamePasswordMatching(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword())) {
-            return new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                List.of("Authentication failed"));
-        }
-
-        TraineeEntity traineeEntity = traineeService.findById(requestDto.getTraineeId())
-            .orElseThrow(() -> new TraineeNotFoundException(requestDto.getTraineeId()));
-
-        UserEntity user = traineeEntity.getUser();
-        user.setPassword(requestDto.getNewPassword());
-        userService.update(user);
-
-        TraineeUpdateResponseDto responseDto = traineeMapper.mapTraineeEntityToTraineeUpdateResponseDto(traineeEntity);
-
-        RestResponse<TraineeUpdateResponseDto> restResponse =
-            new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
-        LOGGER.info("Successfully changed the password of a Trainee according to the request dto - {}, result - {}",
-            requestDto, restResponse);
-        return restResponse;
-    }
 }

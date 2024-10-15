@@ -48,7 +48,7 @@ public class TrainerEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "trainer")
     private List<TrainingEntity> trainingEntityList;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "trainerEntities")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "trainerEntities", fetch = FetchType.EAGER)
     private Set<TraineeEntity> traineeEntities;
 
     /**

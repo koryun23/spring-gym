@@ -52,7 +52,7 @@ public class TraineeEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "trainee")
     private List<TrainingEntity> trainingEntityList;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "trainee_trainer",
         joinColumns = @JoinColumn(name = "trainee_id"),

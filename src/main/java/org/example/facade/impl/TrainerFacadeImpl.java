@@ -88,7 +88,7 @@ public class TrainerFacadeImpl implements TrainerFacade {
             requestDto.getLastName(),
             requestDto.getUsername(),
             requestDto.getPassword(),
-            requestDto.getIsActive()
+            true
         ));
         requestDto.setUserId(userEntity.getId());
 
@@ -164,30 +164,6 @@ public class TrainerFacadeImpl implements TrainerFacade {
             requestDto, restResponse);
         return restResponse;
 
-    }
-
-    @Override
-    public RestResponse<TrainerUpdateResponseDto> changePassword(TrainerPasswordChangeRequestDto requestDto) {
-        Assert.notNull(requestDto, "TrainerPasswordChangeRequestDto must not be null");
-        LOGGER.info("Changing password of a trainer according to the TrainerPasswordChangeRequestDto - {}", requestDto);
-
-        TrainerEntity trainerEntity = trainerService.findById(requestDto.getTrainerId())
-            .orElseThrow(() -> new TrainerNotFoundException(requestDto.getTrainerId()));
-
-        UserEntity userEntity = trainerEntity.getUser();
-        userEntity.setPassword(requestDto.getNewPassword());
-        userService.update(userEntity);
-
-        TrainerUpdateResponseDto responseDto = trainerMapper.mapTrainerEntityToTrainerUpdateResponseDto(trainerEntity);
-
-        RestResponse<TrainerUpdateResponseDto> restResponse =
-            new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
-        LOGGER.info(
-            "Successfully changed the password of a trainer according to the TrainerPasswordChangeRequestDto - {}, "
-                + "result - {}",
-            requestDto, restResponse);
-
-        return restResponse;
     }
 
     @Override

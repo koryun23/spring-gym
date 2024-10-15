@@ -26,6 +26,4 @@ public interface TraineeFacade {
     RestResponse<TraineeDeletionResponseDto> deleteTraineeByUsername(TraineeDeletionByUsernameRequestDto requestDto);
 
     RestResponse<TraineeSwitchActivationStateResponseDto> switchActivationState(TraineeSwitchActivationStateRequestDto requestDto);
-
-    RestResponse<TraineeUpdateResponseDto> changePassword(TraineePasswordChangeRequestDto requestDto);
 }
