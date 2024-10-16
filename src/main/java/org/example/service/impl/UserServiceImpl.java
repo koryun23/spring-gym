@@ -81,6 +81,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<UserEntity> findByPassword(String password) {
+        Assert.notNull(password, "Password must not be null");
+        Assert.hasText(password, "Password must not be empty");
+        LOGGER.info("Retrieving an optional user with the provided password");
+        Optional<UserEntity> optionalUser = userEntityRepository.findByPassword(password);
+        LOGGER.info("Successfully retrieved an optional user entity with the provided password, result - {}",
+            optionalUser);
+        return optionalUser;
+    }
+
+    @Override
     public Optional<UserEntity> findById(Long id) {
         Assert.notNull(id, "Id must not be null");
         LOGGER.info("Retrieving an optional User Entity with an id of {}", id);

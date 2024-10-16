@@ -42,6 +42,22 @@ public class UserEntityRepositoryImpl implements UserEntityRepository {
     }
 
     @Override
+    public Optional<UserEntity> findByPassword(String password) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        Optional<UserEntity> optionalUser =
+            session.createQuery("select u from UserEntity u where u.password = :password", UserEntity.class)
+                .setParameter("password", password)
+                .uniqueResultOptional();
+
+        transaction.commit();
+        session.close();
+
+        return optionalUser;
+    }
+
+    @Override
     public UserEntity update(UserEntity userEntity) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();

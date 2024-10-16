@@ -17,6 +17,8 @@ public interface UserService {
 
     Optional<UserEntity> findByUsername(String username);
 
+    Optional<UserEntity> findByPassword(String password);
+
     Optional<UserEntity> findById(Long id);
 
     boolean usernamePasswordMatching(String username, String password);

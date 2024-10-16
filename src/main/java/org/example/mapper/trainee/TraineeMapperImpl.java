@@ -99,4 +99,16 @@ public class TraineeMapperImpl implements TraineeMapper {
             requestDto.getAddress()
         );
     }
+
+    @Override
+    public UserEntity mapTraineeUpdateRequestDtoToUserEntity(TraineeUpdateRequestDto requestDto) {
+        Assert.notNull(requestDto, "TraineeUpdateRequestDto must not be null");
+        return new UserEntity(
+            requestDto.getFirstName(),
+            requestDto.getLastName(),
+            requestDto.getUsername(),
+            userService.getByUsername(requestDto.getUsername()).getPassword(),
+            requestDto.getIsActive()
+        );
+    }
 }

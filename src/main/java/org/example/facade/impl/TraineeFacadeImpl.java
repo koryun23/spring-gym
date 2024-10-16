@@ -2,16 +2,9 @@ package org.example.facade.impl;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
 import org.example.dto.RestResponse;
-import org.example.dto.plain.TrainerDto;
-import org.example.dto.plain.TrainingTypeDto;
-import org.example.dto.plain.UserDto;
 import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TraineeDeletionByUsernameRequestDto;
-import org.example.dto.request.TraineePasswordChangeRequestDto;
 import org.example.dto.request.TraineeRetrievalByUsernameRequestDto;
 import org.example.dto.request.TraineeSwitchActivationStateRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
@@ -22,15 +15,13 @@ import org.example.dto.response.TraineeSwitchActivationStateResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
 import org.example.entity.TraineeEntity;
 import org.example.entity.UserEntity;
-import org.example.exception.TraineeNotFoundException;
 import org.example.facade.core.TraineeFacade;
 import org.example.mapper.trainee.TraineeMapper;
 import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
-import org.example.service.core.TrainerService;
-import org.example.service.core.TrainingService;
 import org.example.service.core.UserService;
 import org.example.service.core.UsernamePasswordService;
+import org.example.validator.TraineeValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -44,29 +35,27 @@ public class TraineeFacadeImpl implements TraineeFacade {
     private static final Logger LOGGER = LoggerFactory.getLogger(TraineeFacadeImpl.class);
 
     private final TraineeService traineeService;
-    private final TrainerService trainerService;
-    private final TrainingService trainingService;
     private final UserService userService;
     private final TraineeMapper traineeMapper;
     private final UsernamePasswordService usernamePasswordService;
     private final IdService idService;
+    private final TraineeValidator traineeValidator;
 
     /**
      * Constructor.
      */
-    public TraineeFacadeImpl(TraineeService traineeService, TrainerService trainerService,
-                             TrainingService trainingService, UserService userService,
+    public TraineeFacadeImpl(TraineeService traineeService,
+                             UserService userService,
                              TraineeMapper traineeMapper,
                              @Qualifier("traineeUsernamePasswordService")
                              UsernamePasswordService usernamePasswordService,
-                             @Qualifier("traineeIdService") IdService idService) {
-        this.trainingService = trainingService;
+                             @Qualifier("traineeIdService") IdService idService, TraineeValidator traineeValidator) {
         this.userService = userService;
         this.traineeService = traineeService;
-        this.trainerService = trainerService;
         this.traineeMapper = traineeMapper;
         this.usernamePasswordService = usernamePasswordService;
         this.idService = idService;
+        this.traineeValidator = traineeValidator;
     }
 
     @Override
@@ -74,7 +63,12 @@ public class TraineeFacadeImpl implements TraineeFacade {
         Assert.notNull(requestDto, "TraineeCreationRequestDto must not be null");
         LOGGER.info("Creating a TraineeEntity based on the TraineeCreationRequestDto - {}", requestDto);
 
-        List<String> errors = new LinkedList<>();
+        RestResponse<TraineeCreationResponseDto> restResponse =
+            traineeValidator.validateTraineeCreation(requestDto);
+        if (restResponse != null) {
+            return restResponse;
+        }
+
         requestDto.setUsername(
             usernamePasswordService.username(requestDto.getFirstName(), requestDto.getLastName(), idService.getId(),
                 "trainee"));
@@ -83,7 +77,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
         UserEntity userEntity = userService.create(
             new UserEntity(requestDto.getFirstName(), requestDto.getLastName(), requestDto.getUsername(),
                 requestDto.getPassword(), true));
-        LOGGER.info("currently added user - {}", userEntity);
+
         requestDto.setUserId(userEntity.getId());
 
         TraineeCreationResponseDto responseDto = traineeMapper.mapTraineeEntityToTraineeCreationResponseDto(
@@ -91,7 +85,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
 
         idService.autoIncrement();
 
-        RestResponse<TraineeCreationResponseDto> restResponse = new RestResponse<>(
+        restResponse = new RestResponse<>(
             responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList()
         );
         LOGGER.info("Successfully created a TraineeEntity based on the TraineeCreationRequestDto - {}, response - {}",
@@ -104,50 +98,20 @@ public class TraineeFacadeImpl implements TraineeFacade {
         Assert.notNull(requestDto, "TraineeUpdateRequestDto must not be null");
         LOGGER.info("Updating a TraineeEntity based on the TraineeUpdateRequestDto - {}", requestDto);
 
-        if (!userService.usernamePasswordMatching(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword())) {
-            return new RestResponse<>(
-                null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(), List.of("Authentication failed")
-            );
+        RestResponse<TraineeUpdateResponseDto> restResponse = traineeValidator.validateTraineeUpdate(requestDto);
+        if (restResponse != null) {
+            return restResponse;
         }
 
-        TraineeEntity traineeEntity = traineeService.findByUsername(requestDto.getUsername())
-            .orElseThrow(() -> new TraineeNotFoundException(requestDto.getUsername()));
+        userService.update(traineeMapper.mapTraineeUpdateRequestDtoToUserEntity(requestDto));
+        TraineeEntity traineeEntity =
+            traineeService.update(traineeMapper.mapTraineeUpdateRequestDtoToTraineeEntity(requestDto));
 
-        UserEntity userEntity = traineeEntity.getUser();
-
-        userEntity.setFirstName(requestDto.getFirstName());
-        userEntity.setLastName(requestDto.getLastName());
-        userEntity.setIsActive(requestDto.getIsActive());
-
-        traineeEntity.setAddress(requestDto.getAddress());
-        traineeEntity.setAddress(requestDto.getAddress());
-
-        traineeService.update(traineeEntity);
-        userService.update(userEntity);
-
-        TraineeUpdateResponseDto responseDto = new TraineeUpdateResponseDto(
-            userEntity.getUsername(),
-            userEntity.getFirstName(),
-            userEntity.getLastName(),
-            traineeEntity.getDateOfBirth(),
-            traineeEntity.getAddress(),
-            userEntity.getIsActive(),
-            traineeEntity.getTrainerEntities().stream()
-                .map(trainerEntity -> new TrainerDto(
-                    new UserDto(
-                        trainerEntity.getUser().getFirstName(),
-                        trainerEntity.getUser().getLastName(),
-                        trainerEntity.getUser().getUsername(),
-                        trainerEntity.getUser().getPassword(),
-                        trainerEntity.getUser().getIsActive()
-                    ),
-                    new TrainingTypeDto(trainerEntity.getSpecialization().getTrainingType())
-                ))
-                .toList()
+        restResponse = new RestResponse<>(
+            traineeMapper.mapTraineeEntityToTraineeUpdateResponseDto(traineeEntity),
+            HttpStatus.OK, LocalDateTime.now(), Collections.emptyList()
         );
-        RestResponse<TraineeUpdateResponseDto> restResponse = new RestResponse<>(
-            responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList()
-        );
+
         LOGGER.info("Successfully updated a TraineeEntity based on the TraineeUpdateRequestDto - {}, response - {}",
             requestDto, restResponse);
         return restResponse;
@@ -161,25 +125,14 @@ public class TraineeFacadeImpl implements TraineeFacade {
         Assert.hasText(username, "Username must not be empty");
         LOGGER.info("Retrieving a Trainee with a username of {}", username);
 
-        if (!userService.usernamePasswordMatching(requestDto.getRetrieverUsername(),
-            requestDto.getRetrieverPassword())) {
-            return new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                List.of("Authentication failed"));
-        }
-        Optional<TraineeEntity> optionalTrainee = traineeService.findByUsername(username);
-
-        if (optionalTrainee.isEmpty()) {
-            return new RestResponse<>(
-                null, HttpStatus.NOT_FOUND, LocalDateTime.now(),
-                List.of(String.format("Trainee with a username of %s not found", username)));
+        RestResponse<TraineeRetrievalResponseDto> restResponse = traineeValidator.validateRetrieveTrainee(requestDto);
+        if (restResponse != null) {
+            return restResponse;
         }
 
-        TraineeEntity traineeEntity = optionalTrainee.get();
-        TraineeRetrievalResponseDto responseDto =
-            traineeMapper.mapTraineeEntityToTraineeRetrievalResponseDto(traineeEntity);
-
-        RestResponse<TraineeRetrievalResponseDto> restResponse = new RestResponse<>(
-            responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList()
+        restResponse = new RestResponse<>(
+            traineeMapper.mapTraineeEntityToTraineeRetrievalResponseDto(traineeService.findByUsername(username).get()),
+            HttpStatus.OK, LocalDateTime.now(), Collections.emptyList()
         );
         LOGGER.info("Successfully retrieved a Trainee with a username of {}, result - {}", username, restResponse);
         return restResponse;
@@ -189,25 +142,23 @@ public class TraineeFacadeImpl implements TraineeFacade {
     public RestResponse<TraineeDeletionResponseDto> deleteTraineeByUsername(
         TraineeDeletionByUsernameRequestDto requestDto) {
 
-        String username = requestDto.getUsername();
-        Assert.notNull(username, "Username must not be null");
-        Assert.hasText(username, "Username must not be empty");
-        LOGGER.info("Deleting a Trainee with a username of {}", username);
+        Assert.notNull(requestDto, "TraineeDeletionByUsernameRequestDto must not be null");
+        LOGGER.info("Deleting a Trainee according to TraineeDeletionByUsernameRequestDto - {}", requestDto);
 
-        if (!userService.usernamePasswordMatching(requestDto.getDeleterUsername(), requestDto.getDeleterPassword())) {
-            return new RestResponse<>(
-                null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                List.of("Authentication failed"));
+        RestResponse<TraineeDeletionResponseDto> restResponse = traineeValidator.validateDeleteTrainee(requestDto);
+        if (restResponse != null) {
+            return restResponse;
         }
 
-        traineeService.delete(username);
+        traineeService.delete(requestDto.getUsername());
 
-        TraineeDeletionResponseDto responseDto = new TraineeDeletionResponseDto(HttpStatus.OK);
-
-        RestResponse<TraineeDeletionResponseDto> restResponse = new RestResponse<>(
-            responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList()
+        restResponse = new RestResponse<>(
+            new TraineeDeletionResponseDto(HttpStatus.OK),
+            HttpStatus.OK, LocalDateTime.now(), Collections.emptyList()
         );
-        LOGGER.info("Successfully deleted a Trainee with a username of {}, result - {}", username, restResponse);
+
+        LOGGER.info("Successfully deleted a Trainee with a username of {}, result - {}", requestDto.getUsername(),
+            restResponse);
         return restResponse;
     }
 
@@ -216,18 +167,14 @@ public class TraineeFacadeImpl implements TraineeFacade {
         TraineeSwitchActivationStateRequestDto requestDto) {
         Assert.notNull(requestDto, "TraineeSwitchActivationStateRequestDto must not be null");
 
-        String username = requestDto.getUsername();
-        Assert.notNull(username, "Username must not be null");
-        LOGGER.info("Switching the activation state of a trainee with a username of {}", username);
-
-        if (!userService.usernamePasswordMatching(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword())) {
-            return new RestResponse<>(
-                null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                List.of("Authentication failed"));
+        RestResponse<TraineeSwitchActivationStateResponseDto> restResponse =
+            traineeValidator.validateSwitchActivationState(requestDto);
+        if (restResponse != null) {
+            return restResponse;
         }
 
         TraineeEntity traineeEntity =
-            traineeService.findByUsername(username).orElseThrow(() -> new TraineeNotFoundException(username));
+            traineeService.findByUsername(requestDto.getUsername()).get();
         UserEntity user = traineeEntity.getUser();
 
         user.setIsActive(!user.getIsActive());
@@ -236,12 +183,9 @@ public class TraineeFacadeImpl implements TraineeFacade {
         TraineeSwitchActivationStateResponseDto responseDto =
             new TraineeSwitchActivationStateResponseDto(HttpStatus.OK);
 
-        RestResponse<TraineeSwitchActivationStateResponseDto> restResponse =
-            new RestResponse<>(
-                responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList()
-            );
+        restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
-        LOGGER.info("Successfully switched the activation state of a Trainee with a username of {}", username);
+        LOGGER.info("Successfully switched the activation state of a Trainee, request - {}", requestDto);
         return restResponse;
     }
 }
