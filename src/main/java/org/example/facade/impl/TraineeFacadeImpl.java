@@ -64,7 +64,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
         LOGGER.info("Creating a TraineeEntity based on the TraineeCreationRequestDto - {}", requestDto);
 
         RestResponse<TraineeCreationResponseDto> restResponse =
-            traineeValidator.validateTraineeCreation(requestDto);
+            traineeValidator.validateCreateTrainee(requestDto);
         if (restResponse != null) {
             return restResponse;
         }
@@ -98,7 +98,7 @@ public class TraineeFacadeImpl implements TraineeFacade {
         Assert.notNull(requestDto, "TraineeUpdateRequestDto must not be null");
         LOGGER.info("Updating a TraineeEntity based on the TraineeUpdateRequestDto - {}", requestDto);
 
-        RestResponse<TraineeUpdateResponseDto> restResponse = traineeValidator.validateTraineeUpdate(requestDto);
+        RestResponse<TraineeUpdateResponseDto> restResponse = traineeValidator.validateUpdateTrainee(requestDto);
         if (restResponse != null) {
             return restResponse;
         }

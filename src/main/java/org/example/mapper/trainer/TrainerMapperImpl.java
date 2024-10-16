@@ -2,18 +2,24 @@ package org.example.mapper.trainer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.plain.TraineeDto;
+import org.example.dto.plain.TrainerDto;
 import org.example.dto.plain.TrainingTypeDto;
 import org.example.dto.plain.UserDto;
 import org.example.dto.request.TrainerCreationRequestDto;
+import org.example.dto.request.TrainerSwitchActivationStateRequestDto;
 import org.example.dto.request.TrainerUpdateRequestDto;
 import org.example.dto.response.TrainerCreationResponseDto;
 import org.example.dto.response.TrainerRetrievalResponseDto;
 import org.example.dto.response.TrainerUpdateResponseDto;
 import org.example.entity.TrainerEntity;
 import org.example.entity.TrainingType;
+import org.example.entity.TrainingTypeEntity;
+import org.example.entity.UserEntity;
 import org.example.exception.TrainingTypeNotFoundException;
+import org.example.service.core.IdService;
 import org.example.service.core.TrainingTypeService;
 import org.example.service.core.UserService;
+import org.example.service.core.UsernamePasswordService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -21,12 +27,17 @@ import org.springframework.util.Assert;
 @Component
 public class TrainerMapperImpl implements TrainerMapper {
 
-    private UserService userService;
-    private TrainingTypeService trainingTypeService;
+    private final UserService userService;
+    private final TrainingTypeService trainingTypeService;
+    private final UsernamePasswordService usernamePasswordService;
+    private final IdService idService;
 
-    public TrainerMapperImpl(UserService userService, TrainingTypeService trainingTypeService) {
+    public TrainerMapperImpl(UserService userService, TrainingTypeService trainingTypeService,
+                             UsernamePasswordService usernamePasswordService, IdService idService) {
         this.userService = userService;
         this.trainingTypeService = trainingTypeService;
+        this.usernamePasswordService = usernamePasswordService;
+        this.idService = idService;
     }
 
     @Override
@@ -106,4 +117,89 @@ public class TrainerMapperImpl implements TrainerMapper {
                 () -> new TrainingTypeNotFoundException(trainingType.toString()))
         );
     }
+
+    @Override
+    public UserEntity mapTrainerCreationRequestDtoToUserEntity(TrainerCreationRequestDto requestDto) {
+        Assert.notNull(requestDto, "TrainerCreationRequestDto must not be null");
+
+        return new UserEntity(
+            requestDto.getFirstName(),
+            requestDto.getLastName(),
+            usernamePasswordService.username(requestDto.getFirstName(), requestDto.getLastName(), idService.getId(),
+                "trainer"),
+            usernamePasswordService.password(),
+            true
+        );
+    }
+
+    @Override
+    public UserEntity mapTrainerUpdateRequestDtoToUserEntity(TrainerUpdateRequestDto requestDto) {
+        Assert.notNull(requestDto, "TrainerUpdateRequestDto must not be null");
+
+        return new UserEntity(
+            requestDto.getFirstName(),
+            requestDto.getLastName(),
+            requestDto.getUsername(),
+            userService.findByUsername(requestDto.getUsername()).get().getPassword(),
+            requestDto.getIsActive()
+        );
+    }
+
+    @Override
+    public UserEntity mapSwitchActivationStateRequestDtoToUserEntity(
+        TrainerSwitchActivationStateRequestDto requestDto) {
+
+        Assert.notNull(requestDto, "TrainerSwitchActivationStateRequestDto must not be null");
+
+        UserEntity userEntity = userService.getByUsername(requestDto.getUsername());
+        userEntity.setIsActive(!userEntity.getIsActive());
+        return userEntity;
+    }
+
+    @Override
+    public TrainerDto mapTrainerEntityToTrainerDto(TrainerEntity trainerEntity) {
+        Assert.notNull(trainerEntity, "Trainer Entity must not be null");
+
+        return new TrainerDto(
+            mapTrainerEntityToUserDto(trainerEntity),
+            new TrainingTypeDto(trainerEntity.getSpecialization().getTrainingType())
+        );
+    }
+
+    @Override
+    public TrainerEntity mapTrainerDtoToTrainerEntity(TrainerDto trainerDto) {
+        Assert.notNull(trainerDto, "Trainer dto must not be null");
+
+        return new TrainerEntity(
+            mapTrainerDtoToUserEntity(trainerDto),
+            new TrainingTypeEntity(trainerDto.getTrainingTypeDto().getTrainingType())
+        );
+    }
+
+    @Override
+    public UserEntity mapTrainerDtoToUserEntity(TrainerDto trainerDto) {
+        Assert.notNull(trainerDto, "Trainer Dto must not be null");
+        return new UserEntity(
+            trainerDto.getUserDto().getFirstName(),
+            trainerDto.getUserDto().getLastName(),
+            trainerDto.getUserDto().getUsername(),
+            trainerDto.getUserDto().getPassword(),
+            trainerDto.getUserDto().getIsActive()
+        );
+    }
+
+    @Override
+    public UserDto mapTrainerEntityToUserDto(TrainerEntity trainerEntity) {
+        Assert.notNull(trainerEntity, "Trainer Entity must not be null");
+
+        return new UserDto(
+            trainerEntity.getUser().getFirstName(),
+            trainerEntity.getUser().getLastName(),
+            trainerEntity.getUser().getUsername(),
+            trainerEntity.getUser().getPassword(),
+            trainerEntity.getUser().getIsActive()
+        );
+    }
+
+
 }

@@ -31,7 +31,7 @@ public class TraineeValidator {
         this.traineeService = traineeService;
     }
 
-    public RestResponse<TraineeCreationResponseDto> validateTraineeCreation(TraineeCreationRequestDto requestDto) {
+    public RestResponse<TraineeCreationResponseDto> validateCreateTrainee(TraineeCreationRequestDto requestDto) {
 
         String firstName = requestDto.getFirstName();
         String lastName = requestDto.getLastName();
@@ -48,7 +48,7 @@ public class TraineeValidator {
         return null;
     }
 
-    public RestResponse<TraineeUpdateResponseDto> validateTraineeUpdate(TraineeUpdateRequestDto requestDto) {
+    public RestResponse<TraineeUpdateResponseDto> validateUpdateTrainee(TraineeUpdateRequestDto requestDto) {
 
         String username = requestDto.getUsername();
         if (username == null || username.isEmpty()) {
@@ -71,12 +71,6 @@ public class TraineeValidator {
         if (userService.findByUsername(username).isEmpty()) {
             return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
                 List.of("User does not exist"));
-        }
-
-        Optional<TraineeEntity> optionalTrainee = traineeService.findByUsername(username);
-        if (optionalTrainee.isEmpty()) {
-            return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
-                List.of(String.format("Username '%s' is already occupied", username)));
         }
 
         if (!userService.usernamePasswordMatching(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword())) {
