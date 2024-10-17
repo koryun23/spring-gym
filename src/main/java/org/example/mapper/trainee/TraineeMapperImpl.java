@@ -1,16 +1,21 @@
 package org.example.mapper.trainee;
 
+import org.apache.catalina.User;
 import org.example.dto.plain.TrainerDto;
 import org.example.dto.plain.TrainingTypeDto;
 import org.example.dto.plain.UserDto;
 import org.example.dto.request.TraineeCreationRequestDto;
+import org.example.dto.request.TraineeSwitchActivationStateRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
 import org.example.dto.response.TraineeCreationResponseDto;
 import org.example.dto.response.TraineeRetrievalResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
 import org.example.entity.TraineeEntity;
 import org.example.entity.UserEntity;
+import org.example.service.core.IdService;
 import org.example.service.core.UserService;
+import org.example.service.core.UsernamePasswordService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -18,9 +23,17 @@ import org.springframework.util.Assert;
 public class TraineeMapperImpl implements TraineeMapper {
 
     private final UserService userService;
+    private final UsernamePasswordService usernamePasswordService;
+    private final IdService idService;
 
-    public TraineeMapperImpl(UserService userService) {
+    public TraineeMapperImpl(UserService userService,
+                             @Qualifier("traineeUsernamePasswordService")
+                             UsernamePasswordService usernamePasswordService,
+                             @Qualifier("traineeIdService")
+                             IdService idService) {
         this.userService = userService;
+        this.usernamePasswordService = usernamePasswordService;
+        this.idService = idService;
     }
 
     @Override
@@ -110,5 +123,29 @@ public class TraineeMapperImpl implements TraineeMapper {
             userService.getByUsername(requestDto.getUsername()).getPassword(),
             requestDto.getIsActive()
         );
+    }
+
+    @Override
+    public UserEntity mapTraineeCreationRequestDtoToUserEntity(TraineeCreationRequestDto requestDto) {
+        Assert.notNull(requestDto, "TraineeCreationRequestDto must not be null");
+        String firstName = requestDto.getFirstName();
+        String lastName = requestDto.getLastName();
+        return userService.create(new UserEntity(
+            firstName,
+            lastName,
+            usernamePasswordService.username(firstName, lastName, idService.getId(), "trainee"),
+            usernamePasswordService.password(),
+            true)
+        );
+    }
+
+    @Override
+    public UserEntity mapSwitchActivationStateRequestDtoToUserEntity(
+        TraineeSwitchActivationStateRequestDto requestDto) {
+        Assert.notNull(requestDto, "TraineeSwitchActivationStateRequestDto must not be null");
+
+        UserEntity user = userService.getByUsername(requestDto.getUsername());
+        user.setIsActive(!user.getIsActive());
+        return user;
     }
 }

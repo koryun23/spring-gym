@@ -1,7 +1,9 @@
 package org.example.mapper.trainee;
 
 import org.example.dto.request.TraineeCreationRequestDto;
+import org.example.dto.request.TraineeSwitchActivationStateRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
+import org.example.dto.request.TrainerSwitchActivationStateRequestDto;
 import org.example.dto.response.TraineeCreationResponseDto;
 import org.example.dto.response.TraineeRetrievalResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
@@ -20,4 +22,9 @@ public interface TraineeMapper {
     TraineeEntity mapTraineeUpdateRequestDtoToTraineeEntity(TraineeUpdateRequestDto requestDto);
 
     UserEntity mapTraineeUpdateRequestDtoToUserEntity(TraineeUpdateRequestDto requestDto);
+
+    UserEntity mapTraineeCreationRequestDtoToUserEntity(TraineeCreationRequestDto requestDto);
+
+    UserEntity mapSwitchActivationStateRequestDtoToUserEntity(TraineeSwitchActivationStateRequestDto requestDto);
+
 }

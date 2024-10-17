@@ -73,16 +73,19 @@ public class TrainerFacadeImpl implements TrainerFacade {
         Assert.notNull(requestDto, "TrainerCreationRequestDto must not be null");
         LOGGER.info("Creating a TrainerEntity according to the TrainerCreationRequestDto - {}", requestDto);
 
+        // validations
         RestResponse<TrainerCreationResponseDto> restResponse = trainerValidator.validateCreateTrainer(requestDto);
         if (restResponse != null) {
             return restResponse;
         }
 
+        // service and mapper calls
         userService.create(trainerMapper.mapTrainerCreationRequestDtoToUserEntity(requestDto));
         TrainerCreationResponseDto responseDto = trainerMapper.mapTrainerEntityToTrainerCreationResponseDto(
             trainerService.create(trainerMapper.mapTrainerCreationRequestDtoToTrainerEntity(requestDto)));
         idService.autoIncrement();
 
+        // response
         restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         LOGGER.info(
@@ -96,15 +99,18 @@ public class TrainerFacadeImpl implements TrainerFacade {
         Assert.notNull(requestDto, "TrainerUpdateRequestDto must not be null");
         LOGGER.info("Updating a TrainerEntity according to the TrainerUpdateRequestDto - {}", requestDto);
 
+        // validations
         RestResponse<TrainerUpdateResponseDto> restResponse = trainerValidator.validateUpdateTrainer(requestDto);
         if (restResponse != null) {
             return restResponse;
         }
 
+        // service and mapper calls
         userService.update(trainerMapper.mapTrainerUpdateRequestDtoToUserEntity(requestDto));
         TrainerUpdateResponseDto responseDto = trainerMapper.mapTrainerEntityToTrainerUpdateResponseDto(
             trainerService.update(trainerMapper.mapTrainerUpdateRequestDtoToTrainerEntity(requestDto)));
 
+        // response
         restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         LOGGER.info("Successfully updated a TrainerEntity according to the TrainerUpdateRequestDto - {}, response - {}",
@@ -118,14 +124,17 @@ public class TrainerFacadeImpl implements TrainerFacade {
         Assert.notNull(requestDto, "TrainerSwitchActivationStateRequestDto must not be null");
         LOGGER.info("Switching activation state according to the {}", requestDto);
 
+        // validations
         RestResponse<TrainerSwitchActivationStateResponseDto> restResponse =
             trainerValidator.validateSwitchActivationState(requestDto);
         if (restResponse != null) {
             return restResponse;
         }
 
+        // service and mapper calls
         userService.update(trainerMapper.mapSwitchActivationStateRequestDtoToUserEntity(requestDto));
 
+        // response
         TrainerSwitchActivationStateResponseDto responseDto =
             new TrainerSwitchActivationStateResponseDto(HttpStatus.OK);
 
@@ -144,14 +153,17 @@ public class TrainerFacadeImpl implements TrainerFacade {
         Assert.notNull(requestDto, "TrainerRetrievalByUsernameRequestDto must not be null");
         LOGGER.info("Retrieving a trainer according to the TrainerRetrievalByUsernameRequestDto - {}", requestDto);
 
+        // validations
         RestResponse<TrainerRetrievalResponseDto> restResponse = trainerValidator.validateRetrieveTrainer(requestDto);
         if (restResponse != null) {
             return restResponse;
         }
 
+        // service and mapper calls
         TrainerRetrievalResponseDto responseDto = trainerMapper.mapTrainerEntityToTrainerRetrievalResponseDto(
                 trainerService.findByUsername(requestDto.getUsername()).get());
 
+        // response
         restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
         LOGGER.info(
             "Successfully retrieved a trainer according to the TrainerRetrievalByUsernameRequestDto - {}, result - {}",
@@ -171,17 +183,20 @@ public class TrainerFacadeImpl implements TrainerFacade {
         Assert.notNull(traineeUsername, "Trainee username must not be null");
         LOGGER.info("Retrieving trainers not assigned to a trainee with a username of {}", traineeUsername);
 
+        // validations
         RestResponse<TrainerListRetrievalResponseDto> restResponse =
             trainerValidator.validateRetrieveAllTrainersNotAssignedToTrainee(requestDto);
 
         if (restResponse != null) return restResponse;
 
+        // service and mapper calls
         TrainerListRetrievalResponseDto responseDto = new TrainerListRetrievalResponseDto(
             trainerService.findAllNotAssignedTo(traineeUsername).stream()
                 .map(trainerMapper::mapTrainerEntityToTrainerDto).toList(),
             traineeUsername
         );
 
+        // response
         restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
         LOGGER.info("Successfully retrieved all trainers not assigned to trainee with a username of {}, result - {}",
             traineeUsername, restResponse);
@@ -197,15 +212,18 @@ public class TrainerFacadeImpl implements TrainerFacade {
             "Updating the list of trainers of a trainee according to the TraineeTrainerListUpdateRequestDto - {}",
             requestDto);
 
+        // validations
         RestResponse<TraineeTrainerListUpdateResponseDto> restResponse =
             trainerValidator.validateUpdateTraineeTrainerList(requestDto);
 
         if (restResponse != null) return restResponse;
 
+        // service and mapper calls
         trainerService.updateTrainersAssignedTo(requestDto.getTraineeUsername(),
             requestDto.getTrainerDtoList().stream()
                 .map(trainerMapper::mapTrainerDtoToTrainerEntity).collect(Collectors.toSet()));
 
+        // response
         TraineeTrainerListUpdateResponseDto responseDto =
             new TraineeTrainerListUpdateResponseDto(requestDto.getTrainerDtoList());
 
