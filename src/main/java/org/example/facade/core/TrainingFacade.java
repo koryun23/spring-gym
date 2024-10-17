@@ -19,17 +19,7 @@ public interface TrainingFacade {
 
     RestResponse<TrainingCreationResponseDto> createTraining(TrainingCreationRequestDto requestDto);
 
-    RestResponse<TrainingRetrievalResponseDto> retrieveTraining(TrainingRetrievalByIdRequestDto requestDto);
-
     RestResponse<TrainingListRetrievalResponseDto> retrieveTrainingListByTrainer(TrainingListRetrievalByTrainerRequestDto requestDto);
 
     RestResponse<TrainingListRetrievalResponseDto> retrieveTrainingListByTrainee(TrainingListRetrievalByTraineeRequestDto requestDto);
-
-    RestResponse<MultipleTrainingDeletionByTraineeResponseDto> deleteMultpileTraineeTraining(
-        MultipleTrainingDeletionByTraineeRequestDto requestDto);
-
-    RestResponse<MultipleTrainingDeletionByTrainerResponseDto> deleteMultipleTrainerTraining(
-        MultipleTrainingDeletionByTrainerRequestDto requestDto);
-
-    RestResponse<TrainingUpdateResponseDto> updateTraining(TrainingUpdateRequestDto requestDto);
 }

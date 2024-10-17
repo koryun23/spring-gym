@@ -1,5 +1,6 @@
 package org.example.mapper.training;
 
+import java.util.List;
 import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.dto.response.TrainingRetrievalResponseDto;
@@ -60,5 +61,13 @@ public class TrainingMapperImpl implements TrainingMapper {
             trainingEntity.getDate(),
             trainingEntity.getDuration()
         );
+    }
+
+    @Override
+    public List<TrainingRetrievalResponseDto> mapTrainingEntityListToTrainingRetrievalResponseDtoList(
+        List<TrainingEntity> trainingEntityList) {
+
+        Assert.notNull(trainingEntityList, "Training Entity List must not be null");
+        return trainingEntityList.stream().map(this::mapTrainingEntityToTrainingRetrievalResponseDto).toList();
     }
 }

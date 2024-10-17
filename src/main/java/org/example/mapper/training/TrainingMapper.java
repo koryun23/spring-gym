@@ -1,5 +1,6 @@
 package org.example.mapper.training;
 
+import java.util.List;
 import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.dto.response.TrainingRetrievalResponseDto;
@@ -13,5 +14,6 @@ public interface TrainingMapper {
 
     TrainingRetrievalResponseDto mapTrainingEntityToTrainingRetrievalResponseDto(TrainingEntity trainingEntity);
 
-
+    List<TrainingRetrievalResponseDto> mapTrainingEntityListToTrainingRetrievalResponseDtoList(
+        List<TrainingEntity> trainingEntityList);
 }
