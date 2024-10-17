@@ -2,7 +2,6 @@ package org.example.facade.impl;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
@@ -12,7 +11,9 @@ import org.example.dto.response.UserChangePasswordResponseDto;
 import org.example.dto.response.UserRetrievalResponseDto;
 import org.example.entity.UserEntity;
 import org.example.facade.core.UserFacade;
+import org.example.mapper.user.UserMapper;
 import org.example.service.core.UserService;
+import org.example.validator.UserValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -22,9 +23,13 @@ import org.springframework.util.Assert;
 public class UserFacadeImpl implements UserFacade {
 
     private final UserService userService;
+    private final UserMapper userMapper;
+    private final UserValidator userValidator;
 
-    public UserFacadeImpl(UserService userService) {
+    public UserFacadeImpl(UserService userService, UserMapper userMapper, UserValidator userValidator) {
         this.userService = userService;
+        this.userMapper = userMapper;
+        this.userValidator = userValidator;
     }
 
     @Override
@@ -32,7 +37,12 @@ public class UserFacadeImpl implements UserFacade {
         Assert.notNull(requestDto, "User Retrieval Request Dto must not be null");
         log.info("Selecting a user based on UserRetrievalRequestDto - {}", requestDto);
 
+        // no validations
+
+        // service calls
         Optional<UserEntity> optionalUser = userService.findByUsername(requestDto.getUsername());
+
+        // response
         UserRetrievalResponseDto responseDto = new UserRetrievalResponseDto(
             optionalUser.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
 
@@ -49,18 +59,18 @@ public class UserFacadeImpl implements UserFacade {
         Assert.notNull(requestDto, "UserChangePasswordRequestDto must not be null");
         log.info("Changing password according to the UserChangePasswordRequestDto - {}", requestDto);
 
-        if (!userService.usernamePasswordMatching(requestDto.getUsername(), requestDto.getOldPassword())) {
-            return new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                List.of("Authentication failed"));
+        // validations
+        RestResponse<UserChangePasswordResponseDto> restResponse = userValidator.validateChangePassword(requestDto);
+        if (restResponse != null) {
+            return restResponse;
         }
 
-        UserEntity userEntity = userService.getByUsername(requestDto.getUsername());
-        userEntity.setPassword(requestDto.getNewPassword());
-        userService.update(userEntity);
+        // service and mapper calls
+        UserEntity userEntity = userMapper.mapUserChangePasswordRequestDtoToUserEntity(requestDto);
 
+        // response
         UserChangePasswordResponseDto responseDto = new UserChangePasswordResponseDto(HttpStatus.OK);
-
-        RestResponse<UserChangePasswordResponseDto> restResponse =
+        restResponse =
             new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Successfully changed password according to the UserChangePasswordRequestDto - {}, result - {}",
