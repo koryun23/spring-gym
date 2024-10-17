@@ -30,14 +30,12 @@ public class AuthController {
      * Login.
      */
     @PostMapping(value = "/login")
-    public ResponseEntity<RestResponse<UserRetrievalResponseDto>> login(@RequestBody UserRetrievalRequestDto requestDto,
-                                                                        HttpServletRequest httpServletRequest) {
-        httpServletRequest.setAttribute("Content-Type", "application/json");
+    public ResponseEntity<RestResponse<UserRetrievalResponseDto>> login(@RequestBody UserRetrievalRequestDto requestDto) {
         log.info("Attempting a user log in according to the request - {}", requestDto);
         RestResponse<UserRetrievalResponseDto> restResponse = userFacade.select(requestDto);
         ResponseEntity<RestResponse<UserRetrievalResponseDto>> responseEntity =
             new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
-        log.info("Successfully logged in, response - {}", restResponse);
+        log.info("Response of logging in - {}", restResponse);
         return responseEntity;
     }
 

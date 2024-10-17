@@ -129,7 +129,7 @@ public class TrainingValidator {
                 List.of("Trainee username is required"));
         }
 
-        if (trainerService.findByUsername(traineeUsername).isEmpty()) {
+        if (traineeService.findByUsername(traineeUsername).isEmpty()) {
             return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
                 List.of("Trainee does not exist"));
         }

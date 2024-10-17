@@ -12,6 +12,7 @@ import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.dto.response.TrainingListRetrievalResponseDto;
 import org.example.entity.TrainingType;
 import org.example.facade.core.TrainingFacade;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/training", consumes = "application/json", produces = "application/json")
+@RequestMapping(value = "/training")
 public class TrainingController {
 
     private TrainingFacade trainingFacade;
@@ -32,7 +33,7 @@ public class TrainingController {
         this.trainingFacade = trainingFacade;
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse<TrainingCreationResponseDto>> create(@RequestBody
                                                                             TrainingCreationRequestDto requestDto,
                                                                             HttpServletRequest request) {
@@ -47,8 +48,10 @@ public class TrainingController {
     @GetMapping("/trainee-training/{username}")
     public ResponseEntity<RestResponse<TrainingListRetrievalResponseDto>> retrieveTraineeTraining(
         @PathVariable(value = "username") String username,
-        @RequestParam String from, @RequestParam String to,
-        @RequestParam String trainerUsername, @RequestParam String trainingType,
+        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String from,
+        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String to,
+        @RequestParam(required = false) String trainerUsername,
+        @RequestParam(required = false) String trainingType,
         HttpServletRequest request) {
 
         log.info("Attempting to retrieve trainings of a trainee, username - {}", username);
@@ -57,10 +60,10 @@ public class TrainingController {
                 request.getHeader("username"),
                 request.getHeader("password"),
                 username,
-                Date.valueOf(from),
-                Date.valueOf(to),
+                from == null ? null : Date.valueOf(from),
+                to == null ? null : Date.valueOf(to),
                 trainerUsername,
-                new TrainingTypeDto(TrainingType.valueOf(TrainingType.class, trainingType))
+                trainingType == null ? null : new TrainingTypeDto(TrainingType.valueOf(TrainingType.class, trainingType))
             );
         RestResponse<TrainingListRetrievalResponseDto> restResponse =
             trainingFacade.retrieveTrainingListByTrainee(requestDto);
@@ -71,8 +74,9 @@ public class TrainingController {
     @GetMapping("/trainer-training/{username}")
     public ResponseEntity<RestResponse<TrainingListRetrievalResponseDto>> retrieveTrainerTraining(
         @PathVariable(value = "username") String username,
-        @RequestParam(value = "from") String from, @RequestParam(value = "to") String to,
-        @RequestParam(value = "trainee") String traineeUsername,
+        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String from,
+        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String to,
+        @RequestParam(value = "trainee", required = false) String traineeUsername,
         HttpServletRequest request) {
 
         log.info("Attempting to retrieve trainings of a trainer, username - {}", username);
@@ -82,7 +86,8 @@ public class TrainingController {
                 request.getHeader("username"),
                 request.getHeader("password"),
                 username,
-                Date.valueOf("from"), Date.valueOf("to"),
+                from == null ? null : Date.valueOf(from),
+                to == null ? null : Date.valueOf(to),
                 traineeUsername
             );
 

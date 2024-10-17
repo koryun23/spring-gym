@@ -133,7 +133,8 @@ public class TrainingFacadeImpl implements TrainingFacade {
                         requestDto.getFrom(),
                         requestDto.getTo(),
                         requestDto.getTrainerUsername(),
-                        requestDto.getTrainingTypeDto().getTrainingType()
+                        requestDto.getTrainingTypeDto() == null ? null :
+                            requestDto.getTrainingTypeDto().getTrainingType()
                     )
                 )
             );

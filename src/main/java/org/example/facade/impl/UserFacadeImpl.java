@@ -40,14 +40,14 @@ public class UserFacadeImpl implements UserFacade {
         // no validations
 
         // service calls
-        Optional<UserEntity> optionalUser = userService.findByUsername(requestDto.getUsername());
+        boolean userExists = userService.usernamePasswordMatching(requestDto.getUsername(), requestDto.getPassword());
 
         // response
         UserRetrievalResponseDto responseDto = new UserRetrievalResponseDto(
-            optionalUser.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
+            userExists ? HttpStatus.OK : HttpStatus.NOT_FOUND);
 
         RestResponse<UserRetrievalResponseDto> restResponse =
-            new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+            new RestResponse<>(responseDto, responseDto.getHttpStatus(), LocalDateTime.now(), Collections.emptyList());
 
         log.info("UserRetrievalRequestDto - {}, result - {}", requestDto,
             restResponse);
@@ -66,9 +66,9 @@ public class UserFacadeImpl implements UserFacade {
         }
 
         // service and mapper calls
-        UserEntity userEntity = userMapper.mapUserChangePasswordRequestDtoToUserEntity(requestDto);
+        userService.update(userMapper.mapUserChangePasswordRequestDtoToUserEntity(requestDto));
 
-        // response
+    // response
         UserChangePasswordResponseDto responseDto = new UserChangePasswordResponseDto(HttpStatus.OK);
         restResponse =
             new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
