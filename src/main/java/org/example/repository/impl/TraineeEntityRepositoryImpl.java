@@ -138,14 +138,16 @@ public class TraineeEntityRepositoryImpl implements TraineeEntityRepository {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        TraineeEntity traineeEntityPersisted = session.get(TraineeEntity.class, entity.getId());
-        traineeEntityPersisted.setUser(entity.getUser());
-        traineeEntityPersisted.setAddress(entity.getAddress());
-        traineeEntityPersisted.setDateOfBirth(entity.getDateOfBirth());
+        Long traineeId = session.createQuery("select t.id from TraineeEntity t where t.user.username = :username", Long.class)
+            .setParameter("username", entity.getUser().getUsername())
+            .uniqueResult();
+
+        entity.setId(traineeId);
+        session.merge(entity);
 
         transaction.commit();
         session.close();
 
-        return traineeEntityPersisted;
+        return entity;
     }
 }

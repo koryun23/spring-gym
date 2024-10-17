@@ -19,6 +19,7 @@ import org.example.facade.core.TrainerFacade;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/trainers")
+@RequestMapping(value = "/trainers", consumes = "application/json", produces = "application/json")
 public class TrainerController {
 
     private TrainerFacade trainerFacade;
@@ -88,9 +89,9 @@ public class TrainerController {
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
 
-    @PatchMapping("/switch-active")
+    @PatchMapping("/switch-active/{username}")
     public ResponseEntity<RestResponse<TrainerSwitchActivationStateResponseDto>> switchActivationState(
-        @RequestParam String username,
+        @PathVariable(value = "username") String username,
         HttpServletRequest request) {
         log.info("Attempting to switch the activation state of a trainer, username - {}", username);
         TrainerSwitchActivationStateRequestDto requestDto = new TrainerSwitchActivationStateRequestDto(

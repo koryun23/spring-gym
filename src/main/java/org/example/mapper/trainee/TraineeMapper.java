@@ -26,4 +26,5 @@ public interface TraineeMapper {
 
     UserEntity mapSwitchActivationStateRequestDtoToUserEntity(TraineeSwitchActivationStateRequestDto requestDto);
 
+    TraineeCreationRequestDto mapTraineeCreationRequestDto(TraineeCreationRequestDto requestDto);
 }

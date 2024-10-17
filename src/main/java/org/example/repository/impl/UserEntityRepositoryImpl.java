@@ -62,12 +62,17 @@ public class UserEntityRepositoryImpl implements UserEntityRepository {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        UserEntity userEntityPersisted = session.merge(userEntity);
+        Long userId = session.createQuery("select u.id from UserEntity u where u.username = :username", Long.class)
+            .setParameter("username", userEntity.getUsername())
+            .uniqueResult();
+
+        userEntity.setId(userId);
+        session.merge(userEntity);
 
         transaction.commit();
         session.close();
 
-        return userEntityPersisted;
+        return userEntity;
     }
 
     @Override

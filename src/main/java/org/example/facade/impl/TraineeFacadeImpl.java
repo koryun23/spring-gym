@@ -14,6 +14,7 @@ import org.example.dto.response.TraineeRetrievalResponseDto;
 import org.example.dto.response.TraineeSwitchActivationStateResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
 import org.example.entity.TraineeEntity;
+import org.example.entity.UserEntity;
 import org.example.facade.core.TraineeFacade;
 import org.example.mapper.trainee.TraineeMapper;
 import org.example.service.core.IdService;
@@ -65,7 +66,8 @@ public class TraineeFacadeImpl implements TraineeFacade {
         }
 
         // service and mapper calls
-        traineeMapper.mapTraineeCreationRequestDtoToUserEntity(requestDto);
+        traineeMapper.mapTraineeCreationRequestDto(requestDto);
+        userService.create(traineeMapper.mapTraineeCreationRequestDtoToUserEntity(requestDto));
         TraineeCreationResponseDto responseDto = traineeMapper.mapTraineeEntityToTraineeCreationResponseDto(
             traineeService.create(traineeMapper.mapTraineeCreationRequestDtoToTraineeEntity(requestDto)));
         idService.autoIncrement();

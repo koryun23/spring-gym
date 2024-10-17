@@ -66,6 +66,12 @@ public class TraineeValidator {
                 List.of("Last name is required"));
         }
 
+        Boolean isActive = requestDto.getIsActive();
+        if (isActive == null) {
+            return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
+                List.of("is-active field is required"));
+        }
+
         if (userService.findByUsername(username).isEmpty()) {
             return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
                 List.of("User does not exist"));

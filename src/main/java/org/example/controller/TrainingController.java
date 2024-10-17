@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/training")
+@RequestMapping(value = "/training", consumes = "application/json", produces = "application/json")
 public class TrainingController {
 
     private TrainingFacade trainingFacade;
@@ -71,8 +71,8 @@ public class TrainingController {
     @GetMapping("/trainer-training/{username}")
     public ResponseEntity<RestResponse<TrainingListRetrievalResponseDto>> retrieveTrainerTraining(
         @PathVariable(value = "username") String username,
-        @RequestParam String from, @RequestParam String to,
-        @RequestParam String traineeUsername,
+        @RequestParam(value = "from") String from, @RequestParam(value = "to") String to,
+        @RequestParam(value = "trainee") String traineeUsername,
         HttpServletRequest request) {
 
         log.info("Attempting to retrieve trainings of a trainer, username - {}", username);
