@@ -2,12 +2,8 @@ package org.example.facade.impl;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
 import org.example.dto.RestResponse;
-import org.example.dto.plain.TrainerDto;
-import org.example.dto.plain.TrainingTypeDto;
-import org.example.dto.plain.UserDto;
 import org.example.dto.request.RetrieveAllTrainersNotAssignedToTraineeRequestDto;
 import org.example.dto.request.TraineeTrainerListUpdateRequestDto;
 import org.example.dto.request.TrainerCreationRequestDto;
@@ -20,9 +16,6 @@ import org.example.dto.response.TrainerListRetrievalResponseDto;
 import org.example.dto.response.TrainerRetrievalResponseDto;
 import org.example.dto.response.TrainerSwitchActivationStateResponseDto;
 import org.example.dto.response.TrainerUpdateResponseDto;
-import org.example.entity.TrainerEntity;
-import org.example.entity.TrainingTypeEntity;
-import org.example.entity.UserEntity;
 import org.example.facade.core.TrainerFacade;
 import org.example.mapper.trainer.TrainerMapper;
 import org.example.service.core.IdService;
@@ -161,7 +154,7 @@ public class TrainerFacadeImpl implements TrainerFacade {
 
         // service and mapper calls
         TrainerRetrievalResponseDto responseDto = trainerMapper.mapTrainerEntityToTrainerRetrievalResponseDto(
-                trainerService.findByUsername(requestDto.getUsername()).get());
+            trainerService.findByUsername(requestDto.getUsername()).get());
 
         // response
         restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
@@ -187,7 +180,9 @@ public class TrainerFacadeImpl implements TrainerFacade {
         RestResponse<TrainerListRetrievalResponseDto> restResponse =
             trainerValidator.validateRetrieveAllTrainersNotAssignedToTrainee(requestDto);
 
-        if (restResponse != null) return restResponse;
+        if (restResponse != null) {
+            return restResponse;
+        }
 
         // service and mapper calls
         TrainerListRetrievalResponseDto responseDto = new TrainerListRetrievalResponseDto(
@@ -216,7 +211,9 @@ public class TrainerFacadeImpl implements TrainerFacade {
         RestResponse<TraineeTrainerListUpdateResponseDto> restResponse =
             trainerValidator.validateUpdateTraineeTrainerList(requestDto);
 
-        if (restResponse != null) return restResponse;
+        if (restResponse != null) {
+            return restResponse;
+        }
 
         // service and mapper calls
         trainerService.updateTrainersAssignedTo(requestDto.getTraineeUsername(),

@@ -1,17 +1,13 @@
 package org.example.config;
 
-import com.fasterxml.jackson.core.filter.JsonPointerBasedFilter;
-import jakarta.servlet.DispatcherType;
 import jakarta.servlet.FilterRegistration;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletRegistration;
-import java.util.EnumSet;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class MainWebInitializer implements WebApplicationInitializer {
 
@@ -27,7 +23,7 @@ public class MainWebInitializer implements WebApplicationInitializer {
         rootContext.setServletContext(servletContext);
 
         ServletRegistration.Dynamic dispatcher =
-            servletContext.addServlet("dispatcher",  new DispatcherServlet(rootContext));
+            servletContext.addServlet("dispatcher", new DispatcherServlet(rootContext));
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
 
@@ -38,7 +34,6 @@ public class MainWebInitializer implements WebApplicationInitializer {
         encodingFilter.setInitParameter("Content-Type", "application/json");
         encodingFilter.addMappingForUrlPatterns(null, true, "/*");
         //dispatcher.setInitParameter("Content-Type", "application/json");
-
 
 
         //encodingFilter.setInitParameter("encoding", "UTF-8");

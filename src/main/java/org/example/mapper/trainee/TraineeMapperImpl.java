@@ -1,6 +1,5 @@
 package org.example.mapper.trainee;
 
-import org.apache.catalina.User;
 import org.example.dto.plain.TrainerDto;
 import org.example.dto.plain.TrainingTypeDto;
 import org.example.dto.plain.UserDto;

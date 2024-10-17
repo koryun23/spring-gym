@@ -1,7 +1,5 @@
 package org.example.exception;
 
-import org.example.entity.TrainingType;
-
 public class TrainingTypeNotFoundException extends RuntimeException {
 
     public TrainingTypeNotFoundException(Long id) {

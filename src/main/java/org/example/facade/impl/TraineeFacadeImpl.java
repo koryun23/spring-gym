@@ -19,7 +19,6 @@ import org.example.mapper.trainee.TraineeMapper;
 import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.UserService;
-import org.example.service.core.UsernamePasswordService;
 import org.example.validator.TraineeValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

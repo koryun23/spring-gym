@@ -1,14 +1,9 @@
 package org.example.config;
 
-import java.util.HashMap;
-import java.util.Map;
-import org.example.controller.AuthController;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 
 @Configuration
 @EnableWebMvc

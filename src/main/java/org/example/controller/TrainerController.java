@@ -64,8 +64,9 @@ public class TrainerController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<RestResponse<TrainerUpdateResponseDto>> update(@RequestBody TrainerUpdateRequestDto requestDto,
-                                                                         HttpServletRequest request) {
+    public ResponseEntity<RestResponse<TrainerUpdateResponseDto>> update(
+        @RequestBody TrainerUpdateRequestDto requestDto,
+        HttpServletRequest request) {
         log.info("Attempting an update of a trainer, request - {}", requestDto);
         requestDto.setUpdaterUsername(request.getHeader("username"));
         requestDto.setUpdaterPassword(request.getHeader("password"));
@@ -88,11 +89,12 @@ public class TrainerController {
     }
 
     @PatchMapping("/switch-active")
-    public ResponseEntity<RestResponse<TrainerSwitchActivationStateResponseDto>> switchActivationState(@RequestParam String username,
-                                                                                                       HttpServletRequest request) {
+    public ResponseEntity<RestResponse<TrainerSwitchActivationStateResponseDto>> switchActivationState(
+        @RequestParam String username,
+        HttpServletRequest request) {
         log.info("Attempting to switch the activation state of a trainer, username - {}", username);
         TrainerSwitchActivationStateRequestDto requestDto = new TrainerSwitchActivationStateRequestDto(
-                username, request.getHeader("username"), request.getHeader("password")
+            username, request.getHeader("username"), request.getHeader("password")
         );
         RestResponse<TrainerSwitchActivationStateResponseDto> restResponse =
             trainerFacade.switchActivationState(requestDto);

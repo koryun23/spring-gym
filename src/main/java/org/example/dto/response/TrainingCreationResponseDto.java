@@ -1,7 +1,5 @@
 package org.example.dto.response;
 
-import java.util.Date;
-import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,6 @@
 package org.example.dto.response;
 
 import java.sql.Date;
-import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

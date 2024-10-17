@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 import org.example.entity.TrainingType;
 import org.example.entity.TrainingTypeEntity;
-import org.example.entity.UserEntity;
 import org.example.repository.core.TrainingTypeEntityRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

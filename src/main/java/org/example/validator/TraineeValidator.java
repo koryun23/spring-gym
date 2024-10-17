@@ -2,7 +2,6 @@ package org.example.validator;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import org.example.dto.RestResponse;
 import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TraineeDeletionByUsernameRequestDto;
@@ -14,7 +13,6 @@ import org.example.dto.response.TraineeDeletionResponseDto;
 import org.example.dto.response.TraineeRetrievalResponseDto;
 import org.example.dto.response.TraineeSwitchActivationStateResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
-import org.example.entity.TraineeEntity;
 import org.example.service.core.TraineeService;
 import org.example.service.core.UserService;
 import org.springframework.http.HttpStatus;
