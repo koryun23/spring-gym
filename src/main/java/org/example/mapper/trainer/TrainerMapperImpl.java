@@ -1,5 +1,7 @@
 package org.example.mapper.trainer;
 
+import java.util.Collections;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.plain.TraineeDto;
 import org.example.dto.plain.TrainerDto;
@@ -90,13 +92,9 @@ public class TrainerMapperImpl implements TrainerMapper {
     @Override
     public TrainerUpdateResponseDto mapTrainerEntityToTrainerUpdateResponseDto(TrainerEntity trainerEntity) {
         Assert.notNull(trainerEntity, "TrainerEntity must not be null");
-        return new TrainerUpdateResponseDto(
-            trainerEntity.getUser().getUsername(),
-            trainerEntity.getUser().getFirstName(),
-            trainerEntity.getUser().getLastName(),
-            new TrainingTypeDto(trainerEntity.getSpecialization().getTrainingType()),
-            trainerEntity.getUser().getIsActive(),
-            trainerEntity.getTraineeEntities().stream()
+        List<TraineeDto> traineeDtoList = Collections.emptyList();
+        if(trainerEntity.getTraineeEntities() != null) {
+            traineeDtoList = trainerEntity.getTraineeEntities().stream()
                 .map(traineeEntity -> new TraineeDto(
                     new UserDto(
                         traineeEntity.getUser().getFirstName(),
@@ -107,7 +105,15 @@ public class TrainerMapperImpl implements TrainerMapper {
                     ),
                     traineeEntity.getDateOfBirth(),
                     traineeEntity.getAddress()
-                )).toList()
+                )).toList();
+        }
+        return new TrainerUpdateResponseDto(
+            trainerEntity.getUser().getUsername(),
+            trainerEntity.getUser().getFirstName(),
+            trainerEntity.getUser().getLastName(),
+            new TrainingTypeDto(trainerEntity.getSpecialization().getTrainingType()),
+            trainerEntity.getUser().getIsActive(),
+            traineeDtoList
         );
     }
 
@@ -204,6 +210,18 @@ public class TrainerMapperImpl implements TrainerMapper {
             trainerEntity.getUser().getPassword(),
             trainerEntity.getUser().getIsActive()
         );
+    }
+
+    @Override
+    public TrainerCreationRequestDto mapTrainerCreationRequestDto(TrainerCreationRequestDto requestDto) {
+        Assert.notNull(requestDto, "TrainerCreationRequestDto must not be null");
+
+        requestDto.setUsername(
+            usernamePasswordService.username(requestDto.getFirstName(), requestDto.getLastName(), idService.getId(),
+                "trainer"));
+        requestDto.setPassword(usernamePasswordService.password());
+
+        return requestDto;
     }
 
 

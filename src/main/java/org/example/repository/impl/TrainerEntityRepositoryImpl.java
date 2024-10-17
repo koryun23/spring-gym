@@ -96,7 +96,13 @@ public class TrainerEntityRepositoryImpl implements TrainerEntityRepository {
     public TrainerEntity update(TrainerEntity trainer) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
+
+        Long trainerId = session.createQuery("select t.id from TrainerEntity t where t.user.username = :username",
+                Long.class).setParameter("username", trainer.getUser().getUsername()).uniqueResult();
+
+        trainer.setId(trainerId);
         TrainerEntity updatedTrainer = session.merge(trainer);
+
         transaction.commit();
         session.close();
         return updatedTrainer;

@@ -3,6 +3,7 @@ package org.example.validator;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.example.dto.RestResponse;
+import org.example.dto.plain.TrainingTypeDto;
 import org.example.dto.request.RetrieveAllTrainersNotAssignedToTraineeRequestDto;
 import org.example.dto.request.TraineeTrainerListUpdateRequestDto;
 import org.example.dto.request.TrainerCreationRequestDto;
@@ -38,14 +39,25 @@ public class TrainerValidator {
 
         String firstName = requestDto.getFirstName();
         String lastName = requestDto.getLastName();
+        Long trainingTypeId = requestDto.getTrainingTypeId();
 
         if (firstName == null || firstName.isEmpty()) {
             return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
-                List.of("first name is required"));
+                List.of("First name is required"));
         }
         if (lastName == null || lastName.isEmpty()) {
             return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
-                List.of("last name is required"));
+                List.of("Last name is required"));
+        }
+
+        if (trainingTypeId == null) {
+            return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
+                List.of("Specialization is required"));
+        }
+
+        if (trainingTypeId <= 0) {
+            return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
+                List.of("Specialization id must be a positive integer"));
         }
 
         return null;
@@ -69,6 +81,18 @@ public class TrainerValidator {
         if (lastName == null || lastName.isEmpty()) {
             return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
                 List.of("Last name is required"));
+        }
+
+        TrainingTypeDto specialization = requestDto.getSpecialization();
+        if (specialization == null) {
+            return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
+                List.of("Specialization is required"));
+        }
+
+        Boolean isActive = requestDto.getIsActive();
+        if (isActive == null) {
+            return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
+                List.of("Is-active field is required"));
         }
 
         if (userService.findByUsername(username).isEmpty()) {

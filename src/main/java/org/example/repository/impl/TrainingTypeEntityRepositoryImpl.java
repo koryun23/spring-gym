@@ -98,7 +98,7 @@ public class TrainingTypeEntityRepositoryImpl implements TrainingTypeEntityRepos
         Transaction transaction = session.beginTransaction();
 
         TrainingTypeEntity trainingTypeEntity =
-            session.createQuery("select t from TrainingTypeEntity u where t.trainingType = :trainingType",
+            session.createQuery("select t from TrainingTypeEntity t where t.trainingType = :trainingType",
                     TrainingTypeEntity.class)
                 .setParameter("trainingType", trainingType)
                 .uniqueResult();

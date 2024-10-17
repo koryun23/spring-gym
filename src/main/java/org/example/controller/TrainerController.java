@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -49,9 +48,9 @@ public class TrainerController {
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
-    @GetMapping(value = "/not-assigned-to-trainee")
+    @GetMapping(value = "/not-assigned-to-trainee/{username}")
     public ResponseEntity<RestResponse<TrainerListRetrievalResponseDto>> retrieveAllTrainersNotAssignedToTrainee(
-        @RequestParam String username,
+        @PathVariable(value = "username") String username,
         HttpServletRequest request) {
         log.info("Attempting a retrieval of trainers not assigned to trainee with a username of {}", username);
         RestResponse<TrainerListRetrievalResponseDto> restResponse =
@@ -76,9 +75,10 @@ public class TrainerController {
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
 
-    @GetMapping
-    public ResponseEntity<RestResponse<TrainerRetrievalResponseDto>> retrieve(@RequestParam String username,
-                                                                              HttpServletRequest request) {
+    @GetMapping("/{username}")
+    public ResponseEntity<RestResponse<TrainerRetrievalResponseDto>> retrieve(
+        @PathVariable(value = "username") String username,
+        HttpServletRequest request) {
         log.info("Attempting a retrieval of a single trainer profile, username - {}", username);
         TrainerRetrievalByUsernameRequestDto requestDto =
             new TrainerRetrievalByUsernameRequestDto(username);
@@ -95,7 +95,7 @@ public class TrainerController {
         HttpServletRequest request) {
         log.info("Attempting to switch the activation state of a trainer, username - {}", username);
         TrainerSwitchActivationStateRequestDto requestDto = new TrainerSwitchActivationStateRequestDto(
-            username, request.getHeader("username"), request.getHeader("password")
+            request.getHeader("username"), request.getHeader("password"), username
         );
         RestResponse<TrainerSwitchActivationStateResponseDto> restResponse =
             trainerFacade.switchActivationState(requestDto);
@@ -103,6 +103,7 @@ public class TrainerController {
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
 
+    // TODO: NOT WORKING
     @PutMapping("/trainee-trainers")
     public ResponseEntity<RestResponse<TraineeTrainerListUpdateResponseDto>> updateTraineeTrainerList(@RequestBody
                                                                                                       TraineeTrainerListUpdateRequestDto requestDto,

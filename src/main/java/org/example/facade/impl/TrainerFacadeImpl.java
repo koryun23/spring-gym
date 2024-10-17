@@ -73,6 +73,7 @@ public class TrainerFacadeImpl implements TrainerFacade {
         }
 
         // service and mapper calls
+        trainerMapper.mapTrainerCreationRequestDto(requestDto);
         userService.create(trainerMapper.mapTrainerCreationRequestDtoToUserEntity(requestDto));
         TrainerCreationResponseDto responseDto = trainerMapper.mapTrainerEntityToTrainerCreationResponseDto(
             trainerService.create(trainerMapper.mapTrainerCreationRequestDtoToTrainerEntity(requestDto)));
