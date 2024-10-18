@@ -45,7 +45,8 @@ public class TraineeFacadeImpl implements TraineeFacade {
     public TraineeFacadeImpl(TraineeService traineeService,
                              UserService userService,
                              TraineeMapper traineeMapper,
-                             @Qualifier("traineeIdService") IdService idService, TraineeValidator traineeValidator) {
+                             @Qualifier("traineeIdService") IdService idService,
+                             TraineeValidator traineeValidator) {
         this.userService = userService;
         this.traineeService = traineeService;
         this.traineeMapper = traineeMapper;

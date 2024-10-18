@@ -1,13 +1,18 @@
 package org.example.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.util.Collections;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
 import org.example.dto.request.UserChangePasswordRequestDto;
 import org.example.dto.request.UserRetrievalRequestDto;
 import org.example.dto.response.UserChangePasswordResponseDto;
 import org.example.dto.response.UserRetrievalResponseDto;
-import org.example.facade.core.UserFacade;
+import org.example.mapper.user.UserMapper;
+import org.example.service.core.UserService;
+import org.example.validator.UserValidator;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,36 +25,67 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "", consumes = "application/json", produces = "application/json")
 public class AuthController {
 
-    private UserFacade userFacade;
+    private final UserService userService;
+    private final UserMapper userMapper;
+    private final UserValidator userValidator;
 
-    public AuthController(UserFacade userFacade) {
-        this.userFacade = userFacade;
+    /**
+     * Constructor.
+     */
+    public AuthController(UserService userService, UserMapper userMapper, UserValidator userValidator) {
+        this.userService = userService;
+        this.userMapper = userMapper;
+        this.userValidator = userValidator;
     }
 
     /**
      * Login.
      */
     @PostMapping(value = "/login")
-    public ResponseEntity<RestResponse<UserRetrievalResponseDto>> login(@RequestBody UserRetrievalRequestDto requestDto) {
+    public ResponseEntity<RestResponse<UserRetrievalResponseDto>> login(
+        @RequestBody UserRetrievalRequestDto requestDto) {
         log.info("Attempting a user log in according to the request - {}", requestDto);
-        RestResponse<UserRetrievalResponseDto> restResponse = userFacade.select(requestDto);
+        // no validations
+
+        // service calls
+        boolean userExists = userService.usernamePasswordMatching(requestDto.getUsername(), requestDto.getPassword());
+
+        // response
+        UserRetrievalResponseDto responseDto =
+            new UserRetrievalResponseDto(userExists ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+
+        RestResponse<UserRetrievalResponseDto> restResponse =
+            new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
         ResponseEntity<RestResponse<UserRetrievalResponseDto>> responseEntity =
             new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
         log.info("Response of logging in - {}", restResponse);
         return responseEntity;
     }
 
+    /**
+     * Change password.
+     */
     @PutMapping(value = "/change-password")
-    public ResponseEntity<RestResponse<UserChangePasswordResponseDto>> changePassword(@RequestBody
-                                                                                      UserChangePasswordRequestDto requestDto,
-                                                                                      HttpServletRequest request) {
+    public ResponseEntity<RestResponse<UserChangePasswordResponseDto>> changePassword(
+        @RequestBody UserChangePasswordRequestDto requestDto, HttpServletRequest request) {
         log.info("Attempting password change, request - {}", requestDto);
+
+        // validations
         requestDto.setUsername(request.getHeader("username"));
         requestDto.setOldPassword(request.getHeader("password"));
-        RestResponse<UserChangePasswordResponseDto> restResponse = userFacade.changePassword(requestDto);
+        RestResponse<UserChangePasswordResponseDto> restResponse = userValidator.validateChangePassword(requestDto);
+        if (restResponse != null) {
+            return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
+        }
+
+        // service and mapper calls
+        userService.update(userMapper.mapUserChangePasswordRequestDtoToUserEntity(requestDto));
+
+        // response
+        UserChangePasswordResponseDto responseDto = new UserChangePasswordResponseDto(HttpStatus.OK);
+        restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+
         log.info("Password change response - {}", restResponse);
-        ResponseEntity<RestResponse<UserChangePasswordResponseDto>> responseEntity =
-            new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
-        return responseEntity;
+        return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
 }

@@ -30,10 +30,6 @@ public class TrainingFacadeImpl implements TrainingFacade {
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainingFacadeImpl.class);
 
     private final TrainingService trainingService;
-    private final TraineeService traineeService;
-    private final TrainerService trainerService;
-    private final TrainingTypeService trainingTypeService;
-    private final UserService userService;
     private final TrainingMapper trainingMapper;
     private final TrainingValidator trainingValidator;
 
@@ -41,15 +37,9 @@ public class TrainingFacadeImpl implements TrainingFacade {
      * Constructor.
      */
     public TrainingFacadeImpl(TrainingService trainingService,
-                              TraineeService traineeService,
-                              TrainerService trainerService, TrainingTypeService trainingTypeService,
-                              UserService userService,
-                              TrainingMapper trainingMapper, TrainingValidator trainingValidator) {
+                              TrainingMapper trainingMapper,
+                              TrainingValidator trainingValidator) {
         this.trainingService = trainingService;
-        this.traineeService = traineeService;
-        this.trainerService = trainerService;
-        this.trainingTypeService = trainingTypeService;
-        this.userService = userService;
         this.trainingMapper = trainingMapper;
         this.trainingValidator = trainingValidator;
     }

@@ -37,7 +37,6 @@ public class TrainerFacadeImpl implements TrainerFacade {
 
     private final TrainerService trainerService;
     private final UserService userService;
-    private final UsernamePasswordService usernamePasswordService;
     private final IdService idService;
     private final TrainerMapper trainerMapper;
     private final TrainerValidator trainerValidator;
@@ -47,15 +46,12 @@ public class TrainerFacadeImpl implements TrainerFacade {
      */
     public TrainerFacadeImpl(TrainerService trainerService,
                              UserService userService,
-                             @Qualifier("trainerUsernamePasswordService")
-                             UsernamePasswordService usernamePasswordService,
                              @Qualifier("trainerIdService")
                              IdService idService,
                              TrainerMapper trainerMapper,
                              TrainerValidator trainerValidator) {
         this.trainerService = trainerService;
         this.userService = userService;
-        this.usernamePasswordService = usernamePasswordService;
         this.idService = idService;
         this.trainerMapper = trainerMapper;
         this.trainerValidator = trainerValidator;
@@ -224,7 +220,6 @@ public class TrainerFacadeImpl implements TrainerFacade {
         // response
         TraineeTrainerListUpdateResponseDto responseDto =
             new TraineeTrainerListUpdateResponseDto(requestDto.getTrainerDtoList());
-
         restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         LOGGER.info("Successfully updated the list of trainers of a trainee according to "
