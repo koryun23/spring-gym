@@ -12,7 +12,6 @@ import org.example.repository.core.TrainerEntityRepository;
 import org.example.service.core.TrainerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -21,11 +20,13 @@ public class TrainerServiceImpl implements TrainerService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainerServiceImpl.class);
 
-    @Autowired
-    private TrainerEntityRepository trainerDao;
+    private final TrainerEntityRepository trainerDao;
+    private final TraineeEntityRepository traineeDao;
 
-    @Autowired
-    private TraineeEntityRepository traineeDao;
+    public TrainerServiceImpl(TraineeEntityRepository traineeDao, TrainerEntityRepository trainerDao) {
+        this.traineeDao = traineeDao;
+        this.trainerDao = trainerDao;
+    }
 
     @Override
     public TrainerEntity create(TrainerEntity trainerEntity) {
