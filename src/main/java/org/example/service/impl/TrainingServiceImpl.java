@@ -19,9 +19,11 @@ public class TrainingServiceImpl implements TrainingService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainingServiceImpl.class);
 
-    @Autowired
-    private TrainingEntityRepository trainingEntityRepository;
+    private final TrainingEntityRepository trainingEntityRepository;
 
+    public TrainingServiceImpl(TrainingEntityRepository trainingEntityRepository) {
+        this.trainingEntityRepository = trainingEntityRepository;
+    }
     @Override
     public TrainingEntity create(TrainingEntity trainingEntity) {
         Assert.notNull(trainingEntity, "TrainingCreateParams must not be null");
