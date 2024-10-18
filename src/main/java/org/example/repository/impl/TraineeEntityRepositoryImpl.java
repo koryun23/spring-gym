@@ -142,9 +142,10 @@ public class TraineeEntityRepositoryImpl implements TraineeEntityRepository {
 
         Set<TrainerEntity> trainerEntities = entity.getTrainerEntities();
 
-        Long traineeId = session.createQuery("select t.id from TraineeEntity t where t.user.username = :username", Long.class)
-            .setParameter("username", entity.getUser().getUsername())
-            .uniqueResult();
+        Long traineeId =
+            session.createQuery("select t.id from TraineeEntity t where t.user.username = :username", Long.class)
+                .setParameter("username", entity.getUser().getUsername())
+                .uniqueResult();
 
         entity.setId(traineeId);
         session.merge(entity);

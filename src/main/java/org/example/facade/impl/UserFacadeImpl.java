@@ -2,14 +2,12 @@ package org.example.facade.impl;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
 import org.example.dto.request.UserChangePasswordRequestDto;
 import org.example.dto.request.UserRetrievalRequestDto;
 import org.example.dto.response.UserChangePasswordResponseDto;
 import org.example.dto.response.UserRetrievalResponseDto;
-import org.example.entity.UserEntity;
 import org.example.facade.core.UserFacade;
 import org.example.mapper.user.UserMapper;
 import org.example.service.core.UserService;
@@ -68,7 +66,7 @@ public class UserFacadeImpl implements UserFacade {
         // service and mapper calls
         userService.update(userMapper.mapUserChangePasswordRequestDtoToUserEntity(requestDto));
 
-    // response
+        // response
         UserChangePasswordResponseDto responseDto = new UserChangePasswordResponseDto(HttpStatus.OK);
         restResponse =
             new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());

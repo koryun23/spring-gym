@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
 import org.example.dto.request.TrainingTypeListRetrievalRequestDto;
 import org.example.dto.response.TrainingTypeListRetrievalResponseDto;
-import org.example.facade.core.TrainingTypeFacade;
 import org.example.mapper.training.TrainingTypeMapper;
 import org.example.service.core.TrainingTypeService;
 import org.example.validator.TrainingTypeValidator;
@@ -38,7 +37,8 @@ public class TrainingTypeController {
      * Retrieve training types.
      */
     @GetMapping
-    public ResponseEntity<RestResponse<TrainingTypeListRetrievalResponseDto>> retrieveTrainingTypes(HttpServletRequest request) {
+    public ResponseEntity<RestResponse<TrainingTypeListRetrievalResponseDto>> retrieveTrainingTypes(
+        HttpServletRequest request) {
         log.info("Attempting the retrieval of training types");
 
         TrainingTypeListRetrievalRequestDto requestDto =

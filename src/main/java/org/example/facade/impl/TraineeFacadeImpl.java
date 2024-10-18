@@ -14,7 +14,6 @@ import org.example.dto.response.TraineeRetrievalResponseDto;
 import org.example.dto.response.TraineeSwitchActivationStateResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
 import org.example.entity.TraineeEntity;
-import org.example.entity.UserEntity;
 import org.example.facade.core.TraineeFacade;
 import org.example.mapper.trainee.TraineeMapper;
 import org.example.service.core.IdService;

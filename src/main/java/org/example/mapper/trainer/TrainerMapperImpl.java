@@ -93,7 +93,7 @@ public class TrainerMapperImpl implements TrainerMapper {
     public TrainerUpdateResponseDto mapTrainerEntityToTrainerUpdateResponseDto(TrainerEntity trainerEntity) {
         Assert.notNull(trainerEntity, "TrainerEntity must not be null");
         List<TraineeDto> traineeDtoList = Collections.emptyList();
-        if(trainerEntity.getTraineeEntities() != null) {
+        if (trainerEntity.getTraineeEntities() != null) {
             traineeDtoList = trainerEntity.getTraineeEntities().stream()
                 .map(traineeEntity -> new TraineeDto(
                     new UserDto(
