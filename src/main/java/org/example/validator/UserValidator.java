@@ -22,12 +22,42 @@ public class UserValidator {
 
     public RestResponse<UserChangePasswordResponseDto> validateChangePassword(UserChangePasswordRequestDto requestDto) {
 
+        String username = requestDto.getUsername();
+        if (username == null || username.isEmpty()) {
+            return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
+                List.of("Username is required"));
+        }
+
+        String oldPassword = requestDto.getOldPassword();
+        if (oldPassword == null || oldPassword.isEmpty()) {
+            return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
+                List.of("Old password is required"));
+        }
+
         String newPassword = requestDto.getNewPassword();
-        Optional<UserEntity> optionalUserByPassword = userService.findByPassword(newPassword);
-        if (optionalUserByPassword.isPresent()) {
+        if (newPassword == null || newPassword.isEmpty()) {
+            return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
+                List.of("New password is required"));
+        }
+
+        Optional<UserEntity> optionalUser = userService.findByUsername(username);
+        if (optionalUser.isEmpty()) {
+            return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
+                List.of("User with the provided credentials does not exist"));
+        }
+
+        UserEntity userEntity = optionalUser.get();
+        if (!userEntity.getPassword().equals(oldPassword)) {
+            return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
+                List.of("User with the provided credentials does not exist"));
+        }
+
+        Optional<UserEntity> optionalUserByNewPassword = userService.findByPassword(newPassword);
+        if (optionalUserByNewPassword.isPresent()) {
             return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
                 List.of("Password is already occupied"));
         }
+
         return null;
     }
 
