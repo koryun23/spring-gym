@@ -103,8 +103,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean usernamePasswordMatching(String username, String password) {
-        Assert.notNull(username, "Username must not be null");
-        Assert.notNull(password, "Password must not be null");
         LOGGER.info("Checking if the given username - {}, matches the given password - {}.", username, password);
 
         Optional<UserEntity> optionalUser = userEntityRepository.findByUsername(username);

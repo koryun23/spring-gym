@@ -3,13 +3,13 @@ package org.example.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
-import org.example.dto.request.TrainingTypeListRetrievalRequestDto;
 import org.example.dto.response.TrainingTypeListRetrievalResponseDto;
 import org.example.mapper.training.TrainingTypeMapper;
+import org.example.service.core.AuthenticatorService;
 import org.example.service.core.TrainingTypeService;
-import org.example.validator.TrainingTypeValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,14 +23,14 @@ public class TrainingTypeController {
 
     private final TrainingTypeService trainingTypeService;
     private final TrainingTypeMapper trainingTypeMapper;
-    private final TrainingTypeValidator trainingTypeValidator;
+    private final AuthenticatorService authenticatorService;
 
     public TrainingTypeController(TrainingTypeService trainingTypeService,
                                   TrainingTypeMapper trainingTypeMapper,
-                                  TrainingTypeValidator trainingTypeValidator) {
+                                  AuthenticatorService authenticatorService) {
         this.trainingTypeService = trainingTypeService;
         this.trainingTypeMapper = trainingTypeMapper;
-        this.trainingTypeValidator = trainingTypeValidator;
+        this.authenticatorService = authenticatorService;
     }
 
     /**
@@ -41,14 +41,12 @@ public class TrainingTypeController {
         HttpServletRequest request) {
         log.info("Attempting the retrieval of training types");
 
-        TrainingTypeListRetrievalRequestDto requestDto =
-            new TrainingTypeListRetrievalRequestDto(request.getHeader("username"), request.getHeader("password"));
-
         // validations
-        RestResponse<TrainingTypeListRetrievalResponseDto> restResponse =
-            trainingTypeValidator.validateGetTrainingTypes(requestDto);
-        if (restResponse != null) {
-            return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
+        if (authenticatorService.authFail(request.getHeader("username"),
+            request.getHeader("password"))) {
+            return new ResponseEntity<>(
+                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
         }
 
         // service and mapper calls
@@ -57,7 +55,8 @@ public class TrainingTypeController {
                 trainingTypeService.findAll());
 
         // response
-        restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        RestResponse<TrainingTypeListRetrievalResponseDto> restResponse =
+            new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Response of training types retrieval - {}", restResponse);
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());

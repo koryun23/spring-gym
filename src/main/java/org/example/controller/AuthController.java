@@ -3,6 +3,7 @@ package org.example.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
 import org.example.dto.request.UserChangePasswordRequestDto;
@@ -10,6 +11,7 @@ import org.example.dto.request.UserRetrievalRequestDto;
 import org.example.dto.response.UserChangePasswordResponseDto;
 import org.example.dto.response.UserRetrievalResponseDto;
 import org.example.mapper.user.UserMapper;
+import org.example.service.core.AuthenticatorService;
 import org.example.service.core.UserService;
 import org.example.validator.UserValidator;
 import org.springframework.http.HttpStatus;
@@ -28,14 +30,17 @@ public class AuthController {
     private final UserService userService;
     private final UserMapper userMapper;
     private final UserValidator userValidator;
+    private final AuthenticatorService authenticatorService;
 
     /**
      * Constructor.
      */
-    public AuthController(UserService userService, UserMapper userMapper, UserValidator userValidator) {
+    public AuthController(UserService userService, UserMapper userMapper, UserValidator userValidator,
+                          AuthenticatorService authenticatorService) {
         this.userService = userService;
         this.userMapper = userMapper;
         this.userValidator = userValidator;
+        this.authenticatorService = authenticatorService;
     }
 
     /**
@@ -48,14 +53,14 @@ public class AuthController {
         // no validations
 
         // service calls
-        boolean userExists = userService.usernamePasswordMatching(requestDto.getUsername(), requestDto.getPassword());
+        boolean userExists = authenticatorService.authSuccess(requestDto.getUsername(), requestDto.getPassword());
 
         // response
         UserRetrievalResponseDto responseDto =
             new UserRetrievalResponseDto(userExists ? HttpStatus.OK : HttpStatus.NOT_FOUND);
 
         RestResponse<UserRetrievalResponseDto> restResponse =
-            new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+            new RestResponse<>(responseDto, responseDto.getHttpStatus(), LocalDateTime.now(), Collections.emptyList());
         ResponseEntity<RestResponse<UserRetrievalResponseDto>> responseEntity =
             new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
         log.info("Response of logging in - {}", restResponse);
@@ -70,9 +75,13 @@ public class AuthController {
         @RequestBody UserChangePasswordRequestDto requestDto, HttpServletRequest request) {
         log.info("Attempting password change, request - {}", requestDto);
 
+        // authentication
+        if (authenticatorService.authFail(request.getHeader("username"), request.getHeader("password"))) {
+            return new ResponseEntity<>(new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
+        }
+
         // validations
-        requestDto.setUsername(request.getHeader("username"));
-        requestDto.setOldPassword(request.getHeader("password"));
         RestResponse<UserChangePasswordResponseDto> restResponse = userValidator.validateChangePassword(requestDto);
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());

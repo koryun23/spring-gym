@@ -44,7 +44,7 @@ public class HibernateConfig {
         dataSource.setPassword(password);
         dataSource.setUrl(url);
         dataSource.setDriverClassName(driver);
-        //dataSource.setSchema("classpath:/db/migration/V2__migration.sql");
+        //dataSource.setSchema("classpath:/db/migration/V1__migration.sql");
 
         return dataSource;
     }

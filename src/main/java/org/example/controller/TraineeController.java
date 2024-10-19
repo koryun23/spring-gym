@@ -3,6 +3,7 @@ package org.example.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
 import org.example.dto.request.TraineeCreationRequestDto;
@@ -17,6 +18,7 @@ import org.example.dto.response.TraineeSwitchActivationStateResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
 import org.example.entity.TraineeEntity;
 import org.example.mapper.trainee.TraineeMapper;
+import org.example.service.core.AuthenticatorService;
 import org.example.service.core.IdService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.UserService;
@@ -44,6 +46,7 @@ public class TraineeController {
     private final TraineeMapper traineeMapper;
     private final IdService idService;
     private final TraineeValidator traineeValidator;
+    private final AuthenticatorService authenticatorService;
 
     /**
      * Constructor.
@@ -53,12 +56,13 @@ public class TraineeController {
                              TraineeMapper traineeMapper,
                              @Qualifier("traineeIdService")
                              IdService idService,
-                             TraineeValidator traineeValidator) {
+                             TraineeValidator traineeValidator, AuthenticatorService authenticatorService) {
         this.traineeService = traineeService;
         this.userService = userService;
         this.traineeMapper = traineeMapper;
         this.idService = idService;
         this.traineeValidator = traineeValidator;
+        this.authenticatorService = authenticatorService;
     }
 
     /**
@@ -100,10 +104,15 @@ public class TraineeController {
 
         log.info("Attempting a retrieval of a trainee, username - {}", username);
         TraineeRetrievalByUsernameRequestDto requestDto = new TraineeRetrievalByUsernameRequestDto(username);
-        requestDto.setRetrieverUsername(httpServletRequest.getHeader("username"));
-        requestDto.setRetrieverPassword(httpServletRequest.getHeader("password"));
 
         // validations
+        if (authenticatorService.authFail(httpServletRequest.getHeader("username"),
+            httpServletRequest.getHeader("password"))) {
+            return new ResponseEntity<>(
+                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
+        }
+
         RestResponse<TraineeRetrievalResponseDto> restResponse = traineeValidator.validateRetrieveTrainee(requestDto);
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
@@ -125,10 +134,15 @@ public class TraineeController {
     public ResponseEntity<RestResponse<TraineeUpdateResponseDto>> update(
         @RequestBody TraineeUpdateRequestDto requestDto, HttpServletRequest httpServletRequest) {
         log.info("Attempting an update of a trainee, request - {}", requestDto);
-        requestDto.setUpdaterUsername(httpServletRequest.getHeader("username"));
-        requestDto.setUpdaterPassword(httpServletRequest.getHeader("password"));
 
         // validations
+        if (authenticatorService.authFail(httpServletRequest.getHeader("username"),
+            httpServletRequest.getHeader("password"))) {
+            return new ResponseEntity<>(
+                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
+        }
+
         RestResponse<TraineeUpdateResponseDto> restResponse = traineeValidator.validateUpdateTrainee(requestDto);
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
@@ -157,10 +171,15 @@ public class TraineeController {
 
         log.info("Attempting a deletion of a trainee, username - {}", username);
         TraineeDeletionByUsernameRequestDto requestDto = new TraineeDeletionByUsernameRequestDto(username);
-        requestDto.setDeleterUsername(httpServletRequest.getHeader("username"));
-        requestDto.setDeleterPassword(httpServletRequest.getHeader("password"));
 
         // validations
+        if (authenticatorService.authFail(httpServletRequest.getHeader("username"),
+            httpServletRequest.getHeader("password"))) {
+            return new ResponseEntity<>(
+                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
+        }
+
         RestResponse<TraineeDeletionResponseDto> restResponse = traineeValidator.validateDeleteTrainee(requestDto);
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
@@ -187,10 +206,15 @@ public class TraineeController {
 
         log.info("Attempting to switch the activation state of a trainee, username - {}", username);
         TraineeSwitchActivationStateRequestDto requestDto = new TraineeSwitchActivationStateRequestDto(username);
-        requestDto.setUpdaterUsername(httpServletRequest.getHeader("username"));
-        requestDto.setUpdaterPassword(httpServletRequest.getHeader("password"));
 
         // validations
+        if (authenticatorService.authFail(httpServletRequest.getHeader("username"),
+            httpServletRequest.getHeader("password"))) {
+            return new ResponseEntity<>(
+                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
+        }
+
         RestResponse<TraineeSwitchActivationStateResponseDto> restResponse =
             traineeValidator.validateSwitchActivationState(requestDto);
         if (restResponse != null) {

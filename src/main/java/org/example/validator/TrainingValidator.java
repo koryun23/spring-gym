@@ -69,11 +69,6 @@ public class TrainingValidator {
                 List.of("Training date is required"));
         }
 
-        if (!userService.usernamePasswordMatching(requestDto.getCreatorUsername(), requestDto.getCreatorPassword())) {
-            return new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                List.of("Authentication failed"));
-        }
-
         if (traineeService.findByUsername(traineeUsername).isEmpty()) {
             return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
                 List.of("Trainee does not exist"));
@@ -89,14 +84,6 @@ public class TrainingValidator {
 
     public RestResponse<TrainingListRetrievalResponseDto> validateRetrieveTrainingListByTrainer(
         TrainingListRetrievalByTrainerRequestDto requestDto) {
-
-        String retrieverUsername = requestDto.getRetrieverUsername();
-        String retrieverPassword = requestDto.getRetrieverPassword();
-
-        if (!userService.usernamePasswordMatching(retrieverUsername, retrieverPassword)) {
-            return new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                List.of("Authentication failed"));
-        }
 
         String trainerUsername = requestDto.getTrainerUsername();
         if (trainerUsername == null || trainerUsername.isEmpty()) {
@@ -114,14 +101,6 @@ public class TrainingValidator {
 
     public RestResponse<TrainingListRetrievalResponseDto> validateRetrieveTrainingListByTrainee(
         TrainingListRetrievalByTraineeRequestDto requestDto) {
-
-        String retrieverUsername = requestDto.getRetrieverUsername();
-        String retrieverPassword = requestDto.getRetrieverPassword();
-
-        if (!userService.usernamePasswordMatching(retrieverUsername, retrieverPassword)) {
-            return new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                List.of("Authentication failed"));
-        }
 
         String traineeUsername = requestDto.getTraineeUsername();
         if (traineeUsername == null || traineeUsername.isEmpty()) {

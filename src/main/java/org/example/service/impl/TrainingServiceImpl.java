@@ -10,7 +10,6 @@ import org.example.repository.core.TrainingEntityRepository;
 import org.example.service.core.TrainingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -24,6 +23,7 @@ public class TrainingServiceImpl implements TrainingService {
     public TrainingServiceImpl(TrainingEntityRepository trainingEntityRepository) {
         this.trainingEntityRepository = trainingEntityRepository;
     }
+
     @Override
     public TrainingEntity create(TrainingEntity trainingEntity) {
         Assert.notNull(trainingEntity, "TrainingCreateParams must not be null");

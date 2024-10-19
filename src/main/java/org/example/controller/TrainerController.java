@@ -3,6 +3,7 @@ package org.example.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
@@ -19,6 +20,7 @@ import org.example.dto.response.TrainerRetrievalResponseDto;
 import org.example.dto.response.TrainerSwitchActivationStateResponseDto;
 import org.example.dto.response.TrainerUpdateResponseDto;
 import org.example.mapper.trainer.TrainerMapper;
+import org.example.service.core.AuthenticatorService;
 import org.example.service.core.IdService;
 import org.example.service.core.TrainerService;
 import org.example.service.core.UserService;
@@ -45,6 +47,7 @@ public class TrainerController {
     private final IdService idService;
     private final TrainerMapper trainerMapper;
     private final TrainerValidator trainerValidator;
+    private final AuthenticatorService authenticatorService;
 
     /**
      * Constructor.
@@ -53,12 +56,13 @@ public class TrainerController {
                              UserService userService,
                              @Qualifier("trainerIdService") IdService idService,
                              TrainerMapper trainerMapper,
-                             TrainerValidator trainerValidator) {
+                             TrainerValidator trainerValidator, AuthenticatorService authenticatorService) {
         this.trainerService = trainerService;
         this.userService = userService;
         this.idService = idService;
         this.trainerMapper = trainerMapper;
         this.trainerValidator = trainerValidator;
+        this.authenticatorService = authenticatorService;
     }
 
     /**
@@ -98,10 +102,15 @@ public class TrainerController {
         log.info("Attempting a retrieval of trainers not assigned to trainee with a username of {}", username);
 
         // validations
+        if (authenticatorService.authFail(request.getHeader("username"),
+            request.getHeader("password"))) {
+            return new ResponseEntity<>(
+                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
+        }
         RestResponse<TrainerListRetrievalResponseDto> restResponse =
             trainerValidator.validateRetrieveAllTrainersNotAssignedToTrainee(
-                new RetrieveAllTrainersNotAssignedToTraineeRequestDto(request.getHeader("username"),
-                    request.getHeader("password"), username));
+                new RetrieveAllTrainersNotAssignedToTraineeRequestDto(username));
 
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
@@ -126,10 +135,15 @@ public class TrainerController {
     public ResponseEntity<RestResponse<TrainerUpdateResponseDto>> update(
         @RequestBody TrainerUpdateRequestDto requestDto, HttpServletRequest request) {
         log.info("Attempting an update of a trainer, request - {}", requestDto);
-        requestDto.setUpdaterUsername(request.getHeader("username"));
-        requestDto.setUpdaterPassword(request.getHeader("password"));
 
         // validations
+        if (authenticatorService.authFail(request.getHeader("username"),
+            request.getHeader("password"))) {
+            return new ResponseEntity<>(
+                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
+        }
+
         RestResponse<TrainerUpdateResponseDto> restResponse = trainerValidator.validateUpdateTrainer(requestDto);
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
@@ -155,10 +169,14 @@ public class TrainerController {
         @PathVariable(value = "username") String username, HttpServletRequest request) {
         log.info("Attempting a retrieval of a single trainer profile, username - {}", username);
         TrainerRetrievalByUsernameRequestDto requestDto = new TrainerRetrievalByUsernameRequestDto(username);
-        requestDto.setRetrieverUsername(request.getHeader("username"));
-        requestDto.setRetrieverPassword(request.getHeader("password"));
 
         // validations
+        if (authenticatorService.authFail(request.getHeader("username"),
+            request.getHeader("password"))) {
+            return new ResponseEntity<>(
+                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
+        }
         RestResponse<TrainerRetrievalResponseDto> restResponse = trainerValidator.validateRetrieveTrainer(requestDto);
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
@@ -184,10 +202,15 @@ public class TrainerController {
 
         log.info("Attempting to switch the activation state of a trainer, username - {}", username);
         TrainerSwitchActivationStateRequestDto requestDto =
-            new TrainerSwitchActivationStateRequestDto(request.getHeader("username"), request.getHeader("password"),
-                username);
+            new TrainerSwitchActivationStateRequestDto(username);
 
         // validations
+        if (authenticatorService.authFail(request.getHeader("username"),
+            request.getHeader("password"))) {
+            return new ResponseEntity<>(
+                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
+        }
         RestResponse<TrainerSwitchActivationStateResponseDto> restResponse =
             trainerValidator.validateSwitchActivationState(requestDto);
         if (restResponse != null) {
@@ -215,10 +238,14 @@ public class TrainerController {
     public ResponseEntity<RestResponse<TraineeTrainerListUpdateResponseDto>> updateTraineeTrainerList(
         @RequestBody TraineeTrainerListUpdateRequestDto requestDto, HttpServletRequest request) {
         log.info("Attempting to update the trainers of a trainee, request - {}", requestDto);
-        requestDto.setUpdaterUsername(request.getHeader("username"));
-        requestDto.setUpdaterPassword(request.getHeader("password"));
 
         // validations
+        if (authenticatorService.authFail(request.getHeader("username"),
+            request.getHeader("password"))) {
+            return new ResponseEntity<>(
+                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
+        }
         RestResponse<TraineeTrainerListUpdateResponseDto> restResponse =
             trainerValidator.validateUpdateTraineeTrainerList(requestDto);
         if (restResponse != null) {

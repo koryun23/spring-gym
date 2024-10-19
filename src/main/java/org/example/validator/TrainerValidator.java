@@ -100,11 +100,6 @@ public class TrainerValidator {
                 List.of("User does not exist"));
         }
 
-        if (!userService.usernamePasswordMatching(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword())) {
-            return new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                List.of("Authentication failed"));
-        }
-
         return null;
     }
 
@@ -115,12 +110,6 @@ public class TrainerValidator {
         if (username == null || username.isEmpty()) {
             return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
                 List.of("Username is required"));
-        }
-
-        if (!userService.usernamePasswordMatching(requestDto.getRetrieverUsername(),
-            requestDto.getRetrieverPassword())) {
-            return new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                List.of("Authentication failed"));
         }
 
         if (trainerService.findByUsername(username).isEmpty()) {
@@ -138,11 +127,6 @@ public class TrainerValidator {
         if (username == null || username.isEmpty()) {
             return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
                 List.of("Username is required"));
-        }
-
-        if (!userService.usernamePasswordMatching(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword())) {
-            return new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                List.of("Authentication failed"));
         }
 
         if (trainerService.findByUsername(username).isEmpty()) {
@@ -165,11 +149,6 @@ public class TrainerValidator {
             return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
                 List.of("Trainee does not exist"));
         }
-        if (!userService.usernamePasswordMatching(requestDto.getRetrieverUsername(),
-            requestDto.getRetrieverPassword())) {
-            return new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                List.of("Authentication failed"));
-        }
 
         return null;
     }
@@ -187,11 +166,6 @@ public class TrainerValidator {
         if (traineeService.findByUsername(traineeUsername).isEmpty()) {
             return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
                 List.of("Trainee does not exist"));
-        }
-
-        if (!userService.usernamePasswordMatching(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword())) {
-            return new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                List.of("Authentication failed"));
         }
 
         return null;

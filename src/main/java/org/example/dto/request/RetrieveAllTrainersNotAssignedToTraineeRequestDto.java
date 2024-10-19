@@ -15,8 +15,5 @@ import lombok.ToString;
 @ToString
 public class RetrieveAllTrainersNotAssignedToTraineeRequestDto {
 
-    private String retrieverUsername;
-    private String retrieverPassword;
-
     private String username;
 }

@@ -1,21 +1,20 @@
 package org.example.dto.request;
 
 import java.sql.Date;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
 public class TraineeUpdateRequestDto {
-
-    private String updaterUsername;
-    private String updaterPassword;
 
     private String firstName;
     private String lastName;
@@ -24,20 +23,4 @@ public class TraineeUpdateRequestDto {
     private Date dateOfBirth;
     private String address;
 
-    /**
-     * Constructor.
-     */
-    public TraineeUpdateRequestDto(String firstName,
-                                   String lastName,
-                                   String username,
-                                   Boolean isActive,
-                                   Date dateOfBirth,
-                                   String address) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.username = username;
-        this.isActive = isActive;
-        this.dateOfBirth = dateOfBirth;
-        this.address = address;
-    }
 }

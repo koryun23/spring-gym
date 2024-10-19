@@ -21,10 +21,6 @@ public class UserValidator {
     }
 
     public RestResponse<UserChangePasswordResponseDto> validateChangePassword(UserChangePasswordRequestDto requestDto) {
-        if (!userService.usernamePasswordMatching(requestDto.getUsername(), requestDto.getOldPassword())) {
-            return new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                List.of("Authentication failed"));
-        }
 
         String newPassword = requestDto.getNewPassword();
         Optional<UserEntity> optionalUserByPassword = userService.findByPassword(newPassword);

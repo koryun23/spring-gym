@@ -16,6 +16,7 @@ import org.example.dto.response.TrainingListRetrievalResponseDto;
 import org.example.dto.response.TrainingRetrievalResponseDto;
 import org.example.entity.TrainingType;
 import org.example.mapper.training.TrainingMapper;
+import org.example.service.core.AuthenticatorService;
 import org.example.service.core.TrainingService;
 import org.example.validator.TrainingValidator;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -37,16 +38,18 @@ public class TrainingController {
     private final TrainingService trainingService;
     private final TrainingMapper trainingMapper;
     private final TrainingValidator trainingValidator;
+    private final AuthenticatorService authenticatorService;
 
     /**
      * Constructor.
      */
     public TrainingController(TrainingService trainingService,
                               TrainingMapper trainingMapper,
-                              TrainingValidator trainingValidator) {
+                              TrainingValidator trainingValidator, AuthenticatorService authenticatorService) {
         this.trainingService = trainingService;
         this.trainingMapper = trainingMapper;
         this.trainingValidator = trainingValidator;
+        this.authenticatorService = authenticatorService;
     }
 
     /**
@@ -57,10 +60,14 @@ public class TrainingController {
                                                                             TrainingCreationRequestDto requestDto,
                                                                             HttpServletRequest request) {
         log.info("Attempting to create a training, request - {}", requestDto);
-        requestDto.setCreatorUsername(request.getHeader("username"));
-        requestDto.setCreatorPassword(request.getHeader("password"));
 
         // validations
+        if (authenticatorService.authFail(request.getHeader("username"),
+            request.getHeader("password"))) {
+            return new ResponseEntity<>(
+                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
+        }
         RestResponse<TrainingCreationResponseDto> restResponse = trainingValidator.validateCreateTraining(requestDto);
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
@@ -92,8 +99,6 @@ public class TrainingController {
         log.info("Attempting to retrieve trainings of a trainee, username - {}", username);
         TrainingListRetrievalByTraineeRequestDto requestDto =
             new TrainingListRetrievalByTraineeRequestDto(
-                request.getHeader("username"),
-                request.getHeader("password"),
                 username,
                 from == null ? null : Date.valueOf(from),
                 to == null ? null : Date.valueOf(to),
@@ -103,6 +108,13 @@ public class TrainingController {
             );
 
         // validation
+        if (authenticatorService.authFail(request.getHeader("username"),
+            request.getHeader("password"))) {
+            return new ResponseEntity<>(
+                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
+        }
+
         RestResponse<TrainingListRetrievalResponseDto> restResponse =
             trainingValidator.validateRetrieveTrainingListByTrainee(requestDto);
         if (restResponse != null) {
@@ -146,8 +158,6 @@ public class TrainingController {
 
         TrainingListRetrievalByTrainerRequestDto requestDto =
             new TrainingListRetrievalByTrainerRequestDto(
-                request.getHeader("username"),
-                request.getHeader("password"),
                 username,
                 from == null ? null : Date.valueOf(from),
                 to == null ? null : Date.valueOf(to),
@@ -155,6 +165,12 @@ public class TrainingController {
             );
 
         // validations
+        if (authenticatorService.authFail(request.getHeader("username"),
+            request.getHeader("password"))) {
+            return new ResponseEntity<>(
+                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
+        }
         RestResponse<TrainingListRetrievalResponseDto> restResponse =
             trainingValidator.validateRetrieveTrainingListByTrainer(requestDto);
         if (restResponse != null) {

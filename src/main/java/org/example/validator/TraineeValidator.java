@@ -77,12 +77,6 @@ public class TraineeValidator {
                 List.of("User does not exist"));
         }
 
-        if (!userService.usernamePasswordMatching(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword())) {
-            return new RestResponse<>(
-                null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(), List.of("Authentication failed")
-            );
-        }
-
         return null;
     }
 
@@ -93,12 +87,6 @@ public class TraineeValidator {
         if (username == null || username.isEmpty()) {
             return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
                 List.of("Username is required"));
-        }
-
-        if (!userService.usernamePasswordMatching(requestDto.getRetrieverUsername(),
-            requestDto.getRetrieverPassword())) {
-            return new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                List.of("Authentication failed"));
         }
 
         if (traineeService.findByUsername(username).isEmpty()) {
@@ -119,12 +107,6 @@ public class TraineeValidator {
                 List.of("Username is required"));
         }
 
-        if (!userService.usernamePasswordMatching(requestDto.getDeleterUsername(), requestDto.getDeleterPassword())) {
-            return new RestResponse<>(
-                null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                List.of("Authentication failed"));
-        }
-
         if (traineeService.findByUsername(username).isEmpty()) {
             return new RestResponse<>(
                 null, HttpStatus.NOT_FOUND, LocalDateTime.now(),
@@ -141,12 +123,6 @@ public class TraineeValidator {
         if (username == null || username.isEmpty()) {
             return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
                 List.of("Username is required"));
-        }
-
-        if (!userService.usernamePasswordMatching(requestDto.getUpdaterUsername(), requestDto.getUpdaterPassword())) {
-            return new RestResponse<>(
-                null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                List.of("Authentication failed"));
         }
 
         if (traineeService.findByUsername(username).isEmpty()) {

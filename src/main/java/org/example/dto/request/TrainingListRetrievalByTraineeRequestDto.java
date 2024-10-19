@@ -17,11 +17,7 @@ import org.example.dto.plain.TrainingTypeDto;
 @ToString
 public class TrainingListRetrievalByTraineeRequestDto {
 
-    private String retrieverUsername;
-    private String retrieverPassword;
-
     private String traineeUsername;
-
     private Date from;
     private Date to;
     private String trainerUsername;
