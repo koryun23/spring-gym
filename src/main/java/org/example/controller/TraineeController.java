@@ -20,6 +20,7 @@ import org.example.entity.TraineeEntity;
 import org.example.mapper.trainee.TraineeMapper;
 import org.example.service.core.AuthenticatorService;
 import org.example.service.core.IdService;
+import org.example.service.core.LoggingService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.UserService;
 import org.example.validator.TraineeValidator;
@@ -41,6 +42,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/trainees", consumes = "application/json", produces = "application/json")
 public class TraineeController {
 
+    private final LoggingService loggingService;
     private final TraineeService traineeService;
     private final UserService userService;
     private final TraineeMapper traineeMapper;
@@ -51,12 +53,13 @@ public class TraineeController {
     /**
      * Constructor.
      */
-    public TraineeController(TraineeService traineeService,
+    public TraineeController(LoggingService loggingService, TraineeService traineeService,
                              UserService userService,
                              TraineeMapper traineeMapper,
                              @Qualifier("traineeIdService")
                              IdService idService,
                              TraineeValidator traineeValidator, AuthenticatorService authenticatorService) {
+        this.loggingService = loggingService;
         this.traineeService = traineeService;
         this.userService = userService;
         this.traineeMapper = traineeMapper;
@@ -73,6 +76,9 @@ public class TraineeController {
         @RequestBody TraineeCreationRequestDto requestDto) {
 
         log.info("Attempting a registration of a trainee according to the request - {}", requestDto);
+
+        // logging
+        loggingService.storeTransactionId();
 
         // validations
         RestResponse<TraineeCreationResponseDto> restResponse = traineeValidator.validateCreateTrainee(requestDto);
@@ -91,6 +97,7 @@ public class TraineeController {
         restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
         ResponseEntity<RestResponse<TraineeCreationResponseDto>> responseEntity =
             new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
+
         log.info("Response of a trainee registration - {}", restResponse);
         return responseEntity;
     }
@@ -101,6 +108,9 @@ public class TraineeController {
     @GetMapping("/{username}")
     public ResponseEntity<RestResponse<TraineeRetrievalResponseDto>> retrieve(
         @PathVariable(value = "username") String username, HttpServletRequest httpServletRequest) {
+
+        // logging
+        loggingService.storeTransactionId();
 
         log.info("Attempting a retrieval of a trainee, username - {}", username);
         TraineeRetrievalByUsernameRequestDto requestDto = new TraineeRetrievalByUsernameRequestDto(username);
@@ -134,6 +144,9 @@ public class TraineeController {
     public ResponseEntity<RestResponse<TraineeUpdateResponseDto>> update(
         @RequestBody TraineeUpdateRequestDto requestDto, HttpServletRequest httpServletRequest) {
         log.info("Attempting an update of a trainee, request - {}", requestDto);
+
+        // logging
+        loggingService.storeTransactionId();
 
         // validations
         if (authenticatorService.authFail(httpServletRequest.getHeader("username"),
@@ -172,6 +185,9 @@ public class TraineeController {
         log.info("Attempting a deletion of a trainee, username - {}", username);
         TraineeDeletionByUsernameRequestDto requestDto = new TraineeDeletionByUsernameRequestDto(username);
 
+        // logging
+        loggingService.storeTransactionId();
+
         // validations
         if (authenticatorService.authFail(httpServletRequest.getHeader("username"),
             httpServletRequest.getHeader("password"))) {
@@ -193,6 +209,7 @@ public class TraineeController {
             new RestResponse<>(new TraineeDeletionResponseDto(HttpStatus.OK), HttpStatus.OK, LocalDateTime.now(),
                 Collections.emptyList());
 
+        loggingService.clear();
         log.info("Response of a trainee deletion - {}", restResponse);
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
@@ -206,6 +223,9 @@ public class TraineeController {
 
         log.info("Attempting to switch the activation state of a trainee, username - {}", username);
         TraineeSwitchActivationStateRequestDto requestDto = new TraineeSwitchActivationStateRequestDto(username);
+
+        // logging
+        loggingService.storeTransactionId();
 
         // validations
         if (authenticatorService.authFail(httpServletRequest.getHeader("username"),
@@ -229,6 +249,7 @@ public class TraineeController {
             new TraineeSwitchActivationStateResponseDto(HttpStatus.OK);
         restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
+        loggingService.clear();
         log.info("Response of switching the activation state of a trainee - {}", restResponse);
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }

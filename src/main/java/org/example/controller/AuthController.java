@@ -11,6 +11,7 @@ import org.example.dto.response.UserChangePasswordResponseDto;
 import org.example.dto.response.UserRetrievalResponseDto;
 import org.example.mapper.user.UserMapper;
 import org.example.service.core.AuthenticatorService;
+import org.example.service.core.LoggingService;
 import org.example.service.core.UserService;
 import org.example.validator.UserValidator;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "", consumes = "application/json", produces = "application/json")
 public class AuthController {
 
+    private final LoggingService loggingService;
     private final UserService userService;
     private final UserMapper userMapper;
     private final UserValidator userValidator;
@@ -34,8 +36,9 @@ public class AuthController {
     /**
      * Constructor.
      */
-    public AuthController(UserService userService, UserMapper userMapper, UserValidator userValidator,
+    public AuthController(LoggingService loggingService, UserService userService, UserMapper userMapper, UserValidator userValidator,
                           AuthenticatorService authenticatorService) {
+        this.loggingService = loggingService;
         this.userService = userService;
         this.userMapper = userMapper;
         this.userValidator = userValidator;
@@ -50,6 +53,9 @@ public class AuthController {
         log.info("Attempting a user log in");
         // no validations
 
+        // logging
+        loggingService.storeTransactionId();
+
         // service calls
         boolean userExists =
             authenticatorService.authSuccess(request.getHeader("username"), request.getHeader("password"));
@@ -62,6 +68,7 @@ public class AuthController {
             new RestResponse<>(responseDto, responseDto.getHttpStatus(), LocalDateTime.now(), Collections.emptyList());
         ResponseEntity<RestResponse<UserRetrievalResponseDto>> responseEntity =
             new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
+
         log.info("Response of logging in - {}", restResponse);
         return responseEntity;
     }
@@ -73,6 +80,9 @@ public class AuthController {
     public ResponseEntity<RestResponse<UserChangePasswordResponseDto>> changePassword(
         @RequestBody UserChangePasswordRequestDto requestDto, HttpServletRequest request) {
         log.info("Attempting password change, request - {}", requestDto);
+
+        // logging
+        loggingService.storeTransactionId();
 
         // authentication
         if (authenticatorService.authFail(request.getHeader("username"), request.getHeader("password"))) {
