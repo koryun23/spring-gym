@@ -7,7 +7,6 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
 import org.example.dto.request.UserChangePasswordRequestDto;
-import org.example.dto.request.UserRetrievalRequestDto;
 import org.example.dto.response.UserChangePasswordResponseDto;
 import org.example.dto.response.UserRetrievalResponseDto;
 import org.example.mapper.user.UserMapper;
@@ -16,7 +15,7 @@ import org.example.service.core.UserService;
 import org.example.validator.UserValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,14 +45,14 @@ public class AuthController {
     /**
      * Login.
      */
-    @PostMapping(value = "/login")
-    public ResponseEntity<RestResponse<UserRetrievalResponseDto>> login(
-        @RequestBody UserRetrievalRequestDto requestDto) {
-        log.info("Attempting a user log in according to the request - {}", requestDto);
+    @GetMapping(value = "/login")
+    public ResponseEntity<RestResponse<UserRetrievalResponseDto>> login(HttpServletRequest request) {
+        log.info("Attempting a user log in");
         // no validations
 
         // service calls
-        boolean userExists = authenticatorService.authSuccess(requestDto.getUsername(), requestDto.getPassword());
+        boolean userExists =
+            authenticatorService.authSuccess(request.getHeader("username"), request.getHeader("password"));
 
         // response
         UserRetrievalResponseDto responseDto =
