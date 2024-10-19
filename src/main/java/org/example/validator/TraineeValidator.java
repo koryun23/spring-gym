@@ -17,6 +17,7 @@ import org.example.service.core.TraineeService;
 import org.example.service.core.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 @Component
 public class TraineeValidator {
@@ -36,7 +37,7 @@ public class TraineeValidator {
      * Validate Trainee Creation Request Dto.
      */
     public RestResponse<TraineeCreationResponseDto> validateCreateTrainee(TraineeCreationRequestDto requestDto) {
-
+        Assert.notNull(requestDto, "TraineeCreationRequestDto must not be null");
         String firstName = requestDto.getFirstName();
         String lastName = requestDto.getLastName();
 
@@ -56,6 +57,8 @@ public class TraineeValidator {
      * Validate Trainee Update Request Dto.
      */
     public RestResponse<TraineeUpdateResponseDto> validateUpdateTrainee(TraineeUpdateRequestDto requestDto) {
+
+        Assert.notNull(requestDto, "TraineeUpdateRequestDto must not be null");
 
         String username = requestDto.getUsername();
         if (username == null || username.isEmpty()) {
@@ -95,6 +98,7 @@ public class TraineeValidator {
     public RestResponse<TraineeRetrievalResponseDto> validateRetrieveTrainee(
         TraineeRetrievalByUsernameRequestDto requestDto) {
 
+        Assert.notNull(requestDto, "TraineeRetrievalByUsernameRequestDto must not be null");
         String username = requestDto.getUsername();
         if (username == null || username.isEmpty()) {
             return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
@@ -115,6 +119,8 @@ public class TraineeValidator {
      */
     public RestResponse<TraineeDeletionResponseDto> validateDeleteTrainee(
         TraineeDeletionByUsernameRequestDto requestDto) {
+
+        Assert.notNull(requestDto, "TraineeDeletionByUsernameRequestDto must not be null");
 
         String username = requestDto.getUsername();
         if (username == null || username.isEmpty()) {

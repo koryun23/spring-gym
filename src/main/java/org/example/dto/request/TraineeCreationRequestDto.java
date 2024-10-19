@@ -31,8 +31,6 @@ public class TraineeCreationRequestDto {
                                      String lastName,
                                      Date dateOfBirth,
                                      String address) {
-        Assert.notNull(firstName, "First name must not be null");
-        Assert.notNull(lastName, "Last name must not be null");
         this.firstName = firstName;
         this.lastName = lastName;
         this.isActive = true;
