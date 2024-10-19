@@ -35,6 +35,9 @@ public class TrainerMapperImpl implements TrainerMapper {
     private final UsernamePasswordService usernamePasswordService;
     private final IdService idService;
 
+    /**
+     * Constructor.
+     */
     public TrainerMapperImpl(UserService userService,
                              TrainingTypeService trainingTypeService,
                              @Qualifier("trainerUsernamePasswordService")

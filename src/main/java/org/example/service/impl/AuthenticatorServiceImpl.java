@@ -5,7 +5,7 @@ import org.example.service.core.UserService;
 
 public class AuthenticatorServiceImpl implements AuthenticatorService {
 
-    private UserService userService;
+    private final UserService userService;
 
     public AuthenticatorServiceImpl(UserService userService) {
         this.userService = userService;

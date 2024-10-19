@@ -11,27 +11,27 @@ import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.dto.response.TrainingListRetrievalResponseDto;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
-import org.example.service.core.TrainingService;
-import org.example.service.core.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TrainingValidator {
 
-    private final TrainingService trainingService;
     private final TrainerService trainerService;
     private final TraineeService traineeService;
-    private final UserService userService;
 
-    public TrainingValidator(TrainingService trainingService, TrainerService trainerService,
-                             TraineeService traineeService, UserService userService) {
-        this.trainingService = trainingService;
+    /**
+     * Constructor.
+     */
+    public TrainingValidator(TrainerService trainerService,
+                             TraineeService traineeService) {
         this.trainerService = trainerService;
         this.traineeService = traineeService;
-        this.userService = userService;
     }
 
+    /**
+     * Validate Training Creation Response Dto.
+     */
     public RestResponse<TrainingCreationResponseDto> validateCreateTraining(TrainingCreationRequestDto requestDto) {
 
         String traineeUsername = requestDto.getTraineeUsername();
@@ -82,6 +82,9 @@ public class TrainingValidator {
         return null;
     }
 
+    /**
+     * Validate Training List Retrieval By Trainer Request Dto.
+     */
     public RestResponse<TrainingListRetrievalResponseDto> validateRetrieveTrainingListByTrainer(
         TrainingListRetrievalByTrainerRequestDto requestDto) {
 
@@ -99,6 +102,9 @@ public class TrainingValidator {
         return null;
     }
 
+    /**
+     * Validate Training List Retrieval By Trainee Request Dto.
+     */
     public RestResponse<TrainingListRetrievalResponseDto> validateRetrieveTrainingListByTrainee(
         TrainingListRetrievalByTraineeRequestDto requestDto) {
 

@@ -25,6 +25,9 @@ public class TrainingTypeController {
     private final TrainingTypeMapper trainingTypeMapper;
     private final AuthenticatorService authenticatorService;
 
+    /**
+     * Constructor.
+     */
     public TrainingTypeController(TrainingTypeService trainingTypeService,
                                   TrainingTypeMapper trainingTypeMapper,
                                   AuthenticatorService authenticatorService) {

@@ -1,7 +1,5 @@
 package org.example.config;
 
-import java.text.SimpleDateFormat;
-import org.example.helper.DateConverter;
 import org.example.service.core.DatabasePathService;
 import org.example.service.core.IdService;
 import org.example.service.impl.DatabasePathServiceImpl;
@@ -63,10 +61,5 @@ public class Config {
     @Bean
     public IdService trainingIdService() {
         return new IdServiceImpl(trainingDatabasePathService());
-    }
-
-    @Bean
-    public DateConverter dateConverter() {
-        return new DateConverter(new SimpleDateFormat("yyyy-MM-dd"));
     }
 }

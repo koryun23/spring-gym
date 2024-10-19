@@ -17,8 +17,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class TrainerEntityRepositoryImpl implements TrainerEntityRepository {
 
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
+    /**
+     * Constructor.
+     */
     public TrainerEntityRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
@@ -118,8 +121,6 @@ public class TrainerEntityRepositoryImpl implements TrainerEntityRepository {
             "select training.trainer.id from TrainingEntity training JOIN TraineeEntity trainee "
                 + "ON trainee.id = training.trainee.id JOIN UserEntity u ON u.id = trainee.user.id "
                 + "where u.username = :username";
-//        String assignedTrainersQuery =
-//            "select trainer.id from Trainee trainee join t.trainerEntities trainer where trainee.username = :username";
 
         List<Long> assignedTrainerIdList = session.createQuery(assignedTrainersQuery, Long.class)
             .setParameter("username", traineeUsername)

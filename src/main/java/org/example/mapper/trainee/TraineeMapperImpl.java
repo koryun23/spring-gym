@@ -27,6 +27,9 @@ public class TraineeMapperImpl implements TraineeMapper {
     private final UsernamePasswordService usernamePasswordService;
     private final IdService idService;
 
+    /**
+     * Constructor.
+     */
     public TraineeMapperImpl(UserService userService,
                              @Qualifier("traineeUsernamePasswordService")
                              UsernamePasswordService usernamePasswordService,

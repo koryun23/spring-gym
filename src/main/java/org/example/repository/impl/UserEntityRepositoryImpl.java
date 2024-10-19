@@ -21,6 +21,9 @@ public class UserEntityRepositoryImpl implements UserEntityRepository {
 
     private final SessionFactory sessionFactory;
 
+    /**
+     * Constructor.
+     */
     public UserEntityRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }

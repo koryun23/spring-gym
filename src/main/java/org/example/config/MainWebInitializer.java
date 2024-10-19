@@ -33,29 +33,5 @@ public class MainWebInitializer implements WebApplicationInitializer {
         encodingFilter.setInitParameter("forceEncoding", "true");
         encodingFilter.setInitParameter("Content-Type", "application/json");
         encodingFilter.addMappingForUrlPatterns(null, true, "/*");
-        //dispatcher.setInitParameter("Content-Type", "application/json");
-
-
-        //encodingFilter.setInitParameter("encoding", "UTF-8");
-        //encodingFilter.setInitParameter("forceEncoding", "true");
-        //encodingFilter.addMappingForUrlPatterns(null, true, "/*");
-        //encodingFilter.setInitParameter("application/type", "json");
-        //encodingFilter.setInitParameter("forceEncoding", "true");
-        //encodingFilter.addMappingForUrlPatterns(null, true, "/*");
     }
-
-//    @Override
-//    protected String[] getServletMappings() {
-//        return new String[]{"/"};
-//    }
-//
-//    @Override
-//    protected Class<?>[] getRootConfigClasses() {
-//        return new Class[]{Config.class, HibernateConfig.class};
-//    }
-//
-//    @Override
-//    protected Class<?>[] getServletConfigClasses() {
-//        return new Class[]{WebConfig.class};
-//    }
 }

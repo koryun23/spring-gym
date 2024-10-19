@@ -17,8 +17,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class TrainingTypeEntityRepositoryImpl implements TrainingTypeEntityRepository {
 
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
+    /**
+     * Constructor.
+     */
     public TrainingTypeEntityRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }

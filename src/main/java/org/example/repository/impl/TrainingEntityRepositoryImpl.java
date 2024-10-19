@@ -22,8 +22,11 @@ import org.springframework.util.Assert;
 @Repository
 public class TrainingEntityRepositoryImpl implements TrainingEntityRepository {
 
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
+    /**
+     * Constructor.
+     */
     public TrainingEntityRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }

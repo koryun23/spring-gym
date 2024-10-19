@@ -16,10 +16,16 @@ public class UserValidator {
 
     private UserService userService;
 
+    /**
+     * Constructor.
+     */
     public UserValidator(UserService userService) {
         this.userService = userService;
     }
 
+    /**
+     * Validate User Change Password Request Dto.
+     */
     public RestResponse<UserChangePasswordResponseDto> validateChangePassword(UserChangePasswordRequestDto requestDto) {
 
         String username = requestDto.getUsername();

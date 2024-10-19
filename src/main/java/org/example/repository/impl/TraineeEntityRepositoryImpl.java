@@ -25,8 +25,11 @@ public class TraineeEntityRepositoryImpl implements TraineeEntityRepository {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TraineeEntityRepositoryImpl.class);
 
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
+    /**
+     * Constructor.
+     */
     public TraineeEntityRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }

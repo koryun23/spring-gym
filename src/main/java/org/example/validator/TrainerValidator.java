@@ -29,12 +29,18 @@ public class TrainerValidator {
     private final UserService userService;
     private final TraineeService traineeService;
 
+    /**
+     * Constructor.
+     */
     public TrainerValidator(TrainerService trainerService, UserService userService, TraineeService traineeService) {
         this.trainerService = trainerService;
         this.userService = userService;
         this.traineeService = traineeService;
     }
 
+    /**
+     * Validate Trainer Creation Request Dto.
+     */
     public RestResponse<TrainerCreationResponseDto> validateCreateTrainer(TrainerCreationRequestDto requestDto) {
 
         String firstName = requestDto.getFirstName();
@@ -63,6 +69,9 @@ public class TrainerValidator {
         return null;
     }
 
+    /**
+     * Validate Trainer Update Request Dto.
+     */
     public RestResponse<TrainerUpdateResponseDto> validateUpdateTrainer(TrainerUpdateRequestDto requestDto) {
 
         String username = requestDto.getUsername();
@@ -103,6 +112,9 @@ public class TrainerValidator {
         return null;
     }
 
+    /**
+     * Validate Trainer Retrieval by Username Request Dto.
+     */
     public RestResponse<TrainerRetrievalResponseDto> validateRetrieveTrainer(
         TrainerRetrievalByUsernameRequestDto requestDto) {
 
@@ -120,6 +132,9 @@ public class TrainerValidator {
         return null;
     }
 
+    /**
+     * Validate Trainer Switch Activation State Request Dto.
+     */
     public RestResponse<TrainerSwitchActivationStateResponseDto> validateSwitchActivationState(
         TrainerSwitchActivationStateRequestDto requestDto) {
 
@@ -137,6 +152,9 @@ public class TrainerValidator {
         return null;
     }
 
+    /**
+     * Validate Retrieve All Trainers Not Assigned To Trainee Request Dto.
+     */
     public RestResponse<TrainerListRetrievalResponseDto> validateRetrieveAllTrainersNotAssignedToTrainee(
         RetrieveAllTrainersNotAssignedToTraineeRequestDto requestDto) {
 
@@ -153,6 +171,9 @@ public class TrainerValidator {
         return null;
     }
 
+    /**
+     * Validate Trainee Trainer List Update Request Dto.
+     */
     public RestResponse<TraineeTrainerListUpdateResponseDto> validateUpdateTraineeTrainerList(
         TraineeTrainerListUpdateRequestDto requestDto) {
 

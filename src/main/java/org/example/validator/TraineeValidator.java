@@ -24,11 +24,17 @@ public class TraineeValidator {
     private final UserService userService;
     private final TraineeService traineeService;
 
+    /**
+     * Constructor.
+     */
     public TraineeValidator(UserService userService, TraineeService traineeService) {
         this.userService = userService;
         this.traineeService = traineeService;
     }
 
+    /**
+     * Validate Trainee Creation Request Dto.
+     */
     public RestResponse<TraineeCreationResponseDto> validateCreateTrainee(TraineeCreationRequestDto requestDto) {
 
         String firstName = requestDto.getFirstName();
@@ -46,6 +52,9 @@ public class TraineeValidator {
         return null;
     }
 
+    /**
+     * Validate Trainee Update Request Dto.
+     */
     public RestResponse<TraineeUpdateResponseDto> validateUpdateTrainee(TraineeUpdateRequestDto requestDto) {
 
         String username = requestDto.getUsername();
@@ -80,6 +89,9 @@ public class TraineeValidator {
         return null;
     }
 
+    /**
+     * Validate Trainee Retrieval by Username Request Dto.
+     */
     public RestResponse<TraineeRetrievalResponseDto> validateRetrieveTrainee(
         TraineeRetrievalByUsernameRequestDto requestDto) {
 
@@ -98,6 +110,9 @@ public class TraineeValidator {
         return null;
     }
 
+    /**
+     * Validate Trainee Deletion by Username Request Dto.
+     */
     public RestResponse<TraineeDeletionResponseDto> validateDeleteTrainee(
         TraineeDeletionByUsernameRequestDto requestDto) {
 
@@ -116,6 +131,9 @@ public class TraineeValidator {
         return null;
     }
 
+    /**
+     * Validate Trainee Switch Activation State Request Dto.
+     */
     public RestResponse<TraineeSwitchActivationStateResponseDto> validateSwitchActivationState(
         TraineeSwitchActivationStateRequestDto requestDto) {
 
