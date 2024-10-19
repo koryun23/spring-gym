@@ -21,6 +21,7 @@ import org.example.service.core.TrainerService;
 import org.example.service.core.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 @Component
 public class TrainerValidator {
@@ -42,6 +43,8 @@ public class TrainerValidator {
      * Validate Trainer Creation Request Dto.
      */
     public RestResponse<TrainerCreationResponseDto> validateCreateTrainer(TrainerCreationRequestDto requestDto) {
+
+        Assert.notNull(requestDto, "TrainerCreationRequestDto must not be null");
 
         String firstName = requestDto.getFirstName();
         String lastName = requestDto.getLastName();
@@ -74,6 +77,7 @@ public class TrainerValidator {
      */
     public RestResponse<TrainerUpdateResponseDto> validateUpdateTrainer(TrainerUpdateRequestDto requestDto) {
 
+        Assert.notNull(requestDto, "TrainerUpdateRequestDto must not be null");
         String username = requestDto.getUsername();
         if (username == null || username.isEmpty()) {
             return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
@@ -118,6 +122,7 @@ public class TrainerValidator {
     public RestResponse<TrainerRetrievalResponseDto> validateRetrieveTrainer(
         TrainerRetrievalByUsernameRequestDto requestDto) {
 
+        Assert.notNull(requestDto, "Trainer Retrieval by Username Request Dto must not be null");
         String username = requestDto.getUsername();
         if (username == null || username.isEmpty()) {
             return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
@@ -138,6 +143,7 @@ public class TrainerValidator {
     public RestResponse<TrainerSwitchActivationStateResponseDto> validateSwitchActivationState(
         TrainerSwitchActivationStateRequestDto requestDto) {
 
+        Assert.notNull(requestDto, "TrainerSwitchActivationStateRequestDto must not be null");
         String username = requestDto.getUsername();
         if (username == null || username.isEmpty()) {
             return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),

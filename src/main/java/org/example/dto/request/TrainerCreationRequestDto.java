@@ -28,9 +28,6 @@ public class TrainerCreationRequestDto {
     public TrainerCreationRequestDto(String firstName,
                                      String lastName,
                                      Long trainingTypeId) {
-        Assert.notNull(firstName, "First name must not be null");
-        Assert.notNull(lastName, "Last name must not be null");
-        Assert.notNull(trainingTypeId, "Training Type Id must not be null");
         this.firstName = firstName;
         this.lastName = lastName;
         this.isActive = true;
