@@ -3,14 +3,15 @@ package org.example.config;
 import jakarta.servlet.FilterRegistration;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletRegistration;
+import org.hibernate.Hibernate;
 import org.springdoc.core.configuration.SpringDocConfiguration;
-import org.springdoc.core.configuration.SpringDocSpecPropertiesConfiguration;
 import org.springdoc.core.configuration.SpringDocUIConfiguration;
 import org.springdoc.core.properties.SpringDocConfigProperties;
 import org.springdoc.core.properties.SwaggerUiConfigProperties;
 import org.springdoc.core.properties.SwaggerUiOAuthProperties;
 import org.springdoc.webmvc.core.configuration.MultipleOpenApiSupportConfiguration;
 import org.springdoc.webmvc.core.configuration.SpringDocWebMvcConfiguration;
+import org.springdoc.webmvc.ui.SwaggerConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -44,9 +45,12 @@ public class MainWebInitializer implements WebApplicationInitializer {
 
         rootContext.register(
             this.getClass(),
+            CustomSwaggerConfig.class,
+            Config.class,
+            WebConfig.class,
+            HibernateConfig.class,
             SpringDocConfiguration.class,
             SpringDocConfigProperties.class,
-            SpringDocSpecPropertiesConfiguration.class,
             SpringDocWebMvcConfiguration.class,
             MultipleOpenApiSupportConfiguration.class,
             SwaggerConfig.class,

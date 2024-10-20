@@ -4,11 +4,15 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.servers.Server;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
+@Slf4j
 @Configuration
-public class SwaggerConfig {
+@Import({org.springdoc.webmvc.ui.SwaggerConfig.class})
+public class CustomSwaggerConfig {
 
     /**
      * Custom Open API.
