@@ -54,8 +54,8 @@ public class TraineeMapperImpl implements TraineeMapper {
     public TraineeCreationResponseDto mapTraineeEntityToTraineeCreationResponseDto(TraineeEntity trainee) {
         Assert.notNull(trainee, "TraineeEntity must not be null");
         return new TraineeCreationResponseDto(
-            trainee.getUser().getFirstName(),
-            trainee.getUser().getLastName()
+            trainee.getUser().getUsername(),
+            trainee.getUser().getPassword()
         );
     }
 

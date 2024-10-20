@@ -1,11 +1,13 @@
 package org.example.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -13,14 +15,6 @@ import lombok.ToString;
 @ToString
 public class TrainerCreationResponseDto {
 
-    private String firstName;
-    private String lastName;
-
-    /**
-     * Constructor.
-     */
-    public TrainerCreationResponseDto(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+    private String username;
+    private String password;
 }
