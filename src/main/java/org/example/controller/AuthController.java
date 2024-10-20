@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "", consumes = "application/json", produces = "application/json")
+@RequestMapping(value = "")
 public class AuthController {
 
     private final LoggingService loggingService;
@@ -78,7 +78,7 @@ public class AuthController {
     /**
      * Change password.
      */
-    @PutMapping(value = "/change-password")
+    @PutMapping(value = "/change-password", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse<UserChangePasswordResponseDto>> changePassword(
         @RequestBody UserChangePasswordRequestDto requestDto, HttpServletRequest request) {
         log.info("Attempting password change, request - {}", requestDto);

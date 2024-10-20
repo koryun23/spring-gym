@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/trainers", consumes = "application/json", produces = "application/json")
+@RequestMapping(value = "/trainers")
 public class TrainerController {
 
     private final LoggingService loggingService;
@@ -71,7 +71,7 @@ public class TrainerController {
     /**
      * Trainer registration.
      */
-    @PostMapping(value = "/register")
+    @PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse<TrainerCreationResponseDto>> register(
         @RequestBody TrainerCreationRequestDto requestDto) {
 
@@ -142,7 +142,7 @@ public class TrainerController {
     /**
      * Update trainer.
      */
-    @PutMapping("/update")
+    @PutMapping(value = "/update", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse<TrainerUpdateResponseDto>> update(
         @RequestBody TrainerUpdateRequestDto requestDto, HttpServletRequest request) {
 
@@ -217,7 +217,7 @@ public class TrainerController {
     /**
      * Switch activation state of a trainee.
      */
-    @PatchMapping("/switch-active/{username}")
+    @PatchMapping(value = "/switch-active/{username}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse<TrainerSwitchActivationStateResponseDto>> switchActivationState(
         @PathVariable(value = "username") String username, HttpServletRequest request) {
 
@@ -259,7 +259,7 @@ public class TrainerController {
     /**
      * Update list of trainers of a trainee.
      */
-    @PutMapping("/trainee-trainers")
+    @PutMapping(value = "/trainee-trainers", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse<TraineeTrainerListUpdateResponseDto>> updateTraineeTrainerList(
         @RequestBody TraineeTrainerListUpdateRequestDto requestDto, HttpServletRequest request) {
 

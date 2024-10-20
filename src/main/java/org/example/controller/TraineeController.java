@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/trainees", consumes = "application/json", produces = "application/json")
+@RequestMapping(value = "/trainees")
 public class TraineeController {
 
     private final LoggingService loggingService;
@@ -72,7 +72,7 @@ public class TraineeController {
     /**
      * Trainee registration.
      */
-    @PostMapping("/register")
+    @PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse<TraineeCreationResponseDto>> register(
         @RequestBody TraineeCreationRequestDto requestDto) {
 
@@ -143,7 +143,7 @@ public class TraineeController {
     /**
      * Trainee update.
      */
-    @PutMapping("/update")
+    @PutMapping(value = "/update", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse<TraineeUpdateResponseDto>> update(
         @RequestBody TraineeUpdateRequestDto requestDto, HttpServletRequest httpServletRequest) {
 
@@ -222,7 +222,7 @@ public class TraineeController {
     /**
      * Trainee switch activation state.
      */
-    @PatchMapping("/switch-active/{username}")
+    @PatchMapping(value = "/switch-active/{username}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse<TraineeSwitchActivationStateResponseDto>> switchActivationState(
         @PathVariable("username") String username, HttpServletRequest httpServletRequest) {
 
