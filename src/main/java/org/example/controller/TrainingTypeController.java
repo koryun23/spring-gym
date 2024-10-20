@@ -9,6 +9,7 @@ import org.example.dto.RestResponse;
 import org.example.dto.response.TrainingTypeListRetrievalResponseDto;
 import org.example.mapper.training.TrainingTypeMapper;
 import org.example.service.core.AuthenticatorService;
+import org.example.service.core.LoggingService;
 import org.example.service.core.TrainingTypeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/training-type")
 public class TrainingTypeController {
 
+    private final LoggingService loggingService;
     private final TrainingTypeService trainingTypeService;
     private final TrainingTypeMapper trainingTypeMapper;
     private final AuthenticatorService authenticatorService;
@@ -28,9 +30,10 @@ public class TrainingTypeController {
     /**
      * Constructor.
      */
-    public TrainingTypeController(TrainingTypeService trainingTypeService,
+    public TrainingTypeController(LoggingService loggingService, TrainingTypeService trainingTypeService,
                                   TrainingTypeMapper trainingTypeMapper,
                                   AuthenticatorService authenticatorService) {
+        this.loggingService = loggingService;
         this.trainingTypeService = trainingTypeService;
         this.trainingTypeMapper = trainingTypeMapper;
         this.authenticatorService = authenticatorService;
@@ -42,6 +45,9 @@ public class TrainingTypeController {
     @GetMapping
     public ResponseEntity<RestResponse<TrainingTypeListRetrievalResponseDto>> retrieveTrainingTypes(
         HttpServletRequest request) {
+
+        loggingService.storeTransactionId();
+
         log.info("Attempting the retrieval of training types");
 
         // validations
@@ -62,6 +68,8 @@ public class TrainingTypeController {
             new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Response of training types retrieval - {}", restResponse);
+
+        loggingService.clear();
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
 }

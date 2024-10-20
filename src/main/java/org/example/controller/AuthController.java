@@ -70,6 +70,8 @@ public class AuthController {
             new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
 
         log.info("Response of logging in - {}", restResponse);
+
+        loggingService.clear();
         return responseEntity;
     }
 
@@ -104,6 +106,8 @@ public class AuthController {
         restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Password change response - {}", restResponse);
+
+        loggingService.clear();
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
 }

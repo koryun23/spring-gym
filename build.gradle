@@ -20,9 +20,13 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.slf4j:slf4j-api:1.7.36'
-    runtimeOnly 'org.slf4j:slf4j-simple:1.7.36'
-    implementation 'org.slf4j:slf4j-log4j12:2.0.13'
+    //implementation 'org.slf4j:slf4j-api:1.7.36'
+    //runtimeOnly 'org.slf4j:slf4j-simple:1.7.36'
+    //implementation 'org.slf4j:slf4j-log4j12:2.0.13'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.16'
+    implementation group: 'ch.qos.logback', name: 'logback-core', version: '1.5.7'
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.5.7'
+
     testImplementation 'org.assertj:assertj-core:3.24.2'
     compileOnly 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
@@ -50,14 +54,14 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.2'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.0'
 
-    implementation group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
-    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
+//    implementation group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
+//    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
 
 //    implementation 'org.microprofile-ext.openapi-ext:openapi-ui:2.0.0'
 //    implementation 'org.microprofile-ext.openapi-ext:swagger-ui:1.0.3'
-//    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-api:2.6.0'
     implementation 'io.springfox:springfox-bean-validators:3.0.0'
-    compileOnly 'javax.servlet:servlet-api:2.5'
     testImplementation 'io.rest-assured:rest-assured:5.5.0'
 
 

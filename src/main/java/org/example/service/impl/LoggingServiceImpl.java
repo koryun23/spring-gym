@@ -13,7 +13,7 @@ public class LoggingServiceImpl implements LoggingService {
 
     @Override
     public void storeTransactionId() {
-        MDC.put("transaction-id", UUID.randomUUID().toString());
+        MDC.put("transactionId", UUID.randomUUID().toString());
     }
 
     @Override
