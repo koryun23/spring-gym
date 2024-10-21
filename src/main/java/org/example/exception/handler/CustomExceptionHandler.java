@@ -41,4 +41,15 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
             new RestResponse(null, HttpStatus.NOT_FOUND, LocalDateTime.now(), List.of(e.getMessage()));
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
+
+    /**
+     * Method for handling general exceptions.
+     */
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<RestResponse> handleGeneralException(Exception exception) {
+        return new ResponseEntity<>(
+            new RestResponse(null, HttpStatus.SERVICE_UNAVAILABLE, LocalDateTime.now(), List.of("Something went wrong")),
+            HttpStatus.SERVICE_UNAVAILABLE
+        );
+    }
 }

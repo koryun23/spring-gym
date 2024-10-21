@@ -63,7 +63,7 @@ public class AuthController {
 
         // response
         UserRetrievalResponseDto responseDto =
-            new UserRetrievalResponseDto(userExists ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+            new UserRetrievalResponseDto(userExists ? HttpStatus.OK : HttpStatus.UNAUTHORIZED);
 
         RestResponse restResponse =
             new RestResponse(responseDto, responseDto.getHttpStatus(), LocalDateTime.now(), Collections.emptyList());

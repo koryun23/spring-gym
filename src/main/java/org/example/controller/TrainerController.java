@@ -217,7 +217,7 @@ public class TrainerController {
     /**
      * Switch activation state of a trainee.
      */
-    @PatchMapping(value = "/switch-active/{username}", consumes = "application/json", produces = "application/json")
+    @PatchMapping(value = "/switch-active/{username}")
     public ResponseEntity<RestResponse> switchActivationState(
         @PathVariable(value = "username") String username, HttpServletRequest request) {
 
