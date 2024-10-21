@@ -9,6 +9,8 @@ import org.example.dto.request.TrainerRetrievalByUsernameRequestDto;
 import org.example.dto.request.TrainerSwitchActivationStateRequestDto;
 import org.example.dto.request.TrainerUpdateRequestDto;
 import org.example.exception.CustomIllegalArgumentException;
+import org.example.exception.TraineeNotFoundException;
+import org.example.exception.TrainerNotFoundException;
 import org.example.service.core.TraineeService;
 import org.example.service.core.TrainerService;
 import org.example.service.core.UserService;
@@ -91,8 +93,8 @@ public class TrainerValidator {
             throw new CustomIllegalArgumentException("Is-active field is required");
         }
 
-        if (userService.findByUsername(username).isEmpty()) {
-            throw new CustomIllegalArgumentException("User does not exist");
+        if (trainerService.findByUsername(username).isEmpty()) {
+            throw new TrainerNotFoundException(username);
         }
 
         return null;
@@ -111,8 +113,7 @@ public class TrainerValidator {
         }
 
         if (trainerService.findByUsername(username).isEmpty()) {
-            throw new CustomIllegalArgumentException(
-                String.format("Trainee with a username of %s not found", username));
+            throw new TrainerNotFoundException(username);
         }
 
         return null;
@@ -131,8 +132,7 @@ public class TrainerValidator {
         }
 
         if (trainerService.findByUsername(username).isEmpty()) {
-            throw new CustomIllegalArgumentException(
-                String.format("Trainee with a username of %s not found", username));
+            throw new TrainerNotFoundException(username);
         }
 
         return null;
@@ -149,7 +149,7 @@ public class TrainerValidator {
             throw new CustomIllegalArgumentException("Trainee is required");
         }
         if (traineeService.findByUsername(traineeUsername).isEmpty()) {
-            throw new CustomIllegalArgumentException("Trainee does not exist");
+            throw new TraineeNotFoundException(traineeUsername);
         }
 
         return null;
@@ -168,7 +168,7 @@ public class TrainerValidator {
         }
 
         if (traineeService.findByUsername(traineeUsername).isEmpty()) {
-            throw new CustomIllegalArgumentException("Trainee does not exist");
+            throw new TraineeNotFoundException(traineeUsername);
         }
 
         return null;

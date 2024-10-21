@@ -5,6 +5,7 @@ import org.example.dto.RestResponse;
 import org.example.dto.request.UserChangePasswordRequestDto;
 import org.example.entity.UserEntity;
 import org.example.exception.CustomIllegalArgumentException;
+import org.example.exception.UserNotFoundException;
 import org.example.service.core.UserService;
 import org.springframework.stereotype.Component;
 
@@ -47,7 +48,7 @@ public class UserValidator {
 
         UserEntity userEntity = optionalUser.get();
         if (!userEntity.getPassword().equals(oldPassword)) {
-            throw new CustomIllegalArgumentException("User with the provided credentials does not exist");
+            throw new UserNotFoundException(username);
         }
 
         Optional<UserEntity> optionalUserByNewPassword = userService.findByPassword(newPassword);

@@ -7,6 +7,7 @@ import org.example.dto.request.TraineeRetrievalByUsernameRequestDto;
 import org.example.dto.request.TraineeSwitchActivationStateRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
 import org.example.exception.CustomIllegalArgumentException;
+import org.example.exception.TraineeNotFoundException;
 import org.example.service.core.TraineeService;
 import org.example.service.core.UserService;
 import org.springframework.http.HttpStatus;
@@ -74,8 +75,8 @@ public class TraineeValidator {
             throw new CustomIllegalArgumentException("is-active field is required");
         }
 
-        if (userService.findByUsername(username).isEmpty()) {
-            throw new CustomIllegalArgumentException("User does not exist");
+        if (traineeService.findByUsername(username).isEmpty()) {
+            throw new TraineeNotFoundException(username);
         }
 
         return null;
@@ -94,8 +95,7 @@ public class TraineeValidator {
         }
 
         if (traineeService.findByUsername(username).isEmpty()) {
-            throw new CustomIllegalArgumentException(
-                String.format("Trainee with a username of %s not found", username));
+            throw new TraineeNotFoundException(username);
         }
 
         return null;
@@ -115,8 +115,7 @@ public class TraineeValidator {
         }
 
         if (traineeService.findByUsername(username).isEmpty()) {
-            throw new CustomIllegalArgumentException(
-                String.format("Trainee with a username of %s not found", username));
+            throw new TraineeNotFoundException(username);
         }
 
         return null;
@@ -134,8 +133,7 @@ public class TraineeValidator {
         }
 
         if (traineeService.findByUsername(username).isEmpty()) {
-            throw new CustomIllegalArgumentException(
-                String.format("Trainee with a username of %s not found", username));
+            throw new TraineeNotFoundException(username);
         }
 
         return null;
