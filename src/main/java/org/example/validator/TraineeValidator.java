@@ -1,19 +1,20 @@
 package org.example.validator;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import org.example.dto.RestResponse;
 import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TraineeDeletionByUsernameRequestDto;
 import org.example.dto.request.TraineeRetrievalByUsernameRequestDto;
 import org.example.dto.request.TraineeSwitchActivationStateRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
+import org.example.exception.CustomIllegalArgumentException;
 import org.example.service.core.TraineeService;
 import org.example.service.core.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
+@ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
 @Component
 public class TraineeValidator {
 
@@ -37,12 +38,10 @@ public class TraineeValidator {
         String lastName = requestDto.getLastName();
 
         if (firstName == null || firstName.isEmpty()) {
-            return new RestResponse(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
-                List.of("first name is required"));
+            throw new CustomIllegalArgumentException("First name is required");
         }
         if (lastName == null || lastName.isEmpty()) {
-            return new RestResponse(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
-                List.of("last name is required"));
+            throw new CustomIllegalArgumentException("Last name is required");
         }
 
         return null;
@@ -57,31 +56,26 @@ public class TraineeValidator {
 
         String username = requestDto.getUsername();
         if (username == null || username.isEmpty()) {
-            return new RestResponse(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
-                List.of("Username is required"));
+            throw new CustomIllegalArgumentException("Username is required");
         }
 
         String firstName = requestDto.getFirstName();
         if (firstName == null || firstName.isEmpty()) {
-            return new RestResponse(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
-                List.of("First name is required"));
+            throw new CustomIllegalArgumentException("First name is required");
         }
 
         String lastName = requestDto.getLastName();
         if (lastName == null || lastName.isEmpty()) {
-            return new RestResponse(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
-                List.of("Last name is required"));
+            throw new CustomIllegalArgumentException("Last name is required");
         }
 
         Boolean isActive = requestDto.getIsActive();
         if (isActive == null) {
-            return new RestResponse(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
-                List.of("is-active field is required"));
+            throw new CustomIllegalArgumentException("is-active field is required");
         }
 
         if (userService.findByUsername(username).isEmpty()) {
-            return new RestResponse(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
-                List.of("User does not exist"));
+            throw new CustomIllegalArgumentException("User does not exist");
         }
 
         return null;
@@ -96,14 +90,12 @@ public class TraineeValidator {
         Assert.notNull(requestDto, "TraineeRetrievalByUsernameRequestDto must not be null");
         String username = requestDto.getUsername();
         if (username == null || username.isEmpty()) {
-            return new RestResponse(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
-                List.of("Username is required"));
+            throw new CustomIllegalArgumentException("Username is required");
         }
 
         if (traineeService.findByUsername(username).isEmpty()) {
-            return new RestResponse(
-                null, HttpStatus.NOT_FOUND, LocalDateTime.now(),
-                List.of(String.format("Trainee with a username of %s not found", username)));
+            throw new CustomIllegalArgumentException(
+                String.format("Trainee with a username of %s not found", username));
         }
 
         return null;
@@ -119,14 +111,12 @@ public class TraineeValidator {
 
         String username = requestDto.getUsername();
         if (username == null || username.isEmpty()) {
-            return new RestResponse(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
-                List.of("Username is required"));
+            throw new CustomIllegalArgumentException("Username is required");
         }
 
         if (traineeService.findByUsername(username).isEmpty()) {
-            return new RestResponse(
-                null, HttpStatus.NOT_FOUND, LocalDateTime.now(),
-                List.of(String.format("Trainee with a username of %s not found", username)));
+            throw new CustomIllegalArgumentException(
+                String.format("Trainee with a username of %s not found", username));
         }
 
         return null;
@@ -140,14 +130,12 @@ public class TraineeValidator {
 
         String username = requestDto.getUsername();
         if (username == null || username.isEmpty()) {
-            return new RestResponse(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
-                List.of("Username is required"));
+            throw new CustomIllegalArgumentException("Username is required");
         }
 
         if (traineeService.findByUsername(username).isEmpty()) {
-            return new RestResponse(
-                null, HttpStatus.NOT_FOUND, LocalDateTime.now(),
-                List.of(String.format("Trainee with a username of %s not found", username)));
+            throw new CustomIllegalArgumentException(
+                String.format("Trainee with a username of %s not found", username));
         }
 
         return null;

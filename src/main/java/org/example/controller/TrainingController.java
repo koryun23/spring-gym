@@ -60,8 +60,8 @@ public class TrainingController {
      */
     @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse> create(@RequestBody
-                                                                            TrainingCreationRequestDto requestDto,
-                                                                            HttpServletRequest request) {
+                                               TrainingCreationRequestDto requestDto,
+                                               HttpServletRequest request) {
         loggingService.storeTransactionId();
         log.info("Attempting to create a training, request - {}", requestDto);
 
