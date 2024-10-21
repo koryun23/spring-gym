@@ -43,7 +43,7 @@ public class TrainingTypeController {
      * Retrieve training types.
      */
     @GetMapping
-    public ResponseEntity<RestResponse<TrainingTypeListRetrievalResponseDto>> retrieveTrainingTypes(
+    public ResponseEntity<RestResponse> retrieveTrainingTypes(
         HttpServletRequest request) {
 
         loggingService.storeTransactionId();
@@ -54,7 +54,7 @@ public class TrainingTypeController {
         if (authenticatorService.authFail(request.getHeader("username"),
             request.getHeader("password"))) {
             return new ResponseEntity<>(
-                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
                     List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
         }
 
@@ -64,8 +64,8 @@ public class TrainingTypeController {
                 trainingTypeService.findAll());
 
         // response
-        RestResponse<TrainingTypeListRetrievalResponseDto> restResponse =
-            new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        RestResponse restResponse =
+            new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Response of training types retrieval - {}", restResponse);
 

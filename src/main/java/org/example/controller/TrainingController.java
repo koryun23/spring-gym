@@ -59,7 +59,7 @@ public class TrainingController {
      * Creation of training.
      */
     @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<RestResponse<TrainingCreationResponseDto>> create(@RequestBody
+    public ResponseEntity<RestResponse> create(@RequestBody
                                                                             TrainingCreationRequestDto requestDto,
                                                                             HttpServletRequest request) {
         loggingService.storeTransactionId();
@@ -69,10 +69,10 @@ public class TrainingController {
         if (authenticatorService.authFail(request.getHeader("username"),
             request.getHeader("password"))) {
             return new ResponseEntity<>(
-                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
                     List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
         }
-        RestResponse<TrainingCreationResponseDto> restResponse = trainingValidator.validateCreateTraining(requestDto);
+        RestResponse restResponse = trainingValidator.validateCreateTraining(requestDto);
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
         }
@@ -82,7 +82,7 @@ public class TrainingController {
             trainingService.create(trainingMapper.mapTrainingCreationRequestDtoToTrainingEntity(requestDto)));
 
         // response
-        restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Response of training creation - {}", restResponse);
 
@@ -94,7 +94,7 @@ public class TrainingController {
      * Retrieve trainings of a trainee.
      */
     @GetMapping("/trainee-training/{username}")
-    public ResponseEntity<RestResponse<TrainingListRetrievalResponseDto>> retrieveTraineeTraining(
+    public ResponseEntity<RestResponse> retrieveTraineeTraining(
         @PathVariable(value = "username") String username,
         @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String from,
         @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String to,
@@ -119,11 +119,11 @@ public class TrainingController {
         if (authenticatorService.authFail(request.getHeader("username"),
             request.getHeader("password"))) {
             return new ResponseEntity<>(
-                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
                     List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
         }
 
-        RestResponse<TrainingListRetrievalResponseDto> restResponse =
+        RestResponse restResponse =
             trainingValidator.validateRetrieveTrainingListByTrainee(requestDto);
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
@@ -145,7 +145,7 @@ public class TrainingController {
             );
 
         // response
-        restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Result of retrieving trainings of a trainee - {}", restResponse);
 
@@ -158,7 +158,7 @@ public class TrainingController {
      * Retrieve trainings of a trainer.
      */
     @GetMapping("/trainer-training/{username}")
-    public ResponseEntity<RestResponse<TrainingListRetrievalResponseDto>> retrieveTrainerTraining(
+    public ResponseEntity<RestResponse> retrieveTrainerTraining(
         @PathVariable(value = "username") String username,
         @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String from,
         @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String to,
@@ -181,10 +181,10 @@ public class TrainingController {
         if (authenticatorService.authFail(request.getHeader("username"),
             request.getHeader("password"))) {
             return new ResponseEntity<>(
-                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
                     List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
         }
-        RestResponse<TrainingListRetrievalResponseDto> restResponse =
+        RestResponse restResponse =
             trainingValidator.validateRetrieveTrainingListByTrainer(requestDto);
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
@@ -201,7 +201,7 @@ public class TrainingController {
             ));
 
         // response
-        restResponse = new RestResponse<>(new TrainingListRetrievalResponseDto(trainerUsername, all), HttpStatus.OK,
+        restResponse = new RestResponse(new TrainingListRetrievalResponseDto(trainerUsername, all), HttpStatus.OK,
             LocalDateTime.now(), Collections.emptyList());
 
         log.info("Result of retrieving trainings of a trainer - {}", restResponse);

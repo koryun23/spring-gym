@@ -17,9 +17,9 @@ import org.springframework.http.HttpStatus;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class RestResponse<T> {
+public class RestResponse {
 
-    private T payload;
+    private Object payload;
     private HttpStatus httpStatus;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")

@@ -3,7 +3,6 @@ package org.example.config;
 import jakarta.servlet.FilterRegistration;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletRegistration;
-import org.hibernate.Hibernate;
 import org.springdoc.core.configuration.SpringDocConfiguration;
 import org.springdoc.core.configuration.SpringDocUIConfiguration;
 import org.springdoc.core.properties.SpringDocConfigProperties;

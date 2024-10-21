@@ -8,11 +8,6 @@ import org.example.dto.request.TraineeDeletionByUsernameRequestDto;
 import org.example.dto.request.TraineeRetrievalByUsernameRequestDto;
 import org.example.dto.request.TraineeSwitchActivationStateRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
-import org.example.dto.response.TraineeCreationResponseDto;
-import org.example.dto.response.TraineeDeletionResponseDto;
-import org.example.dto.response.TraineeRetrievalResponseDto;
-import org.example.dto.response.TraineeSwitchActivationStateResponseDto;
-import org.example.dto.response.TraineeUpdateResponseDto;
 import org.example.service.core.TraineeService;
 import org.example.service.core.UserService;
 import org.springframework.http.HttpStatus;
@@ -36,17 +31,17 @@ public class TraineeValidator {
     /**
      * Validate Trainee Creation Request Dto.
      */
-    public RestResponse<TraineeCreationResponseDto> validateCreateTrainee(TraineeCreationRequestDto requestDto) {
+    public RestResponse validateCreateTrainee(TraineeCreationRequestDto requestDto) {
         Assert.notNull(requestDto, "TraineeCreationRequestDto must not be null");
         String firstName = requestDto.getFirstName();
         String lastName = requestDto.getLastName();
 
         if (firstName == null || firstName.isEmpty()) {
-            return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
+            return new RestResponse(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
                 List.of("first name is required"));
         }
         if (lastName == null || lastName.isEmpty()) {
-            return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
+            return new RestResponse(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
                 List.of("last name is required"));
         }
 
@@ -56,36 +51,36 @@ public class TraineeValidator {
     /**
      * Validate Trainee Update Request Dto.
      */
-    public RestResponse<TraineeUpdateResponseDto> validateUpdateTrainee(TraineeUpdateRequestDto requestDto) {
+    public RestResponse validateUpdateTrainee(TraineeUpdateRequestDto requestDto) {
 
         Assert.notNull(requestDto, "TraineeUpdateRequestDto must not be null");
 
         String username = requestDto.getUsername();
         if (username == null || username.isEmpty()) {
-            return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
+            return new RestResponse(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
                 List.of("Username is required"));
         }
 
         String firstName = requestDto.getFirstName();
         if (firstName == null || firstName.isEmpty()) {
-            return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
+            return new RestResponse(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
                 List.of("First name is required"));
         }
 
         String lastName = requestDto.getLastName();
         if (lastName == null || lastName.isEmpty()) {
-            return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
+            return new RestResponse(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
                 List.of("Last name is required"));
         }
 
         Boolean isActive = requestDto.getIsActive();
         if (isActive == null) {
-            return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
+            return new RestResponse(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
                 List.of("is-active field is required"));
         }
 
         if (userService.findByUsername(username).isEmpty()) {
-            return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
+            return new RestResponse(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
                 List.of("User does not exist"));
         }
 
@@ -95,18 +90,18 @@ public class TraineeValidator {
     /**
      * Validate Trainee Retrieval by Username Request Dto.
      */
-    public RestResponse<TraineeRetrievalResponseDto> validateRetrieveTrainee(
+    public RestResponse validateRetrieveTrainee(
         TraineeRetrievalByUsernameRequestDto requestDto) {
 
         Assert.notNull(requestDto, "TraineeRetrievalByUsernameRequestDto must not be null");
         String username = requestDto.getUsername();
         if (username == null || username.isEmpty()) {
-            return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
+            return new RestResponse(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
                 List.of("Username is required"));
         }
 
         if (traineeService.findByUsername(username).isEmpty()) {
-            return new RestResponse<>(
+            return new RestResponse(
                 null, HttpStatus.NOT_FOUND, LocalDateTime.now(),
                 List.of(String.format("Trainee with a username of %s not found", username)));
         }
@@ -117,19 +112,19 @@ public class TraineeValidator {
     /**
      * Validate Trainee Deletion by Username Request Dto.
      */
-    public RestResponse<TraineeDeletionResponseDto> validateDeleteTrainee(
+    public RestResponse validateDeleteTrainee(
         TraineeDeletionByUsernameRequestDto requestDto) {
 
         Assert.notNull(requestDto, "TraineeDeletionByUsernameRequestDto must not be null");
 
         String username = requestDto.getUsername();
         if (username == null || username.isEmpty()) {
-            return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
+            return new RestResponse(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
                 List.of("Username is required"));
         }
 
         if (traineeService.findByUsername(username).isEmpty()) {
-            return new RestResponse<>(
+            return new RestResponse(
                 null, HttpStatus.NOT_FOUND, LocalDateTime.now(),
                 List.of(String.format("Trainee with a username of %s not found", username)));
         }
@@ -140,17 +135,17 @@ public class TraineeValidator {
     /**
      * Validate Trainee Switch Activation State Request Dto.
      */
-    public RestResponse<TraineeSwitchActivationStateResponseDto> validateSwitchActivationState(
+    public RestResponse validateSwitchActivationState(
         TraineeSwitchActivationStateRequestDto requestDto) {
 
         String username = requestDto.getUsername();
         if (username == null || username.isEmpty()) {
-            return new RestResponse<>(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
+            return new RestResponse(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(),
                 List.of("Username is required"));
         }
 
         if (traineeService.findByUsername(username).isEmpty()) {
-            return new RestResponse<>(
+            return new RestResponse(
                 null, HttpStatus.NOT_FOUND, LocalDateTime.now(),
                 List.of(String.format("Trainee with a username of %s not found", username)));
         }

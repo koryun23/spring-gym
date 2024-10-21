@@ -13,9 +13,7 @@ import org.example.dto.request.TraineeSwitchActivationStateRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
 import org.example.dto.response.TraineeCreationResponseDto;
 import org.example.dto.response.TraineeDeletionResponseDto;
-import org.example.dto.response.TraineeRetrievalResponseDto;
 import org.example.dto.response.TraineeSwitchActivationStateResponseDto;
-import org.example.dto.response.TraineeUpdateResponseDto;
 import org.example.entity.TraineeEntity;
 import org.example.mapper.trainee.TraineeMapper;
 import org.example.service.core.AuthenticatorService;
@@ -73,15 +71,16 @@ public class TraineeController {
      * Trainee registration.
      */
     @PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<RestResponse<TraineeCreationResponseDto>> register(
+    public ResponseEntity<RestResponse> register(
         @RequestBody TraineeCreationRequestDto requestDto) {
 
         loggingService.storeTransactionId();
 
-        log.info("{}, Attempting a registration of a trainee according to the request - {}", MDC.get("transactionId"), requestDto);
+        log.info("{}, Attempting a registration of a trainee according to the request - {}", MDC.get("transactionId"),
+            requestDto);
 
         // validations
-        RestResponse<TraineeCreationResponseDto> restResponse = traineeValidator.validateCreateTrainee(requestDto);
+        RestResponse restResponse = traineeValidator.validateCreateTrainee(requestDto);
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
         }
@@ -94,8 +93,8 @@ public class TraineeController {
         idService.autoIncrement();
 
         // response
-        restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
-        ResponseEntity<RestResponse<TraineeCreationResponseDto>> responseEntity =
+        restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        ResponseEntity<RestResponse> responseEntity =
             new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
 
         log.info("Response of a trainee registration - {}", restResponse);
@@ -108,7 +107,7 @@ public class TraineeController {
      * Trainee retrieval.
      */
     @GetMapping("/{username}")
-    public ResponseEntity<RestResponse<TraineeRetrievalResponseDto>> retrieve(
+    public ResponseEntity<RestResponse> retrieve(
         @PathVariable(value = "username") String username, HttpServletRequest httpServletRequest) {
 
         loggingService.storeTransactionId();
@@ -120,17 +119,17 @@ public class TraineeController {
         if (authenticatorService.authFail(httpServletRequest.getHeader("username"),
             httpServletRequest.getHeader("password"))) {
             return new ResponseEntity<>(
-                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
                     List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
         }
 
-        RestResponse<TraineeRetrievalResponseDto> restResponse = traineeValidator.validateRetrieveTrainee(requestDto);
+        RestResponse restResponse = traineeValidator.validateRetrieveTrainee(requestDto);
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
         }
 
         // service and mapper calls + response
-        restResponse = new RestResponse<>(
+        restResponse = new RestResponse(
             traineeMapper.mapTraineeEntityToTraineeRetrievalResponseDto(traineeService.findByUsername(username).get()),
             HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
@@ -144,7 +143,7 @@ public class TraineeController {
      * Trainee update.
      */
     @PutMapping(value = "/update", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<RestResponse<TraineeUpdateResponseDto>> update(
+    public ResponseEntity<RestResponse> update(
         @RequestBody TraineeUpdateRequestDto requestDto, HttpServletRequest httpServletRequest) {
 
         loggingService.storeTransactionId();
@@ -155,11 +154,11 @@ public class TraineeController {
         if (authenticatorService.authFail(httpServletRequest.getHeader("username"),
             httpServletRequest.getHeader("password"))) {
             return new ResponseEntity<>(
-                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
                     List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
         }
 
-        RestResponse<TraineeUpdateResponseDto> restResponse = traineeValidator.validateUpdateTrainee(requestDto);
+        RestResponse restResponse = traineeValidator.validateUpdateTrainee(requestDto);
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
         }
@@ -171,7 +170,7 @@ public class TraineeController {
 
         // response
         restResponse =
-            new RestResponse<>(traineeMapper.mapTraineeEntityToTraineeUpdateResponseDto(traineeEntity), HttpStatus.OK,
+            new RestResponse(traineeMapper.mapTraineeEntityToTraineeUpdateResponseDto(traineeEntity), HttpStatus.OK,
                 LocalDateTime.now(), Collections.emptyList());
 
         log.info("Response of a trainee update - {}", restResponse);
@@ -184,7 +183,7 @@ public class TraineeController {
      * Trainee deletion by username.
      */
     @DeleteMapping("/{username}")
-    public ResponseEntity<RestResponse<TraineeDeletionResponseDto>> delete(
+    public ResponseEntity<RestResponse> delete(
         @PathVariable(value = "username") String username, HttpServletRequest httpServletRequest) {
 
         loggingService.storeTransactionId();
@@ -196,11 +195,11 @@ public class TraineeController {
         if (authenticatorService.authFail(httpServletRequest.getHeader("username"),
             httpServletRequest.getHeader("password"))) {
             return new ResponseEntity<>(
-                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
                     List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
         }
 
-        RestResponse<TraineeDeletionResponseDto> restResponse = traineeValidator.validateDeleteTrainee(requestDto);
+        RestResponse restResponse = traineeValidator.validateDeleteTrainee(requestDto);
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
         }
@@ -210,7 +209,7 @@ public class TraineeController {
 
         // response
         restResponse =
-            new RestResponse<>(new TraineeDeletionResponseDto(HttpStatus.OK), HttpStatus.OK, LocalDateTime.now(),
+            new RestResponse(new TraineeDeletionResponseDto(HttpStatus.OK), HttpStatus.OK, LocalDateTime.now(),
                 Collections.emptyList());
 
         log.info("Response of a trainee deletion - {}", restResponse);
@@ -223,7 +222,7 @@ public class TraineeController {
      * Trainee switch activation state.
      */
     @PatchMapping(value = "/switch-active/{username}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<RestResponse<TraineeSwitchActivationStateResponseDto>> switchActivationState(
+    public ResponseEntity<RestResponse> switchActivationState(
         @PathVariable("username") String username, HttpServletRequest httpServletRequest) {
 
         loggingService.storeTransactionId();
@@ -235,11 +234,11 @@ public class TraineeController {
         if (authenticatorService.authFail(httpServletRequest.getHeader("username"),
             httpServletRequest.getHeader("password"))) {
             return new ResponseEntity<>(
-                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
                     List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
         }
 
-        RestResponse<TraineeSwitchActivationStateResponseDto> restResponse =
+        RestResponse restResponse =
             traineeValidator.validateSwitchActivationState(requestDto);
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
@@ -251,7 +250,7 @@ public class TraineeController {
         // response
         TraineeSwitchActivationStateResponseDto responseDto =
             new TraineeSwitchActivationStateResponseDto(HttpStatus.OK);
-        restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Response of switching the activation state of a trainee - {}", restResponse);
 

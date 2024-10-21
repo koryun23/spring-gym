@@ -36,7 +36,8 @@ public class AuthController {
     /**
      * Constructor.
      */
-    public AuthController(LoggingService loggingService, UserService userService, UserMapper userMapper, UserValidator userValidator,
+    public AuthController(LoggingService loggingService, UserService userService, UserMapper userMapper,
+                          UserValidator userValidator,
                           AuthenticatorService authenticatorService) {
         this.loggingService = loggingService;
         this.userService = userService;
@@ -49,7 +50,7 @@ public class AuthController {
      * Login.
      */
     @GetMapping(value = "/login")
-    public ResponseEntity<RestResponse<UserRetrievalResponseDto>> login(HttpServletRequest request) {
+    public ResponseEntity<RestResponse> login(HttpServletRequest request) {
         log.info("Attempting a user log in");
         // no validations
 
@@ -64,9 +65,9 @@ public class AuthController {
         UserRetrievalResponseDto responseDto =
             new UserRetrievalResponseDto(userExists ? HttpStatus.OK : HttpStatus.NOT_FOUND);
 
-        RestResponse<UserRetrievalResponseDto> restResponse =
-            new RestResponse<>(responseDto, responseDto.getHttpStatus(), LocalDateTime.now(), Collections.emptyList());
-        ResponseEntity<RestResponse<UserRetrievalResponseDto>> responseEntity =
+        RestResponse restResponse =
+            new RestResponse(responseDto, responseDto.getHttpStatus(), LocalDateTime.now(), Collections.emptyList());
+        ResponseEntity<RestResponse> responseEntity =
             new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
 
         log.info("Response of logging in - {}", restResponse);
@@ -79,7 +80,7 @@ public class AuthController {
      * Change password.
      */
     @PutMapping(value = "/change-password", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<RestResponse<UserChangePasswordResponseDto>> changePassword(
+    public ResponseEntity<RestResponse> changePassword(
         @RequestBody UserChangePasswordRequestDto requestDto, HttpServletRequest request) {
         log.info("Attempting password change, request - {}", requestDto);
 
@@ -88,12 +89,12 @@ public class AuthController {
 
         // authentication
         if (authenticatorService.authFail(request.getHeader("username"), request.getHeader("password"))) {
-            return new ResponseEntity<>(new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+            return new ResponseEntity<>(new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
                 List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
         }
 
         // validations
-        RestResponse<UserChangePasswordResponseDto> restResponse = userValidator.validateChangePassword(requestDto);
+        RestResponse restResponse = userValidator.validateChangePassword(requestDto);
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
         }
@@ -103,7 +104,7 @@ public class AuthController {
 
         // response
         UserChangePasswordResponseDto responseDto = new UserChangePasswordResponseDto(HttpStatus.OK);
-        restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Password change response - {}", restResponse);
 

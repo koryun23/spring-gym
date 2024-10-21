@@ -72,14 +72,14 @@ public class TrainerController {
      * Trainer registration.
      */
     @PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<RestResponse<TrainerCreationResponseDto>> register(
+    public ResponseEntity<RestResponse> register(
         @RequestBody TrainerCreationRequestDto requestDto) {
 
         loggingService.storeTransactionId();
         log.info("Attempting a registration of a trainer according to the {}", requestDto);
 
         // validations
-        RestResponse<TrainerCreationResponseDto> restResponse = trainerValidator.validateCreateTrainer(requestDto);
+        RestResponse restResponse = trainerValidator.validateCreateTrainer(requestDto);
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
         }
@@ -92,7 +92,7 @@ public class TrainerController {
         idService.autoIncrement();
 
         // response
-        restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Response of attempted registration - {}", restResponse);
 
@@ -104,7 +104,7 @@ public class TrainerController {
      * Get trainers not assigned to a trainee.
      */
     @GetMapping(value = "/not-assigned-to-trainee/{username}")
-    public ResponseEntity<RestResponse<TrainerListRetrievalResponseDto>> retrieveAllTrainersNotAssignedToTrainee(
+    public ResponseEntity<RestResponse> retrieveAllTrainersNotAssignedToTrainee(
         @PathVariable(value = "username") String username, HttpServletRequest request) {
 
         loggingService.storeTransactionId();
@@ -114,10 +114,10 @@ public class TrainerController {
         if (authenticatorService.authFail(request.getHeader("username"),
             request.getHeader("password"))) {
             return new ResponseEntity<>(
-                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
                     List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
         }
-        RestResponse<TrainerListRetrievalResponseDto> restResponse =
+        RestResponse restResponse =
             trainerValidator.validateRetrieveAllTrainersNotAssignedToTrainee(
                 new RetrieveAllTrainersNotAssignedToTraineeRequestDto(username));
 
@@ -131,7 +131,7 @@ public class TrainerController {
                 .toList(), username);
 
         // response
-        restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Response of retrieval of trainers not assigned to a trainee - {}", restResponse);
 
@@ -143,7 +143,7 @@ public class TrainerController {
      * Update trainer.
      */
     @PutMapping(value = "/update", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<RestResponse<TrainerUpdateResponseDto>> update(
+    public ResponseEntity<RestResponse> update(
         @RequestBody TrainerUpdateRequestDto requestDto, HttpServletRequest request) {
 
         loggingService.storeTransactionId();
@@ -154,11 +154,11 @@ public class TrainerController {
         if (authenticatorService.authFail(request.getHeader("username"),
             request.getHeader("password"))) {
             return new ResponseEntity<>(
-                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
                     List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
         }
 
-        RestResponse<TrainerUpdateResponseDto> restResponse = trainerValidator.validateUpdateTrainer(requestDto);
+        RestResponse restResponse = trainerValidator.validateUpdateTrainer(requestDto);
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
         }
@@ -169,7 +169,7 @@ public class TrainerController {
             trainerService.update(trainerMapper.mapTrainerUpdateRequestDtoToTrainerEntity(requestDto)));
 
         // response
-        restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Response of update of trainers - {}", restResponse);
 
@@ -181,7 +181,7 @@ public class TrainerController {
      * Retrieve a trainer.
      */
     @GetMapping("/{username}")
-    public ResponseEntity<RestResponse<TrainerRetrievalResponseDto>> retrieve(
+    public ResponseEntity<RestResponse> retrieve(
         @PathVariable(value = "username") String username, HttpServletRequest request) {
 
         loggingService.storeTransactionId();
@@ -193,10 +193,10 @@ public class TrainerController {
         if (authenticatorService.authFail(request.getHeader("username"),
             request.getHeader("password"))) {
             return new ResponseEntity<>(
-                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
                     List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
         }
-        RestResponse<TrainerRetrievalResponseDto> restResponse = trainerValidator.validateRetrieveTrainer(requestDto);
+        RestResponse restResponse = trainerValidator.validateRetrieveTrainer(requestDto);
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
         }
@@ -206,7 +206,7 @@ public class TrainerController {
             trainerService.findByUsername(requestDto.getUsername()).get());
 
         // response
-        restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Response of trainer retrieval - {}", restResponse);
 
@@ -218,7 +218,7 @@ public class TrainerController {
      * Switch activation state of a trainee.
      */
     @PatchMapping(value = "/switch-active/{username}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<RestResponse<TrainerSwitchActivationStateResponseDto>> switchActivationState(
+    public ResponseEntity<RestResponse> switchActivationState(
         @PathVariable(value = "username") String username, HttpServletRequest request) {
 
         loggingService.storeTransactionId();
@@ -231,10 +231,10 @@ public class TrainerController {
         if (authenticatorService.authFail(request.getHeader("username"),
             request.getHeader("password"))) {
             return new ResponseEntity<>(
-                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
                     List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
         }
-        RestResponse<TrainerSwitchActivationStateResponseDto> restResponse =
+        RestResponse restResponse =
             trainerValidator.validateSwitchActivationState(requestDto);
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
@@ -246,7 +246,7 @@ public class TrainerController {
         // response
         TrainerSwitchActivationStateResponseDto responseDto =
             new TrainerSwitchActivationStateResponseDto(HttpStatus.OK);
-        restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Response of switching the activation state of a trainer - {}", restResponse);
 
@@ -260,7 +260,7 @@ public class TrainerController {
      * Update list of trainers of a trainee.
      */
     @PutMapping(value = "/trainee-trainers", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<RestResponse<TraineeTrainerListUpdateResponseDto>> updateTraineeTrainerList(
+    public ResponseEntity<RestResponse> updateTraineeTrainerList(
         @RequestBody TraineeTrainerListUpdateRequestDto requestDto, HttpServletRequest request) {
 
         loggingService.storeTransactionId();
@@ -271,10 +271,10 @@ public class TrainerController {
         if (authenticatorService.authFail(request.getHeader("username"),
             request.getHeader("password"))) {
             return new ResponseEntity<>(
-                new RestResponse<>(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
                     List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
         }
-        RestResponse<TraineeTrainerListUpdateResponseDto> restResponse =
+        RestResponse restResponse =
             trainerValidator.validateUpdateTraineeTrainerList(requestDto);
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
@@ -288,7 +288,7 @@ public class TrainerController {
         // response
         TraineeTrainerListUpdateResponseDto responseDto =
             new TraineeTrainerListUpdateResponseDto(requestDto.getTrainerDtoList());
-        restResponse = new RestResponse<>(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Response of updating trainee's trainers list - {}", restResponse);
 
