@@ -3,6 +3,7 @@ package org.example.config;
 import jakarta.servlet.FilterRegistration;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletRegistration;
+import org.example.filter.MdcFilter;
 import org.springdoc.core.configuration.SpringDocConfiguration;
 import org.springdoc.core.configuration.SpringDocUIConfiguration;
 import org.springdoc.core.properties.SpringDocConfigProperties;
@@ -42,6 +43,9 @@ public class MainWebInitializer implements WebApplicationInitializer {
         encodingFilter.setInitParameter("Content-Type", "application/json");
         encodingFilter.addMappingForUrlPatterns(null, true, "/*");
 
+        FilterRegistration.Dynamic mdcFilter = servletContext.addFilter("MdcFilter", new MdcFilter());
+        mdcFilter.addMappingForUrlPatterns(null, true, "/*");
+
         rootContext.register(
             this.getClass(),
             CustomSwaggerConfig.class,
@@ -55,7 +59,8 @@ public class MainWebInitializer implements WebApplicationInitializer {
             SwaggerConfig.class,
             SwaggerUiConfigProperties.class,
             SwaggerUiOAuthProperties.class,
-            SpringDocUIConfiguration.class
+            SpringDocUIConfiguration.class,
+            MdcFilter.class
         );
     }
 }

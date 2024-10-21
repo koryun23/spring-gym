@@ -9,7 +9,6 @@ import org.example.dto.RestResponse;
 import org.example.dto.response.TrainingTypeListRetrievalResponseDto;
 import org.example.mapper.training.TrainingTypeMapper;
 import org.example.service.core.AuthenticatorService;
-import org.example.service.core.LoggingService;
 import org.example.service.core.TrainingTypeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/training-type")
+@RequestMapping(value = "/training-types")
 public class TrainingTypeController {
 
-    private final LoggingService loggingService;
     private final TrainingTypeService trainingTypeService;
     private final TrainingTypeMapper trainingTypeMapper;
     private final AuthenticatorService authenticatorService;
@@ -30,10 +28,9 @@ public class TrainingTypeController {
     /**
      * Constructor.
      */
-    public TrainingTypeController(LoggingService loggingService, TrainingTypeService trainingTypeService,
+    public TrainingTypeController(TrainingTypeService trainingTypeService,
                                   TrainingTypeMapper trainingTypeMapper,
                                   AuthenticatorService authenticatorService) {
-        this.loggingService = loggingService;
         this.trainingTypeService = trainingTypeService;
         this.trainingTypeMapper = trainingTypeMapper;
         this.authenticatorService = authenticatorService;
@@ -45,8 +42,6 @@ public class TrainingTypeController {
     @GetMapping
     public ResponseEntity<RestResponse> retrieveTrainingTypes(
         HttpServletRequest request) {
-
-        loggingService.storeTransactionId();
 
         log.info("Attempting the retrieval of training types");
 
@@ -69,7 +64,6 @@ public class TrainingTypeController {
 
         log.info("Response of training types retrieval - {}", restResponse);
 
-        loggingService.clear();
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
 }

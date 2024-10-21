@@ -18,7 +18,6 @@ import org.example.entity.TraineeEntity;
 import org.example.mapper.trainee.TraineeMapper;
 import org.example.service.core.AuthenticatorService;
 import org.example.service.core.IdService;
-import org.example.service.core.LoggingService;
 import org.example.service.core.TraineeService;
 import org.example.service.core.UserService;
 import org.example.validator.TraineeValidator;
@@ -41,7 +40,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/trainees")
 public class TraineeController {
 
-    private final LoggingService loggingService;
     private final TraineeService traineeService;
     private final UserService userService;
     private final TraineeMapper traineeMapper;
@@ -52,13 +50,12 @@ public class TraineeController {
     /**
      * Constructor.
      */
-    public TraineeController(LoggingService loggingService, TraineeService traineeService,
+    public TraineeController(TraineeService traineeService,
                              UserService userService,
                              TraineeMapper traineeMapper,
                              @Qualifier("traineeIdService")
                              IdService idService,
                              TraineeValidator traineeValidator, AuthenticatorService authenticatorService) {
-        this.loggingService = loggingService;
         this.traineeService = traineeService;
         this.userService = userService;
         this.traineeMapper = traineeMapper;
@@ -74,16 +71,11 @@ public class TraineeController {
     public ResponseEntity<RestResponse> register(
         @RequestBody TraineeCreationRequestDto requestDto) {
 
-        loggingService.storeTransactionId();
-
         log.info("{}, Attempting a registration of a trainee according to the request - {}", MDC.get("transactionId"),
             requestDto);
 
         // validations
-        RestResponse restResponse = traineeValidator.validateCreateTrainee(requestDto);
-        if (restResponse != null) {
-            return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
-        }
+        traineeValidator.validateCreateTrainee(requestDto);
 
         // service and mapper calls
         traineeMapper.mapTraineeCreationRequestDto(requestDto);
@@ -93,13 +85,12 @@ public class TraineeController {
         idService.autoIncrement();
 
         // response
-        restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
-        ResponseEntity<RestResponse> responseEntity =
-            new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
+        RestResponse restResponse =
+            new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        ResponseEntity<RestResponse> responseEntity = new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
 
         log.info("Response of a trainee registration - {}", restResponse);
 
-        loggingService.clear();
         return responseEntity;
     }
 
@@ -109,8 +100,6 @@ public class TraineeController {
     @GetMapping("/{username}")
     public ResponseEntity<RestResponse> retrieve(
         @PathVariable(value = "username") String username, HttpServletRequest httpServletRequest) {
-
-        loggingService.storeTransactionId();
 
         log.info("Attempting a retrieval of a trainee, username - {}", username);
         TraineeRetrievalByUsernameRequestDto requestDto = new TraineeRetrievalByUsernameRequestDto(username);
@@ -135,7 +124,6 @@ public class TraineeController {
 
         log.info("Response of a trainee retrieval - {}", restResponse);
 
-        loggingService.clear();
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
 
@@ -145,8 +133,6 @@ public class TraineeController {
     @PutMapping(value = "/update", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse> update(
         @RequestBody TraineeUpdateRequestDto requestDto, HttpServletRequest httpServletRequest) {
-
-        loggingService.storeTransactionId();
 
         log.info("Attempting an update of a trainee, request - {}", requestDto);
 
@@ -175,7 +161,6 @@ public class TraineeController {
 
         log.info("Response of a trainee update - {}", restResponse);
 
-        loggingService.clear();
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
 
@@ -185,8 +170,6 @@ public class TraineeController {
     @DeleteMapping("/{username}")
     public ResponseEntity<RestResponse> delete(
         @PathVariable(value = "username") String username, HttpServletRequest httpServletRequest) {
-
-        loggingService.storeTransactionId();
 
         log.info("Attempting a deletion of a trainee, username - {}", username);
         TraineeDeletionByUsernameRequestDto requestDto = new TraineeDeletionByUsernameRequestDto(username);
@@ -214,7 +197,6 @@ public class TraineeController {
 
         log.info("Response of a trainee deletion - {}", restResponse);
 
-        loggingService.clear();
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
 
@@ -224,8 +206,6 @@ public class TraineeController {
     @PatchMapping(value = "/switch-active/{username}")
     public ResponseEntity<RestResponse> switchActivationState(
         @PathVariable("username") String username, HttpServletRequest httpServletRequest) {
-
-        loggingService.storeTransactionId();
 
         log.info("Attempting to switch the activation state of a trainee, username - {}", username);
         TraineeSwitchActivationStateRequestDto requestDto = new TraineeSwitchActivationStateRequestDto(username);
@@ -254,7 +234,6 @@ public class TraineeController {
 
         log.info("Response of switching the activation state of a trainee - {}", restResponse);
 
-        loggingService.clear();
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
 }

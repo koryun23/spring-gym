@@ -17,7 +17,6 @@ import org.example.dto.response.TrainingRetrievalResponseDto;
 import org.example.entity.TrainingType;
 import org.example.mapper.training.TrainingMapper;
 import org.example.service.core.AuthenticatorService;
-import org.example.service.core.LoggingService;
 import org.example.service.core.TrainingService;
 import org.example.validator.TrainingValidator;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,10 +32,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/training")
+@RequestMapping(value = "/trainings")
 public class TrainingController {
 
-    private final LoggingService loggingService;
     private final TrainingService trainingService;
     private final TrainingMapper trainingMapper;
     private final TrainingValidator trainingValidator;
@@ -45,10 +43,9 @@ public class TrainingController {
     /**
      * Constructor.
      */
-    public TrainingController(LoggingService loggingService, TrainingService trainingService,
+    public TrainingController(TrainingService trainingService,
                               TrainingMapper trainingMapper,
                               TrainingValidator trainingValidator, AuthenticatorService authenticatorService) {
-        this.loggingService = loggingService;
         this.trainingService = trainingService;
         this.trainingMapper = trainingMapper;
         this.trainingValidator = trainingValidator;
@@ -62,7 +59,7 @@ public class TrainingController {
     public ResponseEntity<RestResponse> create(@RequestBody
                                                TrainingCreationRequestDto requestDto,
                                                HttpServletRequest request) {
-        loggingService.storeTransactionId();
+
         log.info("Attempting to create a training, request - {}", requestDto);
 
         // validations
@@ -86,7 +83,6 @@ public class TrainingController {
 
         log.info("Response of training creation - {}", restResponse);
 
-        loggingService.clear();
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
 
@@ -101,8 +97,6 @@ public class TrainingController {
         @RequestParam(required = false) String trainerUsername,
         @RequestParam(required = false) String trainingType,
         HttpServletRequest request) {
-
-        loggingService.storeTransactionId();
 
         log.info("Attempting to retrieve trainings of a trainee, username - {}", username);
         TrainingListRetrievalByTraineeRequestDto requestDto =
@@ -149,8 +143,6 @@ public class TrainingController {
 
         log.info("Result of retrieving trainings of a trainee - {}", restResponse);
 
-        loggingService.clear();
-
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
 
@@ -164,8 +156,6 @@ public class TrainingController {
         @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String to,
         @RequestParam(value = "trainee", required = false) String traineeUsername,
         HttpServletRequest request) {
-
-        loggingService.storeTransactionId();
 
         log.info("Attempting to retrieve trainings of a trainer, username - {}", username);
 
@@ -206,7 +196,6 @@ public class TrainingController {
 
         log.info("Result of retrieving trainings of a trainer - {}", restResponse);
 
-        loggingService.clear();
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
 }

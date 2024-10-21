@@ -22,7 +22,6 @@ import org.example.dto.response.TrainerUpdateResponseDto;
 import org.example.mapper.trainer.TrainerMapper;
 import org.example.service.core.AuthenticatorService;
 import org.example.service.core.IdService;
-import org.example.service.core.LoggingService;
 import org.example.service.core.TrainerService;
 import org.example.service.core.UserService;
 import org.example.validator.TrainerValidator;
@@ -43,7 +42,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/trainers")
 public class TrainerController {
 
-    private final LoggingService loggingService;
     private final TrainerService trainerService;
     private final UserService userService;
     private final IdService idService;
@@ -54,12 +52,11 @@ public class TrainerController {
     /**
      * Constructor.
      */
-    public TrainerController(LoggingService loggingService, TrainerService trainerService,
+    public TrainerController(TrainerService trainerService,
                              UserService userService,
                              @Qualifier("trainerIdService") IdService idService,
                              TrainerMapper trainerMapper,
                              TrainerValidator trainerValidator, AuthenticatorService authenticatorService) {
-        this.loggingService = loggingService;
         this.trainerService = trainerService;
         this.userService = userService;
         this.idService = idService;
@@ -75,7 +72,6 @@ public class TrainerController {
     public ResponseEntity<RestResponse> register(
         @RequestBody TrainerCreationRequestDto requestDto) {
 
-        loggingService.storeTransactionId();
         log.info("Attempting a registration of a trainer according to the {}", requestDto);
 
         // validations
@@ -96,7 +92,6 @@ public class TrainerController {
 
         log.info("Response of attempted registration - {}", restResponse);
 
-        loggingService.clear();
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
 
@@ -107,7 +102,6 @@ public class TrainerController {
     public ResponseEntity<RestResponse> retrieveAllTrainersNotAssignedToTrainee(
         @PathVariable(value = "username") String username, HttpServletRequest request) {
 
-        loggingService.storeTransactionId();
         log.info("Attempting a retrieval of trainers not assigned to trainee with a username of {}", username);
 
         // validations
@@ -135,7 +129,6 @@ public class TrainerController {
 
         log.info("Response of retrieval of trainers not assigned to a trainee - {}", restResponse);
 
-        loggingService.clear();
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
 
@@ -145,8 +138,6 @@ public class TrainerController {
     @PutMapping(value = "/update", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse> update(
         @RequestBody TrainerUpdateRequestDto requestDto, HttpServletRequest request) {
-
-        loggingService.storeTransactionId();
 
         log.info("Attempting an update of a trainer, request - {}", requestDto);
 
@@ -173,7 +164,6 @@ public class TrainerController {
 
         log.info("Response of update of trainers - {}", restResponse);
 
-        loggingService.clear();
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
 
@@ -183,8 +173,6 @@ public class TrainerController {
     @GetMapping("/{username}")
     public ResponseEntity<RestResponse> retrieve(
         @PathVariable(value = "username") String username, HttpServletRequest request) {
-
-        loggingService.storeTransactionId();
 
         log.info("Attempting a retrieval of a single trainer profile, username - {}", username);
         TrainerRetrievalByUsernameRequestDto requestDto = new TrainerRetrievalByUsernameRequestDto(username);
@@ -210,7 +198,6 @@ public class TrainerController {
 
         log.info("Response of trainer retrieval - {}", restResponse);
 
-        loggingService.clear();
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
 
@@ -220,8 +207,6 @@ public class TrainerController {
     @PatchMapping(value = "/switch-active/{username}")
     public ResponseEntity<RestResponse> switchActivationState(
         @PathVariable(value = "username") String username, HttpServletRequest request) {
-
-        loggingService.storeTransactionId();
 
         log.info("Attempting to switch the activation state of a trainer, username - {}", username);
         TrainerSwitchActivationStateRequestDto requestDto =
@@ -250,7 +235,6 @@ public class TrainerController {
 
         log.info("Response of switching the activation state of a trainer - {}", restResponse);
 
-        loggingService.clear();
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
 
@@ -262,8 +246,6 @@ public class TrainerController {
     @PutMapping(value = "/trainee-trainers", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse> updateTraineeTrainerList(
         @RequestBody TraineeTrainerListUpdateRequestDto requestDto, HttpServletRequest request) {
-
-        loggingService.storeTransactionId();
 
         log.info("Attempting to update the trainers of a trainee, request - {}", requestDto);
 
@@ -292,7 +274,6 @@ public class TrainerController {
 
         log.info("Response of updating trainee's trainers list - {}", restResponse);
 
-        loggingService.clear();
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
 }
