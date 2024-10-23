@@ -54,7 +54,9 @@ public class TrainerMapperImpl implements TrainerMapper {
     public TrainerEntity mapTrainerCreationRequestDtoToTrainerEntity(TrainerCreationRequestDto requestDto) {
         Assert.notNull(requestDto, "TrainerCreationRequestDto must not be null");
         return new TrainerEntity(
-            userService.getByUsername(requestDto.getUsername()),
+            userService.getByUsername(
+                usernamePasswordService.username(requestDto.getFirstName(), requestDto.getLastName(), idService.getId(),
+                    "trainer")),
             trainingTypeService.get(requestDto.getTrainingTypeId())
         );
     }
@@ -217,12 +219,12 @@ public class TrainerMapperImpl implements TrainerMapper {
 
     @Override
     public TrainerCreationRequestDto mapTrainerCreationRequestDto(TrainerCreationRequestDto requestDto) {
-        Assert.notNull(requestDto, "TrainerCreationRequestDto must not be null");
-
-        requestDto.setUsername(
-            usernamePasswordService.username(requestDto.getFirstName(), requestDto.getLastName(), idService.getId(),
-                "trainer"));
-        requestDto.setPassword(usernamePasswordService.password());
+//        Assert.notNull(requestDto, "TrainerCreationRequestDto must not be null");
+//
+//        requestDto.setUsername(
+//            usernamePasswordService.username(requestDto.getFirstName(), requestDto.getLastName(), idService.getId(),
+//                "trainer"));
+//        requestDto.setPassword(usernamePasswordService.password());
 
         return requestDto;
     }

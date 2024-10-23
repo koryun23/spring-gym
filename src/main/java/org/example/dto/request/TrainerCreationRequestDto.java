@@ -1,11 +1,13 @@
 package org.example.dto.request;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -13,23 +15,7 @@ import lombok.ToString;
 @ToString
 public class TrainerCreationRequestDto {
 
-    private Long userId;
     private String firstName;
     private String lastName;
-    private String username;
-    private String password;
-    private Boolean isActive;
     private Long trainingTypeId;
-
-    /**
-     * Constructor.
-     */
-    public TrainerCreationRequestDto(String firstName,
-                                     String lastName,
-                                     Long trainingTypeId) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.isActive = true;
-        this.trainingTypeId = trainingTypeId;
-    }
 }

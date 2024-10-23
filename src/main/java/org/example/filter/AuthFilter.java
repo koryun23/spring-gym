@@ -27,6 +27,13 @@ public class AuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
 
+        log.info(request.getRequestURI());
+        if (request.getRequestURI().startsWith("/trainees/register") ||
+            request.getRequestURI().startsWith("/trainers/register")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         log.info("Attempting authentication");
 
         String username = request.getHeader("username");

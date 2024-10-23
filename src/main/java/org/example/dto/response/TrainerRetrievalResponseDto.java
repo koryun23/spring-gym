@@ -1,6 +1,7 @@
 package org.example.dto.response;
 
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.ToString;
 import org.example.dto.plain.TraineeDto;
 import org.example.dto.plain.TrainingTypeDto;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -22,21 +24,4 @@ public class TrainerRetrievalResponseDto {
     private TrainingTypeDto trainingTypeDto;
     private Boolean isActive;
     private List<TraineeDto> trainees;
-
-    /**
-     * Constructor.
-     */
-    public TrainerRetrievalResponseDto(String username,
-                                       String firstName,
-                                       String lastName,
-                                       TrainingTypeDto trainingTypeDto,
-                                       Boolean isActive,
-                                       List<TraineeDto> trainees) {
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.trainingTypeDto = trainingTypeDto;
-        this.isActive = isActive;
-        this.trainees = trainees;
-    }
 }

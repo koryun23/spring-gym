@@ -76,8 +76,6 @@ public class TraineeController {
         traineeValidator.validateCreateTrainee(requestDto);
 
         // service and mapper calls
-        traineeMapper.mapTraineeCreationRequestDto(requestDto);
-        userService.create(traineeMapper.mapTraineeCreationRequestDtoToUserEntity(requestDto));
         TraineeCreationResponseDto responseDto = traineeMapper.mapTraineeEntityToTraineeCreationResponseDto(
             traineeService.create(traineeMapper.mapTraineeCreationRequestDtoToTraineeEntity(requestDto)));
         idService.autoIncrement();

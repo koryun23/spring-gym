@@ -44,7 +44,13 @@ public class TraineeMapperImpl implements TraineeMapper {
     public TraineeEntity mapTraineeCreationRequestDtoToTraineeEntity(TraineeCreationRequestDto requestDto) {
         Assert.notNull(requestDto, "TraineeCreationRequestDto must not be null");
         return new TraineeEntity(
-            userService.getByUsername(requestDto.getUsername()),
+            new UserEntity(
+                requestDto.getFirstName(),
+                requestDto.getLastName(),
+                usernamePasswordService.username(requestDto.getFirstName(), requestDto.getLastName(), idService.getId(), "trainee"),
+                usernamePasswordService.password(),
+                true
+            ),
             requestDto.getDateOfBirth(),
             requestDto.getAddress()
         );
@@ -139,8 +145,9 @@ public class TraineeMapperImpl implements TraineeMapper {
         return new UserEntity(
             requestDto.getFirstName(),
             requestDto.getLastName(),
-            requestDto.getUsername(),
-            requestDto.getPassword(),
+            usernamePasswordService.username(requestDto.getFirstName(), requestDto.getLastName(), idService.getId(),
+                "trainee"),
+            usernamePasswordService.password(),
             true
         );
     }
@@ -157,10 +164,6 @@ public class TraineeMapperImpl implements TraineeMapper {
 
     @Override
     public TraineeCreationRequestDto mapTraineeCreationRequestDto(TraineeCreationRequestDto requestDto) {
-        String firstName = requestDto.getFirstName();
-        String lastName = requestDto.getLastName();
-        requestDto.setUsername(usernamePasswordService.username(firstName, lastName, idService.getId(), "trainee"));
-        requestDto.setPassword(usernamePasswordService.password());
-        return requestDto;
+        return null;
     }
 }

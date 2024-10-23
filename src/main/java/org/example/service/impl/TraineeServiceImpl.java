@@ -2,9 +2,11 @@ package org.example.service.impl;
 
 import java.util.Optional;
 import org.example.entity.TraineeEntity;
+import org.example.entity.UserEntity;
 import org.example.exception.TraineeNotFoundException;
 import org.example.repository.core.TraineeEntityRepository;
 import org.example.service.core.TraineeService;
+import org.example.service.core.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -16,15 +18,18 @@ public class TraineeServiceImpl implements TraineeService {
     private static final Logger LOGGER = LoggerFactory.getLogger(TraineeServiceImpl.class);
 
     private final TraineeEntityRepository traineeDao;
+    private final UserService userService;
 
-    public TraineeServiceImpl(TraineeEntityRepository traineeDao) {
+    public TraineeServiceImpl(TraineeEntityRepository traineeDao, UserService userService) {
         this.traineeDao = traineeDao;
+        this.userService = userService;
     }
 
     @Override
     public TraineeEntity create(TraineeEntity trainee) {
         Assert.notNull(trainee, "TraineeCreateParams must not be null");
         LOGGER.info("Creating a TraineeEntity based on TraineeCreateParams - {}", trainee);
+        userService.create(trainee.getUser());
         TraineeEntity createdTrainee = traineeDao.save(trainee);
         LOGGER.info("Successfully created a TraineeEntity based on TraineeCreateParams - {}, result - {}", trainee,
             trainee);
