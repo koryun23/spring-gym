@@ -140,19 +140,6 @@ public class TraineeMapperImpl implements TraineeMapper {
     }
 
     @Override
-    public UserEntity mapTraineeCreationRequestDtoToUserEntity(TraineeCreationRequestDto requestDto) {
-        Assert.notNull(requestDto, "TraineeCreationRequestDto must not be null");
-        return new UserEntity(
-            requestDto.getFirstName(),
-            requestDto.getLastName(),
-            usernamePasswordService.username(requestDto.getFirstName(), requestDto.getLastName(), idService.getId(),
-                "trainee"),
-            usernamePasswordService.password(),
-            true
-        );
-    }
-
-    @Override
     public UserEntity mapSwitchActivationStateRequestDtoToUserEntity(
         TraineeSwitchActivationStateRequestDto requestDto) {
         Assert.notNull(requestDto, "TraineeSwitchActivationStateRequestDto must not be null");
@@ -160,10 +147,5 @@ public class TraineeMapperImpl implements TraineeMapper {
         UserEntity user = userService.getByUsername(requestDto.getUsername());
         user.setIsActive(!user.getIsActive());
         return user;
-    }
-
-    @Override
-    public TraineeCreationRequestDto mapTraineeCreationRequestDto(TraineeCreationRequestDto requestDto) {
-        return null;
     }
 }

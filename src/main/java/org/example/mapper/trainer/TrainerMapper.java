@@ -23,8 +23,6 @@ public interface TrainerMapper {
 
     TrainerEntity mapTrainerUpdateRequestDtoToTrainerEntity(TrainerUpdateRequestDto requestDto);
 
-    UserEntity mapTrainerCreationRequestDtoToUserEntity(TrainerCreationRequestDto requestDto);
-
     UserEntity mapTrainerUpdateRequestDtoToUserEntity(TrainerUpdateRequestDto requestDto);
 
     UserEntity mapSwitchActivationStateRequestDtoToUserEntity(TrainerSwitchActivationStateRequestDto requestDto);
@@ -36,6 +34,4 @@ public interface TrainerMapper {
     UserEntity mapTrainerDtoToUserEntity(TrainerDto trainerDto);
 
     UserDto mapTrainerEntityToUserDto(TrainerEntity trainerEntity);
-
-    TrainerCreationRequestDto mapTrainerCreationRequestDto(TrainerCreationRequestDto requestDto);
 }
