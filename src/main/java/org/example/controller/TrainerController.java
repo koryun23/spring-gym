@@ -77,8 +77,6 @@ public class TrainerController {
         trainerValidator.validateCreateTrainer(requestDto);
 
         // service and mapper calls
-        trainerMapper.mapTrainerCreationRequestDto(requestDto);
-        userService.create(trainerMapper.mapTrainerCreationRequestDtoToUserEntity(requestDto));
         TrainerCreationResponseDto responseDto = trainerMapper.mapTrainerEntityToTrainerCreationResponseDto(
             trainerService.create(trainerMapper.mapTrainerCreationRequestDtoToTrainerEntity(requestDto)));
         idService.autoIncrement();
@@ -176,7 +174,7 @@ public class TrainerController {
      */
     @PatchMapping(value = "/switch-active/{username}")
     public ResponseEntity<RestResponse> switchActivationState(
-        @PathVariable(value = "username") String username, HttpServletRequest request) {
+        @PathVariable(value = "username") String username) {
 
         log.info("Attempting to switch the activation state of a trainer, username - {}", username);
         TrainerSwitchActivationStateRequestDto requestDto =

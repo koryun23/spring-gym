@@ -10,6 +10,7 @@ import org.example.exception.TrainerNotFoundException;
 import org.example.repository.core.TraineeEntityRepository;
 import org.example.repository.core.TrainerEntityRepository;
 import org.example.service.core.TrainerService;
+import org.example.service.core.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -22,16 +23,20 @@ public class TrainerServiceImpl implements TrainerService {
 
     private final TrainerEntityRepository trainerDao;
     private final TraineeEntityRepository traineeDao;
+    private final UserService userService;
 
-    public TrainerServiceImpl(TraineeEntityRepository traineeDao, TrainerEntityRepository trainerDao) {
+    public TrainerServiceImpl(TraineeEntityRepository traineeDao, TrainerEntityRepository trainerDao,
+                              UserService userService) {
         this.traineeDao = traineeDao;
         this.trainerDao = trainerDao;
+        this.userService = userService;
     }
 
     @Override
     public TrainerEntity create(TrainerEntity trainerEntity) {
         Assert.notNull(trainerEntity, "TrainerCreateParams must not be null");
         LOGGER.info("Creating a TrainerEntity based on TrainerCreateParams - {}", trainerEntity);
+        userService.create(trainerEntity.getUser());
         TrainerEntity createdTrainerEntity = trainerDao.save(trainerEntity);
         LOGGER.info("Successfully created a TrainerEntity based on TrainerCreateParams - {}, result - {}",
             trainerEntity,

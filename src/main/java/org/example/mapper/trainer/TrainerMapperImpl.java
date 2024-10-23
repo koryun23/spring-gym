@@ -54,9 +54,14 @@ public class TrainerMapperImpl implements TrainerMapper {
     public TrainerEntity mapTrainerCreationRequestDtoToTrainerEntity(TrainerCreationRequestDto requestDto) {
         Assert.notNull(requestDto, "TrainerCreationRequestDto must not be null");
         return new TrainerEntity(
-            userService.getByUsername(
+            new UserEntity(
+                requestDto.getFirstName(),
+                requestDto.getLastName(),
                 usernamePasswordService.username(requestDto.getFirstName(), requestDto.getLastName(), idService.getId(),
-                    "trainer")),
+                    "trainer"),
+                usernamePasswordService.password(),
+                true
+            ),
             trainingTypeService.get(requestDto.getTrainingTypeId())
         );
     }
