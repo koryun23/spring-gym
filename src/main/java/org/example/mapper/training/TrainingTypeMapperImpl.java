@@ -9,13 +9,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class TrainingTypeMapperImpl implements TrainingTypeMapper {
 
-
     @Override
     public TrainingTypeListRetrievalResponseDto mapTrainingTypeEntityListToTrainingTypeListRetrievalResponseDto(
         List<TrainingTypeEntity> trainingTypeEntityList) {
         return new TrainingTypeListRetrievalResponseDto(
             trainingTypeEntityList.stream()
-                .map(trainingType -> new TrainingTypeDto(trainingType.getTrainingType())).toList()
+                .map(TrainingTypeEntity::getTrainingType).toList()
         );
     }
 }

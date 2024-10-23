@@ -22,17 +22,14 @@ public class TrainingTypeController {
 
     private final TrainingTypeService trainingTypeService;
     private final TrainingTypeMapper trainingTypeMapper;
-    private final AuthenticatorService authenticatorService;
 
     /**
      * Constructor.
      */
     public TrainingTypeController(TrainingTypeService trainingTypeService,
-                                  TrainingTypeMapper trainingTypeMapper,
-                                  AuthenticatorService authenticatorService) {
+                                  TrainingTypeMapper trainingTypeMapper) {
         this.trainingTypeService = trainingTypeService;
         this.trainingTypeMapper = trainingTypeMapper;
-        this.authenticatorService = authenticatorService;
     }
 
     /**
@@ -43,14 +40,6 @@ public class TrainingTypeController {
         HttpServletRequest request) {
 
         log.info("Attempting the retrieval of training types");
-
-        // validations
-//        if (authenticatorService.authFail(request.getHeader("username"),
-//            request.getHeader("password"))) {
-//            return new ResponseEntity<>(
-//                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-//                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
-//        }
 
         // service and mapper calls
         TrainingTypeListRetrievalResponseDto responseDto =

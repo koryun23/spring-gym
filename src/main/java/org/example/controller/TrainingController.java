@@ -38,18 +38,16 @@ public class TrainingController {
     private final TrainingService trainingService;
     private final TrainingMapper trainingMapper;
     private final TrainingValidator trainingValidator;
-    private final AuthenticatorService authenticatorService;
 
     /**
      * Constructor.
      */
     public TrainingController(TrainingService trainingService,
                               TrainingMapper trainingMapper,
-                              TrainingValidator trainingValidator, AuthenticatorService authenticatorService) {
+                              TrainingValidator trainingValidator) {
         this.trainingService = trainingService;
         this.trainingMapper = trainingMapper;
         this.trainingValidator = trainingValidator;
-        this.authenticatorService = authenticatorService;
     }
 
     /**
@@ -63,12 +61,6 @@ public class TrainingController {
         log.info("Attempting to create a training, request - {}", requestDto);
 
         // validations
-//        if (authenticatorService.authFail(request.getHeader("username"),
-//            request.getHeader("password"))) {
-//            return new ResponseEntity<>(
-//                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-//                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
-//        }
         RestResponse restResponse = trainingValidator.validateCreateTraining(requestDto);
         if (restResponse != null) {
             return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
@@ -110,13 +102,6 @@ public class TrainingController {
             );
 
         // validation
-//        if (authenticatorService.authFail(request.getHeader("username"),
-//            request.getHeader("password"))) {
-//            return new ResponseEntity<>(
-//                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-//                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
-//        }
-
         RestResponse restResponse =
             trainingValidator.validateRetrieveTrainingListByTrainee(requestDto);
         if (restResponse != null) {

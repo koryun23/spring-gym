@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.example.dto.plain.TrainingTypeDto;
+import org.example.entity.TrainingType;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,5 +18,5 @@ import org.example.dto.plain.TrainingTypeDto;
 @ToString
 public class TrainingTypeListRetrievalResponseDto {
 
-    private List<TrainingTypeDto> trainingTypes;
+    private List<TrainingType> trainingTypes;
 }
