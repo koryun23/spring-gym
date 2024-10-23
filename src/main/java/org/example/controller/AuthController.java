@@ -3,7 +3,6 @@ package org.example.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
 import org.example.dto.request.UserChangePasswordRequestDto;
@@ -77,24 +76,16 @@ public class AuthController {
         @RequestBody UserChangePasswordRequestDto requestDto, HttpServletRequest request) {
         log.info("Attempting password change, request - {}", requestDto);
 
-        // authentication
-        if (authenticatorService.authFail(request.getHeader("username"), request.getHeader("password"))) {
-            return new ResponseEntity<>(new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
-        }
-
         // validations
-        RestResponse restResponse = userValidator.validateChangePassword(requestDto);
-        if (restResponse != null) {
-            return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
-        }
+        userValidator.validateChangePassword(requestDto);
 
         // service and mapper calls
         userService.update(userMapper.mapUserChangePasswordRequestDtoToUserEntity(requestDto));
 
         // response
         UserChangePasswordResponseDto responseDto = new UserChangePasswordResponseDto(HttpStatus.OK);
-        restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        RestResponse restResponse =
+            new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Password change response - {}", restResponse);
 

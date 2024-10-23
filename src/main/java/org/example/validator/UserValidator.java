@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserValidator {
 
-    private UserService userService;
+    private final UserService userService;
 
     /**
      * Constructor.
@@ -26,6 +26,9 @@ public class UserValidator {
      */
     public RestResponse validateChangePassword(UserChangePasswordRequestDto requestDto) {
 
+        if (requestDto == null) {
+            throw new CustomIllegalArgumentException("Request body is missing");
+        }
         String username = requestDto.getUsername();
         if (username == null || username.isEmpty()) {
             throw new CustomIllegalArgumentException("Username is required");

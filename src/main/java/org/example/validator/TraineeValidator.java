@@ -3,7 +3,6 @@ package org.example.validator;
 import org.example.dto.RestResponse;
 import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TraineeDeletionByUsernameRequestDto;
-import org.example.dto.request.TraineeRetrievalByUsernameRequestDto;
 import org.example.dto.request.TraineeSwitchActivationStateRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
 import org.example.exception.CustomIllegalArgumentException;
@@ -34,7 +33,10 @@ public class TraineeValidator {
      * Validate Trainee Creation Request Dto.
      */
     public RestResponse validateCreateTrainee(TraineeCreationRequestDto requestDto) {
-        Assert.notNull(requestDto, "TraineeCreationRequestDto must not be null");
+
+        if (requestDto == null) {
+            throw new CustomIllegalArgumentException("Request body is missing");
+        }
         String firstName = requestDto.getFirstName();
         String lastName = requestDto.getLastName();
 
@@ -53,7 +55,9 @@ public class TraineeValidator {
      */
     public RestResponse validateUpdateTrainee(TraineeUpdateRequestDto requestDto) {
 
-        Assert.notNull(requestDto, "TraineeUpdateRequestDto must not be null");
+        if (requestDto == null) {
+            throw new CustomIllegalArgumentException("Request body is missing");
+        }
 
         String username = requestDto.getUsername();
         if (username == null || username.isEmpty()) {
@@ -85,11 +89,8 @@ public class TraineeValidator {
     /**
      * Validate Trainee Retrieval by Username Request Dto.
      */
-    public RestResponse validateRetrieveTrainee(
-        TraineeRetrievalByUsernameRequestDto requestDto) {
+    public RestResponse validateRetrieveTrainee(String username) {
 
-        Assert.notNull(requestDto, "TraineeRetrievalByUsernameRequestDto must not be null");
-        String username = requestDto.getUsername();
         if (username == null || username.isEmpty()) {
             throw new CustomIllegalArgumentException("Username is required");
         }

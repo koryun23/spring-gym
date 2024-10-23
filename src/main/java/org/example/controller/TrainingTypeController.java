@@ -3,7 +3,6 @@ package org.example.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
 import org.example.dto.response.TrainingTypeListRetrievalResponseDto;
@@ -46,12 +45,12 @@ public class TrainingTypeController {
         log.info("Attempting the retrieval of training types");
 
         // validations
-        if (authenticatorService.authFail(request.getHeader("username"),
-            request.getHeader("password"))) {
-            return new ResponseEntity<>(
-                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
-        }
+//        if (authenticatorService.authFail(request.getHeader("username"),
+//            request.getHeader("password"))) {
+//            return new ResponseEntity<>(
+//                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
+//                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
+//        }
 
         // service and mapper calls
         TrainingTypeListRetrievalResponseDto responseDto =

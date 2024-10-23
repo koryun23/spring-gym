@@ -3,7 +3,6 @@ package org.example.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
@@ -75,10 +74,7 @@ public class TrainerController {
         log.info("Attempting a registration of a trainer according to the {}", requestDto);
 
         // validations
-        RestResponse restResponse = trainerValidator.validateCreateTrainer(requestDto);
-        if (restResponse != null) {
-            return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
-        }
+        trainerValidator.validateCreateTrainer(requestDto);
 
         // service and mapper calls
         trainerMapper.mapTrainerCreationRequestDto(requestDto);
@@ -88,7 +84,8 @@ public class TrainerController {
         idService.autoIncrement();
 
         // response
-        restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        RestResponse restResponse =
+            new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Response of attempted registration - {}", restResponse);
 
@@ -105,19 +102,8 @@ public class TrainerController {
         log.info("Attempting a retrieval of trainers not assigned to trainee with a username of {}", username);
 
         // validations
-        if (authenticatorService.authFail(request.getHeader("username"),
-            request.getHeader("password"))) {
-            return new ResponseEntity<>(
-                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
-        }
-        RestResponse restResponse =
-            trainerValidator.validateRetrieveAllTrainersNotAssignedToTrainee(
-                new RetrieveAllTrainersNotAssignedToTraineeRequestDto(username));
-
-        if (restResponse != null) {
-            return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
-        }
+        trainerValidator.validateRetrieveAllTrainersNotAssignedToTrainee(
+            new RetrieveAllTrainersNotAssignedToTraineeRequestDto(username));
 
         // service and mapper calls
         TrainerListRetrievalResponseDto responseDto = new TrainerListRetrievalResponseDto(
@@ -125,7 +111,8 @@ public class TrainerController {
                 .toList(), username);
 
         // response
-        restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        RestResponse restResponse =
+            new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Response of retrieval of trainers not assigned to a trainee - {}", restResponse);
 
@@ -142,17 +129,7 @@ public class TrainerController {
         log.info("Attempting an update of a trainer, request - {}", requestDto);
 
         // validations
-        if (authenticatorService.authFail(request.getHeader("username"),
-            request.getHeader("password"))) {
-            return new ResponseEntity<>(
-                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
-        }
-
-        RestResponse restResponse = trainerValidator.validateUpdateTrainer(requestDto);
-        if (restResponse != null) {
-            return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
-        }
+        trainerValidator.validateUpdateTrainer(requestDto);
 
         // service and mapper calls
         userService.update(trainerMapper.mapTrainerUpdateRequestDtoToUserEntity(requestDto));
@@ -160,7 +137,8 @@ public class TrainerController {
             trainerService.update(trainerMapper.mapTrainerUpdateRequestDtoToTrainerEntity(requestDto)));
 
         // response
-        restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        RestResponse restResponse =
+            new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Response of update of trainers - {}", restResponse);
 
@@ -178,23 +156,15 @@ public class TrainerController {
         TrainerRetrievalByUsernameRequestDto requestDto = new TrainerRetrievalByUsernameRequestDto(username);
 
         // validations
-        if (authenticatorService.authFail(request.getHeader("username"),
-            request.getHeader("password"))) {
-            return new ResponseEntity<>(
-                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
-        }
-        RestResponse restResponse = trainerValidator.validateRetrieveTrainer(requestDto);
-        if (restResponse != null) {
-            return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
-        }
+        trainerValidator.validateRetrieveTrainer(requestDto);
 
         // service and mapper calls
         TrainerRetrievalResponseDto responseDto = trainerMapper.mapTrainerEntityToTrainerRetrievalResponseDto(
             trainerService.findByUsername(requestDto.getUsername()).get());
 
         // response
-        restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        RestResponse restResponse =
+            new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Response of trainer retrieval - {}", restResponse);
 
@@ -213,17 +183,7 @@ public class TrainerController {
             new TrainerSwitchActivationStateRequestDto(username);
 
         // validations
-        if (authenticatorService.authFail(request.getHeader("username"),
-            request.getHeader("password"))) {
-            return new ResponseEntity<>(
-                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
-        }
-        RestResponse restResponse =
-            trainerValidator.validateSwitchActivationState(requestDto);
-        if (restResponse != null) {
-            return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
-        }
+        trainerValidator.validateSwitchActivationState(requestDto);
 
         // service and mapper calls
         userService.update(trainerMapper.mapSwitchActivationStateRequestDtoToUserEntity(requestDto));
@@ -231,7 +191,8 @@ public class TrainerController {
         // response
         TrainerSwitchActivationStateResponseDto responseDto =
             new TrainerSwitchActivationStateResponseDto(HttpStatus.OK);
-        restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        RestResponse restResponse =
+            new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Response of switching the activation state of a trainer - {}", restResponse);
 
@@ -250,17 +211,7 @@ public class TrainerController {
         log.info("Attempting to update the trainers of a trainee, request - {}", requestDto);
 
         // validations
-        if (authenticatorService.authFail(request.getHeader("username"),
-            request.getHeader("password"))) {
-            return new ResponseEntity<>(
-                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
-        }
-        RestResponse restResponse =
-            trainerValidator.validateUpdateTraineeTrainerList(requestDto);
-        if (restResponse != null) {
-            return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
-        }
+        trainerValidator.validateUpdateTraineeTrainerList(requestDto);
 
         // service and mapper calls
         trainerService.updateTrainersAssignedTo(requestDto.getTraineeUsername(),
@@ -270,7 +221,8 @@ public class TrainerController {
         // response
         TraineeTrainerListUpdateResponseDto responseDto =
             new TraineeTrainerListUpdateResponseDto(requestDto.getTrainerDtoList());
-        restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        RestResponse restResponse =
+            new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Response of updating trainee's trainers list - {}", restResponse);
 

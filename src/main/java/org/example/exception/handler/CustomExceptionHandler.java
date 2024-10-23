@@ -2,6 +2,7 @@ package org.example.exception.handler;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
 import org.example.exception.CustomIllegalArgumentException;
 import org.example.exception.InvalidIdException;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+@Slf4j
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -24,6 +26,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler({CustomIllegalArgumentException.class, InvalidIdException.class, IllegalArgumentException.class})
     public ResponseEntity<RestResponse> handleInvalidRequest(CustomIllegalArgumentException e) {
+        log.info("Handling invalid request");
         RestResponse restResponse =
             new RestResponse(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(), List.of(e.getMessage()));
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
@@ -47,10 +50,11 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<RestResponse> handleGeneralException(Exception exception) {
+        RestResponse restResponse = new RestResponse(null, HttpStatus.SERVICE_UNAVAILABLE, LocalDateTime.now(),
+            List.of("Something went wrong"));
         return new ResponseEntity<>(
-            new RestResponse(null, HttpStatus.SERVICE_UNAVAILABLE, LocalDateTime.now(),
-                List.of("Something went wrong")),
-            HttpStatus.SERVICE_UNAVAILABLE
+            restResponse,
+            restResponse.getHttpStatus()
         );
     }
 }

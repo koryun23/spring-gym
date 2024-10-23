@@ -1,5 +1,6 @@
 package org.example.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.service.core.DatabasePathService;
 import org.example.service.core.IdService;
 import org.example.service.impl.DatabasePathServiceImpl;
@@ -61,5 +62,10 @@ public class Config {
     @Bean
     public IdService trainingIdService() {
         return new IdServiceImpl(trainingDatabasePathService());
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper().findAndRegisterModules();
     }
 }

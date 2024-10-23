@@ -3,6 +3,8 @@ package org.example.config;
 import jakarta.servlet.FilterRegistration;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletRegistration;
+import org.example.exception.handler.FilterExceptionHandler;
+import org.example.filter.AuthFilter;
 import org.example.filter.MdcFilter;
 import org.springdoc.core.configuration.SpringDocConfiguration;
 import org.springdoc.core.configuration.SpringDocUIConfiguration;
@@ -43,8 +45,19 @@ public class MainWebInitializer implements WebApplicationInitializer {
         encodingFilter.setInitParameter("Content-Type", "application/json");
         encodingFilter.addMappingForUrlPatterns(null, true, "/*");
 
-        FilterRegistration.Dynamic mdcFilter = servletContext.addFilter("MdcFilter", new MdcFilter());
+        rootContext.refresh();
+
+        FilterRegistration.Dynamic filterExceptionHandler =
+            servletContext.addFilter("FilterExceptionHandler", rootContext.getBean(FilterExceptionHandler.class));
+        filterExceptionHandler.addMappingForUrlPatterns(null, true, "/*");
+
+        FilterRegistration.Dynamic mdcFilter =
+            servletContext.addFilter("MdcFilter", rootContext.getBean(MdcFilter.class));
         mdcFilter.addMappingForUrlPatterns(null, true, "/*");
+
+        FilterRegistration.Dynamic authFilter =
+            servletContext.addFilter("AuthFilter", rootContext.getBean(AuthFilter.class));
+        authFilter.addMappingForUrlPatterns(null, true, "/*");
 
         rootContext.register(
             this.getClass(),
