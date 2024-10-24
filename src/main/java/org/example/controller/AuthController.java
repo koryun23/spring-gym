@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
 import org.example.dto.request.UserChangePasswordRequestDto;
 import org.example.dto.response.UserChangePasswordResponseDto;
-import org.example.dto.response.UserRetrievalResponseDto;
 import org.example.mapper.user.UserMapper;
 import org.example.service.core.AuthenticatorService;
 import org.example.service.core.UserService;
