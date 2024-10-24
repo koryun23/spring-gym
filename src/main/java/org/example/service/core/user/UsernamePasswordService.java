@@ -1,4 +1,4 @@
-package org.example.service.core;
+package org.example.service.core.user;
 
 public interface UsernamePasswordService {
 

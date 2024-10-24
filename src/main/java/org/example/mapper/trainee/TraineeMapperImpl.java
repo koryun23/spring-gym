@@ -12,9 +12,9 @@ import org.example.dto.response.TraineeRetrievalResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
 import org.example.entity.TraineeEntity;
 import org.example.entity.UserEntity;
-import org.example.service.core.IdService;
-import org.example.service.core.UserService;
-import org.example.service.core.UsernamePasswordService;
+import org.example.service.core.user.IdService;
+import org.example.service.core.user.UserService;
+import org.example.service.core.user.UsernamePasswordService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 

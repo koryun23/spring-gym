@@ -1,7 +1,7 @@
-package org.example.service.impl;
+package org.example.service.impl.user;
 
-import org.example.service.core.AuthenticatorService;
-import org.example.service.core.UserService;
+import org.example.service.core.user.AuthenticatorService;
+import org.example.service.core.user.UserService;
 import org.springframework.stereotype.Component;
 
 @Component

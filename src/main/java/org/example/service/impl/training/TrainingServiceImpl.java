@@ -1,4 +1,4 @@
-package org.example.service.impl;
+package org.example.service.impl.training;
 
 import java.sql.Date;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.example.entity.TrainingEntity;
 import org.example.entity.TrainingType;
 import org.example.exception.TrainingNotFoundException;
 import org.example.repository.core.TrainingEntityRepository;
-import org.example.service.core.TrainingService;
+import org.example.service.core.training.TrainingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

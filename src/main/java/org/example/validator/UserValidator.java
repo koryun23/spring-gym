@@ -6,7 +6,7 @@ import org.example.dto.request.UserChangePasswordRequestDto;
 import org.example.entity.UserEntity;
 import org.example.exception.CustomIllegalArgumentException;
 import org.example.exception.UserNotFoundException;
-import org.example.service.core.UserService;
+import org.example.service.core.user.UserService;
 import org.springframework.stereotype.Component;
 
 @Component

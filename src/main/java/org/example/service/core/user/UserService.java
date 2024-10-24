@@ -1,4 +1,4 @@
-package org.example.service.core;
+package org.example.service.core.user;
 
 import java.util.List;
 import java.util.Optional;

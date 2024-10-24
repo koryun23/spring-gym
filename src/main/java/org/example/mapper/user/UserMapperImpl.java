@@ -2,7 +2,7 @@ package org.example.mapper.user;
 
 import org.example.dto.request.UserChangePasswordRequestDto;
 import org.example.entity.UserEntity;
-import org.example.service.core.UserService;
+import org.example.service.core.user.UserService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 

@@ -1,11 +1,11 @@
-package org.example.service.impl;
+package org.example.service.impl.user;
 
 import java.util.List;
 import java.util.Optional;
 import org.example.entity.UserEntity;
 import org.example.exception.UserNotFoundException;
 import org.example.repository.core.UserEntityRepository;
-import org.example.service.core.UserService;
+import org.example.service.core.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

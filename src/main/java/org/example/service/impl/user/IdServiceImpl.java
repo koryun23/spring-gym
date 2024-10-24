@@ -1,10 +1,10 @@
-package org.example.service.impl;
+package org.example.service.impl.user;
 
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.example.entity.UserEntity;
-import org.example.service.core.IdService;
-import org.example.service.core.UserService;
+import org.example.service.core.user.IdService;
+import org.example.service.core.user.UserService;
 import org.springframework.stereotype.Component;
 
 @Slf4j

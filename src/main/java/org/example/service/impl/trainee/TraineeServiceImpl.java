@@ -1,11 +1,11 @@
-package org.example.service.impl;
+package org.example.service.impl.trainee;
 
 import java.util.Optional;
 import org.example.entity.TraineeEntity;
 import org.example.exception.TraineeNotFoundException;
 import org.example.repository.core.TraineeEntityRepository;
-import org.example.service.core.TraineeService;
-import org.example.service.core.UserService;
+import org.example.service.core.trainee.TraineeService;
+import org.example.service.core.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

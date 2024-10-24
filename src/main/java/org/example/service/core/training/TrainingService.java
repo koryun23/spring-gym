@@ -1,4 +1,4 @@
-package org.example.service.core;
+package org.example.service.core.training;
 
 import java.sql.Date;
 import java.util.List;

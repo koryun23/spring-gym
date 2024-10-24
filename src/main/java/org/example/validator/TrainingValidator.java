@@ -7,8 +7,8 @@ import org.example.dto.request.TrainingListRetrievalByTraineeRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTrainerRequestDto;
 import org.example.exception.CustomIllegalArgumentException;
 import org.example.exception.TraineeNotFoundException;
-import org.example.service.core.TraineeService;
-import org.example.service.core.TrainerService;
+import org.example.service.core.trainee.TraineeService;
+import org.example.service.core.trainer.TrainerService;
 import org.springframework.stereotype.Component;
 
 @Component

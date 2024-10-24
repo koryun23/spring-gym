@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
 import org.example.dto.response.TrainingTypeListRetrievalResponseDto;
 import org.example.mapper.training.TrainingTypeMapper;
-import org.example.service.core.TrainingTypeService;
+import org.example.service.core.training.TrainingTypeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

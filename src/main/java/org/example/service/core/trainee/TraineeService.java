@@ -1,4 +1,4 @@
-package org.example.service.core;
+package org.example.service.core.trainee;
 
 import java.util.Optional;
 import org.example.entity.TraineeEntity;

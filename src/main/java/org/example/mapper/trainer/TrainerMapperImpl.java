@@ -17,10 +17,10 @@ import org.example.entity.TrainingType;
 import org.example.entity.TrainingTypeEntity;
 import org.example.entity.UserEntity;
 import org.example.exception.TrainingTypeNotFoundException;
-import org.example.service.core.IdService;
-import org.example.service.core.TrainingTypeService;
-import org.example.service.core.UserService;
-import org.example.service.core.UsernamePasswordService;
+import org.example.service.core.user.IdService;
+import org.example.service.core.training.TrainingTypeService;
+import org.example.service.core.user.UserService;
+import org.example.service.core.user.UsernamePasswordService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 

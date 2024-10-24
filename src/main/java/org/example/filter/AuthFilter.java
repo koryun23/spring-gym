@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
 import org.example.exception.AuthenticationFailureException;
-import org.example.service.core.AuthenticatorService;
+import org.example.service.core.user.AuthenticatorService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 

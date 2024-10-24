@@ -11,9 +11,9 @@ import org.example.dto.request.TrainerUpdateRequestDto;
 import org.example.exception.CustomIllegalArgumentException;
 import org.example.exception.TraineeNotFoundException;
 import org.example.exception.TrainerNotFoundException;
-import org.example.service.core.TraineeService;
-import org.example.service.core.TrainerService;
-import org.example.service.core.UserService;
+import org.example.service.core.trainee.TraineeService;
+import org.example.service.core.trainer.TrainerService;
+import org.example.service.core.user.UserService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
