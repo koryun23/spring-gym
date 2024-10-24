@@ -22,12 +22,10 @@ public class IdServiceImpl implements IdService {
     public Long getId(String pattern) {
         List<String> usernames =
             userService.findAllByUsernameContains(pattern).stream().map(UserEntity::getUsername).toList();
-        log.info(usernames.size() + "");
         long maxId = Long.MIN_VALUE;
         long currentId = 0;
         for (String username : usernames) {
             String[] split = username.split("\\.");
-            log.info("username - {}, split - {}", username, Arrays.toString(split));
             if (split.length == 2) {
                 currentId = 1;
             } else if (split.length == 3) {
@@ -36,7 +34,6 @@ public class IdServiceImpl implements IdService {
             if (currentId > maxId) {
                 maxId = currentId;
             }
-            log.info("current id - {}", currentId);
         }
 
         return maxId + 1;
