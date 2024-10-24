@@ -51,7 +51,7 @@ public class UserValidator {
 
         UserEntity userEntity = optionalUser.get();
         if (!userEntity.getPassword().equals(oldPassword)) {
-            throw new UserNotFoundException(username);
+            throw new UserNotFoundException(username, oldPassword);
         }
 
         Optional<UserEntity> optionalUserByNewPassword = userService.findByPassword(newPassword);
