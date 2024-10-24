@@ -24,7 +24,6 @@ import org.example.service.core.IdService;
 import org.example.service.core.TrainerService;
 import org.example.service.core.UserService;
 import org.example.validator.TrainerValidator;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,7 +52,7 @@ public class TrainerController {
      */
     public TrainerController(TrainerService trainerService,
                              UserService userService,
-                             @Qualifier("trainerIdService") IdService idService,
+                             IdService idService,
                              TrainerMapper trainerMapper,
                              TrainerValidator trainerValidator, AuthenticatorService authenticatorService) {
         this.trainerService = trainerService;
@@ -79,7 +78,6 @@ public class TrainerController {
         // service and mapper calls
         TrainerCreationResponseDto responseDto = trainerMapper.mapTrainerEntityToTrainerCreationResponseDto(
             trainerService.create(trainerMapper.mapTrainerCreationRequestDtoToTrainerEntity(requestDto)));
-        idService.autoIncrement();
 
         // response
         RestResponse restResponse =

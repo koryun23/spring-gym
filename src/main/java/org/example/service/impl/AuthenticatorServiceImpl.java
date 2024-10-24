@@ -17,9 +17,4 @@ public class AuthenticatorServiceImpl implements AuthenticatorService {
     public boolean authFail(String username, String password) {
         return !userService.usernamePasswordMatching(username, password);
     }
-
-    @Override
-    public boolean authSuccess(String username, String password) {
-        return userService.usernamePasswordMatching(username, password);
-    }
 }

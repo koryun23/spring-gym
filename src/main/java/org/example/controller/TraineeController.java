@@ -20,7 +20,6 @@ import org.example.service.core.TraineeService;
 import org.example.service.core.UserService;
 import org.example.validator.TraineeValidator;
 import org.slf4j.MDC;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -51,7 +50,6 @@ public class TraineeController {
     public TraineeController(TraineeService traineeService,
                              UserService userService,
                              TraineeMapper traineeMapper,
-                             @Qualifier("traineeIdService")
                              IdService idService,
                              TraineeValidator traineeValidator, AuthenticatorService authenticatorService) {
         this.traineeService = traineeService;
@@ -78,7 +76,6 @@ public class TraineeController {
         // service and mapper calls
         TraineeCreationResponseDto responseDto = traineeMapper.mapTraineeEntityToTraineeCreationResponseDto(
             traineeService.create(traineeMapper.mapTraineeCreationRequestDtoToTraineeEntity(requestDto)));
-        idService.autoIncrement();
 
         // response
         RestResponse restResponse =

@@ -61,6 +61,22 @@ public class UserEntityRepositoryImpl implements UserEntityRepository {
     }
 
     @Override
+    public List<UserEntity> findAllByUsernameContains(String pattern) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        List<UserEntity> usernames =
+            session.createQuery("select u from UserEntity u where u.username like '" + pattern + "%'",
+                    UserEntity.class)
+                .getResultList();
+
+        transaction.commit();
+        session.close();
+        return usernames;
+
+    }
+
+    @Override
     public UserEntity update(UserEntity userEntity) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();

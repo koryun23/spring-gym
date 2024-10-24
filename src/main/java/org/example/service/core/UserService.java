@@ -1,5 +1,6 @@
 package org.example.service.core;
 
+import java.util.List;
 import java.util.Optional;
 import org.example.entity.UserEntity;
 
@@ -22,4 +23,6 @@ public interface UserService {
     Optional<UserEntity> findById(Long id);
 
     boolean usernamePasswordMatching(String username, String password);
+
+    List<UserEntity> findAllByUsernameContains(String pattern);
 }

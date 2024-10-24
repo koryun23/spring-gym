@@ -15,7 +15,6 @@ import org.example.entity.UserEntity;
 import org.example.service.core.IdService;
 import org.example.service.core.UserService;
 import org.example.service.core.UsernamePasswordService;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -30,9 +29,7 @@ public class TraineeMapperImpl implements TraineeMapper {
      * Constructor.
      */
     public TraineeMapperImpl(UserService userService,
-                             @Qualifier("traineeUsernamePasswordService")
                              UsernamePasswordService usernamePasswordService,
-                             @Qualifier("traineeIdService")
                              IdService idService) {
         this.userService = userService;
         this.usernamePasswordService = usernamePasswordService;
@@ -46,8 +43,7 @@ public class TraineeMapperImpl implements TraineeMapper {
             new UserEntity(
                 requestDto.getFirstName(),
                 requestDto.getLastName(),
-                usernamePasswordService.username(requestDto.getFirstName(), requestDto.getLastName(), idService.getId(),
-                    "trainee"),
+                usernamePasswordService.username(requestDto.getFirstName(), requestDto.getLastName()),
                 usernamePasswordService.password(),
                 true
             ),

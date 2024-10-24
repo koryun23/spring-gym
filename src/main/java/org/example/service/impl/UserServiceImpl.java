@@ -1,5 +1,6 @@
 package org.example.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 import org.example.entity.UserEntity;
 import org.example.exception.UserNotFoundException;
@@ -112,6 +113,18 @@ public class UserServiceImpl implements UserService {
 
         UserEntity userEntity = optionalUser.get();
         return userEntity.getPassword().equals(password);
+    }
+
+    @Override
+    public List<UserEntity> findAllByUsernameContains(String pattern) {
+        LOGGER.info("Finding all users usernames of which contain the following pattern - {}", pattern);
+        Assert.notNull(pattern, "Pattern must not be null");
+        Assert.hasText(pattern, "Pattern must not be empty");
+        List<UserEntity> allByUsernameContains = userEntityRepository.findAllByUsernameContains(pattern);
+        LOGGER.info("Result of finding all users usernames of which contain the pattern '{}', result - {}",
+            allByUsernameContains);
+        return allByUsernameContains;
+
     }
 }
 

@@ -4,36 +4,33 @@ import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.example.entity.UserEntity;
-import org.example.exception.InvalidIdException;
+import org.example.service.core.IdService;
 import org.example.service.core.UserService;
 import org.example.service.core.UsernamePasswordService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 @Slf4j
-@Service("usernamePasswordService")
+@Service
 public class UsernamePasswordServiceImpl implements UsernamePasswordService {
 
     private final UserService userService;
+    private final IdService idService;
 
     /**
      * Constructor.
      */
-    public UsernamePasswordServiceImpl(UserService userService) {
+    public UsernamePasswordServiceImpl(UserService userService, IdService idService) {
         this.userService = userService;
+        this.idService = idService;
     }
 
     @Override
-    public String username(String firstName, String lastName, Long id, String uniqueSuffix) {
+    public String username(String firstName, String lastName) {
         Assert.notNull(firstName, "First Name must not be null");
         Assert.hasText(firstName, "First name must not be empty");
         Assert.notNull(lastName, "Last Name must not be null");
         Assert.hasText(lastName, "Last Name must not be empty");
-        Assert.notNull(uniqueSuffix, "Unique Suffix must not be null");
-
-        if (id <= 0) {
-            throw new InvalidIdException(id);
-        }
 
         String temporaryUsername = firstName + "." + lastName;
         Optional<UserEntity> optionalUser = userService.findByUsername(temporaryUsername);
@@ -42,13 +39,7 @@ public class UsernamePasswordServiceImpl implements UsernamePasswordService {
             return temporaryUsername;
         }
 
-        temporaryUsername += ("." + id);
-        optionalUser = userService.findByUsername(temporaryUsername);
-
-        if (optionalUser.isEmpty()) {
-            return temporaryUsername;
-        }
-        return temporaryUsername + "." + uniqueSuffix;
+        return temporaryUsername + ("." + idService.getId(temporaryUsername));
     }
 
     @Override

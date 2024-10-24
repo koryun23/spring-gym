@@ -22,7 +22,5 @@ public class Main {
         } catch (LifecycleException e) {
             e.printStackTrace();
         }
-
-        //tomcat.getServer().await();
     }
 }

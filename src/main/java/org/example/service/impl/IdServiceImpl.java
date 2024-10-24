@@ -1,52 +1,44 @@
 package org.example.service.impl;
 
-import jakarta.annotation.PostConstruct;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Scanner;
-import org.example.service.core.DatabasePathService;
+import java.util.Arrays;
+import java.util.List;
+import lombok.extern.slf4j.Slf4j;
+import org.example.entity.UserEntity;
 import org.example.service.core.IdService;
+import org.example.service.core.UserService;
+import org.springframework.stereotype.Component;
 
+@Slf4j
+@Component
 public class IdServiceImpl implements IdService {
 
-    private final DatabasePathService databasePathService;
-    private String fileName;
+    private final UserService userService;
 
-    public IdServiceImpl(DatabasePathService databasePathService) {
-        this.databasePathService = databasePathService;
-    }
-
-    @PostConstruct
-    public void init() {
-        this.fileName = databasePathService.getIdPath();
+    public IdServiceImpl(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
-    public Long getId() {
-        Scanner scanner;
-        try {
-            scanner = new Scanner(new File(fileName));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+    public Long getId(String pattern) {
+        List<String> usernames =
+            userService.findAllByUsernameContains(pattern).stream().map(UserEntity::getUsername).toList();
+        log.info(usernames.size() + "");
+        long maxId = Long.MIN_VALUE;
+        long currentId = 0;
+        for (String username : usernames) {
+            String[] split = username.split("\\.");
+            log.info("username - {}, split - {}", username, Arrays.toString(split));
+            if (split.length == 2) {
+                currentId = 1;
+            } else if (split.length == 3) {
+                currentId = Long.parseLong(split[2]);
+            }
+            if (currentId > maxId) {
+                maxId = currentId;
+            }
+            log.info("current id - {}", currentId);
         }
-        return Long.parseLong(scanner.nextLine());
-    }
 
-    @Override
-    public void autoIncrement() {
-
-        Long id = getId() + 1;
-
-        BufferedWriter writer;
-        try {
-            writer = new BufferedWriter(new FileWriter(fileName));
-            writer.write(String.valueOf(id));
-            writer.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return maxId + 1;
     }
 }

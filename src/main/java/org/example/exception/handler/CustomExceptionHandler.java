@@ -50,6 +50,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<RestResponse> handleGeneralException(Exception exception) {
+        log.error(exception.getMessage());
         RestResponse restResponse = new RestResponse(null, HttpStatus.SERVICE_UNAVAILABLE, LocalDateTime.now(),
             List.of("Something went wrong"));
         return new ResponseEntity<>(
