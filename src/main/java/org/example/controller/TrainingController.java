@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
-import org.example.dto.plain.TrainingTypeDto;
 import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTraineeRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTrainerRequestDto;
@@ -15,9 +14,10 @@ import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.dto.response.TrainingListRetrievalResponseDto;
 import org.example.dto.response.TrainingRetrievalResponseDto;
 import org.example.entity.TrainingType;
+import org.example.exception.TrainingTypeNotFoundException;
 import org.example.mapper.training.TrainingMapper;
-import org.example.service.core.AuthenticatorService;
 import org.example.service.core.TrainingService;
+import org.example.service.core.TrainingTypeService;
 import org.example.validator.TrainingValidator;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -36,16 +36,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class TrainingController {
 
     private final TrainingService trainingService;
+    private final TrainingTypeService trainingTypeService;
     private final TrainingMapper trainingMapper;
     private final TrainingValidator trainingValidator;
 
     /**
      * Constructor.
      */
-    public TrainingController(TrainingService trainingService,
+    public TrainingController(TrainingService trainingService, TrainingTypeService trainingTypeService,
                               TrainingMapper trainingMapper,
                               TrainingValidator trainingValidator) {
         this.trainingService = trainingService;
+        this.trainingTypeService = trainingTypeService;
         this.trainingMapper = trainingMapper;
         this.trainingValidator = trainingValidator;
     }
@@ -97,8 +99,7 @@ public class TrainingController {
                 from == null ? null : Date.valueOf(from),
                 to == null ? null : Date.valueOf(to),
                 trainerUsername,
-                trainingType == null ? null :
-                    new TrainingTypeDto(TrainingType.valueOf(TrainingType.class, trainingType))
+                trainingType == null ? null : TrainingType.valueOf(trainingType).getId()
             );
 
         // validation
@@ -117,8 +118,10 @@ public class TrainingController {
                         requestDto.getFrom(),
                         requestDto.getTo(),
                         requestDto.getTrainerUsername(),
-                        requestDto.getTrainingTypeDto() == null ? null :
-                            requestDto.getTrainingTypeDto().getTrainingType()
+                        requestDto.getSpecializationId() == null ? null :
+                            trainingTypeService.findById(requestDto.getSpecializationId())
+                                .orElseThrow(() -> new TrainingTypeNotFoundException(requestDto.getSpecializationId())
+                                ).getTrainingType()
                     )
                 )
             );
@@ -153,12 +156,6 @@ public class TrainingController {
             );
 
         // validations
-//        if (authenticatorService.authFail(request.getHeader("username"),
-//            request.getHeader("password"))) {
-//            return new ResponseEntity<>(
-//                new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-//                    List.of("Authentication failed")), HttpStatus.UNAUTHORIZED);
-//        }
         RestResponse restResponse =
             trainingValidator.validateRetrieveTrainingListByTrainer(requestDto);
         if (restResponse != null) {

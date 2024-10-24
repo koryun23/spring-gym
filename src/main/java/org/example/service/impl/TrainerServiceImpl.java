@@ -25,6 +25,9 @@ public class TrainerServiceImpl implements TrainerService {
     private final TraineeEntityRepository traineeDao;
     private final UserService userService;
 
+    /**
+     * Constructor.
+     */
     public TrainerServiceImpl(TraineeEntityRepository traineeDao, TrainerEntityRepository trainerDao,
                               UserService userService) {
         this.traineeDao = traineeDao;

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.example.entity.TrainingType;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,5 +17,5 @@ import lombok.ToString;
 public class TrainerDto {
 
     private UserDto userDto;
-    private TrainingTypeDto trainingTypeDto;
+    private TrainingType trainingType;
 }

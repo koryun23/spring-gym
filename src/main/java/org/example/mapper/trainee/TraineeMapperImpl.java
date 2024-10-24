@@ -3,7 +3,6 @@ package org.example.mapper.trainee;
 import java.util.Collections;
 import java.util.List;
 import org.example.dto.plain.TrainerDto;
-import org.example.dto.plain.TrainingTypeDto;
 import org.example.dto.plain.UserDto;
 import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TraineeSwitchActivationStateRequestDto;
@@ -47,7 +46,8 @@ public class TraineeMapperImpl implements TraineeMapper {
             new UserEntity(
                 requestDto.getFirstName(),
                 requestDto.getLastName(),
-                usernamePasswordService.username(requestDto.getFirstName(), requestDto.getLastName(), idService.getId(), "trainee"),
+                usernamePasswordService.username(requestDto.getFirstName(), requestDto.getLastName(), idService.getId(),
+                    "trainee"),
                 usernamePasswordService.password(),
                 true
             ),
@@ -80,10 +80,9 @@ public class TraineeMapperImpl implements TraineeMapper {
                     trainerEntity.getUser().getLastName(),
                     trainerEntity.getUser().getUsername(),
                     trainerEntity.getUser().getPassword(),
-                    trainerEntity.getUser().getIsActive()),
-                new TrainingTypeDto(
-                    trainerEntity.getSpecialization().getTrainingType()
-                )
+                    trainerEntity.getUser().getIsActive()
+                ),
+                trainerEntity.getSpecialization().getTrainingType()
             )).toList()
         );
     }
@@ -102,7 +101,7 @@ public class TraineeMapperImpl implements TraineeMapper {
                         trainerEntity.getUser().getUsername(),
                         trainerEntity.getUser().getPassword(),
                         trainerEntity.getUser().getIsActive()),
-                    new TrainingTypeDto(trainerEntity.getSpecialization().getTrainingType())
+                    trainerEntity.getSpecialization().getTrainingType()
                 ))
                 .toList();
         }

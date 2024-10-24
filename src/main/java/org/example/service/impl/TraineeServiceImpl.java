@@ -2,7 +2,6 @@ package org.example.service.impl;
 
 import java.util.Optional;
 import org.example.entity.TraineeEntity;
-import org.example.entity.UserEntity;
 import org.example.exception.TraineeNotFoundException;
 import org.example.repository.core.TraineeEntityRepository;
 import org.example.service.core.TraineeService;

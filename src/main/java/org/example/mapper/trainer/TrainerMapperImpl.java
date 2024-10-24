@@ -5,7 +5,6 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.plain.TraineeDto;
 import org.example.dto.plain.TrainerDto;
-import org.example.dto.plain.TrainingTypeDto;
 import org.example.dto.plain.UserDto;
 import org.example.dto.request.TrainerCreationRequestDto;
 import org.example.dto.request.TrainerSwitchActivationStateRequestDto;
@@ -62,7 +61,7 @@ public class TrainerMapperImpl implements TrainerMapper {
                 usernamePasswordService.password(),
                 true
             ),
-            trainingTypeService.get(requestDto.getTrainingTypeId())
+            trainingTypeService.get(requestDto.getSpecializationId())
         );
     }
 
@@ -82,7 +81,7 @@ public class TrainerMapperImpl implements TrainerMapper {
             trainerEntity.getUser().getUsername(),
             trainerEntity.getUser().getFirstName(),
             trainerEntity.getUser().getLastName(),
-            new TrainingTypeDto(trainerEntity.getSpecialization().getTrainingType()),
+            trainerEntity.getSpecialization().getTrainingType(),
             trainerEntity.getUser().getIsActive(),
             trainerEntity.getTraineeEntities().stream()
                 .map(traineeEntity -> new TraineeDto(
@@ -121,7 +120,7 @@ public class TrainerMapperImpl implements TrainerMapper {
             trainerEntity.getUser().getUsername(),
             trainerEntity.getUser().getFirstName(),
             trainerEntity.getUser().getLastName(),
-            new TrainingTypeDto(trainerEntity.getSpecialization().getTrainingType()),
+            trainerEntity.getSpecialization().getTrainingType(),
             trainerEntity.getUser().getIsActive(),
             traineeDtoList
         );
@@ -169,7 +168,7 @@ public class TrainerMapperImpl implements TrainerMapper {
 
         return new TrainerDto(
             mapTrainerEntityToUserDto(trainerEntity),
-            new TrainingTypeDto(trainerEntity.getSpecialization().getTrainingType())
+            trainerEntity.getSpecialization().getTrainingType()
         );
     }
 
@@ -179,7 +178,7 @@ public class TrainerMapperImpl implements TrainerMapper {
 
         return new TrainerEntity(
             mapTrainerDtoToUserEntity(trainerDto),
-            new TrainingTypeEntity(trainerDto.getTrainingTypeDto().getTrainingType())
+            new TrainingTypeEntity(trainerDto.getTrainingType())
         );
     }
 

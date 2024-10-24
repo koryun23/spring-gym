@@ -42,7 +42,7 @@ public class TrainerValidator {
 
         String firstName = requestDto.getFirstName();
         String lastName = requestDto.getLastName();
-        Long trainingTypeId = requestDto.getTrainingTypeId();
+        Long trainingTypeId = requestDto.getSpecializationId();
 
         if (firstName == null || firstName.isEmpty()) {
             throw new CustomIllegalArgumentException("First name is required");

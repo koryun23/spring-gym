@@ -28,8 +28,8 @@ public class AuthFilter extends OncePerRequestFilter {
         throws ServletException, IOException {
 
         log.info(request.getRequestURI());
-        if (request.getRequestURI().startsWith("/trainees/register") ||
-            request.getRequestURI().startsWith("/trainers/register")) {
+        if (request.getRequestURI().startsWith("/trainees/register")
+            || request.getRequestURI().startsWith("/trainers/register")) {
             filterChain.doFilter(request, response);
             return;
         }

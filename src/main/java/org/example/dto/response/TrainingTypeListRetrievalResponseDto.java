@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.example.dto.plain.TrainingTypeDto;
 import org.example.entity.TrainingType;
 
 @AllArgsConstructor

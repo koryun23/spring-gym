@@ -17,5 +17,5 @@ public class TrainerCreationRequestDto {
 
     private String firstName;
     private String lastName;
-    private Long trainingTypeId;
+    private Long specializationId;
 }

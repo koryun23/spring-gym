@@ -46,26 +46,8 @@ public class AuthController {
      * Login.
      */
     @GetMapping(value = "/login")
-    public ResponseEntity<RestResponse> login(HttpServletRequest request) {
-        log.info("Attempting a user log in");
-        // no validations
+    public void login() {
 
-        // service calls
-        boolean userExists =
-            authenticatorService.authSuccess(request.getHeader("username"), request.getHeader("password"));
-
-        // response
-        UserRetrievalResponseDto responseDto =
-            new UserRetrievalResponseDto(userExists ? HttpStatus.OK : HttpStatus.UNAUTHORIZED);
-
-        RestResponse restResponse =
-            new RestResponse(responseDto, responseDto.getHttpStatus(), LocalDateTime.now(), Collections.emptyList());
-        ResponseEntity<RestResponse> responseEntity =
-            new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
-
-        log.info("Response of logging in - {}", restResponse);
-
-        return responseEntity;
     }
 
     /**

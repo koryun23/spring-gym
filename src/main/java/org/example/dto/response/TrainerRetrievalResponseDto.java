@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.example.dto.plain.TraineeDto;
-import org.example.dto.plain.TrainingTypeDto;
+import org.example.entity.TrainingType;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,7 +21,7 @@ public class TrainerRetrievalResponseDto {
     private String username;
     private String firstName;
     private String lastName;
-    private TrainingTypeDto trainingTypeDto;
+    private TrainingType specialization;
     private Boolean isActive;
     private List<TraineeDto> trainees;
 }
