@@ -42,6 +42,8 @@ public class AuthFilter extends OncePerRequestFilter {
             throw new AuthenticationFailureException("Authentication failed");
         }
 
+        log.info("Successfully authenticated");
+
         filterChain.doFilter(request, response);
     }
 
