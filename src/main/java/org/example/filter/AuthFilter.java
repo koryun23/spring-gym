@@ -2,7 +2,6 @@ package org.example.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -14,10 +13,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 @Slf4j
 @Component
-@WebFilter(urlPatterns = {"/trainees/*", "/trainers/*", "/users/*", "/trainings/*", "/training-types/*"})
 public class AuthFilter extends OncePerRequestFilter {
 
-    private AuthenticatorService authenticatorService;
+    private final AuthenticatorService authenticatorService;
 
     public AuthFilter(AuthenticatorService authenticatorService) {
         this.authenticatorService = authenticatorService;
@@ -26,13 +24,6 @@ public class AuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
-
-        log.info(request.getRequestURI());
-        if (request.getRequestURI().startsWith("/trainees/register")
-            || request.getRequestURI().startsWith("/trainers/register")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
 
         log.info("Attempting authentication");
 
@@ -52,5 +43,11 @@ public class AuthFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        return request.getRequestURI().startsWith("/trainees/register")
+            || request.getRequestURI().startsWith("/trainers/register");
     }
 }
