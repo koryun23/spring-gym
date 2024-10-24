@@ -194,34 +194,4 @@ public class TrainerController {
 
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
-
-    // TODO: NOT WORKING
-
-    /**
-     * Update list of trainers of a trainee.
-     */
-    @PutMapping(value = "/trainee-trainers", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<RestResponse> updateTraineeTrainerList(
-        @RequestBody TraineeTrainerListUpdateRequestDto requestDto, HttpServletRequest request) {
-
-        log.info("Attempting to update the trainers of a trainee, request - {}", requestDto);
-
-        // validations
-        trainerValidator.validateUpdateTraineeTrainerList(requestDto);
-
-        // service and mapper calls
-        trainerService.updateTrainersAssignedTo(requestDto.getTraineeUsername(),
-            requestDto.getTrainerDtoList().stream().map(trainerMapper::mapTrainerDtoToTrainerEntity)
-                .collect(Collectors.toSet()));
-
-        // response
-        TraineeTrainerListUpdateResponseDto responseDto =
-            new TraineeTrainerListUpdateResponseDto(requestDto.getTrainerDtoList());
-        RestResponse restResponse =
-            new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
-
-        log.info("Response of updating trainee's trainers list - {}", restResponse);
-
-        return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
-    }
 }
