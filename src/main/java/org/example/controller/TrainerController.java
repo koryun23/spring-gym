@@ -91,9 +91,9 @@ public class TrainerController {
     /**
      * Get trainers not assigned to a trainee.
      */
-    @GetMapping(value = "/not-assigned-to-trainee/{username}")
+    @GetMapping(value = "/unassigned-to/{username}")
     public ResponseEntity<RestResponse> retrieveAllTrainersNotAssignedToTrainee(
-        @PathVariable(value = "username") String username, HttpServletRequest request) {
+        @PathVariable(value = "username") String username) {
 
         log.info("Attempting a retrieval of trainers not assigned to trainee with a username of {}", username);
 
@@ -118,13 +118,15 @@ public class TrainerController {
     /**
      * Update trainer.
      */
-    @PutMapping(value = "/update", consumes = "application/json", produces = "application/json")
+    @PutMapping(value = "/{username}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse> update(
-        @RequestBody TrainerUpdateRequestDto requestDto, HttpServletRequest request) {
+        @RequestBody TrainerUpdateRequestDto requestDto,
+        @PathVariable(value = "username") String username) {
 
         log.info("Attempting an update of a trainer, request - {}", requestDto);
 
         // validations
+        requestDto.setUsername(username);
         trainerValidator.validateUpdateTrainer(requestDto);
 
         // service and mapper calls
@@ -146,7 +148,7 @@ public class TrainerController {
      */
     @GetMapping("/{username}")
     public ResponseEntity<RestResponse> retrieve(
-        @PathVariable(value = "username") String username, HttpServletRequest request) {
+        @PathVariable(value = "username") String username) {
 
         log.info("Attempting a retrieval of a single trainer profile, username - {}", username);
         TrainerRetrievalByUsernameRequestDto requestDto = new TrainerRetrievalByUsernameRequestDto(username);
@@ -170,7 +172,7 @@ public class TrainerController {
     /**
      * Switch activation state of a trainee.
      */
-    @PatchMapping(value = "/switch-active/{username}")
+    @PatchMapping(value = "/{username}")
     public ResponseEntity<RestResponse> switchActivationState(
         @PathVariable(value = "username") String username) {
 

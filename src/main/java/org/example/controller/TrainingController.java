@@ -57,8 +57,7 @@ public class TrainingController {
      */
     @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse> create(@RequestBody
-                                               TrainingCreationRequestDto requestDto,
-                                               HttpServletRequest request) {
+                                               TrainingCreationRequestDto requestDto) {
 
         log.info("Attempting to create a training, request - {}", requestDto);
 
@@ -83,14 +82,13 @@ public class TrainingController {
     /**
      * Retrieve trainings of a trainee.
      */
-    @GetMapping("/trainee-training/{username}")
+    @GetMapping("/trainee/{username}")
     public ResponseEntity<RestResponse> retrieveTraineeTraining(
         @PathVariable(value = "username") String username,
         @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String from,
         @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String to,
         @RequestParam(required = false) String trainerUsername,
-        @RequestParam(required = false) String trainingType,
-        HttpServletRequest request) {
+        @RequestParam(required = false) String trainingType) {
 
         log.info("Attempting to retrieve trainings of a trainee, username - {}", username);
         TrainingListRetrievalByTraineeRequestDto requestDto =
@@ -137,13 +135,12 @@ public class TrainingController {
     /**
      * Retrieve trainings of a trainer.
      */
-    @GetMapping("/trainer-training/{username}")
+    @GetMapping("/trainer/{username}")
     public ResponseEntity<RestResponse> retrieveTrainerTraining(
         @PathVariable(value = "username") String username,
         @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String from,
         @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String to,
-        @RequestParam(value = "trainee", required = false) String traineeUsername,
-        HttpServletRequest request) {
+        @RequestParam(value = "trainee", required = false) String traineeUsername) {
 
         log.info("Attempting to retrieve trainings of a trainer, username - {}", username);
 

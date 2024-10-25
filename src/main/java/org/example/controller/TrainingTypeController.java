@@ -35,8 +35,7 @@ public class TrainingTypeController {
      * Retrieve training types.
      */
     @GetMapping
-    public ResponseEntity<RestResponse> retrieveTrainingTypes(
-        HttpServletRequest request) {
+    public ResponseEntity<RestResponse> retrieveTrainingTypes() {
 
         log.info("Attempting the retrieval of training types");
 

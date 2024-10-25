@@ -110,13 +110,15 @@ public class TraineeController {
     /**
      * Trainee update.
      */
-    @PutMapping(value = "/update", consumes = "application/json", produces = "application/json")
+    @PutMapping(value = "/{username}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse> update(
-        @RequestBody TraineeUpdateRequestDto requestDto) {
+        @RequestBody TraineeUpdateRequestDto requestDto,
+        @PathVariable(value = "username") String username) {
 
         log.info("Attempting an update of a trainee, request - {}", requestDto);
 
         // validations
+        requestDto.setUsername(username);
         traineeValidator.validateUpdateTrainee(requestDto);
 
         // service and mapper calls
@@ -139,7 +141,7 @@ public class TraineeController {
      */
     @DeleteMapping("/{username}")
     public ResponseEntity<RestResponse> delete(
-        @PathVariable(value = "username") String username, HttpServletRequest httpServletRequest) {
+        @PathVariable(value = "username") String username) {
 
         log.info("Attempting a deletion of a trainee, username - {}", username);
         TraineeDeletionByUsernameRequestDto requestDto = new TraineeDeletionByUsernameRequestDto(username);
@@ -163,9 +165,9 @@ public class TraineeController {
     /**
      * Trainee switch activation state.
      */
-    @PatchMapping(value = "/switch-active/{username}")
+    @PatchMapping(value = "/{username}")
     public ResponseEntity<RestResponse> switchActivationState(
-        @PathVariable("username") String username, HttpServletRequest httpServletRequest) {
+        @PathVariable("username") String username) {
 
         log.info("Attempting to switch the activation state of a trainee, username - {}", username);
         TraineeSwitchActivationStateRequestDto requestDto = new TraineeSwitchActivationStateRequestDto(username);

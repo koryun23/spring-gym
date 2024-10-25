@@ -52,7 +52,7 @@ public class AuthController {
     /**
      * Change password.
      */
-    @PutMapping(value = "/change-password", consumes = "application/json", produces = "application/json")
+    @PutMapping(value = "/password", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse> changePassword(
         @RequestBody UserChangePasswordRequestDto requestDto, HttpServletRequest request) {
         log.info("Attempting password change, request - {}", requestDto);
