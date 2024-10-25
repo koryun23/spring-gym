@@ -10,6 +10,7 @@ import org.example.entity.UserEntity;
 import org.example.repository.core.TraineeEntityRepository;
 import org.example.repository.core.TrainerEntityRepository;
 import org.example.service.core.trainer.TrainerService;
+import org.example.service.core.user.UserService;
 import org.example.service.impl.trainer.TrainerServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,9 +30,12 @@ class TrainerServiceImplTest {
     @Mock
     private TraineeEntityRepository traineeEntityRepository;
 
+    @Mock
+    private UserService userService;
+
     @BeforeEach
     public void init() {
-        testSubject = new TrainerServiceImpl(traineeEntityRepository, trainerEntityRepository);
+        testSubject = new TrainerServiceImpl(traineeEntityRepository, trainerEntityRepository, userService);
     }
 
     @Test

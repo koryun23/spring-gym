@@ -1,6 +1,5 @@
 package org.example.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import lombok.extern.slf4j.Slf4j;
@@ -14,9 +13,9 @@ import org.example.dto.response.TraineeDeletionResponseDto;
 import org.example.dto.response.TraineeSwitchActivationStateResponseDto;
 import org.example.entity.TraineeEntity;
 import org.example.mapper.trainee.TraineeMapper;
+import org.example.service.core.trainee.TraineeService;
 import org.example.service.core.user.AuthenticatorService;
 import org.example.service.core.user.IdService;
-import org.example.service.core.trainee.TraineeService;
 import org.example.service.core.user.UserService;
 import org.example.validator.TraineeValidator;
 import org.slf4j.MDC;

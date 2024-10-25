@@ -7,6 +7,7 @@ import org.example.entity.TraineeEntity;
 import org.example.entity.UserEntity;
 import org.example.repository.core.TraineeEntityRepository;
 import org.example.service.core.trainee.TraineeService;
+import org.example.service.core.user.UserService;
 import org.example.service.impl.trainee.TraineeServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,9 +24,12 @@ class TraineeServiceImplTest {
     @Mock
     private TraineeEntityRepository traineeEntityRepository;
 
+    @Mock
+    private UserService userService;
+
     @BeforeEach
     public void init() {
-        testSubject = new TraineeServiceImpl(traineeEntityRepository);
+        testSubject = new TraineeServiceImpl(traineeEntityRepository, userService);
     }
 
     @Test

@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.example.dto.request.TraineeCreationRequestDto;
-import org.example.dto.request.TraineeRetrievalByUsernameRequestDto;
 import org.example.dto.request.TraineeSwitchActivationStateRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
 import org.example.entity.TraineeEntity;
@@ -39,7 +38,7 @@ class TraineeValidatorTest {
     @Test
     public void testValidateCreateTraineeWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.validateCreateTrainee(null))
-            .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(CustomIllegalArgumentException.class);
     }
 
     @Test
@@ -80,7 +79,7 @@ class TraineeValidatorTest {
     @Test
     public void testValidateUpdateTraineeWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.validateUpdateTrainee(null))
-            .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(CustomIllegalArgumentException.class);
     }
 
     @Test
@@ -157,7 +156,7 @@ class TraineeValidatorTest {
     @Test
     public void testValidateRetrieveTraineeWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.validateRetrieveTrainee(null))
-            .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(CustomIllegalArgumentException.class);
     }
 
     @Test
@@ -182,9 +181,7 @@ class TraineeValidatorTest {
     public void testValidateRetrieveTraineeWhenUserDoesNotExist() {
         Mockito.when(traineeService.findByUsername("username")).thenReturn(Optional.empty());
         Assertions.assertThatThrownBy(
-            () -> testSubject.validateRetrieveTrainee(new TraineeRetrievalByUsernameRequestDto(
-                "username"
-            ))).isExactlyInstanceOf(TraineeNotFoundException.class);
+            () -> testSubject.validateRetrieveTrainee("username")).isExactlyInstanceOf(TraineeNotFoundException.class);
     }
 
     @Test
