@@ -6,12 +6,12 @@ import java.util.Collections;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
+import org.example.dto.plain.TrainingDto;
 import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTraineeRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTrainerRequestDto;
 import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.dto.response.TrainingListRetrievalResponseDto;
-import org.example.dto.response.TrainingRetrievalResponseDto;
 import org.example.entity.TrainingType;
 import org.example.exception.TrainingTypeNotFoundException;
 import org.example.mapper.training.TrainingMapper;
@@ -84,10 +84,10 @@ public class TrainingController {
     @GetMapping("/trainee/{username}")
     public ResponseEntity<RestResponse> retrieveTraineeTraining(
         @PathVariable(value = "username") String username,
-        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String from,
-        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String to,
-        @RequestParam(required = false) String trainerUsername,
-        @RequestParam(required = false) String trainingType) {
+        @RequestParam(value = "from", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String from,
+        @RequestParam(value = "to", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String to,
+        @RequestParam(value = "trainer", required = false) String trainerUsername,
+        @RequestParam(value = "type", required = false) String trainingType) {
 
         log.info("Attempting to retrieve trainings of a trainee, username - {}", username);
         TrainingListRetrievalByTraineeRequestDto requestDto =
@@ -109,7 +109,7 @@ public class TrainingController {
         // service and mapper calls
         TrainingListRetrievalResponseDto responseDto =
             new TrainingListRetrievalResponseDto(requestDto.getTraineeUsername(),
-                trainingMapper.mapTrainingEntityListToTrainingRetrievalResponseDtoList(
+                trainingMapper.mapTrainingEntityListToTrainingDtoList(
                     trainingService.findAllByTraineeUsernameAndCriteria(
                         requestDto.getTraineeUsername(),
                         requestDto.getFrom(),
@@ -137,8 +137,8 @@ public class TrainingController {
     @GetMapping("/trainer/{username}")
     public ResponseEntity<RestResponse> retrieveTrainerTraining(
         @PathVariable(value = "username") String username,
-        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String from,
-        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String to,
+        @RequestParam(value = "from", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String from,
+        @RequestParam(value = "to", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String to,
         @RequestParam(value = "trainee", required = false) String traineeUsername) {
 
         log.info("Attempting to retrieve trainings of a trainer, username - {}", username);
@@ -160,7 +160,7 @@ public class TrainingController {
 
         // service and mapper calls
         String trainerUsername = requestDto.getTrainerUsername();
-        List<TrainingRetrievalResponseDto> all = trainingMapper.mapTrainingEntityListToTrainingRetrievalResponseDtoList(
+        List<TrainingDto> all = trainingMapper.mapTrainingEntityListToTrainingDtoList(
             trainingService.findAllByTrainerUsernameAndCriteria(
                 trainerUsername,
                 requestDto.getFrom(),

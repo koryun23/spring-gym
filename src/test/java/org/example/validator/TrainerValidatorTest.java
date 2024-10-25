@@ -2,7 +2,6 @@ package org.example.validator;
 
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
-import org.example.dto.plain.TrainingTypeDto;
 import org.example.dto.request.TrainerCreationRequestDto;
 import org.example.dto.request.TrainerRetrievalByUsernameRequestDto;
 import org.example.dto.request.TrainerSwitchActivationStateRequestDto;
@@ -83,24 +82,21 @@ class TrainerValidatorTest {
 
     @Test
     public void testValidateUpdateTrainerWhenUsernameIsInvalid() {
-        TrainerUpdateRequestDto requestDto1 = new TrainerUpdateRequestDto("", "first", "last", new TrainingTypeDto(
-            TrainingType.AEROBIC), true);
+        TrainerUpdateRequestDto requestDto1 = new TrainerUpdateRequestDto("", "first", "last", 1L, true);
         Assertions.assertThatThrownBy(() -> testSubject.validateUpdateTrainer(requestDto1)).isExactlyInstanceOf(
             CustomIllegalArgumentException.class);
     }
 
     @Test
     public void testValidateUpdateTrainerWhenFirstNameIsInvalid() {
-        TrainerUpdateRequestDto requestDto1 = new TrainerUpdateRequestDto("username", "", "last", new TrainingTypeDto(
-            TrainingType.AEROBIC), true);
+        TrainerUpdateRequestDto requestDto1 = new TrainerUpdateRequestDto("username", "", "last", 1L, true);
         Assertions.assertThatThrownBy(() -> testSubject.validateUpdateTrainer(requestDto1)).isExactlyInstanceOf(
             CustomIllegalArgumentException.class);
     }
 
     @Test
     public void testValidateUpdateTrainerWhenLastNameIsInvalid() {
-        TrainerUpdateRequestDto requestDto1 = new TrainerUpdateRequestDto("username", "first", "", new TrainingTypeDto(
-            TrainingType.AEROBIC), true);
+        TrainerUpdateRequestDto requestDto1 = new TrainerUpdateRequestDto("username", "first", "", 1L, true);
         Assertions.assertThatThrownBy(() -> testSubject.validateUpdateTrainer(requestDto1))
             .isExactlyInstanceOf(CustomIllegalArgumentException.class);
     }
@@ -123,7 +119,7 @@ class TrainerValidatorTest {
     @Test
     public void testValidateUpdateTrainerWhenUserDoesNotExist() {
         Assertions.assertThatThrownBy(() -> testSubject.validateUpdateTrainer(new TrainerUpdateRequestDto(
-            "username", "first", "last", new TrainingTypeDto(TrainingType.AEROBIC), true
+            "username", "first", "last", 1L, true
         ))).isExactlyInstanceOf(TrainerNotFoundException.class);
     }
 

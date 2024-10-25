@@ -6,9 +6,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import org.example.entity.TraineeEntity;
-import org.example.entity.TrainerEntity;
 import org.example.entity.TrainingEntity;
 import org.example.exception.TraineeNotFoundException;
 import org.example.repository.core.TraineeEntityRepository;
@@ -142,8 +140,6 @@ public class TraineeEntityRepositoryImpl implements TraineeEntityRepository {
     public TraineeEntity update(TraineeEntity entity) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-
-        Set<TrainerEntity> trainerEntities = entity.getTrainerEntities();
 
         Long traineeId =
             session.createQuery("select t.id from TraineeEntity t where t.user.username = :username", Long.class)

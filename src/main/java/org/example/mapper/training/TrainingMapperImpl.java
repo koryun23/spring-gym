@@ -1,9 +1,9 @@
 package org.example.mapper.training;
 
 import java.util.List;
+import org.example.dto.plain.TrainingDto;
 import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.dto.response.TrainingCreationResponseDto;
-import org.example.dto.response.TrainingRetrievalResponseDto;
 import org.example.entity.TrainerEntity;
 import org.example.entity.TrainingEntity;
 import org.example.exception.TraineeNotFoundException;
@@ -50,24 +50,22 @@ public class TrainingMapperImpl implements TrainingMapper {
     }
 
     @Override
-    public TrainingRetrievalResponseDto mapTrainingEntityToTrainingRetrievalResponseDto(TrainingEntity trainingEntity) {
+    public TrainingDto mapTrainingEntityToTrainingDto(TrainingEntity trainingEntity) {
         Assert.notNull(trainingEntity, "TrainingEntity must not be null");
-        return new TrainingRetrievalResponseDto(
-            trainingEntity.getId(),
-            trainingEntity.getTrainee().getId(),
-            trainingEntity.getTrainer().getId(),
+        return new TrainingDto(
+            trainingEntity.getTrainee().getUser().getUsername(),
+            trainingEntity.getTrainer().getUser().getUsername(),
             trainingEntity.getName(),
-            trainingEntity.getTrainingType().getId(),
             trainingEntity.getDate(),
             trainingEntity.getDuration()
         );
     }
 
     @Override
-    public List<TrainingRetrievalResponseDto> mapTrainingEntityListToTrainingRetrievalResponseDtoList(
+    public List<TrainingDto> mapTrainingEntityListToTrainingDtoList(
         List<TrainingEntity> trainingEntityList) {
 
         Assert.notNull(trainingEntityList, "Training Entity List must not be null");
-        return trainingEntityList.stream().map(this::mapTrainingEntityToTrainingRetrievalResponseDto).toList();
+        return trainingEntityList.stream().map(this::mapTrainingEntityToTrainingDto).toList();
     }
 }

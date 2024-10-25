@@ -1,7 +1,7 @@
 package org.example.mapper.trainer;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.plain.TraineeDto;
 import org.example.dto.plain.TrainerDto;
@@ -13,12 +13,14 @@ import org.example.dto.response.TrainerCreationResponseDto;
 import org.example.dto.response.TrainerRetrievalResponseDto;
 import org.example.dto.response.TrainerUpdateResponseDto;
 import org.example.entity.TrainerEntity;
+import org.example.entity.TrainingEntity;
 import org.example.entity.TrainingType;
 import org.example.entity.TrainingTypeEntity;
 import org.example.entity.UserEntity;
 import org.example.exception.TrainingTypeNotFoundException;
+import org.example.mapper.trainee.TraineeMapper;
+import org.example.service.core.training.TrainingService;
 import org.example.service.core.training.TrainingTypeService;
-import org.example.service.core.user.IdService;
 import org.example.service.core.user.UserService;
 import org.example.service.core.user.UsernamePasswordService;
 import org.springframework.stereotype.Component;
@@ -31,19 +33,19 @@ public class TrainerMapperImpl implements TrainerMapper {
     private final UserService userService;
     private final TrainingTypeService trainingTypeService;
     private final UsernamePasswordService usernamePasswordService;
-    private final IdService idService;
+    private final TrainingService trainingService;
 
     /**
      * Constructor.
      */
     public TrainerMapperImpl(UserService userService,
                              TrainingTypeService trainingTypeService,
-                             UsernamePasswordService usernamePasswordService,
-                             IdService idService) {
+                             UsernamePasswordService usernamePasswordService, TrainingService trainingService,
+                             TraineeMapper traineeMapper) {
         this.userService = userService;
         this.trainingTypeService = trainingTypeService;
         this.usernamePasswordService = usernamePasswordService;
-        this.idService = idService;
+        this.trainingService = trainingService;
     }
 
     @Override
@@ -79,7 +81,10 @@ public class TrainerMapperImpl implements TrainerMapper {
             trainerEntity.getUser().getLastName(),
             trainerEntity.getSpecialization().getTrainingType(),
             trainerEntity.getUser().getIsActive(),
-            trainerEntity.getTraineeEntities().stream()
+            trainingService.findAllByTrainerUsernameAndCriteria(
+                    trainerEntity.getUser().getUsername(), null, null, null)
+                .stream()
+                .map(TrainingEntity::getTrainee)
                 .map(traineeEntity -> new TraineeDto(
                     new UserDto(
                         traineeEntity.getUser().getFirstName(),
@@ -90,28 +95,28 @@ public class TrainerMapperImpl implements TrainerMapper {
                     ),
                     traineeEntity.getDateOfBirth(),
                     traineeEntity.getAddress()
-                )).toList()
+                )).collect(Collectors.toSet()).stream().toList()
         );
     }
 
     @Override
     public TrainerUpdateResponseDto mapTrainerEntityToTrainerUpdateResponseDto(TrainerEntity trainerEntity) {
         Assert.notNull(trainerEntity, "TrainerEntity must not be null");
-        List<TraineeDto> traineeDtoList = Collections.emptyList();
-        if (trainerEntity.getTraineeEntities() != null) {
-            traineeDtoList = trainerEntity.getTraineeEntities().stream()
-                .map(traineeEntity -> new TraineeDto(
-                    new UserDto(
-                        traineeEntity.getUser().getFirstName(),
-                        traineeEntity.getUser().getLastName(),
-                        traineeEntity.getUser().getUsername(),
-                        traineeEntity.getUser().getPassword(),
-                        traineeEntity.getUser().getIsActive()
-                    ),
-                    traineeEntity.getDateOfBirth(),
-                    traineeEntity.getAddress()
-                )).toList();
-        }
+        List<TraineeDto> traineeDtoList = trainingService.findAllByTrainerUsernameAndCriteria(
+                trainerEntity.getUser().getUsername(), null, null, null)
+            .stream()
+            .map(TrainingEntity::getTrainee)
+            .map(traineeEntity -> new TraineeDto(
+                new UserDto(
+                    traineeEntity.getUser().getFirstName(),
+                    traineeEntity.getUser().getLastName(),
+                    traineeEntity.getUser().getUsername(),
+                    traineeEntity.getUser().getPassword(),
+                    traineeEntity.getUser().getIsActive()
+                ),
+                traineeEntity.getDateOfBirth(),
+                traineeEntity.getAddress()
+            )).collect(Collectors.toSet()).stream().toList();
         return new TrainerUpdateResponseDto(
             trainerEntity.getUser().getUsername(),
             trainerEntity.getUser().getFirstName(),
@@ -126,7 +131,8 @@ public class TrainerMapperImpl implements TrainerMapper {
     public TrainerEntity mapTrainerUpdateRequestDtoToTrainerEntity(TrainerUpdateRequestDto requestDto) {
         Assert.notNull(requestDto, "TrainerUpdateRequestDto must not be null");
 
-        TrainingType trainingType = requestDto.getSpecialization().getTrainingType();
+        TrainingType trainingType = trainingTypeService.get(requestDto.getSpecializationId()).getTrainingType();
+
         return new TrainerEntity(
             userService.getByUsername(requestDto.getUsername()),
             trainingTypeService.findByTrainingType(trainingType).orElseThrow(

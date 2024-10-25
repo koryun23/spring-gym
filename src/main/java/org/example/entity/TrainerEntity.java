@@ -7,7 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -15,7 +14,6 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import java.util.List;
-import java.util.Set;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,9 +45,6 @@ public class TrainerEntity {
     @Transient
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "trainer")
     private List<TrainingEntity> trainingEntityList;
-
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "trainerEntities", fetch = FetchType.EAGER)
-    private Set<TraineeEntity> traineeEntities;
 
     /**
      * Constructor.

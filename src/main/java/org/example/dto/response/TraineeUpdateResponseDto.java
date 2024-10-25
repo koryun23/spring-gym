@@ -1,5 +1,6 @@
 package org.example.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Date;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,10 @@ public class TraineeUpdateResponseDto {
     private String username;
     private String firstName;
     private String lastName;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date dateOfBirth;
+
     private String address;
     private Boolean isActive;
     private List<TrainerDto> trainers;

@@ -1,9 +1,7 @@
 package org.example.validator;
 
 import org.example.dto.RestResponse;
-import org.example.dto.plain.TrainingTypeDto;
 import org.example.dto.request.RetrieveAllTrainersNotAssignedToTraineeRequestDto;
-import org.example.dto.request.TraineeTrainerListUpdateRequestDto;
 import org.example.dto.request.TrainerCreationRequestDto;
 import org.example.dto.request.TrainerRetrievalByUsernameRequestDto;
 import org.example.dto.request.TrainerSwitchActivationStateRequestDto;
@@ -83,8 +81,8 @@ public class TrainerValidator {
             throw new CustomIllegalArgumentException("Last name is required");
         }
 
-        TrainingTypeDto specialization = requestDto.getSpecialization();
-        if (specialization == null) {
+        Long specializationId = requestDto.getSpecializationId();
+        if (specializationId == null) {
             throw new CustomIllegalArgumentException("Specialization is required");
         }
 
@@ -148,25 +146,6 @@ public class TrainerValidator {
         if (traineeUsername == null || traineeUsername.isEmpty()) {
             throw new CustomIllegalArgumentException("Trainee is required");
         }
-        if (traineeService.findByUsername(traineeUsername).isEmpty()) {
-            throw new TraineeNotFoundException(traineeUsername);
-        }
-
-        return null;
-    }
-
-    /**
-     * Validate Trainee Trainer List Update Request Dto.
-     */
-    public RestResponse validateUpdateTraineeTrainerList(
-        TraineeTrainerListUpdateRequestDto requestDto) {
-
-        String traineeUsername = requestDto.getTraineeUsername();
-
-        if (traineeUsername == null || traineeUsername.isEmpty()) {
-            throw new CustomIllegalArgumentException("Username is required");
-        }
-
         if (traineeService.findByUsername(traineeUsername).isEmpty()) {
             throw new TraineeNotFoundException(traineeUsername);
         }

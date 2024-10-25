@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.example.dto.plain.TrainingTypeDto;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,7 +18,7 @@ public class TrainerUpdateRequestDto {
     private String username;
     private String firstName;
     private String lastName;
-    private TrainingTypeDto specialization;
+    private Long specializationId;
     private Boolean isActive;
 
 }

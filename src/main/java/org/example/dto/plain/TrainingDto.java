@@ -1,5 +1,6 @@
 package org.example.dto.plain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Date;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -19,6 +20,9 @@ public class TrainingDto {
     private String traineeUsername;
     private String trainerUsername;
     private String trainingName;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date trainingDate;
+
     private Long trainingDuration;
 }

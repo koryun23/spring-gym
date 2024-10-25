@@ -99,7 +99,7 @@ public class TraineeServiceImpl implements TraineeService {
     public Optional<TraineeEntity> findByUsername(String username) {
         Assert.notNull(username, "TraineeEntity username must not be null");
         Assert.hasText(username, "TraineeEntity username must not be empty");
-        LOGGER.info("Retrieved an optional TraineeEntity with a username of {}", username);
+        LOGGER.info("Retrieving an optional TraineeEntity with a username of {}", username);
         Optional<TraineeEntity> optionalTrainee = traineeDao.findByUsername(username);
         LOGGER.info("Successfully retrieved an optional TraineeEntity with an username of {}, result - {}", username,
             optionalTrainee);
