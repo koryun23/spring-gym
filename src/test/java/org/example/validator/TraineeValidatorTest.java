@@ -11,7 +11,6 @@ import org.example.entity.UserEntity;
 import org.example.exception.CustomIllegalArgumentException;
 import org.example.exception.TraineeNotFoundException;
 import org.example.service.core.trainee.TraineeService;
-import org.example.service.core.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,14 +24,11 @@ class TraineeValidatorTest {
     private TraineeValidator testSubject;
 
     @Mock
-    private UserService userService;
-
-    @Mock
     private TraineeService traineeService;
 
     @BeforeEach
     public void init() {
-        testSubject = new TraineeValidator(userService, traineeService);
+        testSubject = new TraineeValidator(traineeService);
     }
 
     @Test
@@ -165,7 +161,7 @@ class TraineeValidatorTest {
             "first", "last", null, true, Date.valueOf("2024-10-10"), "address"
         ))).isExactlyInstanceOf(CustomIllegalArgumentException.class);
 
-        Mockito.verifyNoMoreInteractions(userService, traineeService);
+        Mockito.verifyNoMoreInteractions(traineeService);
     }
 
     @Test
@@ -174,7 +170,7 @@ class TraineeValidatorTest {
             "first", "last", "", true, Date.valueOf("2024-10-10"), "address"
         ))).isExactlyInstanceOf(CustomIllegalArgumentException.class);
 
-        Mockito.verifyNoMoreInteractions(userService, traineeService);
+        Mockito.verifyNoMoreInteractions(traineeService);
     }
 
     @Test
@@ -192,7 +188,7 @@ class TraineeValidatorTest {
         Assertions.assertThat(testSubject.validateUpdateTrainee(new TraineeUpdateRequestDto(
             "first", "last", "username", true, Date.valueOf("2024-10-10"), "address"
         ))).isNull();
-        Mockito.verifyNoMoreInteractions(userService, traineeService);
+        Mockito.verifyNoMoreInteractions(traineeService);
     }
 
     @Test
@@ -207,7 +203,7 @@ class TraineeValidatorTest {
             "first", "last", null, true, Date.valueOf("2024-10-10"), "address"
         ))).isExactlyInstanceOf(CustomIllegalArgumentException.class);
 
-        Mockito.verifyNoMoreInteractions(userService, traineeService);
+        Mockito.verifyNoMoreInteractions(traineeService);
     }
 
     @Test
@@ -216,7 +212,7 @@ class TraineeValidatorTest {
             "first", "last", "", true, Date.valueOf("2024-10-10"), "address"
         ))).isExactlyInstanceOf(CustomIllegalArgumentException.class);
 
-        Mockito.verifyNoMoreInteractions(userService, traineeService);
+        Mockito.verifyNoMoreInteractions(traineeService);
     }
 
     @Test
@@ -251,7 +247,7 @@ class TraineeValidatorTest {
             "first", "last", null, true, Date.valueOf("2024-10-10"), "address"
         ))).isExactlyInstanceOf(CustomIllegalArgumentException.class);
 
-        Mockito.verifyNoMoreInteractions(userService, traineeService);
+        Mockito.verifyNoMoreInteractions(traineeService);
     }
 
     @Test
@@ -260,7 +256,7 @@ class TraineeValidatorTest {
             "first", "last", "", true, Date.valueOf("2024-10-10"), "address"
         ))).isExactlyInstanceOf(CustomIllegalArgumentException.class);
 
-        Mockito.verifyNoMoreInteractions(userService, traineeService);
+        Mockito.verifyNoMoreInteractions(traineeService);
     }
 
     @Test
@@ -283,7 +279,7 @@ class TraineeValidatorTest {
             "first", "last", "username", true, Date.valueOf("2024-10-10"), "address"
         ))).isNull();
 
-        Mockito.verifyNoMoreInteractions(userService, traineeService);
+        Mockito.verifyNoMoreInteractions(traineeService);
     }
 
 }

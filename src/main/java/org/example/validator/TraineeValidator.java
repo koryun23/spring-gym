@@ -8,24 +8,18 @@ import org.example.dto.request.TraineeUpdateRequestDto;
 import org.example.exception.CustomIllegalArgumentException;
 import org.example.exception.TraineeNotFoundException;
 import org.example.service.core.trainee.TraineeService;
-import org.example.service.core.user.UserService;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
 @Component
 public class TraineeValidator {
 
-    private final UserService userService;
     private final TraineeService traineeService;
 
     /**
      * Constructor.
      */
-    public TraineeValidator(UserService userService, TraineeService traineeService) {
-        this.userService = userService;
+    public TraineeValidator(TraineeService traineeService) {
         this.traineeService = traineeService;
     }
 
