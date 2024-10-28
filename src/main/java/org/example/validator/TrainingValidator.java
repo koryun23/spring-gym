@@ -7,6 +7,7 @@ import org.example.dto.request.TrainingListRetrievalByTraineeRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTrainerRequestDto;
 import org.example.exception.CustomIllegalArgumentException;
 import org.example.exception.TraineeNotFoundException;
+import org.example.exception.TrainerNotFoundException;
 import org.example.service.core.trainee.TraineeService;
 import org.example.service.core.trainer.TrainerService;
 import org.springframework.stereotype.Component;
@@ -83,7 +84,7 @@ public class TrainingValidator {
         }
 
         if (trainerService.findByUsername(trainerUsername).isEmpty()) {
-            throw new CustomIllegalArgumentException("Trainer does not exist");
+            throw new TrainerNotFoundException("Trainer does not exist");
         }
 
         return null;
