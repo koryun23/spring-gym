@@ -7,8 +7,8 @@ import org.example.entity.TrainerEntity;
 import org.example.entity.TrainingType;
 import org.example.entity.TrainingTypeEntity;
 import org.example.entity.UserEntity;
-import org.example.repository.core.TraineeEntityRepository;
-import org.example.repository.core.TrainerEntityRepository;
+import org.example.repository.TraineeEntityRepository;
+import org.example.repository.TrainerEntityRepository;
 import org.example.service.core.trainer.TrainerService;
 import org.example.service.core.user.UserService;
 import org.example.service.impl.trainer.TrainerServiceImpl;
@@ -57,7 +57,7 @@ class TrainerServiceImplTest {
         TrainingTypeEntity trainingTypeEntity = new TrainingTypeEntity(TrainingType.AEROBIC);
         TrainerEntity trainerEntity = new TrainerEntity(userEntity, trainingTypeEntity);
 
-        Mockito.when(trainerEntityRepository.update(trainerEntity)).thenReturn(trainerEntity);
+        Mockito.when(trainerEntityRepository.save(trainerEntity)).thenReturn(trainerEntity);
 
         Assertions.assertThat(testSubject.update(trainerEntity)).isEqualTo(trainerEntity);
 
@@ -83,7 +83,7 @@ class TrainerServiceImplTest {
         TrainingTypeEntity trainingTypeEntity = new TrainingTypeEntity(TrainingType.AEROBIC);
         TrainerEntity trainerEntity = new TrainerEntity(userEntity, trainingTypeEntity);
 
-        Mockito.when(trainerEntityRepository.findByUsername("username")).thenReturn(Optional.of(trainerEntity));
+        Mockito.when(trainerEntityRepository.findByUserUsername("username")).thenReturn(Optional.of(trainerEntity));
 
         Assertions.assertThat(testSubject.selectByUsername("username")).isEqualTo(trainerEntity);
 
@@ -109,7 +109,7 @@ class TrainerServiceImplTest {
         TrainingTypeEntity trainingTypeEntity = new TrainingTypeEntity(TrainingType.AEROBIC);
         TrainerEntity trainerEntity = new TrainerEntity(userEntity, trainingTypeEntity);
 
-        Mockito.when(trainerEntityRepository.findByUsername("username")).thenReturn(Optional.of(trainerEntity));
+        Mockito.when(trainerEntityRepository.findByUserUsername("username")).thenReturn(Optional.of(trainerEntity));
 
         Assertions.assertThat(testSubject.findByUsername("username")).isEqualTo(Optional.of(trainerEntity));
 

@@ -3,7 +3,7 @@ package org.example.service.impl;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.example.entity.UserEntity;
-import org.example.repository.core.UserEntityRepository;
+import org.example.repository.UserEntityRepository;
 import org.example.service.core.user.UserService;
 import org.example.service.impl.user.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,7 +57,7 @@ class UserServiceImplTest {
 
     @Test
     public void testUpdate() {
-        Mockito.when(userEntityRepository.update(new UserEntity(
+        Mockito.when(userEntityRepository.save(new UserEntity(
             "first", "last", "username", "password", true
         ))).thenReturn(new UserEntity(
             "first", "last", "username", "password", true

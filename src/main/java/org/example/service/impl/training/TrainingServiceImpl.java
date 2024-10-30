@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.example.entity.TrainingEntity;
 import org.example.entity.TrainingType;
 import org.example.exception.TrainingNotFoundException;
-import org.example.repository.core.TrainingEntityRepository;
+import org.example.repository.TrainingEntityRepository;
 import org.example.service.core.training.TrainingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +51,7 @@ public class TrainingServiceImpl implements TrainingService {
         LOGGER.info("Updating a TrainingEntity with an id of {} according to {}", trainingEntity.getId(),
             trainingEntity);
 
-        TrainingEntity updatedTrainingEntity = trainingEntityRepository.update(trainingEntity);
+        TrainingEntity updatedTrainingEntity = trainingEntityRepository.save(trainingEntity);
 
         LOGGER.info("Successfully updated a TrainingEntity with an id of {}, result - {}", trainingEntity.getId(),
             updatedTrainingEntity);
@@ -118,7 +118,7 @@ public class TrainingServiceImpl implements TrainingService {
         Assert.notNull(traineeUsername, "Trainee username must not be null");
         LOGGER.info("Deleting all trainings of a trainee with a username of {}", traineeUsername);
 
-        trainingEntityRepository.deleteAllByTraineeUsername(traineeUsername);
+        trainingEntityRepository.deleteAllByTraineeUserUsername(traineeUsername);
 
         LOGGER.info("Successfully deleted all trainings of a trainee with a username of {}", traineeUsername);
     }
@@ -128,7 +128,7 @@ public class TrainingServiceImpl implements TrainingService {
         Assert.notNull(trainerUsername, "Trainer username must not be null");
         LOGGER.info("Deleting all trainings of a trainer with a username of {}", trainerUsername);
 
-        trainingEntityRepository.deleteAllByTrainerUsername(trainerUsername);
+        trainingEntityRepository.deleteAllByTrainerUserUsername(trainerUsername);
 
         LOGGER.info("Successfully deleted all trainings of a trainer with a username of {}", trainerUsername);
     }

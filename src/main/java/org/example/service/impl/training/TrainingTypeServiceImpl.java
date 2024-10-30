@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.example.entity.TrainingType;
 import org.example.entity.TrainingTypeEntity;
 import org.example.exception.TrainingTypeNotFoundException;
-import org.example.repository.core.TrainingTypeEntityRepository;
+import org.example.repository.TrainingTypeEntityRepository;
 import org.example.service.core.training.TrainingTypeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +36,7 @@ public class TrainingTypeServiceImpl implements TrainingTypeService {
     public TrainingTypeEntity update(TrainingTypeEntity trainingType) {
         Assert.notNull(trainingType, "Training Type Entity must not be null");
         LOGGER.info("Updating a Training Type Entity with an id of {}", trainingType.getId());
-        TrainingTypeEntity updatedTrainingTypeEntity = trainingTypeDao.update(trainingType);
+        TrainingTypeEntity updatedTrainingTypeEntity = trainingTypeDao.save(trainingType);
         LOGGER.info("Successfully updated a Training Type Entity with an id of {}, result - {}",
             trainingType.getId(), updatedTrainingTypeEntity);
         return updatedTrainingTypeEntity;

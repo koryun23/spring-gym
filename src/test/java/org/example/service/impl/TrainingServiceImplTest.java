@@ -9,7 +9,7 @@ import org.example.entity.TrainingEntity;
 import org.example.entity.TrainingType;
 import org.example.entity.TrainingTypeEntity;
 import org.example.entity.UserEntity;
-import org.example.repository.core.TrainingEntityRepository;
+import org.example.repository.TrainingEntityRepository;
 import org.example.service.core.training.TrainingService;
 import org.example.service.impl.training.TrainingServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -82,7 +82,7 @@ class TrainingServiceImplTest {
         TrainingEntity trainingEntity = new TrainingEntity(
             traineeEntity, trainerEntity, "name", specialization, Date.valueOf("2024-10-10"), 100L
         );
-        Mockito.when(trainingEntityRepository.update(trainingEntity)).thenReturn(trainingEntity);
+        Mockito.when(trainingEntityRepository.save(trainingEntity)).thenReturn(trainingEntity);
 
         Assertions.assertThat(testSubject.update(trainingEntity)).isEqualTo(trainingEntity);
 

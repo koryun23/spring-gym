@@ -4,7 +4,7 @@ import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.example.entity.TrainingType;
 import org.example.entity.TrainingTypeEntity;
-import org.example.repository.core.TrainingTypeEntityRepository;
+import org.example.repository.TrainingTypeEntityRepository;
 import org.example.service.core.training.TrainingTypeService;
 import org.example.service.impl.training.TrainingTypeServiceImpl;
 import org.junit.jupiter.api.BeforeEach;

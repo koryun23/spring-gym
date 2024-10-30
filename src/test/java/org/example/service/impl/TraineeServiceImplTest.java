@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.example.entity.TraineeEntity;
 import org.example.entity.UserEntity;
-import org.example.repository.core.TraineeEntityRepository;
+import org.example.repository.TraineeEntityRepository;
 import org.example.service.core.trainee.TraineeService;
 import org.example.service.core.user.UserService;
 import org.example.service.impl.trainee.TraineeServiceImpl;
@@ -51,7 +51,7 @@ class TraineeServiceImplTest {
             userEntity,
             Date.valueOf("2024-10-10"), "address"
         );
-        Mockito.when(traineeEntityRepository.update(traineeEntity)).thenReturn(traineeEntity);
+        Mockito.when(traineeEntityRepository.save(traineeEntity)).thenReturn(traineeEntity);
         Assertions.assertThat(testSubject.update(traineeEntity)).isEqualTo(traineeEntity);
         Mockito.verifyNoMoreInteractions(traineeEntityRepository);
     }
@@ -75,7 +75,7 @@ class TraineeServiceImplTest {
             userEntity,
             Date.valueOf("2024-10-10"), "address"
         );
-        Mockito.when(traineeEntityRepository.findByUsername("username")).thenReturn(Optional.of(traineeEntity));
+        Mockito.when(traineeEntityRepository.findByUserUsername("username")).thenReturn(Optional.of(traineeEntity));
         Assertions.assertThat(testSubject.selectByUsername("username")).isEqualTo(traineeEntity);
         Mockito.verifyNoMoreInteractions(traineeEntityRepository);
     }
@@ -87,7 +87,7 @@ class TraineeServiceImplTest {
             userEntity,
             Date.valueOf("2024-10-10"), "address"
         );
-        Mockito.when(traineeEntityRepository.findByUsername("username")).thenReturn(Optional.of(traineeEntity));
+        Mockito.when(traineeEntityRepository.findByUserUsername("username")).thenReturn(Optional.of(traineeEntity));
         Assertions.assertThat(testSubject.findByUsername("username")).isEqualTo(Optional.of(traineeEntity));
         Mockito.verifyNoMoreInteractions(traineeEntityRepository);
     }

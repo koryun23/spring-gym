@@ -1,26 +1,14 @@
 package org.example;
 
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-import io.swagger.v3.oas.annotations.servers.Server;
-import java.io.File;
-import org.apache.catalina.LifecycleException;
-import org.apache.catalina.core.StandardContext;
-import org.apache.catalina.startup.Tomcat;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@OpenAPIDefinition(servers = {@Server(url = "localhost:8888/", description = "Gym application")})
+@SpringBootApplication
 public class Main {
     /**
      * Main method.
      */
     public static void main(String[] args) {
-        Tomcat tomcat = new Tomcat();
-        tomcat.setPort(8888);
-        StandardContext context = (StandardContext) tomcat.addWebapp("", new File("src/main/").getAbsolutePath());
-        tomcat.getConnector();
-        try {
-            tomcat.start();
-        } catch (LifecycleException e) {
-            e.printStackTrace();
-        }
+        SpringApplication.run(Main.class, args);
     }
 }

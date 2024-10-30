@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import org.example.entity.TrainerEntity;
 import org.example.exception.TrainerNotFoundException;
-import org.example.repository.core.TraineeEntityRepository;
-import org.example.repository.core.TrainerEntityRepository;
+import org.example.repository.TraineeEntityRepository;
+import org.example.repository.TrainerEntityRepository;
 import org.example.service.core.trainer.TrainerService;
 import org.example.service.core.user.UserService;
 import org.slf4j.Logger;
@@ -48,7 +48,7 @@ public class TrainerServiceImpl implements TrainerService {
     public TrainerEntity update(TrainerEntity trainerEntity) {
         Assert.notNull(trainerEntity, "TrainerUpdateParams must not be null");
         LOGGER.info("Updating a TrainerEntity based on TrainerUpdateParams - {}", trainerEntity);
-        TrainerEntity updatedTrainerEntity = trainerDao.update(trainerEntity);
+        TrainerEntity updatedTrainerEntity = trainerDao.save(trainerEntity);
         LOGGER.info("Successfully updated a TrainerEntity based on TrainerUpdateParams - {}, result - {}",
             trainerEntity,
             updatedTrainerEntity);
@@ -71,7 +71,7 @@ public class TrainerServiceImpl implements TrainerService {
         Assert.hasText(username, "TrainerEntity username must not be empty");
         LOGGER.info("Selecting a TrainerEntity with a username of {}", username);
         TrainerEntity trainerEntity =
-            trainerDao.findByUsername(username).orElseThrow(() -> new TrainerNotFoundException(username));
+            trainerDao.findByUserUsername(username).orElseThrow(() -> new TrainerNotFoundException(username));
         LOGGER.info("Successfully selected a TrainerEntity with a username of {}, result - {}", username,
             trainerEntity);
         return trainerEntity;
@@ -92,7 +92,7 @@ public class TrainerServiceImpl implements TrainerService {
         Assert.notNull(username, "TrainerEntity username must not be null");
         Assert.hasText(username, "TrainerEntity username must not be empty");
         LOGGER.info("Retrieving an optional TrainerEntity with a username of {}", username);
-        Optional<TrainerEntity> optionalTrainer = trainerDao.findByUsername(username);
+        Optional<TrainerEntity> optionalTrainer = trainerDao.findByUserUsername(username);
         LOGGER.info("Successfully retrieved an optional TrainerEntity with a username of {}, result - {}", username,
             optionalTrainer);
         return optionalTrainer;

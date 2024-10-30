@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import org.example.entity.UserEntity;
 import org.example.exception.UserNotFoundException;
-import org.example.repository.core.UserEntityRepository;
+import org.example.repository.UserEntityRepository;
 import org.example.service.core.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     public UserEntity update(UserEntity user) {
         Assert.notNull(user, "User Entity must not be null");
         LOGGER.info("Updating a User Entity with an id of {}", user.getId());
-        UserEntity updatedUserEntity = userEntityRepository.update(user);
+        UserEntity updatedUserEntity = userEntityRepository.save(user);
         LOGGER.info("Successfully updated a User Entity with an id of {}, result - {}",
             user.getId(), updatedUserEntity);
         return updatedUserEntity;

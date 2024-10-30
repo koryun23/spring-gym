@@ -3,7 +3,7 @@ package org.example.service.impl.trainee;
 import java.util.Optional;
 import org.example.entity.TraineeEntity;
 import org.example.exception.TraineeNotFoundException;
-import org.example.repository.core.TraineeEntityRepository;
+import org.example.repository.TraineeEntityRepository;
 import org.example.service.core.trainee.TraineeService;
 import org.example.service.core.user.UserService;
 import org.slf4j.Logger;
@@ -39,7 +39,7 @@ public class TraineeServiceImpl implements TraineeService {
     public TraineeEntity update(TraineeEntity trainee) {
         Assert.notNull(trainee, "TraineeCreateParams must not be null");
         LOGGER.info("Updating a TraineeEntity based on TraineeUpdateParams - {}", trainee);
-        TraineeEntity updatedTrainee = traineeDao.update(trainee);
+        TraineeEntity updatedTrainee = traineeDao.save(trainee);
         LOGGER.info("Successfully updated a TraineeEntity based on TraineeUpdateParams - {}, result - {}", trainee,
             trainee);
         return updatedTrainee;
@@ -59,7 +59,7 @@ public class TraineeServiceImpl implements TraineeService {
         Assert.notNull(username, "Username must not be null");
         Assert.notNull(username, "Username must not be empty");
         LOGGER.info("Deleting a Trainee with a username of {}", username);
-        traineeDao.deleteByUsername(username);
+        traineeDao.deleteByUserUsername(username);
         LOGGER.info("Successfully deleted a Trainee with a username of {}", username);
         return true;
     }
@@ -80,7 +80,7 @@ public class TraineeServiceImpl implements TraineeService {
         Assert.hasText(username, "TraineeEntity username must not be empty");
         LOGGER.info("Selecting a TraineeEntity with a username of {}", username);
         TraineeEntity trainee =
-            traineeDao.findByUsername(username).orElseThrow(() -> new TraineeNotFoundException(username));
+            traineeDao.findByUserUsername(username).orElseThrow(() -> new TraineeNotFoundException(username));
         LOGGER.info("Successfully selected a trainee with a username of {}, result - {}", username, trainee);
         return trainee;
     }
@@ -100,7 +100,7 @@ public class TraineeServiceImpl implements TraineeService {
         Assert.notNull(username, "TraineeEntity username must not be null");
         Assert.hasText(username, "TraineeEntity username must not be empty");
         LOGGER.info("Retrieving an optional TraineeEntity with a username of {}", username);
-        Optional<TraineeEntity> optionalTrainee = traineeDao.findByUsername(username);
+        Optional<TraineeEntity> optionalTrainee = traineeDao.findByUserUsername(username);
         LOGGER.info("Successfully retrieved an optional TraineeEntity with an username of {}, result - {}", username,
             optionalTrainee);
         return optionalTrainee;
