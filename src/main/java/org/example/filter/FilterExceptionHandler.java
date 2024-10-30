@@ -1,4 +1,4 @@
-package org.example.exception.handler;
+package org.example.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;

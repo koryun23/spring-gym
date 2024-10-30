@@ -45,9 +45,3 @@ create table if not exists TRAINING (
     foreign key (trainer_id) references trainer(id),
     foreign key (training_type_id) references training_type(id)
 );
-
-insert into TRAINING_TYPE (training_type) VALUES ('STRENGTH_TRAINING');
-insert into TRAINING_TYPE (training_type) VALUES ('AEROBIC');
-insert into TRAINING_TYPE (training_type) VALUES ('BODYBUILDING');
-insert into TRAINING_TYPE (training_type) VALUES ('FLEXIBILITY_TRAINING');
-insert into TRAINING_TYPE (training_type) VALUES ('WEIGHTLIFTING');

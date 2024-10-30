@@ -46,6 +46,7 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-api:2.2.0'
     testImplementation 'io.rest-assured:rest-assured:5.5.0'
+    //implementation 'org.flywaydb:flyway-core:7.15.0'
 
     // spring boot dependencies
     implementation 'org.springframework.boot:spring-boot-starter-web:3.3.3'
@@ -66,5 +67,5 @@ flyway {
     url = 'jdbc:postgresql://localhost:6432/postgres'
     user = 'postgres'
     password = ''
-    schemas = ['classpath:/db/migration/schema.sql']
+    schemas = ['classpath:resources/db/migration/V1__migration.sql']
 }
