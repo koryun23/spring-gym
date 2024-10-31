@@ -1,8 +1,9 @@
 package org.example.actuator.prometheus;
 
 
-import io.micrometer.core.instrument.Counter;
-import io.micrometer.core.instrument.MeterRegistry;
+
+import io.prometheus.metrics.core.metrics.Counter;
+import io.prometheus.metrics.core.metrics.Gauge;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -11,20 +12,44 @@ import org.springframework.stereotype.Service;
 public class CustomMetricsService {
 
     private final Counter requestsSentCounter;
+    private final Gauge jvmMemoryUsageGauage;
 
-    public CustomMetricsService(MeterRegistry meterRegistry) {
-        requestsSentCounter = Counter.builder("http_total_requests_sent")
-            .description("Total number of HTTP requests sent to the API")
-            .register(meterRegistry);
+    public CustomMetricsService() {
+        requestsSentCounter = Counter.builder()
+            .name("http_total_requests_sent")
+            .help("Total number of HTTP requests sent to the API")
+            .register();
+        jvmMemoryUsageGauage = Gauge.builder().name("jvm_memory_usage")
+            .help("Memory usage in the JVM in bytes")
+            .register();
     }
 
     public void incrementTotalRequestsSent() {
         log.info("Incrementing the number of requests sent by 1");
-        requestsSentCounter.increment();
+        requestsSentCounter.inc(1L);
     }
 
     public double getTotalRequestsSent() {
         log.info("Getting the number of total requests sent");
-        return requestsSentCounter.count();
+        return requestsSentCounter.get();
+    }
+
+    public void updateJvmMemoryUsage() {
+        log.info("Updating JVM Memory Usage");
+        jvmMemoryUsageGauage.set(Runtime.getRuntime().totalMemory());
+    }
+
+    public double getJvmMemoryUsage() {
+        log.info("Getting the jvm memory usage");
+        updateJvmMemoryUsage();
+        return jvmMemoryUsageGauage.get();
+    }
+
+    public double getJvmMaximumMemory() {
+        return (double) Runtime.getRuntime().maxMemory();
+    }
+
+    public double getJvmFreeMemory() {
+        return (double) Runtime.getRuntime().freeMemory();
     }
 }

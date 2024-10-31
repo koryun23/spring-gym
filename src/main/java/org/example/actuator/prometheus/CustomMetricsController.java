@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
 import org.springframework.http.HttpStatus;
@@ -26,22 +27,30 @@ public class CustomMetricsController {
         this.objectMapper = objectMapper;
     }
 
-    @GetMapping("requests")
+    @GetMapping("/requests")
     public ResponseEntity<RestResponse> totalRequestsSent() {
         log.info("Retrieving the number of total requests");
-        HashMap<Object, Object> totalRequests = new HashMap<>();
+        Map<String, Double> totalRequests = new HashMap<>();
         totalRequests.put("Number of Total Requests", customMetricsService.getTotalRequestsSent());
         log.info("{}", totalRequests);
 
-        String totalRequestsAsJson = "";
-        try {
-            totalRequestsAsJson = objectMapper.writer().writeValueAsString(totalRequests);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        log.info(totalRequestsAsJson);
         return new ResponseEntity<>(
             new RestResponse(totalRequests, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList()),
             HttpStatus.OK);
+    }
+
+    @GetMapping("/memory")
+    public ResponseEntity<RestResponse> memoryUsage() {
+        log.info("Retrieving the memory usage");
+        Map<String, Double> memoryUsage = new HashMap<>();
+        memoryUsage.put("Memory usage", customMetricsService.getJvmMemoryUsage());
+        memoryUsage.put("Maximum memory", customMetricsService.getJvmMaximumMemory());
+        memoryUsage.put("Free memory", customMetricsService.getJvmFreeMemory());
+
+        log.info("{}", memoryUsage);
+        return new ResponseEntity<>(
+            new RestResponse(memoryUsage, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList()),
+            HttpStatus.OK
+        );
     }
 }
