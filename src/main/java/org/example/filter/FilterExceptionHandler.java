@@ -10,11 +10,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.example.dto.RestResponse;
 import org.example.exception.AuthenticationFailureException;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Component
+@Order(1)
 public class FilterExceptionHandler extends OncePerRequestFilter {
 
     private final ObjectMapper objectMapper;

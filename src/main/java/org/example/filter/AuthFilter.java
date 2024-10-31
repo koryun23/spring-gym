@@ -8,11 +8,13 @@ import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
 import org.example.exception.AuthenticationFailureException;
 import org.example.service.core.user.AuthenticatorService;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Slf4j
 @Component
+@Order(3)
 public class AuthFilter extends OncePerRequestFilter {
 
     private final AuthenticatorService authenticatorService;
