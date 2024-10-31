@@ -1,6 +1,5 @@
 package org.example.actuator.prometheus;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -20,11 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomMetricsController {
 
     private final CustomMetricsService customMetricsService;
-    private final ObjectMapper objectMapper;
 
-    public CustomMetricsController(CustomMetricsService customMetricsService, ObjectMapper objectMapper) {
+    public CustomMetricsController(CustomMetricsService customMetricsService) {
         this.customMetricsService = customMetricsService;
-        this.objectMapper = objectMapper;
     }
 
     @GetMapping("/requests")
