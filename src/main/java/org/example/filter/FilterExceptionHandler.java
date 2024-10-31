@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.example.actuator.prometheus.CustomMetricsService;
 import org.example.dto.RestResponse;
 import org.example.exception.AuthenticationFailureException;
 import org.springframework.core.annotation.Order;
@@ -20,9 +21,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class FilterExceptionHandler extends OncePerRequestFilter {
 
     private final ObjectMapper objectMapper;
+    private final CustomMetricsService customMetricsService;
 
-    public FilterExceptionHandler(ObjectMapper objectMapper) {
+    public FilterExceptionHandler(ObjectMapper objectMapper, CustomMetricsService customMetricsService) {
         this.objectMapper = objectMapper;
+        this.customMetricsService = customMetricsService;
     }
 
     @Override
@@ -35,6 +38,8 @@ public class FilterExceptionHandler extends OncePerRequestFilter {
                 new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(), List.of(e.getMessage()));
             response.setStatus(401);
             response.getWriter().write(objectMapper.writeValueAsString(restResponse));
+        } finally {
+            customMetricsService.incrementTotalRequestsSent();
         }
     }
 }
