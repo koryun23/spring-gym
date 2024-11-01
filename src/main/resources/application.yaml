@@ -1,0 +1,51 @@
+spring:
+  datasource:
+    url:
+      jdbc:postgresql://localhost:6432/postgres
+    username: postgres
+    password:
+    driver: org.postgresql.Driver
+    initialize: true
+    continue-on-error: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        format_sql: true
+  sql:
+    init:
+      mode:
+        always
+flyway:
+  user: postgres
+  password:
+  url: jdbc:postgresql://localhost:6432/postgres
+  locations: classpath:resources/db/migration
+  driver: org.postgresql.Driver
+  enabled: true
+  baseline-on-migrate: true
+server:
+  port: 8888
+  servlet:
+    context-path: /
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.index.html
+logging:
+  pattern:
+    level: '%5p %mdc'
+management:
+  health:
+    memory:
+      enabled: true
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
