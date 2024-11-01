@@ -1,15 +1,14 @@
 package org.example.actuator;
 
 import java.sql.SQLException;
-import javax.sql.DataSource;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RandomHealthIndicator implements HealthIndicator {
+public class MemoryHealthIndicator implements HealthIndicator {
 
-    private DataSource dataSource;
+    private static final long FREE_MEMORY_THRESHOLD = 10485760L;
 
     @Override
     public Health health() {
@@ -23,10 +22,13 @@ public class RandomHealthIndicator implements HealthIndicator {
     }
 
     protected void doHealthCheck(Health.Builder builder) throws SQLException {
-        if (dataSource.getConnection() != null) {
-            builder.down().withDetail("Database Connection", true);
+        builder = builder.withDetail("Used memory", Runtime.getRuntime().totalMemory())
+            .withDetail("Max memory", Runtime.getRuntime().maxMemory())
+            .withDetail("Free memory", Runtime.getRuntime().freeMemory());
+        if (Runtime.getRuntime().freeMemory() < FREE_MEMORY_THRESHOLD) {
+            builder = builder.down();
         } else {
-            builder.down().withDetail("Database Connection", false);
+            builder = builder.up();
         }
     }
 
