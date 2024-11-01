@@ -22,6 +22,9 @@ public class DatabaseLoaderImpl implements DatabaseLoader, CommandLineRunner {
 
     @Override
     public void saveInitialTrainingTypes() {
+        if (!trainingTypeEntityRepository.findAll().isEmpty()) {
+            return;
+        }
         trainingTypeEntityRepository.save(new TrainingTypeEntity(TrainingType.AEROBIC));
         trainingTypeEntityRepository.save(new TrainingTypeEntity(TrainingType.WEIGHTLIFTING));
         trainingTypeEntityRepository.save(new TrainingTypeEntity(TrainingType.FLEXIBILITY_TRAINING));

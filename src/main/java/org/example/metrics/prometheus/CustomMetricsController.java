@@ -23,6 +23,9 @@ public class CustomMetricsController {
         this.customMetricsService = customMetricsService;
     }
 
+    /**
+     * A method for retrieving the total amount of requests sent to the API.
+     */
     @GetMapping("/requests")
     public ResponseEntity<RestResponse> totalRequestsSent() {
         log.info("Retrieving the number of total requests");
@@ -35,6 +38,9 @@ public class CustomMetricsController {
             HttpStatus.OK);
     }
 
+    /**
+     * A method for retrieving data about the memory usage of the application.
+     */
     @GetMapping("/memory")
     public ResponseEntity<RestResponse> memoryUsage() {
         log.info("Retrieving the memory usage");
