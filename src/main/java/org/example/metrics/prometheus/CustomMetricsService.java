@@ -1,4 +1,4 @@
-package org.example.actuator.prometheus;
+package org.example.metrics.prometheus;
 
 
 

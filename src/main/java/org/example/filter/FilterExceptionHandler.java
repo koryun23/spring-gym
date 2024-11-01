@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
-import org.example.actuator.prometheus.CustomMetricsService;
+import org.example.metrics.prometheus.CustomMetricsService;
 import org.example.dto.RestResponse;
 import org.example.exception.AuthenticationFailureException;
 import org.springframework.core.annotation.Order;

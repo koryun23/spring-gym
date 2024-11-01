@@ -1,6 +1,5 @@
-package org.example.actuator.prometheus;
+package org.example.metrics.prometheus;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
