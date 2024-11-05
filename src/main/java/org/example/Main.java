@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication(scanBasePackages = "org.example.*")
-@EnableJpaRepositories
+@EnableJpaRepositories // TODO usually we do not use main clss as configuration, so such annotations should not be here
 public class Main {
     /**
      * Main method.

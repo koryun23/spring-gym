@@ -38,10 +38,10 @@ public class TrainerController {
 
     private final TrainerService trainerService;
     private final UserService userService;
-    private final IdService idService;
+    private final IdService idService; // TODO
     private final TrainerMapper trainerMapper;
     private final TrainerValidator trainerValidator;
-    private final AuthenticatorService authenticatorService;
+    private final AuthenticatorService authenticatorService; // TODO at this point please find all unused things
 
     /**
      * Constructor.
@@ -62,6 +62,7 @@ public class TrainerController {
     /**
      * Trainer registration.
      */
+    // TODO we should not use verbs
     @PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse> register(
         @RequestBody TrainerCreationRequestDto requestDto) {

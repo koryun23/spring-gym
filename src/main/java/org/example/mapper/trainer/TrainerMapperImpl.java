@@ -56,7 +56,7 @@ public class TrainerMapperImpl implements TrainerMapper {
                 requestDto.getFirstName(),
                 requestDto.getLastName(),
                 usernamePasswordService.username(requestDto.getFirstName(), requestDto.getLastName()),
-                usernamePasswordService.password(),
+                usernamePasswordService.password(), // TODO we talked business logic is spread across service and mappers
                 true
             ),
             trainingTypeService.get(requestDto.getSpecializationId())

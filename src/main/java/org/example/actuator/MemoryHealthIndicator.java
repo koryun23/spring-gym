@@ -36,6 +36,7 @@ public class MemoryHealthIndicator implements HealthIndicator {
             log.info("Status of health check - up");
             log.info("Free memory - {}", Runtime.getRuntime().freeMemory());
             builder = builder.up();
+            // TODO builder is never used and never returned
         }
     }
 }

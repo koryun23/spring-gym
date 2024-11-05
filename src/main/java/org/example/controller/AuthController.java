@@ -27,7 +27,7 @@ public class AuthController {
     private final UserService userService;
     private final UserMapper userMapper;
     private final UserValidator userValidator;
-    private final AuthenticatorService authenticatorService;
+    private final AuthenticatorService authenticatorService; // TODO
 
     /**
      * Constructor.
@@ -44,7 +44,7 @@ public class AuthController {
     /**
      * Login.
      */
-    @GetMapping(value = "/login")
+    @GetMapping(value = "/login") //TODO what does it do? at this point I don't understand where is a login check
     public void login() {
 
     }
