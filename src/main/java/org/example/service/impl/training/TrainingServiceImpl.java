@@ -3,10 +3,15 @@ package org.example.service.impl.training;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
+
+import org.example.entity.TraineeEntity;
+import org.example.entity.TrainerEntity;
 import org.example.entity.TrainingEntity;
 import org.example.entity.TrainingType;
 import org.example.exception.TrainingNotFoundException;
 import org.example.repository.TrainingEntityRepository;
+import org.example.service.core.trainee.TraineeService;
+import org.example.service.core.trainer.TrainerService;
 import org.example.service.core.training.TrainingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +34,20 @@ public class TrainingServiceImpl implements TrainingService {
         Assert.notNull(trainingEntity, "TrainingCreateParams must not be null");
         LOGGER.info("Creating a TrainingEntity according to the TrainingCreateParams - {}", trainingEntity);
         TrainingEntity createdTrainingEntity = trainingEntityRepository.save(trainingEntity);
+
+        TraineeEntity trainee = trainingEntity.getTrainee();
+        List<TrainingEntity> traineeTrainings = this.findAllByTraineeUsernameAndCriteria(trainee.getUser().getUsername(),
+                null, null, null, null);
+        trainee.setTrainingEntityList(traineeTrainings);
+
+        TrainerEntity trainer = trainingEntity.getTrainer();
+        List<TrainingEntity> trainerTrainings = this.findAllByTrainerUsernameAndCriteria(trainer.getUser().getUsername(),
+                null, null, null);
+        trainer.setTrainingEntityList(trainerTrainings);
+
         LOGGER.info(
-            "Successfully created a TrainingEntity according to the TrainingEntity Create Params - {}, result - {}",
-            trainingEntity, createdTrainingEntity);
+                "Successfully created a TrainingEntity according to the TrainingEntity Create Params - {}, result - {}",
+                trainingEntity, createdTrainingEntity);
         return createdTrainingEntity;
     }
 
@@ -40,7 +56,7 @@ public class TrainingServiceImpl implements TrainingService {
         Assert.notNull(id, "TrainingEntity Id must not be null");
         LOGGER.info("Selecting a TrainingEntity with an id of {}", id);
         TrainingEntity trainingEntity =
-            trainingEntityRepository.findById(id).orElseThrow(() -> new TrainingNotFoundException(id));
+                trainingEntityRepository.findById(id).orElseThrow(() -> new TrainingNotFoundException(id));
         LOGGER.info("Successfully selected a TrainingEntity with an id of {}, result - {}", id, trainingEntity);
         return trainingEntity;
     }
@@ -49,12 +65,21 @@ public class TrainingServiceImpl implements TrainingService {
     public TrainingEntity update(TrainingEntity trainingEntity) {
         Assert.notNull(trainingEntity, "Training Entity must not be null");
         LOGGER.info("Updating a TrainingEntity with an id of {} according to {}", trainingEntity.getId(),
-            trainingEntity);
+                trainingEntity);
 
         TrainingEntity updatedTrainingEntity = trainingEntityRepository.save(trainingEntity);
 
+        TraineeEntity trainee = trainingEntity.getTrainee();
+        List<TrainingEntity> traineeTrainings = this.findAllByTraineeUsernameAndCriteria(trainee.getUser().getUsername(),
+                null, null, null, null);
+        trainee.setTrainingEntityList(traineeTrainings);
+
+        TrainerEntity trainer = trainingEntity.getTrainer();
+        List<TrainingEntity> trainerTrainings = this.findAllByTrainerUsernameAndCriteria(trainer.getUser().getUsername(),
+                null, null, null);
+        trainer.setTrainingEntityList(trainerTrainings);
         LOGGER.info("Successfully updated a TrainingEntity with an id of {}, result - {}", trainingEntity.getId(),
-            updatedTrainingEntity);
+                updatedTrainingEntity);
 
         return updatedTrainingEntity;
     }
@@ -65,16 +90,8 @@ public class TrainingServiceImpl implements TrainingService {
         LOGGER.info("Retrieving an optional TrainingEntity with an id of {}", id);
         Optional<TrainingEntity> optionalTraining = trainingEntityRepository.findById(id);
         LOGGER.info("Successfully retrieved an optional TrainingEntity with an id of {}, result - {}", id,
-            optionalTraining);
+                optionalTraining);
         return optionalTraining;
-    }
-
-    @Override
-    public List<TrainingEntity> findAll() {
-        LOGGER.info("Retrieving a list of all TrainingEntities");
-        List<TrainingEntity> all = trainingEntityRepository.findAll();
-        LOGGER.info("Successfully retrieved a list of all Training Entities, result - {}", all);
-        return all;
     }
 
     @Override
@@ -82,16 +99,16 @@ public class TrainingServiceImpl implements TrainingService {
                                                                     String trainerUsername, TrainingType trainingType) {
         Assert.notNull(traineeUsername, "Trainee Username must not be null");
         LOGGER.info("Retrieving all Training Entities of a trainee({}) based on the following criteria - "
-                + "from = {}, to = {}, trainerUsername = {}, trainingType = {}",
-            traineeUsername, from, to, trainerUsername, trainingType);
+                        + "from = {}, to = {}, trainerUsername = {}, trainingType = {}",
+                traineeUsername, from, to, trainerUsername, trainingType);
 
         List<TrainingEntity> all =
-            trainingEntityRepository.findAllByTraineeUsernameAndCriteria(traineeUsername, from, to,
-                trainerUsername, trainingType);
+                trainingEntityRepository.findAllByTraineeUsernameAndCriteria(traineeUsername, from, to,
+                        trainerUsername, trainingType);
 
         LOGGER.info("Successfully retrieved all Training Entities of a trainee({}) based on the following criteria - "
-                + "from = {}, to = {}, trainerUsername = {}, trainingType = {}. Result of the query - {}",
-            traineeUsername, from, to, trainerUsername, trainingType, all);
+                        + "from = {}, to = {}, trainerUsername = {}, trainingType = {}. Result of the query - {}",
+                traineeUsername, from, to, trainerUsername, trainingType, all);
         return all;
     }
 
@@ -100,38 +117,16 @@ public class TrainingServiceImpl implements TrainingService {
                                                                     String traineeUsername) {
         Assert.notNull(trainerUsername, "Trainer Username must not be null");
         LOGGER.info("Retrieving all Training Entities of a trainer({}) based on the following criteria - "
-                + "from = {}, to = {}, traineeUsername = {}",
-            trainerUsername, from, to, traineeUsername);
+                        + "from = {}, to = {}, traineeUsername = {}",
+                trainerUsername, from, to, traineeUsername);
 
         List<TrainingEntity> all =
-            trainingEntityRepository.findAllByTrainerUsernameAndCriteria(trainerUsername, from, to,
-                traineeUsername);
+                trainingEntityRepository.findAllByTrainerUsernameAndCriteria(trainerUsername, from, to,
+                        traineeUsername);
 
         LOGGER.info("Successfully retrieved all Training Entities of a trainer({}) based on the following criteria - "
-                + "from = {}, to = {}, traineeUsername = {}. Result of the query - {}",
-            trainerUsername, from, to, traineeUsername, all);
+                        + "from = {}, to = {}, traineeUsername = {}. Result of the query - {}",
+                trainerUsername, from, to, traineeUsername, all);
         return all;
     }
-
-    @Override
-    public void deleteAllByTraineeUsername(String traineeUsername) {
-        Assert.notNull(traineeUsername, "Trainee username must not be null");
-        LOGGER.info("Deleting all trainings of a trainee with a username of {}", traineeUsername);
-
-        trainingEntityRepository.deleteAllByTraineeUserUsername(traineeUsername);
-
-        LOGGER.info("Successfully deleted all trainings of a trainee with a username of {}", traineeUsername);
-    }
-
-    @Override
-    public void deleteAllByTrainerUsername(String trainerUsername) {
-        Assert.notNull(trainerUsername, "Trainer username must not be null");
-        LOGGER.info("Deleting all trainings of a trainer with a username of {}", trainerUsername);
-
-        trainingEntityRepository.deleteAllByTrainerUserUsername(trainerUsername);
-
-        LOGGER.info("Successfully deleted all trainings of a trainer with a username of {}", trainerUsername);
-    }
-
-
 }

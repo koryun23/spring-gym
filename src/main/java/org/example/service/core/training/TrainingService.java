@@ -16,15 +16,9 @@ public interface TrainingService {
 
     Optional<TrainingEntity> findById(Long id);
 
-    List<TrainingEntity> findAll();
-
     List<TrainingEntity> findAllByTraineeUsernameAndCriteria(String traineeUsername, Date from, Date to,
                                                              String trainerUsername, TrainingType trainingType);
 
     List<TrainingEntity> findAllByTrainerUsernameAndCriteria(String trainerUsername, Date from, Date to,
                                                              String traineeUsername);
-
-    void deleteAllByTraineeUsername(String traineeUsername);
-
-    void deleteAllByTrainerUsername(String trainerUsername);
 }

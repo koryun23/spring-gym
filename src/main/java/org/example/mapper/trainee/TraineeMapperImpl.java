@@ -11,6 +11,7 @@ import org.example.dto.response.TraineeCreationResponseDto;
 import org.example.dto.response.TraineeRetrievalResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
 import org.example.entity.TraineeEntity;
+import org.example.entity.TrainerEntity;
 import org.example.entity.TrainingEntity;
 import org.example.entity.UserEntity;
 import org.example.service.core.training.TrainingService;
@@ -22,20 +23,6 @@ import org.springframework.util.Assert;
 @Component
 public class TraineeMapperImpl implements TraineeMapper {
 
-    private final UserService userService;
-    private final UsernamePasswordService usernamePasswordService;
-    private final TrainingService trainingService;
-
-    /**
-     * Constructor.
-     */
-    public TraineeMapperImpl(UserService userService,
-                             UsernamePasswordService usernamePasswordService, TrainingService trainingService) {
-        this.userService = userService;
-        this.usernamePasswordService = usernamePasswordService;
-        this.trainingService = trainingService;
-    }
-
     @Override
     public TraineeEntity mapTraineeCreationRequestDtoToTraineeEntity(TraineeCreationRequestDto requestDto) {
         Assert.notNull(requestDto, "TraineeCreationRequestDto must not be null");
@@ -43,8 +30,8 @@ public class TraineeMapperImpl implements TraineeMapper {
             new UserEntity(
                 requestDto.getFirstName(),
                 requestDto.getLastName(),
-                usernamePasswordService.username(requestDto.getFirstName(), requestDto.getLastName()),
-                usernamePasswordService.password(),
+                null,
+                null,
                 true
             ),
             requestDto.getDateOfBirth(),
@@ -70,20 +57,18 @@ public class TraineeMapperImpl implements TraineeMapper {
             trainee.getDateOfBirth(),
             trainee.getAddress(),
             trainee.getUser().getIsActive(),
-            trainingService.findAllByTraineeUsernameAndCriteria(trainee.getUser().getUsername(),
-                    null, null, null, null)
-                .stream()
-                .map(TrainingEntity::getTrainer)
-                .map(trainerEntity -> new TrainerDto(
-                    new UserDto(
-                        trainerEntity.getUser().getFirstName(),
-                        trainerEntity.getUser().getLastName(),
-                        trainerEntity.getUser().getUsername(),
-                        trainerEntity.getUser().getPassword(),
-                        trainerEntity.getUser().getIsActive()
-                    ),
-                    trainerEntity.getSpecialization().getTrainingType()
-                )).collect(Collectors.toSet()).stream().toList()
+            trainee.getTrainingEntityList().stream()
+                    .map(TrainingEntity::getTrainer)
+                    .map(trainerEntity -> new TrainerDto(
+                            new UserDto(
+                                    trainerEntity.getUser().getFirstName(),
+                                    trainerEntity.getUser().getLastName(),
+                                    trainerEntity.getUser().getUsername(),
+                                    trainerEntity.getUser().getPassword(),
+                                    trainerEntity.getUser().getIsActive()
+                            ),
+                            trainerEntity.getSpecialization().getTrainingType()
+                    )).toList()
         );
     }
 
@@ -92,8 +77,7 @@ public class TraineeMapperImpl implements TraineeMapper {
         Assert.notNull(trainee, "TraineeEntity must not be null");
         UserEntity userEntity = trainee.getUser();
         List<TrainerDto> trainerDtoList =
-            trainingService.findAllByTraineeUsernameAndCriteria(trainee.getUser().getUsername(),
-                    null, null, null, null)
+            trainee.getTrainingEntityList()
                 .stream()
                 .map(TrainingEntity::getTrainer)
                 .map(trainerEntity -> new TrainerDto(
@@ -122,7 +106,7 @@ public class TraineeMapperImpl implements TraineeMapper {
     public TraineeEntity mapTraineeUpdateRequestDtoToTraineeEntity(TraineeUpdateRequestDto requestDto) {
         Assert.notNull(requestDto, "TraineeUpdateRequestDto must not be null");
         return new TraineeEntity(
-            userService.getByUsername(requestDto.getUsername()),
+            null,
             requestDto.getDateOfBirth(),
             requestDto.getAddress()
         );
@@ -135,18 +119,8 @@ public class TraineeMapperImpl implements TraineeMapper {
             requestDto.getFirstName(),
             requestDto.getLastName(),
             requestDto.getUsername(),
-            userService.getByUsername(requestDto.getUsername()).getPassword(),
+            null,
             requestDto.getIsActive()
         );
-    }
-
-    @Override
-    public UserEntity mapSwitchActivationStateRequestDtoToUserEntity(
-        TraineeSwitchActivationStateRequestDto requestDto) {
-        Assert.notNull(requestDto, "TraineeSwitchActivationStateRequestDto must not be null");
-
-        UserEntity user = userService.getByUsername(requestDto.getUsername());
-        user.setIsActive(!user.getIsActive());
-        return user;
     }
 }
