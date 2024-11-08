@@ -9,8 +9,6 @@ public interface TraineeService {
 
     TraineeEntity update(TraineeEntity params);
 
-    boolean delete(Long traineeId);
-
     boolean delete(String username);
 
     TraineeEntity select(Long traineeId);

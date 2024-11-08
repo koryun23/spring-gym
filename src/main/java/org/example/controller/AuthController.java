@@ -5,11 +5,14 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
+import org.example.dto.plain.UserDto;
 import org.example.dto.request.UserChangePasswordRequestDto;
 import org.example.dto.response.UserChangePasswordResponseDto;
+import org.example.entity.UserEntity;
 import org.example.mapper.user.UserMapper;
 import org.example.service.core.user.AuthenticatorService;
 import org.example.service.core.user.UserService;
+import org.example.util.Utils;
 import org.example.validator.UserValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +45,8 @@ public class AuthController {
     }
 
     /**
-     * Login.
+     * This method aims to enable the /login endpoint. The actual authentication logic is
+     * carried out by the AuthFilter.
      */
     @GetMapping(value = "/login")
     public void login() {
@@ -61,7 +65,11 @@ public class AuthController {
         userValidator.validateChangePassword(requestDto);
 
         // service and mapper calls
-        userService.update(userMapper.mapUserChangePasswordRequestDtoToUserEntity(requestDto));
+        UserEntity persistedUser = userService.getByUsername(requestDto.getUsername());
+        UserDto userDto = userMapper.mapUserEntityToUserDto(persistedUser);
+        Utils.applyUserChangePasswordOnUserDto(requestDto, userDto);
+        UserEntity mappedUser = userMapper.mapUserDtoToUserEntity(userDto);
+        userService.update(mappedUser);
 
         // response
         UserChangePasswordResponseDto responseDto = new UserChangePasswordResponseDto(HttpStatus.OK);

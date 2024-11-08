@@ -29,7 +29,8 @@ class TraineeServiceImplTest {
 
     @BeforeEach
     public void init() {
-        testSubject = new TraineeServiceImpl(traineeEntityRepository, userService);
+        // TODO: pass a mocked instance of usernamePasswordService
+        testSubject = new TraineeServiceImpl(traineeEntityRepository, userService, null);
     }
 
     @Test
