@@ -22,8 +22,7 @@ public class DatabaseLoaderImpl implements DatabaseLoader, CommandLineRunner {
 
     @Override
     public void saveInitialTrainingTypes() {
-        // TODO: change to count() instead of findAll()
-        if (!trainingTypeEntityRepository.findAll().isEmpty()) {
+        if (trainingTypeEntityRepository.count() > 0) {
             return;
         }
         for (TrainingType trainingType : TrainingType.values()) {
