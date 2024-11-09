@@ -35,7 +35,9 @@ public class UserServiceImpl implements UserService {
     public UserEntity update(UserEntity user) {
         Assert.notNull(user, "User Entity must not be null");
         LOGGER.info("Updating a User Entity with an id of {}", user.getId());
-        UserEntity updatedUserEntity = userEntityRepository.save(user);
+        UserEntity updatedUserEntity = userEntityRepository.update(
+                user.getUsername(), user.getFirstName(), user.getLastName(), user.getIsActive()
+        );
         LOGGER.info("Successfully updated a User Entity with an id of {}, result - {}",
             user.getId(), updatedUserEntity);
         return updatedUserEntity;
@@ -56,6 +58,28 @@ public class UserServiceImpl implements UserService {
         LOGGER.info("Selecting a User Entity with an id of {}", id);
         UserEntity userEntity = userEntityRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
         LOGGER.info("Successfully selected a User Entity with an id of {}, result - {}", id, userEntity);
+        return userEntity;
+    }
+
+    @Override
+    public UserEntity changePassword(String username, String newPassword) {
+        Assert.notNull(username, "Username must not be null");
+        Assert.hasText(username, "Username must not be empty");
+        Assert.notNull(newPassword, "New password must not be null");
+        Assert.hasText(newPassword, "New password must not be empty");
+        LOGGER.info("Changing the password of the user {}", username);
+        UserEntity userEntity = userEntityRepository.changePassword(username, newPassword);
+        LOGGER.info("Successfully changed the password of the user {}", username);
+        return userEntity;
+    }
+
+    @Override
+    public UserEntity switchActivationState(String username) {
+        Assert.notNull(username, "Username must not be null");
+        Assert.hasText(username, "Username must not be empty");
+        LOGGER.info("Switching the activation state of the user {}", username);
+        UserEntity userEntity = userEntityRepository.switchActivationState(username);
+        LOGGER.info("Successfully switched the activation state of the user {}", username);
         return userEntity;
     }
 
@@ -124,7 +148,6 @@ public class UserServiceImpl implements UserService {
         LOGGER.info("Result of finding all users usernames of which contain the pattern '{}', result - {}",
             allByUsernameContains);
         return allByUsernameContains;
-
     }
 }
 

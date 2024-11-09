@@ -14,6 +14,10 @@ public interface UserService {
 
     UserEntity select(Long id);
 
+    UserEntity changePassword(String username, String newPassword);
+
+    UserEntity switchActivationState(String username);
+
     UserEntity getByUsername(String username);
 
     Optional<UserEntity> findByUsername(String username);
