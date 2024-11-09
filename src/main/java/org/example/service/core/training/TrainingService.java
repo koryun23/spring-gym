@@ -3,12 +3,13 @@ package org.example.service.core.training;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
+import org.example.dto.plain.TrainingDto;
 import org.example.entity.TrainingEntity;
 import org.example.entity.TrainingType;
 
 public interface TrainingService {
 
-    TrainingEntity create(TrainingEntity params);
+    TrainingEntity create(TrainingDto training);
 
     TrainingEntity select(Long id);
 

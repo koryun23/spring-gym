@@ -4,42 +4,13 @@ import java.util.List;
 import org.example.dto.plain.TrainingDto;
 import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.dto.response.TrainingCreationResponseDto;
-import org.example.entity.TrainerEntity;
 import org.example.entity.TrainingEntity;
-import org.example.exception.TraineeNotFoundException;
-import org.example.exception.TrainerNotFoundException;
-import org.example.service.core.trainee.TraineeService;
-import org.example.service.core.trainer.TrainerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 @Component
 public class TrainingMapperImpl implements TrainingMapper {
-
-    private final TrainerService trainerService;
-    private final TraineeService traineeService;
-
-    public TrainingMapperImpl(TrainerService trainerService, TraineeService traineeService) {
-        this.trainerService = trainerService;
-        this.traineeService = traineeService;
-    }
-
-    @Override
-    public TrainingEntity mapTrainingCreationRequestDtoToTrainingEntity(TrainingCreationRequestDto requestDto) {
-        Assert.notNull(requestDto, "TrainingCreationRequestDto must not be null");
-        TrainerEntity trainerEntity = trainerService.findByUsername(requestDto.getTrainerUsername())
-            .orElseThrow(() -> new TrainerNotFoundException(requestDto.getTrainerUsername()));
-        return new TrainingEntity(
-            traineeService.findByUsername(requestDto.getTraineeUsername())
-                .orElseThrow(() -> new TraineeNotFoundException(requestDto.getTraineeUsername())),
-            trainerEntity,
-            requestDto.getTrainingName(),
-            trainerEntity.getSpecialization(),
-            requestDto.getTrainingDate(),
-            requestDto.getTrainingDuration()
-        );
-    }
 
     @Override
     public TrainingCreationResponseDto mapTrainingEntityToTrainingCreationResponseDto(TrainingEntity trainingEntity) {
@@ -58,6 +29,17 @@ public class TrainingMapperImpl implements TrainingMapper {
             trainingEntity.getName(),
             trainingEntity.getDate(),
             trainingEntity.getDuration()
+        );
+    }
+
+    @Override
+    public TrainingDto mapTrainingCreationRequestDtoToTrainingDto(TrainingCreationRequestDto requestDto) {
+        return new TrainingDto(
+            requestDto.getTraineeUsername(),
+            requestDto.getTrainerUsername(),
+            requestDto.getTrainingName(),
+            requestDto.getTrainingDate(),
+            requestDto.getTrainingDuration()
         );
     }
 

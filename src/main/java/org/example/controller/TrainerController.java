@@ -14,10 +14,10 @@ import org.example.dto.response.TrainerListRetrievalResponseDto;
 import org.example.dto.response.TrainerRetrievalResponseDto;
 import org.example.dto.response.TrainerSwitchActivationStateResponseDto;
 import org.example.dto.response.TrainerUpdateResponseDto;
+import org.example.entity.TrainerEntity;
+import org.example.entity.UserEntity;
 import org.example.mapper.trainer.TrainerMapper;
 import org.example.service.core.trainer.TrainerService;
-import org.example.service.core.user.AuthenticatorService;
-import org.example.service.core.user.IdService;
 import org.example.service.core.user.UserService;
 import org.example.validator.TrainerValidator;
 import org.springframework.http.HttpStatus;
@@ -38,31 +38,26 @@ public class TrainerController {
 
     private final TrainerService trainerService;
     private final UserService userService;
-    private final IdService idService;
     private final TrainerMapper trainerMapper;
     private final TrainerValidator trainerValidator;
-    private final AuthenticatorService authenticatorService;
 
     /**
      * Constructor.
      */
     public TrainerController(TrainerService trainerService,
                              UserService userService,
-                             IdService idService,
                              TrainerMapper trainerMapper,
-                             TrainerValidator trainerValidator, AuthenticatorService authenticatorService) {
+                             TrainerValidator trainerValidator) {
         this.trainerService = trainerService;
         this.userService = userService;
-        this.idService = idService;
         this.trainerMapper = trainerMapper;
         this.trainerValidator = trainerValidator;
-        this.authenticatorService = authenticatorService;
     }
 
     /**
      * Trainer registration.
      */
-    @PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse> register(
         @RequestBody TrainerCreationRequestDto requestDto) {
 
@@ -72,8 +67,9 @@ public class TrainerController {
         trainerValidator.validateCreateTrainer(requestDto);
 
         // service and mapper calls
+        TrainerEntity trainer = trainerMapper.mapTrainerCreationRequestDtoToTrainerEntity(requestDto);
         TrainerCreationResponseDto responseDto = trainerMapper.mapTrainerEntityToTrainerCreationResponseDto(
-            trainerService.create(trainerMapper.mapTrainerCreationRequestDtoToTrainerEntity(requestDto)));
+            trainerService.create(trainer));
 
         // response
         RestResponse restResponse =
@@ -126,9 +122,13 @@ public class TrainerController {
         trainerValidator.validateUpdateTrainer(requestDto);
 
         // service and mapper calls
-        userService.update(trainerMapper.mapTrainerUpdateRequestDtoToUserEntity(requestDto));
-        TrainerUpdateResponseDto responseDto = trainerMapper.mapTrainerEntityToTrainerUpdateResponseDto(
-            trainerService.update(trainerMapper.mapTrainerUpdateRequestDtoToTrainerEntity(requestDto)));
+        UserEntity user = trainerMapper.mapTrainerUpdateRequestDtoToUserEntity(requestDto);
+        userService.update(user);
+
+        TrainerEntity trainer = trainerMapper.mapTrainerUpdateRequestDtoToTrainerEntity(requestDto);
+        trainerService.update(trainer);
+
+        TrainerUpdateResponseDto responseDto = trainerMapper.mapTrainerEntityToTrainerUpdateResponseDto(trainer);
 
         // response
         RestResponse restResponse =
@@ -153,8 +153,9 @@ public class TrainerController {
         trainerValidator.validateRetrieveTrainer(requestDto);
 
         // service and mapper calls
+        TrainerEntity trainerEntity = trainerService.findByUsername(requestDto.getUsername()).get();
         TrainerRetrievalResponseDto responseDto = trainerMapper.mapTrainerEntityToTrainerRetrievalResponseDto(
-            trainerService.findByUsername(requestDto.getUsername()).get());
+            trainerEntity);
 
         // response
         RestResponse restResponse =
@@ -180,7 +181,7 @@ public class TrainerController {
         trainerValidator.validateSwitchActivationState(requestDto);
 
         // service and mapper calls
-        userService.update(trainerMapper.mapSwitchActivationStateRequestDtoToUserEntity(requestDto));
+        userService.switchActivationState(username);
 
         // response
         TrainerSwitchActivationStateResponseDto responseDto =

@@ -3,11 +3,12 @@ package org.example.service.impl.trainer;
 import java.util.List;
 import java.util.Optional;
 import org.example.entity.TrainerEntity;
+import org.example.entity.UserEntity;
 import org.example.exception.TrainerNotFoundException;
-import org.example.repository.TraineeEntityRepository;
 import org.example.repository.TrainerEntityRepository;
 import org.example.service.core.trainer.TrainerService;
 import org.example.service.core.user.UserService;
+import org.example.service.core.user.UsernamePasswordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -18,16 +19,16 @@ public class TrainerServiceImpl implements TrainerService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainerServiceImpl.class);
 
+    private final UsernamePasswordService usernamePasswordService;
     private final TrainerEntityRepository trainerDao;
-    private final TraineeEntityRepository traineeDao;
     private final UserService userService;
 
     /**
      * Constructor.
      */
-    public TrainerServiceImpl(TraineeEntityRepository traineeDao, TrainerEntityRepository trainerDao,
+    public TrainerServiceImpl(UsernamePasswordService usernamePasswordService, TrainerEntityRepository trainerDao,
                               UserService userService) {
-        this.traineeDao = traineeDao;
+        this.usernamePasswordService = usernamePasswordService;
         this.trainerDao = trainerDao;
         this.userService = userService;
     }
@@ -36,7 +37,11 @@ public class TrainerServiceImpl implements TrainerService {
     public TrainerEntity create(TrainerEntity trainerEntity) {
         Assert.notNull(trainerEntity, "TrainerCreateParams must not be null");
         LOGGER.info("Creating a TrainerEntity based on TrainerCreateParams - {}", trainerEntity);
-        userService.create(trainerEntity.getUser());
+
+        UserEntity user = trainerEntity.getUser();
+        user.setUsername(usernamePasswordService.username(user.getFirstName(), user.getLastName()));
+        user.setPassword(usernamePasswordService.password());
+        userService.create(user);
         TrainerEntity createdTrainerEntity = trainerDao.save(trainerEntity);
         LOGGER.info("Successfully created a TrainerEntity based on TrainerCreateParams - {}, result - {}",
             trainerEntity,
@@ -48,7 +53,9 @@ public class TrainerServiceImpl implements TrainerService {
     public TrainerEntity update(TrainerEntity trainerEntity) {
         Assert.notNull(trainerEntity, "TrainerUpdateParams must not be null");
         LOGGER.info("Updating a TrainerEntity based on TrainerUpdateParams - {}", trainerEntity);
-        TrainerEntity updatedTrainerEntity = trainerDao.save(trainerEntity);
+        TrainerEntity updatedTrainerEntity = trainerDao.update(
+            trainerEntity.getUser().getUsername(), trainerEntity.getSpecialization().getTrainingType()
+        );
         LOGGER.info("Successfully updated a TrainerEntity based on TrainerUpdateParams - {}, result - {}",
             trainerEntity,
             updatedTrainerEntity);

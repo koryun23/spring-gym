@@ -3,7 +3,6 @@ package org.example.mapper.trainer;
 import org.example.dto.plain.TrainerDto;
 import org.example.dto.plain.UserDto;
 import org.example.dto.request.TrainerCreationRequestDto;
-import org.example.dto.request.TrainerSwitchActivationStateRequestDto;
 import org.example.dto.request.TrainerUpdateRequestDto;
 import org.example.dto.response.TrainerCreationResponseDto;
 import org.example.dto.response.TrainerRetrievalResponseDto;
@@ -25,13 +24,7 @@ public interface TrainerMapper {
 
     UserEntity mapTrainerUpdateRequestDtoToUserEntity(TrainerUpdateRequestDto requestDto);
 
-    UserEntity mapSwitchActivationStateRequestDtoToUserEntity(TrainerSwitchActivationStateRequestDto requestDto);
-
     TrainerDto mapTrainerEntityToTrainerDto(TrainerEntity trainerEntity);
-
-    TrainerEntity mapTrainerDtoToTrainerEntity(TrainerDto trainerDto);
-
-    UserEntity mapTrainerDtoToUserEntity(TrainerDto trainerDto);
 
     UserDto mapTrainerEntityToUserDto(TrainerEntity trainerEntity);
 }

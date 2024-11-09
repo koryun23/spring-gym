@@ -8,11 +8,11 @@ import org.example.entity.TrainingEntity;
 
 public interface TrainingMapper {
 
-    TrainingEntity mapTrainingCreationRequestDtoToTrainingEntity(TrainingCreationRequestDto requestDto);
-
     TrainingCreationResponseDto mapTrainingEntityToTrainingCreationResponseDto(TrainingEntity trainingEntity);
 
     TrainingDto mapTrainingEntityToTrainingDto(TrainingEntity trainingEntity);
+
+    TrainingDto mapTrainingCreationRequestDtoToTrainingDto(TrainingCreationRequestDto requestDto);
 
     List<TrainingDto> mapTrainingEntityListToTrainingDtoList(
         List<TrainingEntity> trainingEntityList);

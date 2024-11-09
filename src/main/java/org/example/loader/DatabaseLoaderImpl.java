@@ -22,13 +22,12 @@ public class DatabaseLoaderImpl implements DatabaseLoader, CommandLineRunner {
 
     @Override
     public void saveInitialTrainingTypes() {
+        // TODO: change to count() instead of findAll()
         if (!trainingTypeEntityRepository.findAll().isEmpty()) {
             return;
         }
-        trainingTypeEntityRepository.save(new TrainingTypeEntity(TrainingType.AEROBIC));
-        trainingTypeEntityRepository.save(new TrainingTypeEntity(TrainingType.WEIGHTLIFTING));
-        trainingTypeEntityRepository.save(new TrainingTypeEntity(TrainingType.FLEXIBILITY_TRAINING));
-        trainingTypeEntityRepository.save(new TrainingTypeEntity(TrainingType.STRENGTH_TRAINING));
-        trainingTypeEntityRepository.save(new TrainingTypeEntity(TrainingType.BODYBUILDING));
+        for (TrainingType trainingType : TrainingType.values()) {
+            trainingTypeEntityRepository.save(new TrainingTypeEntity(trainingType));
+        }
     }
 }

@@ -3,6 +3,7 @@ package org.example.service.impl;
 import java.sql.Date;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
+import org.example.dto.plain.TrainingDto;
 import org.example.entity.TraineeEntity;
 import org.example.entity.TrainerEntity;
 import org.example.entity.TrainingEntity;
@@ -29,7 +30,7 @@ class TrainingServiceImplTest {
 
     @BeforeEach
     public void init() {
-        testSubject = new TrainingServiceImpl(trainingEntityRepository);
+        testSubject = new TrainingServiceImpl(trainingEntityRepository, null, null);
     }
 
     @Test
@@ -44,9 +45,12 @@ class TrainingServiceImplTest {
         TrainingEntity trainingEntity = new TrainingEntity(
             traineeEntity, trainerEntity, "name", specialization, Date.valueOf("2024-10-10"), 100L
         );
+        TrainingDto trainingDto = new TrainingDto(
+            "first", "first2", "training", null, 1000L
+        );
         Mockito.when(trainingEntityRepository.save(trainingEntity)).thenReturn(trainingEntity);
 
-        Assertions.assertThat(testSubject.create(trainingEntity)).isEqualTo(trainingEntity);
+        Assertions.assertThat(testSubject.create(trainingDto)).isEqualTo(trainingEntity);
 
         Mockito.verifyNoMoreInteractions(trainingEntityRepository);
     }

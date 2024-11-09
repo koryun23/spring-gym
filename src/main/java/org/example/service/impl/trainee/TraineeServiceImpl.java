@@ -1,17 +1,11 @@
 package org.example.service.impl.trainee;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.example.dto.plain.TrainerDto;
-import org.example.dto.plain.UserDto;
 import org.example.entity.TraineeEntity;
-import org.example.entity.TrainingEntity;
 import org.example.entity.UserEntity;
 import org.example.exception.TraineeNotFoundException;
 import org.example.repository.TraineeEntityRepository;
 import org.example.service.core.trainee.TraineeService;
-import org.example.service.core.training.TrainingService;
 import org.example.service.core.user.UserService;
 import org.example.service.core.user.UsernamePasswordService;
 import org.slf4j.Logger;
@@ -28,7 +22,11 @@ public class TraineeServiceImpl implements TraineeService {
     private final UserService userService;
     private final UsernamePasswordService usernamePasswordService;
 
-    public TraineeServiceImpl(TraineeEntityRepository traineeDao, UserService userService, UsernamePasswordService usernamePasswordService) {
+    /**
+     * Constructor.
+     */
+    public TraineeServiceImpl(TraineeEntityRepository traineeDao, UserService userService,
+                              UsernamePasswordService usernamePasswordService) {
         this.traineeDao = traineeDao;
         this.userService = userService;
         this.usernamePasswordService = usernamePasswordService;
@@ -47,7 +45,7 @@ public class TraineeServiceImpl implements TraineeService {
         TraineeEntity createdTrainee = traineeDao.save(trainee);
 
         LOGGER.info("Successfully created a TraineeEntity based on TraineeCreateParams - {}, result - {}", trainee,
-                trainee);
+            trainee);
         return createdTrainee;
     }
 
@@ -55,9 +53,11 @@ public class TraineeServiceImpl implements TraineeService {
     public TraineeEntity update(TraineeEntity trainee) {
         Assert.notNull(trainee, "TraineeCreateParams must not be null");
         LOGGER.info("Updating a TraineeEntity based on TraineeUpdateParams - {}", trainee);
-        TraineeEntity updatedTrainee = traineeDao.save(trainee);
+        TraineeEntity updatedTrainee = traineeDao.update(
+            trainee.getUser().getUsername(), trainee.getDateOfBirth(), trainee.getAddress()
+        );
         LOGGER.info("Successfully updated a TraineeEntity based on TraineeUpdateParams - {}, result - {}", trainee,
-                trainee);
+            trainee);
         return updatedTrainee;
     }
 
@@ -76,7 +76,7 @@ public class TraineeServiceImpl implements TraineeService {
         Assert.notNull(traineeId, "TraineeEntity id must not be null");
         LOGGER.info("Selecting a TraineeEntity with an id of {}", traineeId);
         TraineeEntity trainee =
-                traineeDao.findById(traineeId).orElseThrow(() -> new TraineeNotFoundException(traineeId));
+            traineeDao.findById(traineeId).orElseThrow(() -> new TraineeNotFoundException(traineeId));
         LOGGER.info("Successfully selected a TraineeEntity with an id of {}, result - {}", traineeId, trainee);
         return trainee;
     }
@@ -88,7 +88,7 @@ public class TraineeServiceImpl implements TraineeService {
         LOGGER.info("Selecting a TraineeEntity with a username of {}", username);
 
         TraineeEntity trainee =
-                traineeDao.findByUserUsername(username).orElseThrow(() -> new TraineeNotFoundException(username));
+            traineeDao.findByUserUsername(username).orElseThrow(() -> new TraineeNotFoundException(username));
 
         LOGGER.info("Successfully selected a trainee with a username of {}, result - {}", username, trainee);
         return trainee;
@@ -100,7 +100,7 @@ public class TraineeServiceImpl implements TraineeService {
         LOGGER.info("Retrieved an optional TraineeEntity with an id of {}", id);
         Optional<TraineeEntity> optionalTrainee = traineeDao.findById(id);
         LOGGER.info("Successfully retrieved an optional TraineeEntity with an id of {}, result - {}", id,
-                optionalTrainee);
+            optionalTrainee);
         return optionalTrainee;
     }
 
@@ -111,7 +111,7 @@ public class TraineeServiceImpl implements TraineeService {
         LOGGER.info("Retrieving an optional TraineeEntity with a username of {}", username);
         Optional<TraineeEntity> optionalTrainee = traineeDao.findByUserUsername(username);
         LOGGER.info("Successfully retrieved an optional TraineeEntity with an username of {}, result - {}", username,
-                optionalTrainee);
+            optionalTrainee);
         return optionalTrainee;
     }
 }

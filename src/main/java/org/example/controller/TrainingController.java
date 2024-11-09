@@ -12,9 +12,14 @@ import org.example.dto.request.TrainingListRetrievalByTraineeRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTrainerRequestDto;
 import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.dto.response.TrainingListRetrievalResponseDto;
+import org.example.entity.TraineeEntity;
+import org.example.entity.TrainerEntity;
+import org.example.entity.TrainingEntity;
 import org.example.entity.TrainingType;
 import org.example.exception.TrainingTypeNotFoundException;
 import org.example.mapper.training.TrainingMapper;
+import org.example.service.core.trainee.TraineeService;
+import org.example.service.core.trainer.TrainerService;
 import org.example.service.core.training.TrainingService;
 import org.example.service.core.training.TrainingTypeService;
 import org.example.validator.TrainingValidator;
@@ -35,6 +40,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class TrainingController {
 
     private final TrainingService trainingService;
+    private final TraineeService traineeService;
+    private final TrainerService trainerService;
     private final TrainingTypeService trainingTypeService;
     private final TrainingMapper trainingMapper;
     private final TrainingValidator trainingValidator;
@@ -42,10 +49,15 @@ public class TrainingController {
     /**
      * Constructor.
      */
-    public TrainingController(TrainingService trainingService, TrainingTypeService trainingTypeService,
+    public TrainingController(TrainingService trainingService,
+                              TraineeService traineeService,
+                              TrainerService trainerService,
+                              TrainingTypeService trainingTypeService,
                               TrainingMapper trainingMapper,
                               TrainingValidator trainingValidator) {
         this.trainingService = trainingService;
+        this.traineeService = traineeService;
+        this.trainerService = trainerService;
         this.trainingTypeService = trainingTypeService;
         this.trainingMapper = trainingMapper;
         this.trainingValidator = trainingValidator;
@@ -54,7 +66,7 @@ public class TrainingController {
     /**
      * Creation of training.
      */
-    @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse> create(@RequestBody
                                                TrainingCreationRequestDto requestDto) {
 
@@ -67,8 +79,13 @@ public class TrainingController {
         }
 
         // service and mapper calls
-        TrainingCreationResponseDto responseDto = trainingMapper.mapTrainingEntityToTrainingCreationResponseDto(
-            trainingService.create(trainingMapper.mapTrainingCreationRequestDtoToTrainingEntity(requestDto)));
+        TraineeEntity trainee = traineeService.selectByUsername(requestDto.getTraineeUsername());
+        TrainerEntity trainer = trainerService.selectByUsername(requestDto.getTrainerUsername());
+
+        TrainingDto trainingDto = trainingMapper.mapTrainingCreationRequestDtoToTrainingDto(requestDto);
+        TrainingEntity trainingEntity = trainingService.create(trainingDto);
+        TrainingCreationResponseDto responseDto =
+            trainingMapper.mapTrainingEntityToTrainingCreationResponseDto(trainingEntity);
 
         // response
         restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
@@ -117,7 +134,8 @@ public class TrainingController {
                         requestDto.getTrainerUsername(),
                         requestDto.getSpecializationId() == null ? null :
                             trainingTypeService.findById(requestDto.getSpecializationId())
-                                .orElseThrow(() -> new TrainingTypeNotFoundException(requestDto.getSpecializationId())
+                                .orElseThrow(() -> new TrainingTypeNotFoundException(
+                                    requestDto.getSpecializationId())
                                 ).getTrainingType()
                     )
                 )

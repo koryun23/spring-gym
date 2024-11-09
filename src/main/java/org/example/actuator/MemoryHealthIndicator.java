@@ -31,11 +31,11 @@ public class MemoryHealthIndicator implements HealthIndicator {
         if (Runtime.getRuntime().freeMemory() < FREE_MEMORY_THRESHOLD) {
             log.warn("Status of health check - down");
             log.warn("Free memory - {}", Runtime.getRuntime().freeMemory());
-            builder = builder.down();
+            builder.down();
         } else {
             log.info("Status of health check - up");
             log.info("Free memory - {}", Runtime.getRuntime().freeMemory());
-            builder = builder.up();
+            builder.up();
         }
     }
 }

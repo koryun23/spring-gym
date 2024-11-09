@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
         Assert.notNull(user, "User Entity must not be null");
         LOGGER.info("Updating a User Entity with an id of {}", user.getId());
         UserEntity updatedUserEntity = userEntityRepository.update(
-                user.getUsername(), user.getFirstName(), user.getLastName(), user.getIsActive()
+            user.getUsername(), user.getFirstName(), user.getLastName(), user.getIsActive()
         );
         LOGGER.info("Successfully updated a User Entity with an id of {}, result - {}",
             user.getId(), updatedUserEntity);

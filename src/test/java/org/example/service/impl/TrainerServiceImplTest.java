@@ -35,7 +35,7 @@ class TrainerServiceImplTest {
 
     @BeforeEach
     public void init() {
-        testSubject = new TrainerServiceImpl(traineeEntityRepository, trainerEntityRepository, userService);
+        testSubject = new TrainerServiceImpl(null, trainerEntityRepository, userService);
     }
 
     @Test
