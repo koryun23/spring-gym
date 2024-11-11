@@ -19,7 +19,7 @@ public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
     @Query("update UserEntity u set u.password = ?2 where u.username = ?1")
     UserEntity changePassword(String username, String newPassword);
 
-    @Query("update UserEntity u set u.is_active = !u.is_active where u.username = ?1")
+    @Query("update UserEntity u set u.isActive = not u.isActive where u.username = ?1")
     UserEntity switchActivationState(String username);
 
     @Query("update UserEntity u set u.firstName = ?2, u.lastName = ?3, u.isActive = ?4 where u.username = ?1")

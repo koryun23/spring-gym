@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Configuration
-@EnableJpaRepositories
+@EnableJpaRepositories("org.example.repository")
 public class Config {
 
     @Bean
