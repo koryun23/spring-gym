@@ -51,7 +51,7 @@ public class AuthFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return request.getRequestURI().startsWith("/trainees/register")
-            || request.getRequestURI().startsWith("/trainers/register");
+        return (request.getRequestURI().startsWith("/trainees") && "POST".equals(request.getMethod()))
+            || (request.getRequestURI().startsWith("/trainers") && "POST".equals(request.getMethod()));
     }
 }

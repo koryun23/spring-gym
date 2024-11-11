@@ -69,7 +69,7 @@ checkstyle {
 }
 
 flyway {
-    url = 'jdbc:postgresql://localhost:6432/postgres'
+    url = 'jdbc:postgresql://localhost:6432/gym-dev'
     user = 'postgres'
     password = ''
     schemas = ['classpath:resources/db/migration/V1__migration.sql']

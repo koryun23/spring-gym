@@ -3,6 +3,7 @@ create sequence if not exists TRAINER_SEQUENCE start with 1 increment by 1;
 create sequence if not exists TRAINING_SEQUENCE start with 1 increment by 1;
 create sequence if not exists TRAINING_TYPE_SEQUENCE start with 1 increment by 1;
 create sequence if not exists USER_SEQUENCE start with 1 increment by 1;
+create sequence if not exists USER_SUFFIX_SEQUENCE start with 1 increment by 1;
 
 create table if not exists USERS (
     is_active boolean not null,
@@ -11,6 +12,13 @@ create table if not exists USERS (
     last_name varchar(255) not null,
     password varchar(255) not null,
     username varchar(255) not null
+);
+
+create table if not exists USER_SUFFIX (
+    id bigint not null primary key DEFAULT nextval('user_suffix_sequence'),
+    first_name varchar(255) not null,
+    last_name varchar(255) not null,
+    suffix bigint not null
 );
 
 create table if not exists TRAINING_TYPE (

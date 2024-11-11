@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.entity.UserEntity;
 import org.example.service.core.user.IdService;
 import org.example.service.core.user.UserService;
+import org.example.service.core.user.UserSuffixService;
 import org.example.service.core.user.UsernamePasswordService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -14,15 +15,13 @@ import org.springframework.util.Assert;
 @Service
 public class UsernamePasswordServiceImpl implements UsernamePasswordService {
 
-    private final UserService userService;
-    private final IdService idService;
+    private final UserSuffixService userSuffixService;
 
     /**
      * Constructor.
      */
-    public UsernamePasswordServiceImpl(UserService userService, IdService idService) {
-        this.userService = userService;
-        this.idService = idService;
+    public UsernamePasswordServiceImpl(UserSuffixService userSuffixService) {
+        this.userSuffixService = userSuffixService;
     }
 
     @Override
@@ -32,14 +31,12 @@ public class UsernamePasswordServiceImpl implements UsernamePasswordService {
         Assert.notNull(lastName, "Last Name must not be null");
         Assert.hasText(lastName, "Last Name must not be empty");
 
-        String temporaryUsername = firstName + "." + lastName;
-        Optional<UserEntity> optionalUser = userService.findByUsername(temporaryUsername);
+        Long suffix = userSuffixService.getSuffix(firstName, lastName);
 
-        if (optionalUser.isEmpty()) {
-            return temporaryUsername;
+        if(suffix == 1) {
+            return firstName + "." + lastName;
         }
-
-        return temporaryUsername + ("." + idService.getId(temporaryUsername));
+        return firstName + "." + lastName + "." + suffix;
     }
 
     @Override
