@@ -104,7 +104,7 @@ public class TrainingController {
         @RequestParam(value = "from", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String from,
         @RequestParam(value = "to", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String to,
         @RequestParam(value = "trainer", required = false) String trainerUsername,
-        @RequestParam(value = "type", required = false) String trainingType) {
+        @RequestParam(value = "type", required = false) Long specializationId) {
 
         log.info("Attempting to retrieve trainings of a trainee, username - {}", username);
         TrainingListRetrievalByTraineeRequestDto requestDto =
@@ -113,7 +113,7 @@ public class TrainingController {
                 from == null ? null : Date.valueOf(from),
                 to == null ? null : Date.valueOf(to),
                 trainerUsername,
-                trainingType == null ? null : TrainingType.valueOf(trainingType).getId()
+                specializationId
             );
 
         // validation
