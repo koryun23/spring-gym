@@ -67,10 +67,3 @@ checkstyle {
     maxWarnings = 0
     configFile = rootProject.file('config/checkstyle/checkstyle.xml')
 }
-
-flyway {
-    url = 'jdbc:postgresql://localhost:6432/gym-dev'
-    user = 'postgres'
-    password = ''
-    schemas = ['classpath:resources/db/migration/V1__migration.sql']
-}

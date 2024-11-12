@@ -6,11 +6,17 @@ import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Configuration
 @EnableJpaRepositories("org.example.repository")
+@PropertySource(value = {"classpath:application.properties",
+    "classpath:application-dev.properties",
+    "classpath:application-local.properties",
+    "classpath:application-prod.properties",
+    "classpath:application-stg.properties"})
 public class Config {
 
     @Bean
