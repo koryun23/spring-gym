@@ -9,8 +9,10 @@ import org.example.dto.request.TrainerUpdateRequestDto;
 import org.example.exception.CustomIllegalArgumentException;
 import org.example.exception.TraineeNotFoundException;
 import org.example.exception.TrainerNotFoundException;
+import org.example.exception.TrainingTypeNotFoundException;
 import org.example.service.core.trainee.TraineeService;
 import org.example.service.core.trainer.TrainerService;
+import org.example.service.core.training.TrainingTypeService;
 import org.example.service.core.user.UserService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -19,16 +21,17 @@ import org.springframework.util.Assert;
 public class TrainerValidator {
 
     private final TrainerService trainerService;
-    private final UserService userService;
     private final TraineeService traineeService;
+    private final TrainingTypeService trainingTypeService;
 
     /**
      * Constructor.
      */
-    public TrainerValidator(TrainerService trainerService, UserService userService, TraineeService traineeService) {
+    public TrainerValidator(TrainerService trainerService, TraineeService traineeService,
+                            TrainingTypeService trainingTypeService) {
         this.trainerService = trainerService;
-        this.userService = userService;
         this.traineeService = traineeService;
+        this.trainingTypeService = trainingTypeService;
     }
 
     /**
@@ -57,6 +60,9 @@ public class TrainerValidator {
             throw new CustomIllegalArgumentException("Specialization id must be a positive integer");
         }
 
+        if(trainingTypeService.findById(trainingTypeId).isEmpty()) {
+            throw new CustomIllegalArgumentException("Training Type Id does not exist");
+        }
         return null;
     }
 
@@ -84,6 +90,9 @@ public class TrainerValidator {
         Long specializationId = requestDto.getSpecializationId();
         if (specializationId == null) {
             throw new CustomIllegalArgumentException("Specialization is required");
+        }
+        if(trainingTypeService.findById(specializationId).isEmpty()) {
+            throw new TrainingTypeNotFoundException(specializationId);
         }
 
         Boolean isActive = requestDto.getIsActive();
