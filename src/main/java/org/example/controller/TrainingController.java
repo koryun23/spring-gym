@@ -73,10 +73,7 @@ public class TrainingController {
         log.info("Attempting to create a training, request - {}", requestDto);
 
         // validations
-        RestResponse restResponse = trainingValidator.validateCreateTraining(requestDto);
-        if (restResponse != null) {
-            return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
-        }
+        trainingValidator.validateCreateTraining(requestDto);
 
         // service and mapper calls
         TraineeEntity trainee = traineeService.selectByUsername(requestDto.getTraineeUsername());
@@ -88,7 +85,7 @@ public class TrainingController {
             trainingMapper.mapTrainingEntityToTrainingCreationResponseDto(trainingEntity);
 
         // response
-        restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        RestResponse restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Response of training creation - {}", restResponse);
 
