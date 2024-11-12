@@ -22,7 +22,8 @@ public class UserSuffixServiceImpl implements UserSuffixService {
     @Override
     public Long getSuffix(String firstName, String lastName) {
         log.info("Getting a suffix for the username of {} {}", firstName, lastName);
-        Optional<UserSuffixEntity> optionalUserSuffixEntity = userSuffixEntityRepository.findByFirstAndLastName(firstName, lastName);
+        Optional<UserSuffixEntity> optionalUserSuffixEntity =
+            userSuffixEntityRepository.findByFirstAndLastName(firstName, lastName);
         if (optionalUserSuffixEntity.isEmpty()) {
             userSuffixEntityRepository.save(new UserSuffixEntity(firstName, lastName, 1L));
             return 1L;

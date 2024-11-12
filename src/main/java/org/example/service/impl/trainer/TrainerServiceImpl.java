@@ -2,7 +2,6 @@ package org.example.service.impl.trainer;
 
 import java.util.List;
 import java.util.Optional;
-import lombok.val;
 import org.example.dto.plain.TrainerDto;
 import org.example.dto.plain.UserDto;
 import org.example.entity.TrainerEntity;
@@ -56,7 +55,8 @@ public class TrainerServiceImpl implements TrainerService {
         );
         userService.create(userEntity);
 
-        TrainerEntity createdTrainerEntity = trainerDao.save(new TrainerEntity(userEntity, trainingTypeService.get(trainer.getSpecializationId())));
+        TrainerEntity createdTrainerEntity =
+            trainerDao.save(new TrainerEntity(userEntity, trainingTypeService.get(trainer.getSpecializationId())));
         LOGGER.info("Successfully created a TrainerEntity based on TrainerCreateParams - {}, result - {}",
             trainer,
             createdTrainerEntity);
@@ -64,14 +64,23 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Override
-    public TrainerEntity update(TrainerEntity trainerEntity) {
-        Assert.notNull(trainerEntity, "TrainerUpdateParams must not be null");
-        LOGGER.info("Updating a TrainerEntity based on TrainerUpdateParams - {}", trainerEntity);
-        TrainerEntity updatedTrainerEntity = trainerDao.update(
-            trainerEntity.getUser().getUsername(), trainerEntity.getSpecialization().getTrainingType()
-        );
-        LOGGER.info("Successfully updated a TrainerEntity based on TrainerUpdateParams - {}, result - {}",
-            trainerEntity,
+    public TrainerEntity update(TrainerDto trainer) {
+        Assert.notNull(trainer, "TrainerUpdateParams must not be null");
+        LOGGER.info("Updating a TrainerEntity based on TrainerUpdateParams - {}", trainer);
+
+        UserEntity updatedUserEntity = userService.update(new UserEntity(
+            trainer.getUserDto().getFirstName(),
+            trainer.getUserDto().getLastName(),
+            trainer.getUserDto().getUsername(),
+            null,
+            trainer.getUserDto().getIsActive()
+        ));
+        TrainerEntity persistedTrainer = this.selectByUsername(trainer.getUserDto().getUsername());
+        persistedTrainer.setUser(updatedUserEntity);
+        persistedTrainer.setSpecialization(trainingTypeService.get(trainer.getSpecializationId()));
+        TrainerEntity updatedTrainerEntity = trainerDao.save(persistedTrainer);
+        LOGGER.info("Successfully updated a Trainer based on TrainerUpdateParams - {}, result - {}",
+            trainer,
             updatedTrainerEntity);
         return updatedTrainerEntity;
     }
@@ -125,6 +134,7 @@ public class TrainerServiceImpl implements TrainerService {
         Assert.hasText(traineeUsername, "Trainee username must not be empty");
         LOGGER.info("Retrieving all trainers not assigned to trainee with a username of {}", traineeUsername);
         List<TrainerEntity> all = trainerDao.findAllTrainersNotAssignedTo(traineeUsername);
+
         LOGGER.info("Successfully retrieved all trainers not assigned to trainee with a username of {}, result - {}",
             traineeUsername, all);
         return all;

@@ -13,7 +13,13 @@ public interface TrainerEntityRepository extends JpaRepository<TrainerEntity, Lo
 
     Optional<TrainerEntity> findByUserUsername(String username);
 
-    @Query("select training.trainer from TrainingEntity training where training.trainee.user.username != ?1")
+    @Query("select trainer from TrainerEntity trainer " +
+        "where not exists ( " +
+        "select trainee " +
+        "from TrainingEntity training " +
+        "left join TraineeEntity trainee on training.trainee.id = trainee.id " +
+        "left join UserEntity user on trainee.user.id = user.id " +
+        "where training.trainer.id = trainer.id and user.username = ?1)")
     List<TrainerEntity> findAllTrainersNotAssignedTo(String traineeUsername);
 
     @Query("update TrainerEntity t set t.specialization = ?2 where t.user.username = ?1")

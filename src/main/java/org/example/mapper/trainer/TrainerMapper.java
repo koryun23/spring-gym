@@ -29,4 +29,6 @@ public interface TrainerMapper {
     UserDto mapTrainerEntityToUserDto(TrainerEntity trainerEntity);
 
     TrainerDto mapTrainerCreationRequestDtoToTrainerDto(TrainerCreationRequestDto requestDto);
+
+    TrainerDto mapTrainerUpdateRequestDtoToTrainerDto(TrainerUpdateRequestDto requestDto);
 }

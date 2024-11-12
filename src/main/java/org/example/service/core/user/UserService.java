@@ -12,6 +12,8 @@ public interface UserService {
 
     boolean delete(Long id);
 
+    boolean deleteByUsername(String username);
+
     UserEntity select(Long id);
 
     UserEntity changePassword(String username, String newPassword);

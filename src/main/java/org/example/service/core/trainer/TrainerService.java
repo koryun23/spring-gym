@@ -9,7 +9,7 @@ public interface TrainerService {
 
     TrainerEntity create(TrainerDto params);
 
-    TrainerEntity update(TrainerEntity params);
+    TrainerEntity update(TrainerDto params);
 
     TrainerEntity select(Long trainerId);
 

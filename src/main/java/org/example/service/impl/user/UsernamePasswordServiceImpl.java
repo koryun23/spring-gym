@@ -29,7 +29,7 @@ public class UsernamePasswordServiceImpl implements UsernamePasswordService {
 
         Long suffix = userSuffixService.getSuffix(firstName, lastName);
 
-        if(suffix == 1) {
+        if (suffix == 1) {
             return firstName + "." + lastName;
         }
         return firstName + "." + lastName + "." + suffix;

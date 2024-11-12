@@ -46,13 +46,10 @@ public class TraineeMapperImpl implements TraineeMapper {
     @Override
     public TraineeRetrievalResponseDto mapTraineeEntityToTraineeRetrievalResponseDto(TraineeEntity trainee) {
         Assert.notNull(trainee, "TraineeEntity must not be null");
-        return new TraineeRetrievalResponseDto(
-            trainee.getUser().getFirstName(),
-            trainee.getUser().getLastName(),
-            trainee.getDateOfBirth(),
-            trainee.getAddress(),
-            trainee.getUser().getIsActive(),
-            trainee.getTrainingEntityList().stream()
+        List<TrainingEntity> trainingEntityList = trainee.getTrainingEntityList();
+        List<TrainerDto> assignedTrainers = null;
+        if (trainingEntityList != null) {
+            assignedTrainers = trainingEntityList.stream()
                 .map(TrainingEntity::getTrainer)
                 .map(trainerEntity -> new TrainerDto(
                     new UserDto(
@@ -63,7 +60,15 @@ public class TraineeMapperImpl implements TraineeMapper {
                         trainerEntity.getUser().getIsActive()
                     ),
                     trainerEntity.getSpecialization().getId()
-                )).toList()
+                )).toList();
+        }
+        return new TraineeRetrievalResponseDto(
+            trainee.getUser().getFirstName(),
+            trainee.getUser().getLastName(),
+            trainee.getDateOfBirth(),
+            trainee.getAddress(),
+            trainee.getUser().getIsActive(),
+            assignedTrainers
         );
     }
 
@@ -71,20 +76,24 @@ public class TraineeMapperImpl implements TraineeMapper {
     public TraineeUpdateResponseDto mapTraineeEntityToTraineeUpdateResponseDto(TraineeEntity trainee) {
         Assert.notNull(trainee, "TraineeEntity must not be null");
         UserEntity userEntity = trainee.getUser();
-        List<TrainerDto> trainerDtoList =
-            trainee.getTrainingEntityList()
-                .stream()
-                .map(TrainingEntity::getTrainer)
-                .map(trainerEntity -> new TrainerDto(
-                    new UserDto(
-                        trainerEntity.getUser().getFirstName(),
-                        trainerEntity.getUser().getLastName(),
-                        trainerEntity.getUser().getUsername(),
-                        trainerEntity.getUser().getPassword(),
-                        trainerEntity.getUser().getIsActive()
-                    ),
-                    trainerEntity.getSpecialization().getId()
-                )).collect(Collectors.toSet()).stream().toList();
+        List<TrainingEntity> trainingEntityList = trainee.getTrainingEntityList();
+        List<TrainerDto> assignedTrainers = null;
+        if (trainingEntityList != null) {
+            List<TrainerDto> trainerDtoList =
+                trainingEntityList
+                    .stream()
+                    .map(TrainingEntity::getTrainer)
+                    .map(trainerEntity -> new TrainerDto(
+                        new UserDto(
+                            trainerEntity.getUser().getFirstName(),
+                            trainerEntity.getUser().getLastName(),
+                            trainerEntity.getUser().getUsername(),
+                            trainerEntity.getUser().getPassword(),
+                            trainerEntity.getUser().getIsActive()
+                        ),
+                        trainerEntity.getSpecialization().getId()
+                    )).collect(Collectors.toSet()).stream().toList();
+        }
 
         return new TraineeUpdateResponseDto(
             userEntity.getUsername(),
@@ -93,7 +102,7 @@ public class TraineeMapperImpl implements TraineeMapper {
             trainee.getDateOfBirth(),
             trainee.getAddress(),
             userEntity.getIsActive(),
-            trainerDtoList
+            assignedTrainers
         );
     }
 

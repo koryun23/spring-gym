@@ -1,5 +1,7 @@
 package org.example.mapper.trainer;
 
+import java.util.Collections;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.plain.TraineeDto;
 import org.example.dto.plain.TrainerDto;
@@ -48,13 +50,10 @@ public class TrainerMapperImpl implements TrainerMapper {
     @Override
     public TrainerRetrievalResponseDto mapTrainerEntityToTrainerRetrievalResponseDto(TrainerEntity trainerEntity) {
         Assert.notNull(trainerEntity, "TrainerEntity must not be null");
-        return new TrainerRetrievalResponseDto(
-            trainerEntity.getUser().getUsername(),
-            trainerEntity.getUser().getFirstName(),
-            trainerEntity.getUser().getLastName(),
-            trainerEntity.getSpecialization().getTrainingType(),
-            trainerEntity.getUser().getIsActive(),
-            trainerEntity.getTrainingEntityList().stream()
+        List<TrainingEntity> trainings = trainerEntity.getTrainingEntityList();
+        List<TraineeDto> trainees = Collections.emptyList();
+        if (trainings != null) {
+            trainees = trainings.stream()
                 .map(TrainingEntity::getTrainee)
                 .map(traineeEntity -> new TraineeDto(
                     new UserDto(
@@ -66,7 +65,15 @@ public class TrainerMapperImpl implements TrainerMapper {
                     ),
                     traineeEntity.getDateOfBirth(),
                     traineeEntity.getAddress()
-                )).toList()
+                )).toList();
+        }
+        return new TrainerRetrievalResponseDto(
+            trainerEntity.getUser().getUsername(),
+            trainerEntity.getUser().getFirstName(),
+            trainerEntity.getUser().getLastName(),
+            trainerEntity.getSpecialization().getTrainingType(),
+            trainerEntity.getUser().getIsActive(),
+            trainees
         );
     }
 
@@ -157,6 +164,20 @@ public class TrainerMapperImpl implements TrainerMapper {
                 null,
                 null,
                 true
+            ),
+            requestDto.getSpecializationId()
+        );
+    }
+
+    @Override
+    public TrainerDto mapTrainerUpdateRequestDtoToTrainerDto(TrainerUpdateRequestDto requestDto) {
+        return new TrainerDto(
+            new UserDto(
+                requestDto.getFirstName(),
+                requestDto.getLastName(),
+                requestDto.getUsername(),
+                null,
+                requestDto.getIsActive()
             ),
             requestDto.getSpecializationId()
         );

@@ -12,7 +12,6 @@ import org.example.dto.response.TraineeCreationResponseDto;
 import org.example.dto.response.TraineeDeletionResponseDto;
 import org.example.dto.response.TraineeSwitchActivationStateResponseDto;
 import org.example.entity.TraineeEntity;
-import org.example.entity.UserEntity;
 import org.example.mapper.trainee.TraineeMapper;
 import org.example.service.core.trainee.TraineeService;
 import org.example.service.core.user.UserService;
@@ -114,9 +113,6 @@ public class TraineeController {
         traineeValidator.validateUpdateTrainee(requestDto);
 
         // service and mapper calls
-        UserEntity user = traineeMapper.mapTraineeUpdateRequestDtoToUserEntity(requestDto);
-        userService.update(user);
-
         TraineeEntity trainee = traineeMapper.mapTraineeUpdateRequestDtoToTraineeEntity(requestDto);
         TraineeEntity traineeEntity = traineeService.update(trainee);
 

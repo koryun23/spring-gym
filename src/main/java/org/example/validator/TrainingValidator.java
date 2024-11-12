@@ -102,7 +102,7 @@ public class TrainingValidator {
         }
 
         if (traineeService.findByUsername(traineeUsername).isEmpty()) {
-            throw new TraineeNotFoundException("Trainee does not exist");
+            throw new TraineeNotFoundException(traineeUsername);
         }
 
         return null;

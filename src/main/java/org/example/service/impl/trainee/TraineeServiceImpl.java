@@ -55,9 +55,15 @@ public class TraineeServiceImpl implements TraineeService {
     public TraineeEntity update(TraineeEntity trainee) {
         Assert.notNull(trainee, "TraineeCreateParams must not be null");
         LOGGER.info("Updating a TraineeEntity based on TraineeUpdateParams - {}", trainee);
-        TraineeEntity updatedTrainee = traineeDao.update(
-            trainee.getUser().getUsername(), trainee.getDateOfBirth(), trainee.getAddress()
-        );
+
+        UserEntity persistedUser = userService.update(trainee.getUser());
+
+        TraineeEntity updatedTrainee = this.selectByUsername(trainee.getUser().getUsername());
+        updatedTrainee.setUser(persistedUser);
+        updatedTrainee.setAddress(trainee.getAddress());
+        updatedTrainee.setDateOfBirth(trainee.getDateOfBirth());
+        traineeDao.save(updatedTrainee);
+
         LOGGER.info("Successfully updated a TraineeEntity based on TraineeUpdateParams - {}, result - {}", trainee,
             trainee);
         return updatedTrainee;
@@ -68,7 +74,9 @@ public class TraineeServiceImpl implements TraineeService {
         Assert.notNull(username, "Username must not be null");
         Assert.notNull(username, "Username must not be empty");
         LOGGER.info("Deleting a Trainee with a username of {}", username);
+
         traineeDao.deleteByUserUsername(username);
+
         LOGGER.info("Successfully deleted a Trainee with a username of {}", username);
         return true;
     }

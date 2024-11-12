@@ -16,7 +16,6 @@ import org.example.dto.response.TrainerRetrievalResponseDto;
 import org.example.dto.response.TrainerSwitchActivationStateResponseDto;
 import org.example.dto.response.TrainerUpdateResponseDto;
 import org.example.entity.TrainerEntity;
-import org.example.entity.UserEntity;
 import org.example.mapper.trainer.TrainerMapper;
 import org.example.service.core.trainer.TrainerService;
 import org.example.service.core.user.UserService;
@@ -123,11 +122,8 @@ public class TrainerController {
         trainerValidator.validateUpdateTrainer(requestDto);
 
         // service and mapper calls
-        UserEntity user = trainerMapper.mapTrainerUpdateRequestDtoToUserEntity(requestDto);
-        userService.update(user);
-
         TrainerEntity trainer = trainerMapper.mapTrainerUpdateRequestDtoToTrainerEntity(requestDto);
-        trainerService.update(trainer);
+        trainerService.update(trainerMapper.mapTrainerUpdateRequestDtoToTrainerDto(requestDto));
 
         TrainerUpdateResponseDto responseDto = trainerMapper.mapTrainerEntityToTrainerUpdateResponseDto(trainer);
 

@@ -37,9 +37,11 @@ public class UserServiceImpl implements UserService {
     public UserEntity update(UserEntity user) {
         Assert.notNull(user, "User Entity must not be null");
         LOGGER.info("Updating a User Entity with an id of {}", user.getId());
-        UserEntity updatedUserEntity = userEntityRepository.update(
-            user.getUsername(), user.getFirstName(), user.getLastName(), user.getIsActive()
-        );
+        UserEntity persistedUserEntity = this.getByUsername(user.getUsername());
+        persistedUserEntity.setFirstName(user.getFirstName());
+        persistedUserEntity.setLastName(user.getLastName());
+        persistedUserEntity.setIsActive(user.getIsActive());
+        UserEntity updatedUserEntity = userEntityRepository.save(persistedUserEntity);
         LOGGER.info("Successfully updated a User Entity with an id of {}, result - {}",
             user.getId(), updatedUserEntity);
         return updatedUserEntity;
@@ -51,6 +53,16 @@ public class UserServiceImpl implements UserService {
         LOGGER.info("Deleting a User Entity with an id of {}", id);
         userEntityRepository.deleteById(id);
         LOGGER.info("Succsesfully deleted a User Entity with an id of {}", id);
+        return true;
+    }
+
+    @Override
+    public boolean deleteByUsername(String username) {
+        Assert.notNull(username, "Username must not be null");
+        Assert.hasText(username, "Username must not be empty");
+        LOGGER.info("Deleting a user with a username of {}", username);
+        userEntityRepository.deleteByUsername(username);
+        LOGGER.info("Successfully deleted a User with a username of {}", username);
         return true;
     }
 
@@ -70,7 +82,9 @@ public class UserServiceImpl implements UserService {
         Assert.notNull(newPassword, "New password must not be null");
         Assert.hasText(newPassword, "New password must not be empty");
         LOGGER.info("Changing the password of the user {}", username);
-        UserEntity userEntity = userEntityRepository.changePassword(username, newPassword);
+        UserEntity userEntity = this.getByUsername(username);
+        userEntity.setPassword(newPassword);
+        userEntity = userEntityRepository.save(userEntity);
         LOGGER.info("Successfully changed the password of the user {}", username);
         return userEntity;
     }
@@ -80,7 +94,9 @@ public class UserServiceImpl implements UserService {
         Assert.notNull(username, "Username must not be null");
         Assert.hasText(username, "Username must not be empty");
         LOGGER.info("Switching the activation state of the user {}", username);
-        UserEntity userEntity = userEntityRepository.switchActivationState(username);
+        UserEntity userEntity = this.getByUsername(username);
+        userEntity.setIsActive(!userEntity.getIsActive());
+        userEntity = userEntityRepository.save(userEntity);
         LOGGER.info("Successfully switched the activation state of the user {}", username);
         return userEntity;
     }

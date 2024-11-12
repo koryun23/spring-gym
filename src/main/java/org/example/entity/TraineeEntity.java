@@ -35,7 +35,7 @@ public class TraineeEntity {
     @SequenceGenerator(name = "TRAINEE_SEQUENCE", allocationSize = 1)
     private Long id;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private UserEntity user;
 
