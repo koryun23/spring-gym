@@ -17,8 +17,8 @@ import lombok.ToString;
 public class TrainingListRetrievalByTraineeRequestDto {
 
     private String traineeUsername;
-    private Date from;
-    private Date to;
+    private String from;
+    private String to;
     private String trainerUsername;
     private Long specializationId;
 }

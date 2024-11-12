@@ -12,17 +12,17 @@ import org.springframework.stereotype.Repository;
 public interface TrainingEntityRepository extends JpaRepository<TrainingEntity, Long> {
 
     @Query("select training from TrainingEntity training where training.trainee.user.username = ?1 "
-        + "AND (?2 is null or training.date >= ?2) "
-        + "AND (?3 is null or training.date <= ?3)"
-        + "AND (?4 is null or training.trainer.user.username = ?4)"
-        + "AND (?5 is null or training.trainingType = ?5)")
+        + "and (training.date >= coalesce(?2, training.date)) "
+        + "and (training.date <= coalesce(?3, training.date)) "
+        + "and (?4 is null or training.trainer.user.username = ?4) "
+        + "and (?5 is null or training.trainingType.id = ?5)")
     List<TrainingEntity> findAllByTraineeUsernameAndCriteria(String traineeUsername, Date from, Date to,
-                                                             String trainerUsername, TrainingType trainingType);
+                                                             String trainerUsername, Long trainingTypeId);
 
     @Query("select training from TrainingEntity training where training.trainer.user.username = ?1 "
-        + "AND (?2 is null or training.date >= ?2) "
-        + "AND (?3 is null or training.date <= ?3)"
-        + "AND (?4 is null or training.trainee.user.username = ?4)")
+        + "and training.date >= coalesce(?2, training.date) "
+        + "and training.date <= coalesce(?3, training.date) "
+        + "and (?4 is null or training.trainee.user.username = ?4) ")
     List<TrainingEntity> findAllByTrainerUsernameAndCriteria(String trainerUsername, Date from, Date to,
                                                              String traineeUsername);
 }

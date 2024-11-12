@@ -15,6 +15,7 @@ import org.example.service.core.trainer.TrainerService;
 import org.example.service.core.training.TrainingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -118,19 +119,19 @@ public class TrainingServiceImpl implements TrainingService {
 
     @Override
     public List<TrainingEntity> findAllByTraineeUsernameAndCriteria(String traineeUsername, Date from, Date to,
-                                                                    String trainerUsername, TrainingType trainingType) {
+                                                                    String trainerUsername, Long trainingTypeId) {
         Assert.notNull(traineeUsername, "Trainee Username must not be null");
         LOGGER.info("Retrieving all Training Entities of a trainee({}) based on the following criteria - "
                 + "from = {}, to = {}, trainerUsername = {}, trainingType = {}",
-            traineeUsername, from, to, trainerUsername, trainingType);
+            traineeUsername, from, to, trainerUsername, trainingTypeId);
 
         List<TrainingEntity> all =
             trainingEntityRepository.findAllByTraineeUsernameAndCriteria(traineeUsername, from, to,
-                trainerUsername, trainingType);
+                trainerUsername, trainingTypeId);
 
         LOGGER.info("Successfully retrieved all Training Entities of a trainee({}) based on the following criteria - "
                 + "from = {}, to = {}, trainerUsername = {}, trainingType = {}. Result of the query - {}",
-            traineeUsername, from, to, trainerUsername, trainingType, all);
+            traineeUsername, from, to, trainerUsername, trainingTypeId, all);
         return all;
     }
 

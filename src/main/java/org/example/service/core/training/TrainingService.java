@@ -18,7 +18,7 @@ public interface TrainingService {
     Optional<TrainingEntity> findById(Long id);
 
     List<TrainingEntity> findAllByTraineeUsernameAndCriteria(String traineeUsername, Date from, Date to,
-                                                             String trainerUsername, TrainingType trainingType);
+                                                             String trainerUsername, Long trainingTypeId);
 
     List<TrainingEntity> findAllByTrainerUsernameAndCriteria(String trainerUsername, Date from, Date to,
                                                              String traineeUsername);

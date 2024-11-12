@@ -86,6 +86,18 @@ public class TrainingValidator {
         if (trainerService.findByUsername(trainerUsername).isEmpty()) {
             throw new TrainerNotFoundException("Trainer does not exist");
         }
+        if(requestDto.getFrom() != null) {
+            String[] from = requestDto.getFrom().split("-");
+            if (from.length != 3 || from[0].length() != 4 || from[1].length() != 2 || from[2].length() != 2) {
+                throw new CustomIllegalArgumentException("Date format is wrong for the from argument");
+            }
+        }
+        if(requestDto.getTo() != null) {
+            String[] to = requestDto.getTo().split("-");
+            if (to.length != 3 || to[0].length() != 4 || to[1].length() != 2 || to[2].length() != 2) {
+                throw new CustomIllegalArgumentException("Date format is wrong for the to argument");
+            }
+        }
 
         return null;
     }
@@ -105,6 +117,18 @@ public class TrainingValidator {
             throw new TraineeNotFoundException(traineeUsername);
         }
 
+        if(requestDto.getFrom() != null) {
+            String[] from = requestDto.getFrom().split("-");
+            if (from.length != 3 || from[0].length() != 4 || from[1].length() != 2 || from[2].length() != 2) {
+                throw new CustomIllegalArgumentException("Date format is wrong for the from argument");
+            }
+        }
+        if(requestDto.getTo() != null) {
+            String[] to = requestDto.getTo().split("-");
+            if (to.length != 3 || to[0].length() != 4 || to[1].length() != 2 || to[2].length() != 2) {
+                throw new CustomIllegalArgumentException("Date format is wrong for the to argument");
+            }
+        }
         return null;
     }
 }

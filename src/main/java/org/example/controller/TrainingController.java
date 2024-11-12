@@ -110,18 +110,14 @@ public class TrainingController {
         TrainingListRetrievalByTraineeRequestDto requestDto =
             new TrainingListRetrievalByTraineeRequestDto(
                 username,
-                from == null ? null : Date.valueOf(from),
-                to == null ? null : Date.valueOf(to),
+                from,
+                to,
                 trainerUsername,
                 specializationId
             );
 
         // validation
-        RestResponse restResponse =
-            trainingValidator.validateRetrieveTrainingListByTrainee(requestDto);
-        if (restResponse != null) {
-            return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
-        }
+        trainingValidator.validateRetrieveTrainingListByTrainee(requestDto);
 
         // service and mapper calls
         TrainingListRetrievalResponseDto responseDto =
@@ -129,20 +125,16 @@ public class TrainingController {
                 trainingMapper.mapTrainingEntityListToTrainingDtoList(
                     trainingService.findAllByTraineeUsernameAndCriteria(
                         requestDto.getTraineeUsername(),
-                        requestDto.getFrom(),
-                        requestDto.getTo(),
+                        requestDto.getFrom() == null ? null : Date.valueOf(requestDto.getFrom()),
+                        requestDto.getTo() == null ? null : Date.valueOf(requestDto.getTo()),
                         requestDto.getTrainerUsername(),
-                        requestDto.getSpecializationId() == null ? null :
-                            trainingTypeService.findById(requestDto.getSpecializationId())
-                                .orElseThrow(() -> new TrainingTypeNotFoundException(
-                                    requestDto.getSpecializationId())
-                                ).getTrainingType()
+                        requestDto.getSpecializationId()
                     )
                 )
             );
 
         // response
-        restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        RestResponse restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Result of retrieving trainings of a trainee - {}", restResponse);
 
@@ -164,8 +156,8 @@ public class TrainingController {
         TrainingListRetrievalByTrainerRequestDto requestDto =
             new TrainingListRetrievalByTrainerRequestDto(
                 username,
-                from == null ? null : Date.valueOf(from),
-                to == null ? null : Date.valueOf(to),
+                from,
+                to,
                 traineeUsername
             );
 
@@ -181,8 +173,8 @@ public class TrainingController {
         List<TrainingDto> all = trainingMapper.mapTrainingEntityListToTrainingDtoList(
             trainingService.findAllByTrainerUsernameAndCriteria(
                 trainerUsername,
-                requestDto.getFrom(),
-                requestDto.getTo(),
+                requestDto.getFrom() == null ? null : Date.valueOf(requestDto.getFrom()),
+                requestDto.getTo() == null ? null : Date.valueOf(requestDto.getTo()),
                 requestDto.getTraineeUsername()
             ));
 
