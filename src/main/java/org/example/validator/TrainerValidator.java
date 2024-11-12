@@ -13,7 +13,6 @@ import org.example.exception.TrainingTypeNotFoundException;
 import org.example.service.core.trainee.TraineeService;
 import org.example.service.core.trainer.TrainerService;
 import org.example.service.core.training.TrainingTypeService;
-import org.example.service.core.user.UserService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -60,7 +59,7 @@ public class TrainerValidator {
             throw new CustomIllegalArgumentException("Specialization id must be a positive integer");
         }
 
-        if(trainingTypeService.findById(trainingTypeId).isEmpty()) {
+        if (trainingTypeService.findById(trainingTypeId).isEmpty()) {
             throw new CustomIllegalArgumentException("Training Type Id does not exist");
         }
         return null;
@@ -91,7 +90,7 @@ public class TrainerValidator {
         if (specializationId == null) {
             throw new CustomIllegalArgumentException("Specialization is required");
         }
-        if(trainingTypeService.findById(specializationId).isEmpty()) {
+        if (trainingTypeService.findById(specializationId).isEmpty()) {
             throw new TrainingTypeNotFoundException(specializationId);
         }
 

@@ -15,8 +15,6 @@ import org.example.dto.response.TrainingListRetrievalResponseDto;
 import org.example.entity.TraineeEntity;
 import org.example.entity.TrainerEntity;
 import org.example.entity.TrainingEntity;
-import org.example.entity.TrainingType;
-import org.example.exception.TrainingTypeNotFoundException;
 import org.example.mapper.training.TrainingMapper;
 import org.example.service.core.trainee.TraineeService;
 import org.example.service.core.trainer.TrainerService;
@@ -85,7 +83,8 @@ public class TrainingController {
             trainingMapper.mapTrainingEntityToTrainingCreationResponseDto(trainingEntity);
 
         // response
-        RestResponse restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        RestResponse restResponse =
+            new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Response of training creation - {}", restResponse);
 
@@ -131,7 +130,8 @@ public class TrainingController {
             );
 
         // response
-        RestResponse restResponse = new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        RestResponse restResponse =
+            new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Result of retrieving trainings of a trainee - {}", restResponse);
 
