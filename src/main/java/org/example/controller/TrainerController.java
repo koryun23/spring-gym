@@ -96,7 +96,7 @@ public class TrainerController {
         // service and mapper calls
         TrainerListRetrievalResponseDto responseDto = new TrainerListRetrievalResponseDto(
             trainerService.findAllNotAssignedTo(username).stream().map(trainerMapper::mapTrainerEntityToTrainerDto)
-                .toList(), username);
+                .toList());
 
         // response
         RestResponse restResponse =
