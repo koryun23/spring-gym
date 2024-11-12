@@ -3,6 +3,8 @@ package org.example.service.impl;
 import java.util.List;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
+import org.example.dto.plain.TrainerDto;
+import org.example.dto.plain.UserDto;
 import org.example.entity.TrainerEntity;
 import org.example.entity.TrainingType;
 import org.example.entity.TrainingTypeEntity;
@@ -33,9 +35,10 @@ class TrainerServiceImplTest {
     @Mock
     private UserService userService;
 
+    //TODO: IMPLEMENT NORMALLY
     @BeforeEach
     public void init() {
-        testSubject = new TrainerServiceImpl(null, trainerEntityRepository, userService);
+        testSubject = new TrainerServiceImpl(null, trainerEntityRepository, userService, null);
     }
 
     @Test
@@ -46,7 +49,12 @@ class TrainerServiceImplTest {
 
         Mockito.when(trainerEntityRepository.save(trainerEntity)).thenReturn(trainerEntity);
 
-        Assertions.assertThat(testSubject.create(trainerEntity)).isEqualTo(trainerEntity);
+        Assertions.assertThat(testSubject.create(new TrainerDto(
+            new UserDto(
+                "first", "last", "username", "password", true
+            ),
+            trainerEntity.getSpecialization().getId()
+        ))).isEqualTo(trainerEntity);
 
         Mockito.verifyNoMoreInteractions(trainerEntityRepository);
     }
@@ -59,7 +67,12 @@ class TrainerServiceImplTest {
 
         Mockito.when(trainerEntityRepository.save(trainerEntity)).thenReturn(trainerEntity);
 
-        Assertions.assertThat(testSubject.update(trainerEntity)).isEqualTo(trainerEntity);
+        Assertions.assertThat(testSubject.update(new TrainerDto(
+            new UserDto(
+                "first", "last", "username", "password", true
+            ),
+            trainerEntity.getSpecialization().getId()
+        ))).isEqualTo(trainerEntity);
 
         Mockito.verifyNoMoreInteractions(trainerEntityRepository, traineeEntityRepository);
     }

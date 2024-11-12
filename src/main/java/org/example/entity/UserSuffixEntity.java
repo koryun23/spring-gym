@@ -37,6 +37,9 @@ public class UserSuffixEntity {
     @Column(name = "suffix", nullable = false)
     private Long suffix;
 
+    /**
+     * Constructor.
+     */
     public UserSuffixEntity(String firstName, String lastName, Long suffix) {
         this.firstName = firstName;
         this.lastName = lastName;

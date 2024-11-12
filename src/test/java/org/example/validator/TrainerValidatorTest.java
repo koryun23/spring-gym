@@ -36,9 +36,10 @@ class TrainerValidatorTest {
     @Mock
     private TraineeService traineeService;
 
+    // TODO: IMPLEMENT NORMALLY
     @BeforeEach
     public void init() {
-        testSubject = new TrainerValidator(trainerService, userService, traineeService);
+        testSubject = new TrainerValidator(trainerService, traineeService, null);
     }
 
     @Test
