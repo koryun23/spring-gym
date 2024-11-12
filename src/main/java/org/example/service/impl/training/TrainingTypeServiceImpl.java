@@ -10,8 +10,10 @@ import org.example.service.core.training.TrainingTypeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+@Transactional
 @Service
 public class TrainingTypeServiceImpl implements TrainingTypeService {
 

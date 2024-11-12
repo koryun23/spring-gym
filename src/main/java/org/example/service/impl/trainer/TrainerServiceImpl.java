@@ -2,18 +2,24 @@ package org.example.service.impl.trainer;
 
 import java.util.List;
 import java.util.Optional;
+import lombok.val;
+import org.example.dto.plain.TrainerDto;
+import org.example.dto.plain.UserDto;
 import org.example.entity.TrainerEntity;
 import org.example.entity.UserEntity;
 import org.example.exception.TrainerNotFoundException;
 import org.example.repository.TrainerEntityRepository;
 import org.example.service.core.trainer.TrainerService;
+import org.example.service.core.training.TrainingTypeService;
 import org.example.service.core.user.UserService;
 import org.example.service.core.user.UsernamePasswordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+@Transactional
 @Service
 public class TrainerServiceImpl implements TrainerService {
 
@@ -22,29 +28,37 @@ public class TrainerServiceImpl implements TrainerService {
     private final UsernamePasswordService usernamePasswordService;
     private final TrainerEntityRepository trainerDao;
     private final UserService userService;
+    private final TrainingTypeService trainingTypeService;
 
     /**
      * Constructor.
      */
     public TrainerServiceImpl(UsernamePasswordService usernamePasswordService, TrainerEntityRepository trainerDao,
-                              UserService userService) {
+                              UserService userService, TrainingTypeService trainingTypeService) {
         this.usernamePasswordService = usernamePasswordService;
         this.trainerDao = trainerDao;
         this.userService = userService;
+        this.trainingTypeService = trainingTypeService;
     }
 
     @Override
-    public TrainerEntity create(TrainerEntity trainerEntity) {
-        Assert.notNull(trainerEntity, "TrainerCreateParams must not be null");
-        LOGGER.info("Creating a TrainerEntity based on TrainerCreateParams - {}", trainerEntity);
+    public TrainerEntity create(TrainerDto trainer) {
+        Assert.notNull(trainer, "TrainerCreateParams must not be null");
+        LOGGER.info("Creating a TrainerEntity based on TrainerCreateParams - {}", trainer);
 
-        UserEntity user = trainerEntity.getUser();
-        user.setUsername(usernamePasswordService.username(user.getFirstName(), user.getLastName()));
-        user.setPassword(usernamePasswordService.password());
-        userService.create(user);
-        TrainerEntity createdTrainerEntity = trainerDao.save(trainerEntity);
+        UserDto userDto = trainer.getUserDto();
+        UserEntity userEntity = new UserEntity(
+            userDto.getFirstName(),
+            userDto.getLastName(),
+            usernamePasswordService.username(userDto.getFirstName(), userDto.getLastName()),
+            usernamePasswordService.password(),
+            userDto.getIsActive()
+        );
+        userService.create(userEntity);
+
+        TrainerEntity createdTrainerEntity = trainerDao.save(new TrainerEntity(userEntity, trainingTypeService.get(trainer.getSpecializationId())));
         LOGGER.info("Successfully created a TrainerEntity based on TrainerCreateParams - {}, result - {}",
-            trainerEntity,
+            trainer,
             createdTrainerEntity);
         return createdTrainerEntity;
     }

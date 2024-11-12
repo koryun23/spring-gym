@@ -21,6 +21,7 @@ import org.springframework.util.Assert;
 @Component
 public class TrainerMapperImpl implements TrainerMapper {
 
+
     @Override
     public TrainerEntity mapTrainerCreationRequestDtoToTrainerEntity(TrainerCreationRequestDto requestDto) {
         Assert.notNull(requestDto, "TrainerCreationRequestDto must not be null");
@@ -130,7 +131,7 @@ public class TrainerMapperImpl implements TrainerMapper {
 
         return new TrainerDto(
             mapTrainerEntityToUserDto(trainerEntity),
-            trainerEntity.getSpecialization().getTrainingType()
+            trainerEntity.getSpecialization().getId()
         );
     }
 
@@ -144,6 +145,20 @@ public class TrainerMapperImpl implements TrainerMapper {
             trainerEntity.getUser().getUsername(),
             trainerEntity.getUser().getPassword(),
             trainerEntity.getUser().getIsActive()
+        );
+    }
+
+    @Override
+    public TrainerDto mapTrainerCreationRequestDtoToTrainerDto(TrainerCreationRequestDto requestDto) {
+        return new TrainerDto(
+            new UserDto(
+                requestDto.getFirstName(),
+                requestDto.getLastName(),
+                null,
+                null,
+                true
+            ),
+            requestDto.getSpecializationId()
         );
     }
 }

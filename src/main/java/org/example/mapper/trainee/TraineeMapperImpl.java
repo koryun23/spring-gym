@@ -62,7 +62,7 @@ public class TraineeMapperImpl implements TraineeMapper {
                         trainerEntity.getUser().getPassword(),
                         trainerEntity.getUser().getIsActive()
                     ),
-                    trainerEntity.getSpecialization().getTrainingType()
+                    trainerEntity.getSpecialization().getId()
                 )).toList()
         );
     }
@@ -83,7 +83,7 @@ public class TraineeMapperImpl implements TraineeMapper {
                         trainerEntity.getUser().getPassword(),
                         trainerEntity.getUser().getIsActive()
                     ),
-                    trainerEntity.getSpecialization().getTrainingType()
+                    trainerEntity.getSpecialization().getId()
                 )).collect(Collectors.toSet()).stream().toList();
 
         return new TraineeUpdateResponseDto(

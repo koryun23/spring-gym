@@ -39,7 +39,7 @@ public class TrainerEntity {
     private UserEntity user;
 
     @JoinColumn(name = "specialization_id", referencedColumnName = "id", nullable = false)
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private TrainingTypeEntity specialization;
 
     @Transient

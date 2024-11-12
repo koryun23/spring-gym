@@ -1,11 +1,7 @@
 package org.example.service.impl.user;
 
-import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
-import org.example.entity.UserEntity;
-import org.example.service.core.user.IdService;
-import org.example.service.core.user.UserService;
 import org.example.service.core.user.UserSuffixService;
 import org.example.service.core.user.UsernamePasswordService;
 import org.springframework.stereotype.Service;

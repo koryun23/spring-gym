@@ -6,7 +6,9 @@ import org.example.entity.UserSuffixEntity;
 import org.example.repository.UserSuffixEntityRepository;
 import org.example.service.core.user.UserSuffixService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @Slf4j
 @Service
 public class UserSuffixServiceImpl implements UserSuffixService {

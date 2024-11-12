@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
+import org.example.dto.plain.TrainerDto;
 import org.example.dto.request.RetrieveAllTrainersNotAssignedToTraineeRequestDto;
 import org.example.dto.request.TrainerCreationRequestDto;
 import org.example.dto.request.TrainerRetrievalByUsernameRequestDto;
@@ -67,9 +68,9 @@ public class TrainerController {
         trainerValidator.validateCreateTrainer(requestDto);
 
         // service and mapper calls
-        TrainerEntity trainer = trainerMapper.mapTrainerCreationRequestDtoToTrainerEntity(requestDto);
+        TrainerDto trainerDto = trainerMapper.mapTrainerCreationRequestDtoToTrainerDto(requestDto);
         TrainerCreationResponseDto responseDto = trainerMapper.mapTrainerEntityToTrainerCreationResponseDto(
-            trainerService.create(trainer));
+            trainerService.create(trainerDto));
 
         // response
         RestResponse restResponse =

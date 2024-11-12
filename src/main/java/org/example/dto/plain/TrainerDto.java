@@ -17,5 +17,5 @@ import org.example.entity.TrainingType;
 public class TrainerDto {
 
     private UserDto userDto;
-    private TrainingType trainingType;
+    private Long specializationId;
 }
