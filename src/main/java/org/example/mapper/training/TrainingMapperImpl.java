@@ -3,6 +3,8 @@ package org.example.mapper.training;
 import java.util.List;
 import org.example.dto.plain.TrainingDto;
 import org.example.dto.request.TrainingCreationRequestDto;
+import org.example.dto.response.TraineeTrainingRetrievalResponseDto;
+import org.example.dto.response.TrainerTrainingRetrievalResponseDto;
 import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.entity.TrainingEntity;
 import org.springframework.http.HttpStatus;
@@ -49,5 +51,45 @@ public class TrainingMapperImpl implements TrainingMapper {
 
         Assert.notNull(trainingEntityList, "Training Entity List must not be null");
         return trainingEntityList.stream().map(this::mapTrainingEntityToTrainingDto).toList();
+    }
+
+
+    @Override
+    public TraineeTrainingRetrievalResponseDto mapTrainingEntityToTraineeTrainingRetrievalResponseDto(TrainingEntity trainingEntity) {
+        return new TraineeTrainingRetrievalResponseDto(
+            trainingEntity.getName(),
+            trainingEntity.getDate(),
+            trainingEntity.getTrainer().getSpecialization().getId(),
+            trainingEntity.getDuration(),
+            trainingEntity.getTrainer().getUser().getUsername()
+        );
+    }
+
+    @Override
+    public List<TraineeTrainingRetrievalResponseDto> mapTrainingEntityListToTraineeTrainingRetrievalResponseDtoList(
+        List<TrainingEntity> trainings) {
+        return trainings.stream()
+            .map(this::mapTrainingEntityToTraineeTrainingRetrievalResponseDto)
+            .toList();
+    }
+
+    @Override
+    public TrainerTrainingRetrievalResponseDto mapTrainingEntityToTrainerTrainingRetrievalResponsedto(
+        TrainingEntity trainingEntity) {
+        return new TrainerTrainingRetrievalResponseDto(
+            trainingEntity.getName(),
+            trainingEntity.getDate(),
+            trainingEntity.getTrainer().getSpecialization().getId(),
+            trainingEntity.getDuration(),
+            trainingEntity.getTrainee().getUser().getUsername()
+        );
+    }
+
+    @Override
+    public List<TrainerTrainingRetrievalResponseDto> mapTrainingEntityListToTrainerTrainingRetrievalResponseDtoList(
+        List<TrainingEntity> trainings) {
+        return trainings.stream()
+            .map(this::mapTrainingEntityToTrainerTrainingRetrievalResponsedto)
+            .toList();
     }
 }

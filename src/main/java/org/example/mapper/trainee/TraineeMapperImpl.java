@@ -8,6 +8,7 @@ import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
 import org.example.dto.response.TraineeCreationResponseDto;
 import org.example.dto.response.TraineeRetrievalResponseDto;
+import org.example.dto.response.TraineeTrainingRetrievalResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
 import org.example.entity.TraineeEntity;
 import org.example.entity.TrainingEntity;
@@ -79,7 +80,7 @@ public class TraineeMapperImpl implements TraineeMapper {
         List<TrainingEntity> trainingEntityList = trainee.getTrainingEntityList();
         List<TrainerDto> assignedTrainers = null;
         if (trainingEntityList != null) {
-            List<TrainerDto> trainerDtoList =
+            assignedTrainers =
                 trainingEntityList
                     .stream()
                     .map(TrainingEntity::getTrainer)
@@ -119,18 +120,6 @@ public class TraineeMapperImpl implements TraineeMapper {
             ),
             requestDto.getDateOfBirth(),
             requestDto.getAddress()
-        );
-    }
-
-    @Override
-    public UserEntity mapTraineeUpdateRequestDtoToUserEntity(TraineeUpdateRequestDto requestDto) {
-        Assert.notNull(requestDto, "TraineeUpdateRequestDto must not be null");
-        return new UserEntity(
-            requestDto.getFirstName(),
-            requestDto.getLastName(),
-            requestDto.getUsername(),
-            null,
-            requestDto.getIsActive()
         );
     }
 }

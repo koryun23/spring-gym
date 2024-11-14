@@ -166,7 +166,7 @@ public class TrainerController {
     /**
      * Switch activation state of a trainee.
      */
-    @PatchMapping(value = "/{username}")
+    @PatchMapping(value = "/{username}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse> switchActivationState(
         @PathVariable(value = "username") String username,
         @RequestBody TrainerSwitchActivationStateRequestDto requestDto) {
