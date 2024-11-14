@@ -53,11 +53,6 @@ public class UserValidator {
             throw new CustomIllegalArgumentException("User with the provided credentials does not exist");
         }
 
-        Optional<UserEntity> optionalUserByNewPassword = userService.findByPassword(newPassword);
-        if (optionalUserByNewPassword.isPresent()) {
-            throw new CustomIllegalArgumentException("Password is already occupied");
-        }
-
         return null;
     }
 
