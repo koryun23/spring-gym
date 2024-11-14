@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping(value = "/users")
-public class AuthController {
+public class UserController {
 
     private final UserService userService;
     private final UserValidator userValidator;
@@ -28,7 +28,7 @@ public class AuthController {
     /**
      * Constructor.
      */
-    public AuthController(UserService userService,
+    public UserController(UserService userService,
                           UserValidator userValidator) {
         this.userService = userService;
         this.userValidator = userValidator;
