@@ -57,16 +57,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean deleteByUsername(String username) {
-        Assert.notNull(username, "Username must not be null");
-        Assert.hasText(username, "Username must not be empty");
-        LOGGER.info("Deleting a user with a username of {}", username);
-        userEntityRepository.deleteByUsername(username);
-        LOGGER.info("Successfully deleted a User with a username of {}", username);
-        return true;
-    }
-
-    @Override
     public UserEntity select(Long id) {
         Assert.notNull(id, "Id must not be null");
         LOGGER.info("Selecting a User Entity with an id of {}", id);
@@ -90,12 +80,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity switchActivationState(String username) {
+    public UserEntity switchActivationState(String username, Boolean state) {
         Assert.notNull(username, "Username must not be null");
         Assert.hasText(username, "Username must not be empty");
         LOGGER.info("Switching the activation state of the user {}", username);
         UserEntity userEntity = this.getByUsername(username);
-        userEntity.setIsActive(!userEntity.getIsActive());
+        userEntity.setIsActive(state);
         userEntity = userEntityRepository.save(userEntity);
         LOGGER.info("Successfully switched the activation state of the user {}", username);
         return userEntity;
@@ -155,17 +145,6 @@ public class UserServiceImpl implements UserService {
 
         UserEntity userEntity = optionalUser.get();
         return userEntity.getPassword().equals(password);
-    }
-
-    @Override
-    public List<UserEntity> findAllByUsernameContains(String pattern) {
-        LOGGER.info("Finding all users usernames of which contain the following pattern - {}", pattern);
-        Assert.notNull(pattern, "Pattern must not be null");
-        Assert.hasText(pattern, "Pattern must not be empty");
-        List<UserEntity> allByUsernameContains = userEntityRepository.findAllByUsernameContains(pattern);
-        LOGGER.info("Result of finding all users usernames of which contain the pattern '{}', result - {}",
-            allByUsernameContains);
-        return allByUsernameContains;
     }
 }
 

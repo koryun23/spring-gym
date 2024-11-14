@@ -155,16 +155,17 @@ public class TraineeController {
      * Trainee switch activation state.
      */
     @PatchMapping(value = "/{username}")
-    public ResponseEntity<RestResponse> switchActivationState(@PathVariable("username") String username) {
+    public ResponseEntity<RestResponse> switchActivationState(@PathVariable("username") String username,
+                                                              @RequestBody TraineeSwitchActivationStateRequestDto requestDto) {
 
         log.info("Attempting to switch the activation state of a trainee, username - {}", username);
-        TraineeSwitchActivationStateRequestDto requestDto = new TraineeSwitchActivationStateRequestDto(username);
+        requestDto.setUsername(username);
 
         // validations
         traineeValidator.validateSwitchActivationState(requestDto);
 
         // service and mapper calls
-        userService.switchActivationState(username);
+        userService.switchActivationState(username, requestDto.getState());
 
         // response
         TraineeSwitchActivationStateResponseDto responseDto =

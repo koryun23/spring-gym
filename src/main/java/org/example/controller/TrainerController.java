@@ -168,17 +168,17 @@ public class TrainerController {
      */
     @PatchMapping(value = "/{username}")
     public ResponseEntity<RestResponse> switchActivationState(
-        @PathVariable(value = "username") String username) {
+        @PathVariable(value = "username") String username,
+        @RequestBody TrainerSwitchActivationStateRequestDto requestDto) {
 
         log.info("Attempting to switch the activation state of a trainer, username - {}", username);
-        TrainerSwitchActivationStateRequestDto requestDto =
-            new TrainerSwitchActivationStateRequestDto(username);
+        requestDto.setUsername(username);
 
         // validations
         trainerValidator.validateSwitchActivationState(requestDto);
 
         // service and mapper calls
-        userService.switchActivationState(username);
+        userService.switchActivationState(username, requestDto.getState());
 
         // response
         TrainerSwitchActivationStateResponseDto responseDto =

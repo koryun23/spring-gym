@@ -16,4 +16,5 @@ import lombok.ToString;
 public class TrainerSwitchActivationStateRequestDto {
 
     private String username;
+    Boolean state;
 }

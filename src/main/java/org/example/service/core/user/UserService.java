@@ -12,13 +12,11 @@ public interface UserService {
 
     boolean delete(Long id);
 
-    boolean deleteByUsername(String username);
-
     UserEntity select(Long id);
 
     UserEntity changePassword(String username, String newPassword);
 
-    UserEntity switchActivationState(String username);
+    UserEntity switchActivationState(String username, Boolean state);
 
     UserEntity getByUsername(String username);
 
@@ -29,6 +27,4 @@ public interface UserService {
     Optional<UserEntity> findById(Long id);
 
     boolean usernamePasswordMatching(String username, String password);
-
-    List<UserEntity> findAllByUsernameContains(String pattern);
 }
