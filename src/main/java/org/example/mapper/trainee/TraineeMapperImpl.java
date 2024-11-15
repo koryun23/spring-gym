@@ -50,7 +50,7 @@ public class TraineeMapperImpl implements TraineeMapper {
         Assert.notNull(trainee, "TraineeEntity must not be null");
         List<TrainingEntity> trainingEntityList = trainee.getTrainingEntityList();
 
-        List<TrainerDto> assignedTrainers = Collections.emptyList();
+        List<TrainerDto> assignedTrainers = null;
         if (trainingEntityList != null && !trainingEntityList.isEmpty()) {
             assignedTrainers = trainingEntityList.stream()
                 .map(TrainingEntity::getTrainer)
@@ -81,7 +81,7 @@ public class TraineeMapperImpl implements TraineeMapper {
         UserEntity userEntity = trainee.getUser();
         List<TrainingEntity> trainingEntityList = trainee.getTrainingEntityList();
         List<TrainerDto> assignedTrainers = null;
-        if (trainingEntityList != null) {
+        if (trainingEntityList != null && !trainingEntityList.isEmpty()) {
             assignedTrainers =
                 trainingEntityList
                     .stream()
