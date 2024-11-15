@@ -163,7 +163,7 @@ class TrainerValidatorTest {
 
     @Test
     public void testValidateTrainerSwitchActivationStateWhenUsernameIsInvalid() {
-        TrainerSwitchActivationStateRequestDto requestDto = new TrainerSwitchActivationStateRequestDto("");
+        TrainerSwitchActivationStateRequestDto requestDto = new TrainerSwitchActivationStateRequestDto("", true);
         Assertions.assertThatThrownBy(() -> testSubject.validateSwitchActivationState(requestDto))
             .isExactlyInstanceOf(CustomIllegalArgumentException.class);
     }
@@ -172,7 +172,7 @@ class TrainerValidatorTest {
     public void testValidateTrainerSwitchActivationStateWhenUserDoesNotExist() {
         Mockito.when(trainerService.findByUsername("username")).thenReturn(Optional.empty());
         Assertions.assertThatThrownBy(
-                () -> testSubject.validateSwitchActivationState(new TrainerSwitchActivationStateRequestDto("username")))
+                () -> testSubject.validateSwitchActivationState(new TrainerSwitchActivationStateRequestDto("username", true)))
             .isExactlyInstanceOf(TrainerNotFoundException.class);
         Mockito.verifyNoMoreInteractions(trainerService, userService, traineeService);
     }
@@ -184,7 +184,7 @@ class TrainerValidatorTest {
             new TrainingTypeEntity(TrainingType.AEROBIC)
         )));
         Assertions.assertThat(
-                testSubject.validateSwitchActivationState(new TrainerSwitchActivationStateRequestDto("username")))
+                testSubject.validateSwitchActivationState(new TrainerSwitchActivationStateRequestDto("username", true)))
             .isNull();
     }
 }

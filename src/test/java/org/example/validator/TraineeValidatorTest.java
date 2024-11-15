@@ -265,7 +265,7 @@ class TraineeValidatorTest {
 
         Assertions.assertThatThrownBy(
             () -> testSubject.validateSwitchActivationState(new TraineeSwitchActivationStateRequestDto(
-                "username"
+                "username", true
             ))).isExactlyInstanceOf(TraineeNotFoundException.class);
     }
 

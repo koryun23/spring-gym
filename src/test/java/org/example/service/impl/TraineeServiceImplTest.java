@@ -8,6 +8,7 @@ import org.example.entity.UserEntity;
 import org.example.repository.TraineeEntityRepository;
 import org.example.service.core.trainee.TraineeService;
 import org.example.service.core.user.UserService;
+import org.example.service.core.user.UsernamePasswordService;
 import org.example.service.impl.trainee.TraineeServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,10 +28,12 @@ class TraineeServiceImplTest {
     @Mock
     private UserService userService;
 
+    @Mock
+    private UsernamePasswordService usernamePasswordService;
+
     @BeforeEach
     public void init() {
-        // TODO: pass a mocked instance of usernamePasswordService
-        testSubject = new TraineeServiceImpl(traineeEntityRepository, userService, null);
+        testSubject = new TraineeServiceImpl(traineeEntityRepository, userService, usernamePasswordService);
     }
 
     @Test
@@ -52,6 +55,7 @@ class TraineeServiceImplTest {
             userEntity,
             Date.valueOf("2024-10-10"), "address"
         );
+        Mockito.when(traineeEntityRepository.findByUserUsername("username")).thenReturn(Optional.of(traineeEntity));
         Mockito.when(traineeEntityRepository.save(traineeEntity)).thenReturn(traineeEntity);
         Assertions.assertThat(testSubject.update(traineeEntity)).isEqualTo(traineeEntity);
         Mockito.verifyNoMoreInteractions(traineeEntityRepository);
