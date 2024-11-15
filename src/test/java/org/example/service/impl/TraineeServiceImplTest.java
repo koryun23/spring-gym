@@ -55,6 +55,7 @@ class TraineeServiceImplTest {
             userEntity,
             Date.valueOf("2024-10-10"), "address"
         );
+
         Mockito.when(traineeEntityRepository.findByUserUsername("username")).thenReturn(Optional.of(traineeEntity));
         Mockito.when(traineeEntityRepository.save(traineeEntity)).thenReturn(traineeEntity);
         Assertions.assertThat(testSubject.update(traineeEntity)).isEqualTo(traineeEntity);
