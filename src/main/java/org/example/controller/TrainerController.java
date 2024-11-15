@@ -118,7 +118,6 @@ public class TrainerController {
         log.info("Attempting an update of a trainer, request - {}", requestDto);
 
         // validations
-        requestDto.setUsername(username);
         trainerValidator.validateUpdateTrainer(requestDto);
 
         // service and mapper calls
@@ -172,7 +171,6 @@ public class TrainerController {
         @RequestBody TrainerSwitchActivationStateRequestDto requestDto) {
 
         log.info("Attempting to switch the activation state of a trainer, username - {}", username);
-        requestDto.setUsername(username);
 
         // validations
         trainerValidator.validateSwitchActivationState(requestDto);

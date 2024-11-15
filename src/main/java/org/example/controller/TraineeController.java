@@ -109,7 +109,6 @@ public class TraineeController {
         log.info("Attempting an update of a trainee, request - {}", requestDto);
 
         // validations
-        requestDto.setUsername(username);
         traineeValidator.validateUpdateTrainee(requestDto);
 
         // service and mapper calls
@@ -160,7 +159,6 @@ public class TraineeController {
                                                               TraineeSwitchActivationStateRequestDto requestDto) {
 
         log.info("Attempting to switch the activation state of a trainee, username - {}", username);
-        requestDto.setUsername(username);
 
         // validations
         traineeValidator.validateSwitchActivationState(requestDto);
