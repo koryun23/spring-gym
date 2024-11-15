@@ -55,7 +55,8 @@ public class TrainingMapperImpl implements TrainingMapper {
 
 
     @Override
-    public TraineeTrainingRetrievalResponseDto mapTrainingEntityToTraineeTrainingRetrievalResponseDto(TrainingEntity trainingEntity) {
+    public TraineeTrainingRetrievalResponseDto mapTrainingEntityToTraineeTrainingRetrievalResponseDto(
+        TrainingEntity trainingEntity) {
         return new TraineeTrainingRetrievalResponseDto(
             trainingEntity.getName(),
             trainingEntity.getDate(),

@@ -1,8 +1,8 @@
 package org.example.metrics.prometheus;
 
-
-import io.prometheus.metrics.core.metrics.Counter;
-import io.prometheus.metrics.core.metrics.Gauge;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Gauge;
+import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -11,19 +11,18 @@ import org.springframework.stereotype.Service;
 public class CustomMetricsService {
 
     private final Counter requestsSentCounter;
-    private final Gauge jvmMemoryUsageGauage;
 
     /**
      * Constructor.
      */
-    public CustomMetricsService() {
-        requestsSentCounter = Counter.builder()
-            .name("http_total_requests_sent")
-            .help("Total number of HTTP requests sent to the API")
-            .register();
-        jvmMemoryUsageGauage = Gauge.builder().name("jvm_memory_usage")
-            .help("Memory usage in the JVM in bytes")
-            .register();
+    public CustomMetricsService(MeterRegistry meterRegistry) {
+        requestsSentCounter = Counter.builder("http_total_requests_sent")
+            .description("Total number of HTTP requests sent to the API")
+            .register(meterRegistry);
+        Gauge.builder("jvm_memory_usage", this::getJvmMemoryUsage)
+            .description("Memory usage in the JVM in bytes")
+            .register(meterRegistry);
+
     }
 
     /**
@@ -31,23 +30,17 @@ public class CustomMetricsService {
      */
     public void incrementTotalRequestsSent() {
         log.info("Incrementing the number of requests sent by 1");
-        requestsSentCounter.inc(1L);
+        requestsSentCounter.increment();
+        log.info("Total number of requests - {}", requestsSentCounter.count());
     }
 
     /**
      * A method for getting the total amount of requests sent to the API.
      */
     public double getTotalRequestsSent() {
-        log.info("Getting the number of total requests sent");
-        return requestsSentCounter.get();
-    }
-
-    /**
-     * A method for updating the memory usage information in the gauge.
-     */
-    public void updateJvmMemoryUsage() {
-        log.info("Updating JVM Memory Usage");
-        jvmMemoryUsageGauage.set(Runtime.getRuntime().totalMemory());
+        log.info("Getting the number of total requests sent, total number of requests - {}",
+            requestsSentCounter.count());
+        return requestsSentCounter.count();
     }
 
     /**
@@ -55,8 +48,7 @@ public class CustomMetricsService {
      */
     public double getJvmMemoryUsage() {
         log.info("Getting the jvm memory usage");
-        updateJvmMemoryUsage();
-        return jvmMemoryUsageGauage.get();
+        return Runtime.getRuntime().totalMemory();
     }
 
     /**

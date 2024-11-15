@@ -1,6 +1,5 @@
 package org.example.service.core.user;
 
-import java.util.List;
 import java.util.Optional;
 import org.example.entity.UserEntity;
 

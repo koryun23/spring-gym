@@ -19,11 +19,15 @@ public interface TrainingMapper {
     List<TrainingDto> mapTrainingEntityListToTrainingDtoList(
         List<TrainingEntity> trainingEntityList);
 
-    TraineeTrainingRetrievalResponseDto mapTrainingEntityToTraineeTrainingRetrievalResponseDto(TrainingEntity trainingEntity);
+    TraineeTrainingRetrievalResponseDto mapTrainingEntityToTraineeTrainingRetrievalResponseDto(
+        TrainingEntity trainingEntity);
 
-    List<TraineeTrainingRetrievalResponseDto> mapTrainingEntityListToTraineeTrainingRetrievalResponseDtoList(List<TrainingEntity> trainings);
+    List<TraineeTrainingRetrievalResponseDto> mapTrainingEntityListToTraineeTrainingRetrievalResponseDtoList(
+        List<TrainingEntity> trainings);
 
-    TrainerTrainingRetrievalResponseDto mapTrainingEntityToTrainerTrainingRetrievalResponsedto(TrainingEntity trainingEntity);
+    TrainerTrainingRetrievalResponseDto mapTrainingEntityToTrainerTrainingRetrievalResponsedto(
+        TrainingEntity trainingEntity);
 
-    List<TrainerTrainingRetrievalResponseDto> mapTrainingEntityListToTrainerTrainingRetrievalResponseDtoList(List<TrainingEntity> trainings);
+    List<TrainerTrainingRetrievalResponseDto> mapTrainingEntityListToTrainerTrainingRetrievalResponseDtoList(
+        List<TrainingEntity> trainings);
 }
