@@ -14,6 +14,7 @@ import org.example.exception.CustomIllegalArgumentException;
 import org.example.exception.TrainerNotFoundException;
 import org.example.service.core.trainee.TraineeService;
 import org.example.service.core.trainer.TrainerService;
+import org.example.service.core.training.TrainingTypeService;
 import org.example.service.core.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,10 +37,12 @@ class TrainerValidatorTest {
     @Mock
     private TraineeService traineeService;
 
-    // TODO: IMPLEMENT NORMALLY
+    @Mock
+    private TrainingTypeService trainingTypeService;
+
     @BeforeEach
     public void init() {
-        testSubject = new TrainerValidator(trainerService, traineeService, null);
+        testSubject = new TrainerValidator(trainerService, traineeService, trainingTypeService);
     }
 
     @Test
@@ -72,6 +75,7 @@ class TrainerValidatorTest {
     @Test
     public void testValidateCreateTrainerWhenValid() {
         TrainerCreationRequestDto requestDto1 = new TrainerCreationRequestDto("first", "last", 1L);
+        Mockito.when(trainingTypeService.findById(1L)).thenReturn(Optional.of(new TrainingTypeEntity(TrainingType.AEROBIC)));
         Assertions.assertThat(testSubject.validateCreateTrainer(requestDto1)).isNull();
     }
 
@@ -119,6 +123,7 @@ class TrainerValidatorTest {
 
     @Test
     public void testValidateUpdateTrainerWhenUserDoesNotExist() {
+        Mockito.when(trainingTypeService.findById(1L)).thenReturn(Optional.of(new TrainingTypeEntity(TrainingType.AEROBIC)));
         Assertions.assertThatThrownBy(() -> testSubject.validateUpdateTrainer(new TrainerUpdateRequestDto(
             "username", "first", "last", 1L, true
         ))).isExactlyInstanceOf(TrainerNotFoundException.class);
