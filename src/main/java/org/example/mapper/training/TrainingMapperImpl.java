@@ -46,15 +46,6 @@ public class TrainingMapperImpl implements TrainingMapper {
     }
 
     @Override
-    public List<TrainingDto> mapTrainingEntityListToTrainingDtoList(
-        List<TrainingEntity> trainingEntityList) {
-
-        Assert.notNull(trainingEntityList, "Training Entity List must not be null");
-        return trainingEntityList.stream().map(this::mapTrainingEntityToTrainingDto).toList();
-    }
-
-
-    @Override
     public TraineeTrainingRetrievalResponseDto mapTrainingEntityToTraineeTrainingRetrievalResponseDto(
         TrainingEntity trainingEntity) {
         return new TraineeTrainingRetrievalResponseDto(

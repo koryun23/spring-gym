@@ -12,8 +12,6 @@ import org.example.entity.UserEntity;
 
 public interface TrainerMapper {
 
-    TrainerEntity mapTrainerCreationRequestDtoToTrainerEntity(TrainerCreationRequestDto requestDto);
-
     TrainerCreationResponseDto mapTrainerEntityToTrainerCreationResponseDto(TrainerEntity trainerEntity);
 
     TrainerRetrievalResponseDto mapTrainerEntityToTrainerRetrievalResponseDto(TrainerEntity trainerEntity);
@@ -21,8 +19,6 @@ public interface TrainerMapper {
     TrainerUpdateResponseDto mapTrainerEntityToTrainerUpdateResponseDto(TrainerEntity trainerEntity);
 
     TrainerEntity mapTrainerUpdateRequestDtoToTrainerEntity(TrainerUpdateRequestDto requestDto);
-
-    UserEntity mapTrainerUpdateRequestDtoToUserEntity(TrainerUpdateRequestDto requestDto);
 
     TrainerDto mapTrainerEntityToTrainerDto(TrainerEntity trainerEntity);
 

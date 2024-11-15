@@ -16,9 +16,6 @@ public interface TrainingMapper {
 
     TrainingDto mapTrainingCreationRequestDtoToTrainingDto(TrainingCreationRequestDto requestDto);
 
-    List<TrainingDto> mapTrainingEntityListToTrainingDtoList(
-        List<TrainingEntity> trainingEntityList);
-
     TraineeTrainingRetrievalResponseDto mapTrainingEntityToTraineeTrainingRetrievalResponseDto(
         TrainingEntity trainingEntity);
 
