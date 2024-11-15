@@ -137,6 +137,10 @@ public class TrainerValidator {
             throw new CustomIllegalArgumentException("Username is required");
         }
 
+        if(requestDto.getState() == null) {
+            throw new CustomIllegalArgumentException("State is required");
+        }
+
         if (trainerService.findByUsername(username).isEmpty()) {
             throw new TrainerNotFoundException(username);
         }

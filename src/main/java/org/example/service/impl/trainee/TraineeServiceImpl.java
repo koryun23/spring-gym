@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-@Transactional
 @Service
 public class TraineeServiceImpl implements TraineeService {
 
@@ -34,6 +33,7 @@ public class TraineeServiceImpl implements TraineeService {
         this.usernamePasswordService = usernamePasswordService;
     }
 
+    @Transactional
     @Override
     public TraineeEntity create(TraineeEntity trainee) {
         Assert.notNull(trainee, "TraineeCreateParams must not be null");
@@ -51,6 +51,7 @@ public class TraineeServiceImpl implements TraineeService {
         return createdTrainee;
     }
 
+    @Transactional
     @Override
     public TraineeEntity update(TraineeEntity trainee) {
         Assert.notNull(trainee, "TraineeCreateParams must not be null");
@@ -69,6 +70,7 @@ public class TraineeServiceImpl implements TraineeService {
         return updatedTrainee;
     }
 
+    @Transactional
     @Override
     public boolean delete(String username) {
         Assert.notNull(username, "Username must not be null");
@@ -81,6 +83,7 @@ public class TraineeServiceImpl implements TraineeService {
         return true;
     }
 
+    @Transactional
     @Override
     public TraineeEntity select(Long traineeId) {
         Assert.notNull(traineeId, "TraineeEntity id must not be null");
@@ -91,6 +94,7 @@ public class TraineeServiceImpl implements TraineeService {
         return trainee;
     }
 
+    @Transactional
     @Override
     public TraineeEntity selectByUsername(String username) {
         Assert.notNull(username, "TraineeEntity username must not be null");
@@ -104,6 +108,7 @@ public class TraineeServiceImpl implements TraineeService {
         return trainee;
     }
 
+    @Transactional
     @Override
     public Optional<TraineeEntity> findById(Long id) {
         Assert.notNull(id, "TraineeEntity id must not be null");
@@ -114,6 +119,7 @@ public class TraineeServiceImpl implements TraineeService {
         return optionalTrainee;
     }
 
+    @Transactional
     @Override
     public Optional<TraineeEntity> findByUsername(String username) {
         Assert.notNull(username, "TraineeEntity username must not be null");

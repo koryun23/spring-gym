@@ -34,10 +34,10 @@ public class TrainingTypeEntity {
     @Column(name = "training_type")
     private TrainingType trainingType;
 
-    @OneToMany(mappedBy = "trainingType", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "trainingType")
     private List<TrainingEntity> trainingEntityList;
 
-    @OneToMany(mappedBy = "specialization", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "specialization")
     private List<TrainerEntity> trainerEntityList;
 
     public TrainingTypeEntity(TrainingType trainingType) {

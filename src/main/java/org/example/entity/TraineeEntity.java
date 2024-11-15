@@ -1,5 +1,6 @@
 package org.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,13 +40,14 @@ public class TraineeEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private UserEntity user;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
     @Column(name = "address")
     private String address;
 
-    @Transient
+    @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "trainee")
     private List<TrainingEntity> trainingEntityList;
 

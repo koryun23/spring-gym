@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-@Transactional
 @Service
 public class TrainingTypeServiceImpl implements TrainingTypeService {
 
@@ -25,6 +24,7 @@ public class TrainingTypeServiceImpl implements TrainingTypeService {
         this.trainingTypeDao = trainingTypeDao;
     }
 
+    @Transactional
     @Override
     public TrainingTypeEntity create(TrainingTypeEntity trainingType) {
         Assert.notNull(trainingType, "Training Type Entity must not be null");
@@ -44,6 +44,7 @@ public class TrainingTypeServiceImpl implements TrainingTypeService {
         return updatedTrainingTypeEntity;
     }
 
+    @Transactional
     @Override
     public boolean delete(Long id) {
         Assert.notNull(id, "Id must not be null");
@@ -53,6 +54,7 @@ public class TrainingTypeServiceImpl implements TrainingTypeService {
         return true;
     }
 
+    @Transactional
     @Override
     public TrainingTypeEntity get(Long id) {
         Assert.notNull(id, "Id must not be null");
@@ -64,6 +66,7 @@ public class TrainingTypeServiceImpl implements TrainingTypeService {
         return trainingTypeEntity;
     }
 
+    @Transactional
     @Override
     public Optional<TrainingTypeEntity> findById(Long id) {
         Assert.notNull(id, "Id must not be null");
@@ -74,6 +77,7 @@ public class TrainingTypeServiceImpl implements TrainingTypeService {
         return optionalTrainingType;
     }
 
+    @Transactional
     @Override
     public List<TrainingTypeEntity> findAll() {
         LOGGER.info("Retrieving all training types");
@@ -84,6 +88,7 @@ public class TrainingTypeServiceImpl implements TrainingTypeService {
         return all;
     }
 
+    @Transactional
     @Override
     public Optional<TrainingTypeEntity> findByTrainingType(TrainingType trainingType) {
         Assert.notNull(trainingType, "Training Type must not be null");
@@ -95,6 +100,5 @@ public class TrainingTypeServiceImpl implements TrainingTypeService {
         LOGGER.info("Successfully retrieved an optional Training Type {}", optionalTrainingType);
 
         return optionalTrainingType;
-
     }
 }

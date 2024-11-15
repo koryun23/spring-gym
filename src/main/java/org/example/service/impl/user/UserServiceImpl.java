@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-@Transactional
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -23,6 +22,7 @@ public class UserServiceImpl implements UserService {
         this.userEntityRepository = userDao;
     }
 
+    @Transactional
     @Override
     public UserEntity create(UserEntity user) {
         Assert.notNull(user, "User Entity must not be null");
@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
         return savedUserEntity;
     }
 
+    @Transactional
     @Override
     public UserEntity update(UserEntity user) {
         Assert.notNull(user, "User Entity must not be null");
@@ -46,6 +47,7 @@ public class UserServiceImpl implements UserService {
         return updatedUserEntity;
     }
 
+    @Transactional
     @Override
     public boolean delete(Long id) {
         Assert.notNull(id, "Id must not be null");
@@ -55,6 +57,7 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    @Transactional
     @Override
     public UserEntity select(Long id) {
         Assert.notNull(id, "Id must not be null");
@@ -64,6 +67,7 @@ public class UserServiceImpl implements UserService {
         return userEntity;
     }
 
+    @Transactional
     @Override
     public UserEntity changePassword(String username, String newPassword) {
         Assert.notNull(username, "Username must not be null");
@@ -78,6 +82,7 @@ public class UserServiceImpl implements UserService {
         return userEntity;
     }
 
+    @Transactional
     @Override
     public UserEntity switchActivationState(String username, Boolean state) {
         Assert.notNull(username, "Username must not be null");
@@ -90,6 +95,7 @@ public class UserServiceImpl implements UserService {
         return userEntity;
     }
 
+    @Transactional
     @Override
     public UserEntity getByUsername(String username) {
         Assert.notNull(username, "Username must not be null");
@@ -101,6 +107,7 @@ public class UserServiceImpl implements UserService {
         return userEntity;
     }
 
+    @Transactional
     @Override
     public Optional<UserEntity> findByUsername(String username) {
         Assert.notNull(username, "Username must not be null");
@@ -112,6 +119,7 @@ public class UserServiceImpl implements UserService {
         return optionalUserEntity;
     }
 
+    @Transactional
     @Override
     public Optional<UserEntity> findByPassword(String password) {
         Assert.notNull(password, "Password must not be null");
@@ -123,6 +131,7 @@ public class UserServiceImpl implements UserService {
         return optionalUser;
     }
 
+    @Transactional
     @Override
     public Optional<UserEntity> findById(Long id) {
         Assert.notNull(id, "Id must not be null");
@@ -133,6 +142,7 @@ public class UserServiceImpl implements UserService {
         return optionalUser;
     }
 
+    @Transactional
     @Override
     public boolean usernamePasswordMatching(String username, String password) {
         LOGGER.info("Checking if the given username - {}, matches the given password - {}.", username, password);

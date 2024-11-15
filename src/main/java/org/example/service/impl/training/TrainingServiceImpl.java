@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-@Transactional
 @Service
 public class TrainingServiceImpl implements TrainingService {
 
@@ -38,22 +37,14 @@ public class TrainingServiceImpl implements TrainingService {
         this.trainerService = trainerService;
     }
 
+    @Transactional
     @Override
     public TrainingEntity create(TrainingDto training) {
         Assert.notNull(training, "Training Dto must not be null");
         LOGGER.info("Creating a TrainingEntity according to the TrainingDto - {}", training);
 
         TraineeEntity trainee = traineeService.selectByUsername(training.getTraineeUsername());
-        List<TrainingEntity> traineeTrainings =
-            this.findAllByTraineeUsernameAndCriteria(trainee.getUser().getUsername(),
-                null, null, null, null);
-        trainee.setTrainingEntityList(traineeTrainings);
-
         TrainerEntity trainer = trainerService.selectByUsername(training.getTrainerUsername());
-        List<TrainingEntity> trainerTrainings =
-            this.findAllByTrainerUsernameAndCriteria(trainer.getUser().getUsername(),
-                null, null, null);
-        trainer.setTrainingEntityList(trainerTrainings);
 
         TrainingEntity createdTrainingEntity = trainingEntityRepository.save(new TrainingEntity(
             trainee,
@@ -70,6 +61,7 @@ public class TrainingServiceImpl implements TrainingService {
         return createdTrainingEntity;
     }
 
+    @Transactional
     @Override
     public TrainingEntity select(Long id) {
         Assert.notNull(id, "TrainingEntity Id must not be null");
@@ -80,6 +72,7 @@ public class TrainingServiceImpl implements TrainingService {
         return trainingEntity;
     }
 
+    @Transactional
     @Override
     public TrainingEntity update(TrainingEntity trainingEntity) {
         Assert.notNull(trainingEntity, "Training Entity must not be null");
@@ -105,6 +98,7 @@ public class TrainingServiceImpl implements TrainingService {
         return updatedTrainingEntity;
     }
 
+    @Transactional
     @Override
     public Optional<TrainingEntity> findById(Long id) {
         Assert.notNull(id, "TrainingEntity id must not be null");
@@ -115,6 +109,7 @@ public class TrainingServiceImpl implements TrainingService {
         return optionalTraining;
     }
 
+    @Transactional
     @Override
     public List<TrainingEntity> findAllByTraineeUsernameAndCriteria(String traineeUsername, Date from, Date to,
                                                                     String trainerUsername, Long trainingTypeId) {
@@ -133,6 +128,7 @@ public class TrainingServiceImpl implements TrainingService {
         return all;
     }
 
+    @Transactional
     @Override
     public List<TrainingEntity> findAllByTrainerUsernameAndCriteria(String trainerUsername, Date from, Date to,
                                                                     String traineeUsername) {

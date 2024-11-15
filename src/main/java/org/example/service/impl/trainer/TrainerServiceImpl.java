@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-@Transactional
 @Service
 public class TrainerServiceImpl implements TrainerService {
 
@@ -40,6 +39,7 @@ public class TrainerServiceImpl implements TrainerService {
         this.trainingTypeService = trainingTypeService;
     }
 
+    @Transactional
     @Override
     public TrainerEntity create(TrainerDto trainer) {
         Assert.notNull(trainer, "TrainerCreateParams must not be null");
@@ -63,6 +63,7 @@ public class TrainerServiceImpl implements TrainerService {
         return createdTrainerEntity;
     }
 
+    @Transactional
     @Override
     public TrainerEntity update(TrainerDto trainer) {
         Assert.notNull(trainer, "TrainerUpdateParams must not be null");
@@ -85,6 +86,7 @@ public class TrainerServiceImpl implements TrainerService {
         return updatedTrainerEntity;
     }
 
+    @Transactional
     @Override
     public TrainerEntity select(Long trainerId) {
         Assert.notNull(trainerId, "TrainerEntity id must not be null");
@@ -95,6 +97,7 @@ public class TrainerServiceImpl implements TrainerService {
         return trainerEntity;
     }
 
+    @Transactional
     @Override
     public TrainerEntity selectByUsername(String username) {
         Assert.notNull(username, "TrainerEntity username must not be null");
@@ -107,6 +110,7 @@ public class TrainerServiceImpl implements TrainerService {
         return trainerEntity;
     }
 
+    @Transactional
     @Override
     public Optional<TrainerEntity> findById(Long id) {
         Assert.notNull(id, "TrainerEntity id must not be null");
@@ -117,6 +121,7 @@ public class TrainerServiceImpl implements TrainerService {
         return optionalTrainer;
     }
 
+    @Transactional
     @Override
     public Optional<TrainerEntity> findByUsername(String username) {
         Assert.notNull(username, "TrainerEntity username must not be null");
@@ -128,6 +133,7 @@ public class TrainerServiceImpl implements TrainerService {
         return optionalTrainer;
     }
 
+    @Transactional
     @Override
     public List<TrainerEntity> findAllNotAssignedTo(String traineeUsername) {
         Assert.notNull(traineeUsername, "Trainee username must not be null");

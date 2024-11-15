@@ -2,6 +2,7 @@ package org.example.mapper.trainer;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.plain.TraineeDto;
 import org.example.dto.plain.TrainerDto;
@@ -43,14 +44,14 @@ public class TrainerMapperImpl implements TrainerMapper {
                 .map(traineeEntity -> new TraineeDto(
                     new UserDto(
                         traineeEntity.getUser().getFirstName(),
-                        trainerEntity.getUser().getLastName(),
+                        traineeEntity.getUser().getLastName(),
                         traineeEntity.getUser().getUsername(),
                         traineeEntity.getUser().getPassword(),
                         traineeEntity.getUser().getIsActive()
                     ),
                     traineeEntity.getDateOfBirth(),
                     traineeEntity.getAddress()
-                )).toList();
+                )).collect(Collectors.toSet()).stream().toList();
         }
         return new TrainerRetrievalResponseDto(
             trainerEntity.getUser().getUsername(),

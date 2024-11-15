@@ -46,10 +46,12 @@ public class UserEntity {
     private Boolean isActive;
 
     @Transient
+    @ToString.Exclude
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private TraineeEntity traineeEntity;
 
     @Transient
+    @ToString.Exclude
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private TrainerEntity trainerEntity;
 

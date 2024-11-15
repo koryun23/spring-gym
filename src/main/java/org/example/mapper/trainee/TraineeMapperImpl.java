@@ -1,6 +1,8 @@
 package org.example.mapper.trainee;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.example.dto.plain.TrainerDto;
 import org.example.dto.plain.UserDto;
@@ -47,8 +49,9 @@ public class TraineeMapperImpl implements TraineeMapper {
     public TraineeRetrievalResponseDto mapTraineeEntityToTraineeRetrievalResponseDto(TraineeEntity trainee) {
         Assert.notNull(trainee, "TraineeEntity must not be null");
         List<TrainingEntity> trainingEntityList = trainee.getTrainingEntityList();
-        List<TrainerDto> assignedTrainers = null;
-        if (trainingEntityList != null) {
+
+        List<TrainerDto> assignedTrainers = Collections.emptyList();
+        if (trainingEntityList != null && !trainingEntityList.isEmpty()) {
             assignedTrainers = trainingEntityList.stream()
                 .map(TrainingEntity::getTrainer)
                 .map(trainerEntity -> new TrainerDto(
@@ -60,7 +63,7 @@ public class TraineeMapperImpl implements TraineeMapper {
                         trainerEntity.getUser().getIsActive()
                     ),
                     trainerEntity.getSpecialization().getId()
-                )).toList();
+                )).collect(Collectors.toSet()).stream().toList();
         }
         return new TraineeRetrievalResponseDto(
             trainee.getUser().getFirstName(),

@@ -127,6 +127,10 @@ public class TraineeValidator {
             throw new CustomIllegalArgumentException("Username is required");
         }
 
+        if(requestDto.getState() == null) {
+            throw new CustomIllegalArgumentException("State is required");
+        }
+
         if (traineeService.findByUsername(username).isEmpty()) {
             throw new TraineeNotFoundException(username);
         }

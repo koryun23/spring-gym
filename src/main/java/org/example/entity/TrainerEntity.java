@@ -43,9 +43,9 @@ public class TrainerEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     private TrainingTypeEntity specialization;
 
-    @Transient
+    @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "trainer")
-    private List<TrainingEntity> trainingEntityList = new LinkedList<>();
+    private List<TrainingEntity> trainingEntityList;
 
     /**
      * Constructor.

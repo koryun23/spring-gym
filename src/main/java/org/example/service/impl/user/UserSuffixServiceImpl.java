@@ -8,7 +8,6 @@ import org.example.service.core.user.UserSuffixService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
 @Slf4j
 @Service
 public class UserSuffixServiceImpl implements UserSuffixService {
@@ -19,6 +18,7 @@ public class UserSuffixServiceImpl implements UserSuffixService {
         this.userSuffixEntityRepository = userSuffixEntityRepository;
     }
 
+    @Transactional
     @Override
     public Long getSuffix(String firstName, String lastName) {
         log.info("Getting a suffix for the username of {} {}", firstName, lastName);
