@@ -75,9 +75,6 @@ public class TrainingController {
         trainingValidator.validateCreateTraining(requestDto);
 
         // service and mapper calls
-        TraineeEntity trainee = traineeService.selectByUsername(requestDto.getTraineeUsername());
-        TrainerEntity trainer = trainerService.selectByUsername(requestDto.getTrainerUsername());
-
         TrainingDto trainingDto = trainingMapper.mapTrainingCreationRequestDtoToTrainingDto(requestDto);
         TrainingEntity trainingEntity = trainingService.create(trainingDto);
         TrainingCreationResponseDto responseDto =
