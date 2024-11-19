@@ -1,15 +1,11 @@
 package org.example.mapper.training;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.sql.Date;
-import java.util.Collections;
 import org.assertj.core.api.Assertions;
 import org.example.dto.plain.TrainingDto;
 import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.dto.response.TraineeTrainingRetrievalResponseDto;
 import org.example.dto.response.TrainingCreationResponseDto;
-import org.example.dto.response.TrainingListRetrievalResponseDto;
 import org.example.entity.TraineeEntity;
 import org.example.entity.TrainerEntity;
 import org.example.entity.TrainingEntity;
@@ -49,10 +45,10 @@ class TrainingMapperImplTest {
             ),
             "training",
             new TrainingTypeEntity(TrainingType.AEROBIC),
-                Date.valueOf("2024-10-10"),
+            Date.valueOf("2024-10-10"),
             1000L
-            ))).isEqualTo(new TrainingDto(
-                "trainee", "trainer", "training", Date.valueOf("2024-10-10"), 1000L
+        ))).isEqualTo(new TrainingDto(
+            "trainee", "trainer", "training", Date.valueOf("2024-10-10"), 1000L
         ));
     }
 
