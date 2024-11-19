@@ -33,7 +33,7 @@ class TrainerMapperImplTest {
             new UserEntity("first", "last", "username", "password", true),
             new TrainingTypeEntity(TrainingType.AEROBIC)
         ))).isEqualTo(new TrainerRetrievalResponseDto(
-            "usrename", "first", "last", TrainingType.AEROBIC, true, null
+            "username", "first", "last", TrainingType.AEROBIC, true, null
         ));
     }
 }
