@@ -1,4 +1,4 @@
-package org.example.entity;
+package org.example.entity.training;
 
 public enum TrainingType {
     STRENGTH_TRAINING,

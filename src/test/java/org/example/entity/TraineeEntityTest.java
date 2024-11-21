@@ -2,6 +2,8 @@ package org.example.entity;
 
 import java.sql.Date;
 import org.assertj.core.api.Assertions;
+import org.example.entity.trainee.TraineeEntity;
+import org.example.entity.user.UserEntity;
 import org.junit.jupiter.api.Test;
 
 class TraineeEntityTest {

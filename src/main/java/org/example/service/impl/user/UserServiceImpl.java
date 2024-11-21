@@ -1,7 +1,7 @@
 package org.example.service.impl.user;
 
 import java.util.Optional;
-import org.example.entity.UserEntity;
+import org.example.entity.user.UserEntity;
 import org.example.exception.UserNotFoundException;
 import org.example.repository.UserEntityRepository;
 import org.example.service.core.user.UserService;

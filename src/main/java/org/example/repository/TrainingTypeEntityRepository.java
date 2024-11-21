@@ -1,8 +1,8 @@
 package org.example.repository;
 
 import java.util.List;
-import org.example.entity.TrainingType;
-import org.example.entity.TrainingTypeEntity;
+import org.example.entity.training.TrainingType;
+import org.example.entity.training.TrainingTypeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

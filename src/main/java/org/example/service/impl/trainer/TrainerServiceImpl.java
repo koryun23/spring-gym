@@ -4,12 +4,15 @@ import java.util.List;
 import java.util.Optional;
 import org.example.dto.plain.TrainerDto;
 import org.example.dto.plain.UserDto;
-import org.example.entity.TrainerEntity;
-import org.example.entity.UserEntity;
+import org.example.entity.trainer.TrainerEntity;
+import org.example.entity.user.UserEntity;
+import org.example.entity.user.UserRoleEntity;
+import org.example.entity.user.UserRoleType;
 import org.example.exception.TrainerNotFoundException;
 import org.example.repository.TrainerEntityRepository;
 import org.example.service.core.trainer.TrainerService;
 import org.example.service.core.training.TrainingTypeService;
+import org.example.service.core.user.UserRoleService;
 import org.example.service.core.user.UserService;
 import org.example.service.core.user.UsernamePasswordService;
 import org.slf4j.Logger;
@@ -26,16 +29,18 @@ public class TrainerServiceImpl implements TrainerService {
     private final UsernamePasswordService usernamePasswordService;
     private final TrainerEntityRepository trainerDao;
     private final UserService userService;
+    private final UserRoleService userRoleService;
     private final TrainingTypeService trainingTypeService;
 
     /**
      * Constructor.
      */
     public TrainerServiceImpl(UsernamePasswordService usernamePasswordService, TrainerEntityRepository trainerDao,
-                              UserService userService, TrainingTypeService trainingTypeService) {
+                              UserService userService, UserRoleService userRoleService, TrainingTypeService trainingTypeService) {
         this.usernamePasswordService = usernamePasswordService;
         this.trainerDao = trainerDao;
         this.userService = userService;
+        this.userRoleService = userRoleService;
         this.trainingTypeService = trainingTypeService;
     }
 
@@ -54,6 +59,7 @@ public class TrainerServiceImpl implements TrainerService {
             userDto.getIsActive()
         );
         userService.create(userEntity);
+        userRoleService.create(new UserRoleEntity(userEntity, UserRoleType.TRAINER));
 
         TrainerEntity createdTrainerEntity =
             trainerDao.save(new TrainerEntity(userEntity, trainingTypeService.get(trainer.getSpecializationId())));

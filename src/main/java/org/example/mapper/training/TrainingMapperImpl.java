@@ -6,7 +6,7 @@ import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.dto.response.TraineeTrainingRetrievalResponseDto;
 import org.example.dto.response.TrainerTrainingRetrievalResponseDto;
 import org.example.dto.response.TrainingCreationResponseDto;
-import org.example.entity.TrainingEntity;
+import org.example.entity.training.TrainingEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;

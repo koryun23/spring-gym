@@ -1,6 +1,5 @@
 package org.example.mapper.trainer;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
@@ -12,11 +11,11 @@ import org.example.dto.request.TrainerUpdateRequestDto;
 import org.example.dto.response.TrainerCreationResponseDto;
 import org.example.dto.response.TrainerRetrievalResponseDto;
 import org.example.dto.response.TrainerUpdateResponseDto;
-import org.example.entity.TrainerEntity;
-import org.example.entity.TrainingEntity;
-import org.example.entity.TrainingType;
-import org.example.entity.TrainingTypeEntity;
-import org.example.entity.UserEntity;
+import org.example.entity.trainer.TrainerEntity;
+import org.example.entity.training.TrainingEntity;
+import org.example.entity.training.TrainingType;
+import org.example.entity.training.TrainingTypeEntity;
+import org.example.entity.user.UserEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 

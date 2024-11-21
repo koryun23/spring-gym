@@ -7,8 +7,7 @@ import org.example.dto.request.TrainerUpdateRequestDto;
 import org.example.dto.response.TrainerCreationResponseDto;
 import org.example.dto.response.TrainerRetrievalResponseDto;
 import org.example.dto.response.TrainerUpdateResponseDto;
-import org.example.entity.TrainerEntity;
-import org.example.entity.UserEntity;
+import org.example.entity.trainer.TrainerEntity;
 
 public interface TrainerMapper {
 

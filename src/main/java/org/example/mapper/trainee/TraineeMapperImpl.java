@@ -1,8 +1,6 @@
 package org.example.mapper.trainee;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.example.dto.plain.TrainerDto;
 import org.example.dto.plain.UserDto;
@@ -11,9 +9,9 @@ import org.example.dto.request.TraineeUpdateRequestDto;
 import org.example.dto.response.TraineeCreationResponseDto;
 import org.example.dto.response.TraineeRetrievalResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
-import org.example.entity.TraineeEntity;
-import org.example.entity.TrainingEntity;
-import org.example.entity.UserEntity;
+import org.example.entity.trainee.TraineeEntity;
+import org.example.entity.training.TrainingEntity;
+import org.example.entity.user.UserEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 

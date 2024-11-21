@@ -11,7 +11,7 @@ import org.example.dto.request.TraineeUpdateRequestDto;
 import org.example.dto.response.TraineeCreationResponseDto;
 import org.example.dto.response.TraineeDeletionResponseDto;
 import org.example.dto.response.TraineeSwitchActivationStateResponseDto;
-import org.example.entity.TraineeEntity;
+import org.example.entity.trainee.TraineeEntity;
 import org.example.mapper.trainee.TraineeMapper;
 import org.example.service.core.trainee.TraineeService;
 import org.example.service.core.user.UserService;

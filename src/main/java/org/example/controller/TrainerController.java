@@ -15,7 +15,7 @@ import org.example.dto.response.TrainerListRetrievalResponseDto;
 import org.example.dto.response.TrainerRetrievalResponseDto;
 import org.example.dto.response.TrainerSwitchActivationStateResponseDto;
 import org.example.dto.response.TrainerUpdateResponseDto;
-import org.example.entity.TrainerEntity;
+import org.example.entity.trainer.TrainerEntity;
 import org.example.mapper.trainer.TrainerMapper;
 import org.example.service.core.trainer.TrainerService;
 import org.example.service.core.user.UserService;

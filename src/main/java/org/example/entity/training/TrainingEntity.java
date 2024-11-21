@@ -1,6 +1,5 @@
-package org.example.entity;
+package org.example.entity.training;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,6 +15,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.example.entity.trainee.TraineeEntity;
+import org.example.entity.trainer.TrainerEntity;
 
 @NoArgsConstructor
 @Getter

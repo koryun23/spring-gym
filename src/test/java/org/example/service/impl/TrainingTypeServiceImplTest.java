@@ -2,8 +2,8 @@ package org.example.service.impl;
 
 import java.util.List;
 import org.assertj.core.api.Assertions;
-import org.example.entity.TrainingType;
-import org.example.entity.TrainingTypeEntity;
+import org.example.entity.training.TrainingType;
+import org.example.entity.training.TrainingTypeEntity;
 import org.example.repository.TrainingTypeEntityRepository;
 import org.example.service.core.training.TrainingTypeService;
 import org.example.service.impl.training.TrainingTypeServiceImpl;

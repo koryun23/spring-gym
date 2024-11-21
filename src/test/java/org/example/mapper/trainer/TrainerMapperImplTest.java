@@ -3,10 +3,10 @@ package org.example.mapper.trainer;
 import org.assertj.core.api.Assertions;
 import org.example.dto.response.TrainerCreationResponseDto;
 import org.example.dto.response.TrainerRetrievalResponseDto;
-import org.example.entity.TrainerEntity;
-import org.example.entity.TrainingType;
-import org.example.entity.TrainingTypeEntity;
-import org.example.entity.UserEntity;
+import org.example.entity.trainer.TrainerEntity;
+import org.example.entity.training.TrainingType;
+import org.example.entity.training.TrainingTypeEntity;
+import org.example.entity.user.UserEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,11 +1,14 @@
 package org.example.service.impl.trainee;
 
 import java.util.Optional;
-import org.example.entity.TraineeEntity;
-import org.example.entity.UserEntity;
+import org.example.entity.trainee.TraineeEntity;
+import org.example.entity.user.UserEntity;
+import org.example.entity.user.UserRoleEntity;
+import org.example.entity.user.UserRoleType;
 import org.example.exception.TraineeNotFoundException;
 import org.example.repository.TraineeEntityRepository;
 import org.example.service.core.trainee.TraineeService;
+import org.example.service.core.user.UserRoleService;
 import org.example.service.core.user.UserService;
 import org.example.service.core.user.UsernamePasswordService;
 import org.slf4j.Logger;
@@ -21,15 +24,18 @@ public class TraineeServiceImpl implements TraineeService {
 
     private final TraineeEntityRepository traineeDao;
     private final UserService userService;
+    private final UserRoleService userRoleService;
     private final UsernamePasswordService usernamePasswordService;
 
     /**
      * Constructor.
      */
     public TraineeServiceImpl(TraineeEntityRepository traineeDao, UserService userService,
+                              UserRoleService userRoleService,
                               UsernamePasswordService usernamePasswordService) {
         this.traineeDao = traineeDao;
         this.userService = userService;
+        this.userRoleService = userRoleService;
         this.usernamePasswordService = usernamePasswordService;
     }
 
@@ -44,6 +50,8 @@ public class TraineeServiceImpl implements TraineeService {
         user.setPassword(usernamePasswordService.password());
 
         userService.create(user);
+        userRoleService.create(new UserRoleEntity(user, UserRoleType.TRAINEE));
+
         TraineeEntity createdTrainee = traineeDao.save(trainee);
 
         LOGGER.info("Successfully created a TraineeEntity based on TraineeCreateParams - {}, result - {}", trainee,

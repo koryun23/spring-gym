@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping
 public class UserController {
 
     private final UserService userService;
@@ -38,7 +38,7 @@ public class UserController {
      * This method aims to enable the /login endpoint. The actual authentication logic is
      * carried out by the AuthFilter.
      */
-    @GetMapping(value = "/login")
+    @GetMapping(value = "/login/oauth2")
     public void login() {
 
     }

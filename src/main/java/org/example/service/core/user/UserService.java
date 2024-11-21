@@ -1,7 +1,7 @@
 package org.example.service.core.user;
 
 import java.util.Optional;
-import org.example.entity.UserEntity;
+import org.example.entity.user.UserEntity;
 
 public interface UserService {
 

@@ -1,4 +1,4 @@
-package org.example.entity;
+package org.example.entity.user;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -6,15 +6,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.example.entity.trainee.TraineeEntity;
+import org.example.entity.trainer.TrainerEntity;
 
 @NoArgsConstructor
 @Getter
@@ -45,15 +49,17 @@ public class UserEntity {
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
 
-    @Transient
     @ToString.Exclude
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private TraineeEntity traineeEntity;
 
-    @Transient
     @ToString.Exclude
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private TrainerEntity trainerEntity;
+
+    @ToString.Exclude
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<UserRoleEntity> userRoleEntityList;
 
     /**
      * Constructor.

@@ -1,14 +1,13 @@
 package org.example.mapper.trainee;
 
-import java.util.Collections;
 import org.assertj.core.api.Assertions;
 import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
 import org.example.dto.response.TraineeCreationResponseDto;
 import org.example.dto.response.TraineeRetrievalResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
-import org.example.entity.TraineeEntity;
-import org.example.entity.UserEntity;
+import org.example.entity.trainee.TraineeEntity;
+import org.example.entity.user.UserEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

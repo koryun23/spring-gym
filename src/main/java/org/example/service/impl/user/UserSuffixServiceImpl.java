@@ -2,7 +2,7 @@ package org.example.service.impl.user;
 
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
-import org.example.entity.UserSuffixEntity;
+import org.example.entity.user.UserSuffixEntity;
 import org.example.repository.UserSuffixEntityRepository;
 import org.example.service.core.user.UserSuffixService;
 import org.springframework.stereotype.Service;

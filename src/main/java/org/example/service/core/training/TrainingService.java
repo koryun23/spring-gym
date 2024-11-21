@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 import org.example.dto.plain.TrainingDto;
-import org.example.entity.TrainingEntity;
+import org.example.entity.training.TrainingEntity;
 
 public interface TrainingService {
 

@@ -1,6 +1,10 @@
 package org.example.entity;
 
 import org.assertj.core.api.Assertions;
+import org.example.entity.trainer.TrainerEntity;
+import org.example.entity.training.TrainingType;
+import org.example.entity.training.TrainingTypeEntity;
+import org.example.entity.user.UserEntity;
 import org.junit.jupiter.api.Test;
 
 class TrainerEntityTest {

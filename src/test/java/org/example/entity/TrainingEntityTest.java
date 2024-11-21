@@ -2,6 +2,12 @@ package org.example.entity;
 
 import java.sql.Date;
 import org.assertj.core.api.Assertions;
+import org.example.entity.trainee.TraineeEntity;
+import org.example.entity.trainer.TrainerEntity;
+import org.example.entity.training.TrainingEntity;
+import org.example.entity.training.TrainingType;
+import org.example.entity.training.TrainingTypeEntity;
+import org.example.entity.user.UserEntity;
 import org.junit.jupiter.api.Test;
 
 class TrainingEntityTest {

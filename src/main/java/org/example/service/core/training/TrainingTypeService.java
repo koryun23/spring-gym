@@ -2,8 +2,8 @@ package org.example.service.core.training;
 
 import java.util.List;
 import java.util.Optional;
-import org.example.entity.TrainingType;
-import org.example.entity.TrainingTypeEntity;
+import org.example.entity.training.TrainingType;
+import org.example.entity.training.TrainingTypeEntity;
 
 public interface TrainingTypeService {
 
