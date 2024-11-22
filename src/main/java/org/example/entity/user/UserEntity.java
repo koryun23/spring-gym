@@ -3,6 +3,7 @@ package org.example.entity.user;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,6 +20,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.example.entity.trainee.TraineeEntity;
 import org.example.entity.trainer.TrainerEntity;
+import org.hibernate.annotations.Fetch;
 
 @NoArgsConstructor
 @Getter
@@ -58,7 +60,7 @@ public class UserEntity {
     private TrainerEntity trainerEntity;
 
     @ToString.Exclude
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
     private List<UserRoleEntity> userRoleEntityList;
 
     /**

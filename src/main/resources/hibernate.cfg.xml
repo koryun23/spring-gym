@@ -12,10 +12,10 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">none</property>
         <property name="hibernate.current_session_context_class">thread</property>
-        <mapping class="org.example.entity.UserEntity"/>
-        <mapping class="org.example.entity.TrainerEntity"/>
-        <mapping class="org.example.entity.TraineeEntity"/>
-        <mapping class="org.example.entity.TrainingEntity"/>
-        <mapping class="org.example.entity.TrainingTypeEntity"/>
+        <mapping class="org.example.entity.user.UserEntity"/>
+        <mapping class="org.example.entity.trainer.TrainerEntity"/>
+        <mapping class="org.example.entity.trainee.TraineeEntity"/>
+        <mapping class="org.example.entity.training.TrainingEntity"/>
+        <mapping class="org.example.entity.training.TrainingTypeEntity"/>
     </session-factory>
 </hibernate-configuration>

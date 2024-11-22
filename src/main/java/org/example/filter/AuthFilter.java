@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Slf4j
-@Component
-@Order(3)
 public class AuthFilter extends OncePerRequestFilter {
 
     private final AuthenticatorService authenticatorService;
