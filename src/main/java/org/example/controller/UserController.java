@@ -38,7 +38,7 @@ public class UserController {
      * This method aims to enable the /login endpoint. The actual authentication logic is
      * carried out by the AuthFilter.
      */
-    @GetMapping(value = "/login/oauth2")
+    @GetMapping(value = "/login")
     public void login() {
 
     }
