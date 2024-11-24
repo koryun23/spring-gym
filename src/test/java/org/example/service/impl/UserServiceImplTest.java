@@ -23,7 +23,7 @@ class UserServiceImplTest {
 
     @BeforeEach
     public void init() {
-        testSubject = new UserServiceImpl(userEntityRepository);
+        testSubject = new UserServiceImpl(userEntityRepository, null);
     }
 
     @Test

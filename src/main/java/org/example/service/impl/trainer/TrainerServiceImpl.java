@@ -50,12 +50,16 @@ public class TrainerServiceImpl implements TrainerService {
         Assert.notNull(trainer, "TrainerCreateParams must not be null");
         LOGGER.info("Creating a TrainerEntity based on TrainerCreateParams - {}", trainer);
 
+
         UserDto userDto = trainer.getUserDto();
+        String username = usernamePasswordService.username(userDto.getFirstName(), userDto.getLastName());
+        String password = usernamePasswordService.password();
+        LOGGER.info("username - {}, password - {}", username, password);
         UserEntity userEntity = new UserEntity(
             userDto.getFirstName(),
             userDto.getLastName(),
-            usernamePasswordService.username(userDto.getFirstName(), userDto.getLastName()),
-            usernamePasswordService.password(),
+            username,
+            password,
             userDto.getIsActive()
         );
         userService.create(userEntity);

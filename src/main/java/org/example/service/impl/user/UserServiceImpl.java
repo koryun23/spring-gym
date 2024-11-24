@@ -7,6 +7,7 @@ import org.example.repository.UserEntityRepository;
 import org.example.service.core.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -17,9 +18,11 @@ public class UserServiceImpl implements UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserEntityRepository userEntityRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserEntityRepository userDao) {
+    public UserServiceImpl(UserEntityRepository userDao, PasswordEncoder passwordEncoder) {
         this.userEntityRepository = userDao;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
@@ -27,6 +30,8 @@ public class UserServiceImpl implements UserService {
     public UserEntity create(UserEntity user) {
         Assert.notNull(user, "User Entity must not be null");
         LOGGER.info("Creating a User Entity {}", user);
+        LOGGER.info("decoded password - {}", user.getPassword()); // TODO: DONT
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         UserEntity savedUserEntity = userEntityRepository.save(user);
         LOGGER.info("Successfully saved {}, result - {}", user, savedUserEntity);
         return savedUserEntity;
@@ -76,7 +81,7 @@ public class UserServiceImpl implements UserService {
         Assert.hasText(newPassword, "New password must not be empty");
         LOGGER.info("Changing the password of the user {}", username);
         UserEntity userEntity = this.getByUsername(username);
-        userEntity.setPassword(newPassword);
+        userEntity.setPassword(passwordEncoder.encode(newPassword));
         userEntity = userEntityRepository.save(userEntity);
         LOGGER.info("Successfully changed the password of the user {}", username);
         return userEntity;

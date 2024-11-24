@@ -33,7 +33,7 @@ class TraineeServiceImplTest {
 
     @BeforeEach
     public void init() {
-        testSubject = new TraineeServiceImpl(traineeEntityRepository, userService, usernamePasswordService);
+        testSubject = new TraineeServiceImpl(traineeEntityRepository, userService, null, usernamePasswordService);
     }
 
     @Test

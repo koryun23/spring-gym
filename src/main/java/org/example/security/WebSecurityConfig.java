@@ -3,46 +3,36 @@ package org.example.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.intercept.AuthorizationFilter;
-import org.springframework.web.cors.CorsConfigurationSource;
 
-@EnableWebSecurity
 @Configuration
+@EnableWebSecurity
 public class WebSecurityConfig {
 
-    private final AuthenticationManager authenticationManager;
+    private final AuthenticationProvider authenticationProvider;
 
-    public WebSecurityConfig(AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
+    public WebSecurityConfig(AuthenticationProvider authenticationProvider) {
+        this.authenticationProvider = authenticationProvider;
     }
 
     /**
-     * Configuring the security filter chain.
+     * Security filter chain.
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // TODO: add endpoints
-        http
+        return http
             .csrf(AbstractHttpConfigurer::disable)
-            .cors(Customizer.withDefaults())
-            .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(
-                SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(authorize -> authorize
+            .httpBasic(basic -> basic.init(http))
+            .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.POST, "/trainees").permitAll()
                 .requestMatchers(HttpMethod.POST, "/trainers").permitAll()
                 .anyRequest().authenticated())
-            .authenticationManager(authenticationManager)
-            .formLogin(login -> login
-                .failureHandler(new UsernamePasswordAuthenticationFailureHandler())
-                .successHandler(new UsernamePasswordAuthenticationSuccessHandler()))
-            .logout(Customizer.withDefaults());
-        return http.build();
+            .authenticationProvider(authenticationProvider)
+            .build();
     }
 }

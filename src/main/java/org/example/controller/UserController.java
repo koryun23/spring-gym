@@ -11,7 +11,9 @@ import org.example.service.core.user.UserService;
 import org.example.validator.UserValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +40,7 @@ public class UserController {
      * This method aims to enable the /login endpoint. The actual authentication logic is
      * carried out by the AuthFilter.
      */
-    @GetMapping(value = "/login")
+    @GetMapping(value = "/users/login")
     public void login() {
 
     }
@@ -65,5 +67,10 @@ public class UserController {
         log.info("Password change response - {}", restResponse);
 
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
+    }
+
+    @GetMapping
+    public void home() {
+        System.out.println("successfully logged in " + SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     }
 }
