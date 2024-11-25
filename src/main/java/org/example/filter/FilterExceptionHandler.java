@@ -10,14 +10,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.example.dto.RestResponse;
 import org.example.exception.AuthenticationFailureException;
+import org.example.exception.JwtException;
 import org.example.metrics.prometheus.CustomMetricsService;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Component
-@Order(1)
 public class FilterExceptionHandler extends OncePerRequestFilter {
 
     private final ObjectMapper objectMapper;
@@ -32,8 +32,9 @@ public class FilterExceptionHandler extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
         try {
+            System.out.println("Authentication - " + SecurityContextHolder.getContext().getAuthentication());
             filterChain.doFilter(request, response);
-        } catch (AuthenticationFailureException e) {
+        } catch (AuthenticationFailureException | JwtException e) {
             RestResponse restResponse =
                 new RestResponse(null, HttpStatus.UNAUTHORIZED, LocalDateTime.now(), List.of(e.getMessage()));
             response.setStatus(401);
