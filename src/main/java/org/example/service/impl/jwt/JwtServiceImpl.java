@@ -37,6 +37,7 @@ public class JwtServiceImpl implements JwtService {
     public String getAccessToken(String username, List<UserRoleType> roles) {
         return jwtBuilder
             .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpirationMillis))
+            .setIssuedAt(new Date(System.currentTimeMillis()))
             .claim("tokenId", UUID.randomUUID().toString())
             .claim("username", username)
             .claim("roles", roles)
@@ -77,4 +78,23 @@ public class JwtServiceImpl implements JwtService {
         Claims body = (Claims) jwtParser.parse(jwt).getBody();
         return (List<UserRoleType>) body.get("roles");
     }
+
+    @Override
+    public String getTokenIdFromJwt(String jwt) {
+        Claims body = (Claims) jwtParser.parse(jwt).getBody();
+        return (String) body.get("tokenId");
+    }
+
+    @Override
+    public Date getIssuedAt(String jwt) {
+        Claims body = (Claims) jwtParser.parse(jwt).getBody();
+        return body.getIssuedAt();
+    }
+
+    public Date getExpiration(String jwt) {
+        Claims body = (Claims) jwtParser.parse(jwt).getBody();
+        return body.getExpiration();
+    }
+
+
 }

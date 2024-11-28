@@ -10,6 +10,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -21,14 +22,16 @@ public class WebSecurityConfig {
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final FilterExceptionHandler filterExceptionHandler;
+    private final JwtConverter jwtConverter;
 
     public WebSecurityConfig(AuthenticationManager authenticationManager, AuthenticationProvider authenticationProvider,
                              JwtAuthenticationFilter jwtAuthenticationFilter,
-                             FilterExceptionHandler filterExceptionHandler) {
+                             FilterExceptionHandler filterExceptionHandler, JwtConverter jwtConverter) {
         this.authenticationManager = authenticationManager;
         this.authenticationProvider = authenticationProvider;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.filterExceptionHandler = filterExceptionHandler;
+        this.jwtConverter = jwtConverter;
     }
 
     /**
@@ -47,6 +50,7 @@ public class WebSecurityConfig {
                 .anyRequest().authenticated())
             .authenticationProvider(authenticationProvider)
             .authenticationManager(authenticationManager)
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .build();
     }
 }
