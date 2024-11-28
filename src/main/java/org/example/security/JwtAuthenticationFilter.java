@@ -70,33 +70,20 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
         List<UserRoleType> userRoles = user.getUserRoleEntityList().stream().map(
             UserRoleEntity::getRole).toList();
 
-        SuccessfulAuthenticationResponseDto authSuccessDto =
-            new SuccessfulAuthenticationResponseDto(username,
-                jwtService.createJwt(username, userRoles)
-            );
-
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
             user, password, userRoles.stream().map(UserRoleType::toString).map(SimpleGrantedAuthority::new).toList()
         ));
 
-        RestResponse restResponse =
-            new RestResponse(authSuccessDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
-
-        response.setHeader("token", authSuccessDto.getJwt());
+        response.setHeader("Access Token", jwtService.createJwt(username, userRoles));
+        response.setHeader("Refresh Token", jwtService.refreshJwt(username, userRoles));
         response.setStatus(200);
-        response.getWriter().write(objectMapper.writeValueAsString(restResponse));
         response.getWriter().flush();
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                               AuthenticationException failed) throws IOException, ServletException {
-        UnsuccessfulAuthenticationResponseDto authFailDto =
-            new UnsuccessfulAuthenticationResponseDto("Authentication failed");
-        RestResponse restResponse = new RestResponse(authFailDto, HttpStatus.UNAUTHORIZED, LocalDateTime.now(),
-            List.of(authFailDto.getMessage()));
         response.setStatus(401);
-        response.getWriter().write(objectMapper.writeValueAsString(restResponse));
     }
 
     @Override
