@@ -16,6 +16,7 @@ import org.example.entity.user.UserRoleType;
 import org.example.service.core.jwt.JwtService;
 import org.example.service.core.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,30 +25,33 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 
 @Component
-public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final ObjectMapper objectMapper;
     private final JwtService jwtService;
 
+    /**
+     * Constructor.
+     */
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, UserService userService,
                                    ObjectMapper objectMapper, JwtService jwtService) {
+        super(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/users/login"));
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.objectMapper = objectMapper;
         this.jwtService = jwtService;
-        setFilterProcessesUrl("/users/login");
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
         throws AuthenticationException {
-
         String username = request.getHeader("username");
         String password = request.getHeader("password");
 
@@ -56,7 +60,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         ));
     }
 
-    //TODO: ADD A SEPARATE JWT SERVICE
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
@@ -76,12 +79,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             user, password, userRoles.stream().map(UserRoleType::toString).map(SimpleGrantedAuthority::new).toList()
         ));
 
-        RestResponse restRespnose =
+        RestResponse restResponse =
             new RestResponse(authSuccessDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         response.setHeader("token", authSuccessDto.getJwt());
         response.setStatus(200);
-        response.getWriter().write(objectMapper.writeValueAsString(restRespnose));
+        response.getWriter().write(objectMapper.writeValueAsString(restResponse));
         response.getWriter().flush();
     }
 

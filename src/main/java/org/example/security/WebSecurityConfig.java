@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -20,17 +21,14 @@ public class WebSecurityConfig {
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final FilterExceptionHandler filterExceptionHandler;
-    private final JwtAuthorizationFilter jwtAuthorizationFilter;
 
     public WebSecurityConfig(AuthenticationManager authenticationManager, AuthenticationProvider authenticationProvider,
                              JwtAuthenticationFilter jwtAuthenticationFilter,
-                             FilterExceptionHandler filterExceptionHandler,
-                             JwtAuthorizationFilter jwtAuthorizationFilter) {
+                             FilterExceptionHandler filterExceptionHandler) {
         this.authenticationManager = authenticationManager;
         this.authenticationProvider = authenticationProvider;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.filterExceptionHandler = filterExceptionHandler;
-        this.jwtAuthorizationFilter = jwtAuthorizationFilter;
     }
 
     /**
@@ -40,19 +38,15 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
             .csrf(AbstractHttpConfigurer::disable)
-            .addFilter(jwtAuthenticationFilter)
-            .addFilterBefore(jwtAuthorizationFilter, JwtAuthenticationFilter.class)
-            .addFilterBefore(filterExceptionHandler, JwtAuthenticationFilter.class)
+            .addFilterAfter(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.POST, "/trainees").permitAll()
                 .requestMatchers(HttpMethod.POST, "/trainers").permitAll()
-                .requestMatchers("/users/login").permitAll()
-                .requestMatchers(HttpMethod.GET, "/trainees/*").hasAuthority("TRAINER")
-                //.requestMatchers("/logout").permitAll()
+                .requestMatchers(HttpMethod.GET, "/users/login").permitAll()
+                .requestMatchers(HttpMethod.GET, "/trainees/*").hasAuthority("TRAINEE")
                 .anyRequest().authenticated())
             .authenticationProvider(authenticationProvider)
             .authenticationManager(authenticationManager)
-            .logout(logout -> logout.logoutUrl("https://localhost:8888/logout"))
             .build();
     }
 }

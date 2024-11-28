@@ -19,7 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-@Component
+//@Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final JwtValidator jwtValidator;
@@ -49,12 +49,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             .stream()
             .map(SimpleGrantedAuthority::new)
             .toList();
-        if (username != null) {
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                username, null, simpleGrantedAuthoritySet
-            );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        } else {
+        if (username == null) {
             SecurityContextHolder.getContext().setAuthentication(null);
         }
 
