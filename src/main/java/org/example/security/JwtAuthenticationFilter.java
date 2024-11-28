@@ -6,10 +6,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-import org.example.dto.RestResponse;
 import org.example.entity.user.UserEntity;
 import org.example.entity.user.UserRoleEntity;
 import org.example.entity.user.UserRoleType;
@@ -17,7 +15,6 @@ import org.example.service.core.jwt.JwtService;
 import org.example.service.core.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -74,8 +71,8 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
             user, password, userRoles.stream().map(UserRoleType::toString).map(SimpleGrantedAuthority::new).toList()
         ));
 
-        response.setHeader("Access Token", jwtService.createJwt(username, userRoles));
-        response.setHeader("Refresh Token", jwtService.refreshJwt(username, userRoles));
+        response.setHeader("Access Token", jwtService.getAccessToken(username, userRoles));
+        response.setHeader("Refresh Token", jwtService.getRefreshToken(username, userRoles));
         response.setStatus(200);
         response.getWriter().flush();
     }

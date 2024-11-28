@@ -1,21 +1,14 @@
 package org.example.service.impl.jwt;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.impl.ClaimsSerializer;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Header;
-import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtParser;
-import io.jsonwebtoken.Jwts;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
-import org.example.entity.user.UserRoleEntity;
 import org.example.entity.user.UserRoleType;
 import org.example.service.core.jwt.JwtService;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -41,7 +34,7 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public String createJwt(String username, List<UserRoleType> roles) {
+    public String getAccessToken(String username, List<UserRoleType> roles) {
         return jwtBuilder
             .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpirationMillis))
             .claim("tokenId", UUID.randomUUID().toString())
@@ -51,7 +44,12 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public String refreshJwt(String username, List<UserRoleType> roles) {
+    public String refreshAccessToken(String refreshToken) {
+        return getAccessToken(this.getUsernameFromJwt(refreshToken), this.getRolesFromJwt(refreshToken));
+    }
+
+    @Override
+    public String getRefreshToken(String username, List<UserRoleType> roles) {
         return jwtBuilder
             .setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpirationMillis))
             .claim("tokenId", UUID.randomUUID().toString())
@@ -75,8 +73,8 @@ public class JwtServiceImpl implements JwtService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<String> getRolesFromJwt(String jwt) {
+    public List<UserRoleType> getRolesFromJwt(String jwt) {
         Claims body = (Claims) jwtParser.parse(jwt).getBody();
-        return (List<String>) body.get("roles");
+        return (List<UserRoleType>) body.get("roles");
     }
 }
