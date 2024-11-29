@@ -1,10 +1,17 @@
 package org.example.service.impl.jwt;
 
+import com.auth0.jwt.interfaces.Claim;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Header;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtParser;
+import io.jsonwebtoken.impl.DefaultJwsHeader;
+import java.io.IOException;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.example.entity.user.UserRoleType;
@@ -18,6 +25,7 @@ public class JwtServiceImpl implements JwtService {
 
     private final JwtBuilder jwtBuilder;
     private final JwtParser jwtParser;
+    private final ObjectMapper objectMapper;
 
     @Value("${jwt.refresh.token.expiration}")
     private long refreshTokenExpirationMillis;
@@ -28,9 +36,10 @@ public class JwtServiceImpl implements JwtService {
     /**
      * Constructor.
      */
-    public JwtServiceImpl(JwtBuilder jwtBuilder, JwtParser jwtParser) {
+    public JwtServiceImpl(JwtBuilder jwtBuilder, JwtParser jwtParser, ObjectMapper objectMapper) {
         this.jwtBuilder = jwtBuilder;
         this.jwtParser = jwtParser;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -67,7 +76,6 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String getUsernameFromJwt(String jwt) {
-        System.out.println(jwt);
         Claims body = (Claims) jwtParser.parse(jwt).getBody();
         return (String) body.get("username");
     }
@@ -91,10 +99,20 @@ public class JwtServiceImpl implements JwtService {
         return body.getIssuedAt();
     }
 
+    @Override
     public Date getExpiration(String jwt) {
         Claims body = (Claims) jwtParser.parse(jwt).getBody();
         return body.getExpiration();
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public Map<String, Object> getHeadersAsMap(String jwt) throws IOException {
+        Base64.Decoder decoder = Base64.getUrlDecoder();
+        String[] splitJwt = jwt.split("\\.");
+        byte[] decode = decoder.decode(splitJwt[0]);
+        Map<String, Object> map = (Map<String, Object>) objectMapper.readValue(decode, Map.class);
+        return map;
+    }
 
 }

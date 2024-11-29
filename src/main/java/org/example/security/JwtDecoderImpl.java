@@ -1,5 +1,6 @@
 package org.example.security;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +10,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.stereotype.Component;
 
-//@Component
+@Component
 public class JwtDecoderImpl implements JwtDecoder {
 
     private final JwtService jwtService;
@@ -20,16 +21,36 @@ public class JwtDecoderImpl implements JwtDecoder {
 
     @Override
     public Jwt decode(String token) throws JwtException {
+
+        return new Jwt(token, issuedAt(token), expiresAt(token), headersMap(token), claimsMap(token));
+    }
+
+    private Map<String, Object> claimsMap(String token) {
         Map<String, Object> claimsMap = new HashMap<>();
         claimsMap.put("tokenId", jwtService.getTokenIdFromJwt(token));
         claimsMap.put("username", jwtService.getUsernameFromJwt(token));
         claimsMap.put("roles", jwtService.getRolesFromJwt(token));
+        System.out.println(claimsMap);
+        return claimsMap;
+    }
 
-        Instant issuedAt = jwtService.getIssuedAt(token).toInstant();
-        Instant expiresAt = jwtService.getExpiration(token).toInstant();
+    private Instant issuedAt(String token) {
+        return jwtService.getIssuedAt(token).toInstant();
+    }
 
-        return new Jwt(
-            token, issuedAt, expiresAt, null, claimsMap
-        );
+    private Instant expiresAt(String token) {
+        return jwtService.getExpiration(token).toInstant();
+    }
+
+    private Map<String, Object> headersMap(String token) {
+        Map<String, Object> headers = null;
+        try {
+            headers = jwtService.getHeadersAsMap(token);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+        System.out.println(headers);
+        return headers;
     }
 }

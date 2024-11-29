@@ -1,16 +1,18 @@
 package org.example.security;
 
 import org.example.service.core.user.UserService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.core.userdetails.UserDetailsChecker;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationProvider;
 
 @Configuration
 public class SecurityConfig {
@@ -30,7 +32,8 @@ public class SecurityConfig {
      * Authentication provider bean.
      */
     @Bean
-    public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+    public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService,
+                                                         PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(userDetailsService);
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
@@ -38,7 +41,17 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationProvider authenticationProvider) {
-        return new ProviderManager(authenticationProvider);
+    public AuthenticationProvider jwtAuthenticationProvider(JwtDecoder jwtDecoder, JwtConverter jwtConverter) {
+        JwtAuthenticationProvider jwtAuthenticationProvider = new JwtAuthenticationProvider(jwtDecoder);
+        jwtAuthenticationProvider.setJwtAuthenticationConverter(jwtConverter);
+        return jwtAuthenticationProvider;
     }
+
+    @Bean
+    public AuthenticationManager authenticationManager(
+        @Qualifier("authenticationProvider") AuthenticationProvider authenticationProvider,
+        @Qualifier("jwtAuthenticationProvider") AuthenticationProvider jwtAuthenticationProvider) {
+        return new ProviderManager(authenticationProvider, jwtAuthenticationProvider);
+    }
+
 }
