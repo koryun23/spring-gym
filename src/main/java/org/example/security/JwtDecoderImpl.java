@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class JwtDecoderImpl implements JwtDecoder {
 
     private final JwtService jwtService;

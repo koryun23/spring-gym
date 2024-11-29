@@ -20,10 +20,10 @@ public class JwtServiceImpl implements JwtService {
     private final JwtParser jwtParser;
 
     @Value("${jwt.refresh.token.expiration}")
-    long refreshTokenExpirationMillis;
+    private long refreshTokenExpirationMillis;
 
     @Value("${jwt.access.token.expiration}")
-    long accessTokenExpirationMillis;
+    private long accessTokenExpirationMillis;
 
     /**
      * Constructor.
