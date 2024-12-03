@@ -58,7 +58,7 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
         throws AuthenticationException, IOException {
 
         UnsuccessfulAuthRequest unsuccessfulAuthRequest = authHolder.getUnsuccessfulAuthRequest();
-        if (unsuccessfulAuthRequest != null
+        if (unsuccessfulAuthRequest != null && unsuccessfulAuthRequest.getBlockedUntil() != null
             && LocalDateTime.now().isBefore(unsuccessfulAuthRequest.getBlockedUntil())) {
             response.setStatus(401);
             return null;
