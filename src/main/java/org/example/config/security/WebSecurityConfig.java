@@ -1,5 +1,7 @@
-package org.example.security;
+package org.example.config.security;
 
+import org.example.security.JwtAuthenticationFilter;
+import org.example.security.JwtConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -9,7 +11,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -19,13 +23,21 @@ public class WebSecurityConfig {
     private final AuthenticationManager authenticationManager;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtConverter jwtConverter;
+    private final AccessDeniedHandler accessDeniedHandler;
+    private final AuthenticationEntryPoint authenticationEntryPoint;
 
+    /**
+     * Constructor.
+     */
     public WebSecurityConfig(AuthenticationManager authenticationManager,
                              JwtAuthenticationFilter jwtAuthenticationFilter,
-                             JwtConverter jwtConverter) {
+                             JwtConverter jwtConverter, AccessDeniedHandler accessDeniedHandler,
+                             AuthenticationEntryPoint authenticationEntryPoint) {
         this.authenticationManager = authenticationManager;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.jwtConverter = jwtConverter;
+        this.accessDeniedHandler = accessDeniedHandler;
+        this.authenticationEntryPoint = authenticationEntryPoint;
     }
 
     /**
@@ -49,6 +61,9 @@ public class WebSecurityConfig {
                 .anyRequest().authenticated())
             .authenticationManager(authenticationManager)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//            .exceptionHandling(e -> e
+//                .accessDeniedHandler(accessDeniedHandler)
+//                .authenticationEntryPoint(authenticationEntryPoint))
             .build();
     }
 }

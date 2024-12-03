@@ -1,5 +1,7 @@
-package org.example.security;
+package org.example.config.security;
 
+import org.example.security.DatabaseUserDetailsService;
+import org.example.security.JwtConverter;
 import org.example.service.core.user.UserService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +18,6 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 
 @Configuration
 public class SecurityConfig {
-    // TODO: define an authentication manager, user details service and password encoder
 
     @Bean
     public UserDetailsService userDetailsService(UserService userService) {
