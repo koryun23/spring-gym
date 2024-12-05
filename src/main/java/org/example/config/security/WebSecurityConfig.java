@@ -61,9 +61,10 @@ public class WebSecurityConfig {
                 .anyRequest().authenticated())
             .authenticationManager(authenticationManager)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//            .exceptionHandling(e -> e
-//                .accessDeniedHandler(accessDeniedHandler)
-//                .authenticationEntryPoint(authenticationEntryPoint))
+            .logout(logout -> logout
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID"))
             .build();
     }
 }
