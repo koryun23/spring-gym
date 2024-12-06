@@ -15,8 +15,6 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
 
-        if (authException.getCause() instanceof UserNotFoundException) {
-            response.setStatus(401);
-        }
+        response.setStatus(401);
     }
 }

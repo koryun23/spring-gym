@@ -1,6 +1,8 @@
 package org.example.service.impl.jwt;
 
+import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.Claim;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Header;
@@ -70,8 +72,8 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public boolean isExpired(String jwt) {
-        //return JWT.decode(jwt).getExpiresAt().before(new Date(System.currentTimeMillis()));
-        return false;
+        DecodedJWT decodedJwt = JWT.decode(jwt);
+        return decodedJwt.getExpiresAt().before(new Date(System.currentTimeMillis()));
     }
 
     @Override

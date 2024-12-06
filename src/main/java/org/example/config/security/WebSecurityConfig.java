@@ -1,6 +1,7 @@
 package org.example.config.security;
 
-import org.example.security.JwtAuthenticationFilter;
+import org.example.mdc.MdcFilter;
+import org.example.security.filter.JwtAuthenticationFilter;
 import org.example.security.JwtConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,19 +26,22 @@ public class WebSecurityConfig {
     private final JwtConverter jwtConverter;
     private final AccessDeniedHandler accessDeniedHandler;
     private final AuthenticationEntryPoint authenticationEntryPoint;
+    private final MdcFilter mdcFilter;
 
     /**
      * Constructor.
      */
     public WebSecurityConfig(AuthenticationManager authenticationManager,
                              JwtAuthenticationFilter jwtAuthenticationFilter,
-                             JwtConverter jwtConverter, AccessDeniedHandler accessDeniedHandler,
-                             AuthenticationEntryPoint authenticationEntryPoint) {
+                             JwtConverter jwtConverter,
+                             AccessDeniedHandler accessDeniedHandler,
+                             AuthenticationEntryPoint authenticationEntryPoint, MdcFilter mdcFilter) {
         this.authenticationManager = authenticationManager;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.jwtConverter = jwtConverter;
         this.accessDeniedHandler = accessDeniedHandler;
         this.authenticationEntryPoint = authenticationEntryPoint;
+        this.mdcFilter = mdcFilter;
     }
 
     /**
@@ -49,7 +53,11 @@ public class WebSecurityConfig {
             .cors(Customizer.withDefaults())
             .csrf(AbstractHttpConfigurer::disable)
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-            .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtConverter)))
+            .addFilterBefore(mdcFilter, JwtAuthenticationFilter.class)
+            .oauth2ResourceServer(oauth2 -> oauth2
+                .jwt(jwt -> jwt
+                    .jwtAuthenticationConverter(jwtConverter))
+            )
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.POST, "/trainees").permitAll()
                 .requestMatchers(HttpMethod.POST, "/trainers").permitAll()
@@ -62,9 +70,12 @@ public class WebSecurityConfig {
             .authenticationManager(authenticationManager)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .logout(logout -> logout
+                .logoutUrl("/users/logout")
                 .clearAuthentication(true)
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID"))
+            .exceptionHandling(e ->
+                e.accessDeniedHandler(accessDeniedHandler).authenticationEntryPoint(authenticationEntryPoint))
             .build();
     }
 }

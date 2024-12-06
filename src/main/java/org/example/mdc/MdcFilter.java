@@ -1,4 +1,4 @@
-package org.example.filter;
+package org.example.mdc;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Component
-@Order(2)
 public class MdcFilter extends OncePerRequestFilter {
 
     @Override

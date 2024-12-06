@@ -21,7 +21,9 @@ public class JwtDecoderImpl implements JwtDecoder {
 
     @Override
     public Jwt decode(String token) throws JwtException {
-
+        if (jwtService.isExpired(token)) {
+            throw new JwtException("Token is expired");
+        }
         return new Jwt(token, issuedAt(token), expiresAt(token), headersMap(token), claimsMap(token));
     }
 

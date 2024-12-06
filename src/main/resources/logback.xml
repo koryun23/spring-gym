@@ -1,7 +1,7 @@
 <configuration>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] [traceId: %X{transactionId}] [auth: %X{auth}] %-5level %logger{36} - %msg%n
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] [traceId: %X{transactionId}] %-5level %logger{36} - %msg%n
             </pattern>
         </encoder>
     </appender>    <!-- Enable DEBUG logging for Spring Web components -->
