@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.example.auth.AuthHolder;
-import org.example.auth.UnsuccessfulAuthRequest;
 import org.example.entity.user.UserEntity;
 import org.example.entity.user.UserRoleEntity;
 import org.example.entity.user.UserRoleType;
@@ -36,30 +35,28 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final JwtService jwtService;
-    private final AuthHolder authHolder;
 
     /**
      * Constructor.
      */
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager,
                                    UserService userService,
-                                   JwtService jwtService,
-                                   AuthHolder authHolder) {
+                                   JwtService jwtService) {
         super(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/users/login"));
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.jwtService = jwtService;
-        this.authHolder = authHolder;
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
         throws AuthenticationException, IOException {
 
-        UnsuccessfulAuthRequest unsuccessfulAuthRequest = authHolder.getUnsuccessfulAuthRequest();
-        if (unsuccessfulAuthRequest != null && unsuccessfulAuthRequest.getBlockedUntil() != null
-            && LocalDateTime.now().isBefore(unsuccessfulAuthRequest.getBlockedUntil())) {
+        AuthHolder.setSessionId(request.getSession().getId());
+
+        if (LocalDateTime.now().isBefore(AuthHolder.getBlockedUntil())) {
             response.setStatus(401);
+            log.info("Cannot login until {}", AuthHolder.getBlockedUntil());
             return null;
         }
 
@@ -94,27 +91,16 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                               AuthenticationException failed) throws IOException, ServletException {
-        log.info("Auth Holder before - {}", authHolder);
-        String sessionId = request.getSession().getId();
-        UnsuccessfulAuthRequest unsuccessfulAuthRequest = authHolder.getUnsuccessfulAuthRequest();
-        if (unsuccessfulAuthRequest == null) {
-            authHolder.setUnsuccessfulAuthRequest(new UnsuccessfulAuthRequest(
-                sessionId,
-                null,
-                1
-            ));
-        } else {
-            unsuccessfulAuthRequest.setAttemptCounter(unsuccessfulAuthRequest.getAttemptCounter() + 1);
-            if (unsuccessfulAuthRequest.getAttemptCounter() == 3) {
-                unsuccessfulAuthRequest.setBlockedUntil(LocalDateTime.now().plusMinutes(5));
-            }
-            if (LocalDateTime.now().isAfter(unsuccessfulAuthRequest.getBlockedUntil())) {
-                unsuccessfulAuthRequest.setBlockedUntil(null);
-                unsuccessfulAuthRequest.setAttemptCounter(0);
-            }
-            authHolder.setUnsuccessfulAuthRequest(unsuccessfulAuthRequest);
+        log.info("Auth Holder before - {}", AuthHolder.print());
+
+        AuthHolder.setAttemptCounter(AuthHolder.getAttemptCounter() + 1);
+
+        if (AuthHolder.getAttemptCounter() == 3) {
+            AuthHolder.setBlockedUntil(
+                LocalDateTime.now().plusMinutes(5)); // TODO: Move the minutes to application.properties
+            AuthHolder.setAttemptCounter(0);
         }
-        log.info("Auth Holder after - {}", authHolder);
+        log.info("Auth Holder after - {}", AuthHolder.print());
 
         response.setStatus(401);
     }
