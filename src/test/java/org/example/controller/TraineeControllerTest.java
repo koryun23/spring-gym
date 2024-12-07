@@ -141,7 +141,8 @@ class TraineeControllerTest {
         TraineeUpdateRequestDto requestDto = new TraineeUpdateRequestDto("first", "last", "username", true, null, null);
         TraineeEntity trainee =
             new TraineeEntity(new UserEntity("first", "last", "username", "password", true), null, null);
-        TraineeUpdateResponseDto responseDto = new TraineeUpdateResponseDto("username", "first", "last", null, null, true, Collections.emptyList());
+        TraineeUpdateResponseDto responseDto =
+            new TraineeUpdateResponseDto("username", "first", "last", null, null, true, Collections.emptyList());
 
         Mockito.when(traineeValidator.validateUpdateTrainee(requestDto)).thenReturn(null);
         Mockito.when(traineeMapper.mapTraineeUpdateRequestDtoToTraineeEntity(requestDto)).thenReturn(trainee);
@@ -157,7 +158,8 @@ class TraineeControllerTest {
     @Test
     public void testDeleteWhenValidationsFail() {
         TraineeDeletionByUsernameRequestDto requestDto = new TraineeDeletionByUsernameRequestDto("username");
-        Mockito.when(traineeValidator.validateDeleteTrainee(requestDto)).thenThrow(CustomIllegalArgumentException.class);
+        Mockito.when(traineeValidator.validateDeleteTrainee(requestDto))
+            .thenThrow(CustomIllegalArgumentException.class);
 
         Assertions.assertThatThrownBy(() -> testSubject.delete("username"))
             .isExactlyInstanceOf(CustomIllegalArgumentException.class);
@@ -180,7 +182,8 @@ class TraineeControllerTest {
 
     @Test
     public void testSwitchActivationStateWhenValidationsFail() {
-        TraineeSwitchActivationStateRequestDto requestDto = new TraineeSwitchActivationStateRequestDto("username", true);
+        TraineeSwitchActivationStateRequestDto requestDto =
+            new TraineeSwitchActivationStateRequestDto("username", true);
         Mockito.when(traineeValidator.validateSwitchActivationState(requestDto)).thenThrow(
             CustomIllegalArgumentException.class);
 
@@ -190,7 +193,8 @@ class TraineeControllerTest {
 
     @Test
     public void testSwitchActivationStateWhenValidationsPass() {
-        TraineeSwitchActivationStateRequestDto requestDto = new TraineeSwitchActivationStateRequestDto("username", true);
+        TraineeSwitchActivationStateRequestDto requestDto =
+            new TraineeSwitchActivationStateRequestDto("username", true);
         UserEntity user = new UserEntity("first", "last", "username", "password", true);
         TraineeSwitchActivationStateResponseDto responseDto =
             new TraineeSwitchActivationStateResponseDto(HttpStatus.OK);

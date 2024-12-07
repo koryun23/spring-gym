@@ -75,7 +75,8 @@ class TrainerValidatorTest {
     @Test
     public void testValidateCreateTrainerWhenValid() {
         TrainerCreationRequestDto requestDto1 = new TrainerCreationRequestDto("first", "last", 1L);
-        Mockito.when(trainingTypeService.findById(1L)).thenReturn(Optional.of(new TrainingTypeEntity(TrainingType.AEROBIC)));
+        Mockito.when(trainingTypeService.findById(1L))
+            .thenReturn(Optional.of(new TrainingTypeEntity(TrainingType.AEROBIC)));
         Assertions.assertThat(testSubject.validateCreateTrainer(requestDto1)).isNull();
     }
 
@@ -123,7 +124,8 @@ class TrainerValidatorTest {
 
     @Test
     public void testValidateUpdateTrainerWhenUserDoesNotExist() {
-        Mockito.when(trainingTypeService.findById(1L)).thenReturn(Optional.of(new TrainingTypeEntity(TrainingType.AEROBIC)));
+        Mockito.when(trainingTypeService.findById(1L))
+            .thenReturn(Optional.of(new TrainingTypeEntity(TrainingType.AEROBIC)));
         Assertions.assertThatThrownBy(() -> testSubject.validateUpdateTrainer(new TrainerUpdateRequestDto(
             "username", "first", "last", 1L, true
         ))).isExactlyInstanceOf(TrainerNotFoundException.class);
@@ -177,7 +179,8 @@ class TrainerValidatorTest {
     public void testValidateTrainerSwitchActivationStateWhenUserDoesNotExist() {
         Mockito.when(trainerService.findByUsername("username")).thenReturn(Optional.empty());
         Assertions.assertThatThrownBy(
-                () -> testSubject.validateSwitchActivationState(new TrainerSwitchActivationStateRequestDto("username", true)))
+                () -> testSubject.validateSwitchActivationState(
+                    new TrainerSwitchActivationStateRequestDto("username", true)))
             .isExactlyInstanceOf(TrainerNotFoundException.class);
         Mockito.verifyNoMoreInteractions(trainerService, userService, traineeService);
     }

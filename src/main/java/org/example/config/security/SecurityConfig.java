@@ -41,6 +41,9 @@ public class SecurityConfig {
         return daoAuthenticationProvider;
     }
 
+    /**
+     * Jwt Authentication provider bean.
+     */
     @Bean
     public AuthenticationProvider jwtAuthenticationProvider(JwtDecoder jwtDecoder, JwtConverter jwtConverter) {
         JwtAuthenticationProvider jwtAuthenticationProvider = new JwtAuthenticationProvider(jwtDecoder);
@@ -54,5 +57,4 @@ public class SecurityConfig {
         @Qualifier("jwtAuthenticationProvider") AuthenticationProvider jwtAuthenticationProvider) {
         return new ProviderManager(authenticationProvider, jwtAuthenticationProvider);
     }
-
 }
