@@ -1,11 +1,8 @@
 package org.example.validator;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import org.example.dto.RestResponse;
 import org.example.exception.JwtException;
 import org.example.service.core.jwt.JwtService;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Component

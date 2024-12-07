@@ -49,7 +49,7 @@ class TrainerServiceImplTest {
             usernamePasswordService,
             trainerEntityRepository,
             userService,
-            trainingTypeService);
+            null, null);
     }
 
     @Test

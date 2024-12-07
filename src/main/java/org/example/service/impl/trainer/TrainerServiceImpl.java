@@ -36,7 +36,8 @@ public class TrainerServiceImpl implements TrainerService {
      * Constructor.
      */
     public TrainerServiceImpl(UsernamePasswordService usernamePasswordService, TrainerEntityRepository trainerDao,
-                              UserService userService, UserRoleService userRoleService, TrainingTypeService trainingTypeService) {
+                              UserService userService, UserRoleService userRoleService,
+                              TrainingTypeService trainingTypeService) {
         this.usernamePasswordService = usernamePasswordService;
         this.trainerDao = trainerDao;
         this.userService = userService;

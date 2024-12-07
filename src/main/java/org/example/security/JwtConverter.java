@@ -2,7 +2,6 @@ package org.example.security;
 
 import java.util.List;
 import org.example.entity.user.UserEntity;
-import org.example.entity.user.UserRoleType;
 import org.example.service.core.user.UserService;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.NonNull;

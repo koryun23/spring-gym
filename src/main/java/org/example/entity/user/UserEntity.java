@@ -11,7 +11,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,7 +19,6 @@ import lombok.Setter;
 import lombok.ToString;
 import org.example.entity.trainee.TraineeEntity;
 import org.example.entity.trainer.TrainerEntity;
-import org.hibernate.annotations.Fetch;
 
 @NoArgsConstructor
 @Getter

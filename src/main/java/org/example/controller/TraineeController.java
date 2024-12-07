@@ -154,9 +154,9 @@ public class TraineeController {
      * Trainee switch activation state.
      */
     @PatchMapping(value = "/{username}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<RestResponse> switchActivationState(@PathVariable("username") String username,
-                                                              @RequestBody
-                                                              TraineeSwitchActivationStateRequestDto requestDto) {
+    public ResponseEntity<RestResponse> switchActivationState(
+        @RequestBody TraineeSwitchActivationStateRequestDto requestDto,
+        @PathVariable("username") String username) {
 
         log.info("Attempting to switch the activation state of a trainee, username - {}", username);
 

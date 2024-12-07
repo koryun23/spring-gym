@@ -15,10 +15,7 @@ import org.example.dto.response.TrainerTrainingRetrievalResponseDto;
 import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.entity.training.TrainingEntity;
 import org.example.mapper.training.TrainingMapper;
-import org.example.service.core.trainee.TraineeService;
-import org.example.service.core.trainer.TrainerService;
 import org.example.service.core.training.TrainingService;
-import org.example.service.core.training.TrainingTypeService;
 import org.example.validator.TrainingValidator;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -37,9 +34,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class TrainingController {
 
     private final TrainingService trainingService;
-    private final TraineeService traineeService;
-    private final TrainerService trainerService;
-    private final TrainingTypeService trainingTypeService;
     private final TrainingMapper trainingMapper;
     private final TrainingValidator trainingValidator;
 
@@ -47,15 +41,9 @@ public class TrainingController {
      * Constructor.
      */
     public TrainingController(TrainingService trainingService,
-                              TraineeService traineeService,
-                              TrainerService trainerService,
-                              TrainingTypeService trainingTypeService,
                               TrainingMapper trainingMapper,
                               TrainingValidator trainingValidator) {
         this.trainingService = trainingService;
-        this.traineeService = traineeService;
-        this.trainerService = trainerService;
-        this.trainingTypeService = trainingTypeService;
         this.trainingMapper = trainingMapper;
         this.trainingValidator = trainingValidator;
     }

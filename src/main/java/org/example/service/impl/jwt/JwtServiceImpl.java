@@ -1,14 +1,11 @@
 package org.example.service.impl.jwt;
 
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Header;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtParser;
-import io.jsonwebtoken.impl.DefaultJwsHeader;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.Date;
