@@ -3,6 +3,7 @@ package org.example.service.impl;
 import java.sql.Date;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
+import org.example.dto.plain.TrainingDto;
 import org.example.entity.trainee.TraineeEntity;
 import org.example.entity.trainer.TrainerEntity;
 import org.example.entity.training.TrainingEntity;
@@ -44,10 +45,22 @@ class TrainingServiceImplTest {
         );
     }
 
-    //TODO
     @Test
     public void testCreate() {
+        TrainingDto trainingDto = new TrainingDto("trainee", "trainer", "training", null, 1000L);
+        TraineeEntity traineeEntity =
+            new TraineeEntity(new UserEntity("first", "last", "trainee", "pwd", true), null, null);
+        TrainerEntity trainerEntity = new TrainerEntity(new UserEntity("first", "last", "trainer", "pwd", true),
+            new TrainingTypeEntity(TrainingType.AEROBIC));
+        TrainingEntity trainingEntity = new TrainingEntity(
+            traineeEntity, trainerEntity, "training", new TrainingTypeEntity(TrainingType.AEROBIC), null, 1000L
+        );
 
+        Mockito.when(traineeService.selectByUsername("trainee")).thenReturn(traineeEntity);
+        Mockito.when(trainerService.selectByUsername("trainer")).thenReturn(trainerEntity);
+        Mockito.when(trainingEntityRepository.save(trainingEntity)).thenReturn(trainingEntity);
+
+        Assertions.assertThat(testSubject.create(trainingDto)).isEqualTo(trainingEntity);
     }
 
     @Test
@@ -69,10 +82,19 @@ class TrainingServiceImplTest {
         Mockito.verifyNoMoreInteractions(trainingEntityRepository);
     }
 
-    //TODO
     @Test
     public void testUpdate() {
+        TraineeEntity traineeEntity =
+            new TraineeEntity(new UserEntity("first", "last", "trainee", "pwd", true), null, null);
+        TrainerEntity trainerEntity = new TrainerEntity(new UserEntity("first", "last", "trainer", "pwd", true),
+            new TrainingTypeEntity(TrainingType.AEROBIC));
+        TrainingEntity trainingEntity = new TrainingEntity(
+            traineeEntity, trainerEntity, "training", new TrainingTypeEntity(TrainingType.AEROBIC), null, 1000L
+        );
 
+        Mockito.when(trainingEntityRepository.save(trainingEntity)).thenReturn(trainingEntity);
+
+        Assertions.assertThat(testSubject.update(trainingEntity)).isEqualTo(trainingEntity);
     }
 
     @Test

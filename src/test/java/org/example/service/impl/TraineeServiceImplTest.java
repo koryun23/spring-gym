@@ -7,6 +7,7 @@ import org.example.entity.trainee.TraineeEntity;
 import org.example.entity.user.UserEntity;
 import org.example.repository.TraineeEntityRepository;
 import org.example.service.core.trainee.TraineeService;
+import org.example.service.core.user.UserRoleService;
 import org.example.service.core.user.UserService;
 import org.example.service.core.user.UsernamePasswordService;
 import org.example.service.impl.trainee.TraineeServiceImpl;
@@ -31,9 +32,13 @@ class TraineeServiceImplTest {
     @Mock
     private UsernamePasswordService usernamePasswordService;
 
+    @Mock
+    private UserRoleService userRoleService;
+
     @BeforeEach
     public void init() {
-        testSubject = new TraineeServiceImpl(traineeEntityRepository, userService, null, usernamePasswordService);
+        testSubject =
+            new TraineeServiceImpl(traineeEntityRepository, userService, userRoleService, usernamePasswordService);
     }
 
     @Test

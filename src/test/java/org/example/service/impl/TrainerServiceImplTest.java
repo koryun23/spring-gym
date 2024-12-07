@@ -13,6 +13,7 @@ import org.example.repository.TraineeEntityRepository;
 import org.example.repository.TrainerEntityRepository;
 import org.example.service.core.trainer.TrainerService;
 import org.example.service.core.training.TrainingTypeService;
+import org.example.service.core.user.UserRoleService;
 import org.example.service.core.user.UserService;
 import org.example.service.core.user.UsernamePasswordService;
 import org.example.service.impl.trainer.TrainerServiceImpl;
@@ -43,13 +44,14 @@ class TrainerServiceImplTest {
     @Mock
     private TrainingTypeService trainingTypeService;
 
+    @Mock
+    private UserRoleService userRoleService;
+
     @BeforeEach
     public void init() {
-        testSubject = new TrainerServiceImpl(
-            usernamePasswordService,
-            trainerEntityRepository,
-            userService,
-            null, null);
+        testSubject =
+            new TrainerServiceImpl(usernamePasswordService, trainerEntityRepository, userService, userRoleService,
+                trainingTypeService);
     }
 
     @Test
@@ -61,12 +63,9 @@ class TrainerServiceImplTest {
 
         Mockito.when(trainerEntityRepository.save(trainerEntity)).thenReturn(trainerEntity);
 
-        Assertions.assertThat(testSubject.create(new TrainerDto(
-            new UserDto(
-                "first", "last", "username", "password", true
-            ),
-            null
-        ))).isEqualTo(trainerEntity);
+        Assertions.assertThat(
+                testSubject.create(new TrainerDto(new UserDto("first", "last", "username", "password", true), null)))
+            .isEqualTo(trainerEntity);
 
         Mockito.verifyNoMoreInteractions(trainerEntityRepository);
     }
@@ -80,12 +79,9 @@ class TrainerServiceImplTest {
         Mockito.when(trainerEntityRepository.findByUserUsername("username")).thenReturn(Optional.of(trainerEntity));
         Mockito.when(trainerEntityRepository.save(trainerEntity)).thenReturn(trainerEntity);
 
-        Assertions.assertThat(testSubject.update(new TrainerDto(
-            new UserDto(
-                "first", "last", "username", "password", true
-            ),
-            trainerEntity.getSpecialization().getId()
-        ))).isEqualTo(trainerEntity);
+        Assertions.assertThat(testSubject.update(
+            new TrainerDto(new UserDto("first", "last", "username", "password", true),
+                trainerEntity.getSpecialization().getId()))).isEqualTo(trainerEntity);
 
         Mockito.verifyNoMoreInteractions(trainerEntityRepository, traineeEntityRepository);
     }
@@ -148,8 +144,8 @@ class TrainerServiceImplTest {
         TrainingTypeEntity trainingTypeEntity = new TrainingTypeEntity(TrainingType.AEROBIC);
         TrainerEntity trainerEntity = new TrainerEntity(userEntity, trainingTypeEntity);
 
-        Mockito.when(trainerEntityRepository.findAllTrainersNotAssignedTo("username")).thenReturn(
-            List.of(trainerEntity));
+        Mockito.when(trainerEntityRepository.findAllTrainersNotAssignedTo("username"))
+            .thenReturn(List.of(trainerEntity));
 
         Assertions.assertThat(testSubject.findAllNotAssignedTo("username")).isEqualTo(List.of(trainerEntity));
 

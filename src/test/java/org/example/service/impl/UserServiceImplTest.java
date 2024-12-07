@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
@@ -21,9 +22,12 @@ class UserServiceImplTest {
     @Mock
     private UserEntityRepository userEntityRepository;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     @BeforeEach
     public void init() {
-        testSubject = new UserServiceImpl(userEntityRepository, null);
+        testSubject = new UserServiceImpl(userEntityRepository, passwordEncoder);
     }
 
     @Test
@@ -35,15 +39,16 @@ class UserServiceImplTest {
     @Test
     public void testCreate() {
         Mockito.when(userEntityRepository.save(new UserEntity(
-            "first", "last", "username", "password", true
+            "first", "last", "username", "encoded", true
         ))).thenReturn(new UserEntity(
-            "first", "last", "username", "password", true
+            "first", "last", "username", "encoded", true
         ));
+        Mockito.when(passwordEncoder.encode("password")).thenReturn("encoded");
 
         Assertions.assertThat(testSubject.create(new UserEntity(
             "first", "last", "username", "password", true
         ))).isEqualTo(new UserEntity(
-            "first", "last", "username", "password", true
+            "first", "last", "username", "encoded", true
         ));
 
         Mockito.verifyNoMoreInteractions(userEntityRepository);
