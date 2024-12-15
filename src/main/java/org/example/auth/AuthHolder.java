@@ -20,7 +20,7 @@ public class AuthHolder {
 
     @Getter
     @Setter
-    private static String sessionId;
+    private static String id;
 
     @Getter
     @Setter
@@ -33,6 +33,6 @@ public class AuthHolder {
 
     public static String print() {
         return String.format("AuthHolder: Blocked Until - %s; Session Id - %s; Attempt Counter - %s", blockedUntil,
-            sessionId, attemptCounter);
+            id, attemptCounter);
     }
 }

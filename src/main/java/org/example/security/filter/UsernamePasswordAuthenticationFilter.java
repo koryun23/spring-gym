@@ -52,7 +52,7 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
         throws AuthenticationException, IOException {
 
-        AuthHolder.setSessionId(request.getSession().getId());
+        AuthHolder.setId(request.getRemoteAddr());
 
         if (LocalDateTime.now().isBefore(AuthHolder.getBlockedUntil())) {
             response.setStatus(401);
