@@ -11,7 +11,7 @@ import org.example.entity.trainer.TrainerEntity;
 
 public interface TrainerMapper {
 
-    TrainerCreationResponseDto mapTrainerEntityToTrainerCreationResponseDto(TrainerEntity trainerEntity);
+    TrainerCreationResponseDto mapTrainerDtoToTrainerCreationResponseDto(TrainerDto trainer);
 
     TrainerRetrievalResponseDto mapTrainerEntityToTrainerRetrievalResponseDto(TrainerEntity trainerEntity);
 

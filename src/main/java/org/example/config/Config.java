@@ -1,6 +1,7 @@
 package org.example.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Base64;
 import javax.sql.DataSource;
 import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,5 +52,10 @@ public class Config {
         Flyway flyway = Flyway.configure().dataSource(dataSource).baselineOnMigrate(true).load();
         flyway.migrate();
         return flyway;
+    }
+
+    @Bean
+    public Base64.Encoder base64Encoder() {
+        return Base64.getEncoder();
     }
 }

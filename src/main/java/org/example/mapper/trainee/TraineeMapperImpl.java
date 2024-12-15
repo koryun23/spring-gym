@@ -2,6 +2,7 @@ package org.example.mapper.trainee;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import org.example.dto.plain.TraineeDto;
 import org.example.dto.plain.TrainerDto;
 import org.example.dto.plain.UserDto;
 import org.example.dto.request.TraineeCreationRequestDto;
@@ -35,11 +36,11 @@ public class TraineeMapperImpl implements TraineeMapper {
     }
 
     @Override
-    public TraineeCreationResponseDto mapTraineeEntityToTraineeCreationResponseDto(TraineeEntity trainee) {
+    public TraineeCreationResponseDto mapTraineeDtoToTraineeCreationResponseDto(TraineeDto trainee) {
         Assert.notNull(trainee, "TraineeEntity must not be null");
         return new TraineeCreationResponseDto(
-            trainee.getUser().getUsername(),
-            trainee.getUser().getPassword()
+            trainee.getUserDto().getUsername(),
+            trainee.getUserDto().getPassword()
         );
     }
 

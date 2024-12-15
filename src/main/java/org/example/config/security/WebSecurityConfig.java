@@ -2,7 +2,7 @@ package org.example.config.security;
 
 import org.example.mdc.MdcFilter;
 import org.example.security.JwtConverter;
-import org.example.security.filter.JwtAuthenticationFilter;
+import org.example.security.filter.UsernamePasswordAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -15,14 +15,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
 
     private final AuthenticationManager authenticationManager;
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final UsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter;
     private final JwtConverter jwtConverter;
     private final AccessDeniedHandler accessDeniedHandler;
     private final AuthenticationEntryPoint authenticationEntryPoint;
@@ -32,12 +31,12 @@ public class WebSecurityConfig {
      * Constructor.
      */
     public WebSecurityConfig(AuthenticationManager authenticationManager,
-                             JwtAuthenticationFilter jwtAuthenticationFilter,
+                             UsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter,
                              JwtConverter jwtConverter,
                              AccessDeniedHandler accessDeniedHandler,
                              AuthenticationEntryPoint authenticationEntryPoint, MdcFilter mdcFilter) {
         this.authenticationManager = authenticationManager;
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.usernamePasswordAuthenticationFilter = usernamePasswordAuthenticationFilter;
         this.jwtConverter = jwtConverter;
         this.accessDeniedHandler = accessDeniedHandler;
         this.authenticationEntryPoint = authenticationEntryPoint;
@@ -52,8 +51,9 @@ public class WebSecurityConfig {
         return http
             .cors(Customizer.withDefaults())
             .csrf(AbstractHttpConfigurer::disable)
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-            .addFilterBefore(mdcFilter, JwtAuthenticationFilter.class)
+            .addFilterBefore(
+                usernamePasswordAuthenticationFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(mdcFilter, UsernamePasswordAuthenticationFilter.class)
             .oauth2ResourceServer(oauth2 -> oauth2
                 .jwt(jwt -> jwt
                     .jwtAuthenticationConverter(jwtConverter))

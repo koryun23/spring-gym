@@ -24,11 +24,11 @@ import org.springframework.util.Assert;
 public class TrainerMapperImpl implements TrainerMapper {
 
     @Override
-    public TrainerCreationResponseDto mapTrainerEntityToTrainerCreationResponseDto(TrainerEntity trainerEntity) {
-        Assert.notNull(trainerEntity, "TrainerEntity must not be null");
+    public TrainerCreationResponseDto mapTrainerDtoToTrainerCreationResponseDto(TrainerDto trainer) {
+        Assert.notNull(trainer, "Trainer Dto must not be null");
         return new TrainerCreationResponseDto(
-            trainerEntity.getUser().getUsername(),
-            trainerEntity.getUser().getPassword()
+            trainer.getUserDto().getUsername(),
+            trainer.getUserDto().getPassword()
         );
     }
 

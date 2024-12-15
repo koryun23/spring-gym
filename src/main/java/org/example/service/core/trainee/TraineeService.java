@@ -1,11 +1,12 @@
 package org.example.service.core.trainee;
 
 import java.util.Optional;
+import org.example.dto.plain.TraineeDto;
 import org.example.entity.trainee.TraineeEntity;
 
 public interface TraineeService {
 
-    TraineeEntity create(TraineeEntity params);
+    TraineeDto create(TraineeEntity params);
 
     TraineeEntity update(TraineeEntity params);
 

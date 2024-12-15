@@ -47,15 +47,18 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Transactional
     @Override
-    public TrainerEntity create(TrainerDto trainer) {
+    public TrainerDto create(TrainerDto trainer) {
         Assert.notNull(trainer, "TrainerCreateParams must not be null");
         LOGGER.info("Creating a TrainerEntity based on TrainerCreateParams - {}", trainer);
-
 
         UserDto userDto = trainer.getUserDto();
         String username = usernamePasswordService.username(userDto.getFirstName(), userDto.getLastName());
         String password = usernamePasswordService.password();
         LOGGER.info("username - {}, password - {}", username, password);
+
+        userDto.setUsername(username);
+        userDto.setPassword(password);
+        trainer.setUserDto(userDto);
         UserEntity userEntity = new UserEntity(
             userDto.getFirstName(),
             userDto.getLastName(),
@@ -68,10 +71,9 @@ public class TrainerServiceImpl implements TrainerService {
 
         TrainerEntity createdTrainerEntity =
             trainerDao.save(new TrainerEntity(userEntity, trainingTypeService.get(trainer.getSpecializationId())));
-        LOGGER.info("Successfully created a TrainerEntity based on TrainerCreateParams - {}, result - {}",
-            trainer,
-            createdTrainerEntity);
-        return createdTrainerEntity;
+
+        LOGGER.info("Successfully created a TrainerEntity result - {}", trainer);
+        return trainer;
     }
 
     @Transactional

@@ -68,7 +68,7 @@ public class TrainerController {
 
         // service and mapper calls
         TrainerDto trainerDto = trainerMapper.mapTrainerCreationRequestDtoToTrainerDto(requestDto);
-        TrainerCreationResponseDto responseDto = trainerMapper.mapTrainerEntityToTrainerCreationResponseDto(
+        TrainerCreationResponseDto responseDto = trainerMapper.mapTrainerDtoToTrainerCreationResponseDto(
             trainerService.create(trainerDto));
 
         // response

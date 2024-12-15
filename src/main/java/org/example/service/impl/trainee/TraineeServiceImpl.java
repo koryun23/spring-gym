@@ -1,6 +1,8 @@
 package org.example.service.impl.trainee;
 
 import java.util.Optional;
+import org.example.dto.plain.TraineeDto;
+import org.example.dto.plain.UserDto;
 import org.example.entity.trainee.TraineeEntity;
 import org.example.entity.user.UserEntity;
 import org.example.entity.user.UserRoleEntity;
@@ -41,22 +43,35 @@ public class TraineeServiceImpl implements TraineeService {
 
     @Transactional
     @Override
-    public TraineeEntity create(TraineeEntity trainee) {
+    public TraineeDto create(TraineeEntity trainee) {
         Assert.notNull(trainee, "TraineeCreateParams must not be null");
         LOGGER.info("Creating a TraineeEntity based on TraineeCreateParams - {}", trainee);
 
         UserEntity user = trainee.getUser();
-        user.setUsername(usernamePasswordService.username(user.getFirstName(), user.getLastName()));
-        user.setPassword(usernamePasswordService.password());
+        String username = usernamePasswordService.username(user.getFirstName(), user.getLastName());
+        String password = usernamePasswordService.password();
+
+        user.setUsername(username);
+        user.setPassword(password);
 
         userService.create(user);
         userRoleService.create(new UserRoleEntity(user, UserRoleType.TRAINEE));
 
         TraineeEntity createdTrainee = traineeDao.save(trainee);
-
+        TraineeDto traineeDto = new TraineeDto(
+            new UserDto(
+                user.getFirstName(),
+                user.getLastName(),
+                username,
+                password,
+                user.getIsActive()
+            ),
+            createdTrainee.getDateOfBirth(),
+            createdTrainee.getAddress()
+        );
         LOGGER.info("Successfully created a TraineeEntity based on TraineeCreateParams - {}, result - {}", trainee,
-            trainee);
-        return createdTrainee;
+            traineeDto);
+        return traineeDto;
     }
 
     @Transactional

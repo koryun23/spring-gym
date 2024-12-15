@@ -7,7 +7,7 @@ import org.example.entity.trainer.TrainerEntity;
 
 public interface TrainerService {
 
-    TrainerEntity create(TrainerDto params);
+    TrainerDto create(TrainerDto params);
 
     TrainerEntity update(TrainerDto params);
 

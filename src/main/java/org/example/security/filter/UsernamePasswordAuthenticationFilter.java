@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
+public class UsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
@@ -39,9 +39,9 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
     /**
      * Constructor.
      */
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager,
-                                   UserService userService,
-                                   JwtService jwtService) {
+    public UsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager,
+                                                UserService userService,
+                                                JwtService jwtService) {
         super(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/users/login"));
         this.authenticationManager = authenticationManager;
         this.userService = userService;

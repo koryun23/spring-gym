@@ -20,8 +20,8 @@ class TrainerMapperImplTest {
     }
 
     @Test
-    public void testMapTrainerEntityToTrainerCreationResponseDto() {
-        Assertions.assertThat(testSubject.mapTrainerEntityToTrainerCreationResponseDto(new TrainerEntity(
+    public void testMapTrainerDtoToTrainerCreationResponseDto() {
+        Assertions.assertThat(testSubject.mapTrainerDtoToTrainerCreationResponseDto(new TrainerEntity(
             new UserEntity(null, null, "username", "password", true),
             new TrainingTypeEntity(TrainingType.FLEXIBILITY_TRAINING)
         ))).isEqualTo(new TrainerCreationResponseDto("username", "password"));

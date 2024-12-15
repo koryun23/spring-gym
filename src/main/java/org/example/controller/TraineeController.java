@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
+import org.example.dto.plain.TraineeDto;
 import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TraineeDeletionByUsernameRequestDto;
 import org.example.dto.request.TraineeSwitchActivationStateRequestDto;
@@ -64,8 +65,8 @@ public class TraineeController {
 
         // service and mapper calls
         TraineeEntity params = traineeMapper.mapTraineeCreationRequestDtoToTraineeEntity(requestDto);
-        TraineeEntity trainee = traineeService.create(params);
-        TraineeCreationResponseDto responseDto = traineeMapper.mapTraineeEntityToTraineeCreationResponseDto(trainee);
+        TraineeDto trainee = traineeService.create(params);
+        TraineeCreationResponseDto responseDto = traineeMapper.mapTraineeDtoToTraineeCreationResponseDto(trainee);
 
         // response
         RestResponse restResponse =
