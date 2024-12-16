@@ -15,6 +15,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -26,6 +29,9 @@ public class WebSecurityConfig {
     private final AccessDeniedHandler accessDeniedHandler;
     private final AuthenticationEntryPoint authenticationEntryPoint;
     private final MdcFilter mdcFilter;
+    private final LogoutFilter logoutFilter;
+    private final LogoutSuccessHandler logoutSuccessHandler;
+    private final LogoutHandler logoutHandler;
 
     /**
      * Constructor.
@@ -34,13 +40,18 @@ public class WebSecurityConfig {
                              UsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter,
                              JwtConverter jwtConverter,
                              AccessDeniedHandler accessDeniedHandler,
-                             AuthenticationEntryPoint authenticationEntryPoint, MdcFilter mdcFilter) {
+                             AuthenticationEntryPoint authenticationEntryPoint, MdcFilter mdcFilter,
+                             LogoutFilter logoutFilter, LogoutSuccessHandler logoutSuccessHandler,
+                             LogoutHandler logoutHandler) {
         this.authenticationManager = authenticationManager;
         this.usernamePasswordAuthenticationFilter = usernamePasswordAuthenticationFilter;
         this.jwtConverter = jwtConverter;
         this.accessDeniedHandler = accessDeniedHandler;
         this.authenticationEntryPoint = authenticationEntryPoint;
         this.mdcFilter = mdcFilter;
+        this.logoutFilter = logoutFilter;
+        this.logoutSuccessHandler = logoutSuccessHandler;
+        this.logoutHandler = logoutHandler;
     }
 
     /**
@@ -72,9 +83,10 @@ public class WebSecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .logout(logout -> logout
                 .logoutUrl("/users/logout")
+                .logoutSuccessHandler(logoutSuccessHandler)
+                .addLogoutHandler(logoutHandler)
                 .clearAuthentication(true)
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID"))
+                .invalidateHttpSession(true))
             .exceptionHandling(e ->
                 e.accessDeniedHandler(accessDeniedHandler).authenticationEntryPoint(authenticationEntryPoint))
             .build();
