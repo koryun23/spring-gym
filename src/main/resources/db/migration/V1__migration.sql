@@ -5,6 +5,7 @@ create sequence if not exists TRAINING_TYPE_SEQUENCE start with 1 increment by 1
 create sequence if not exists USER_SEQUENCE start with 1 increment by 1;
 create sequence if not exists USER_SUFFIX_SEQUENCE start with 1 increment by 1;
 create sequence if not exists USER_ROLE_SEQUENCE start with 1 increment by 1;
+create sequence if not exists LOGIN_ATTEMPT_SEQUENCE start with 1 increment by 1;
 
 create table if not exists USERS (
     is_active boolean not null,
@@ -60,4 +61,11 @@ create table if not exists TRAINING (
     foreign key (trainee_id) references trainee(id),
     foreign key (trainer_id) references trainer(id),
     foreign key (training_type_id) references training_type(id)
+);
+
+create table if not exists LOGIN_ATTEMPT (
+    id bigint not null primary key DEFAULT nextval('login_attempt_sequence'),
+    remote_address varchar(255) not null unique,
+    counter int not null,
+    blocked_until timestamp not null
 );

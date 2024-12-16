@@ -1,38 +1,51 @@
 package org.example.auth;
 
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.example.dto.plain.LoginRequestDto;
+import org.springframework.stereotype.Component;
 
-@AllArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
 public class AuthHolder {
 
-    @Getter
-    @Setter
-    private static LocalDateTime blockedUntil = LocalDateTime.MIN;
+    private static AuthHolder authHolder;
 
-    @Getter
-    @Setter
-    private static String id;
+    private LoginRequestDto loginRequestDto;
 
-    @Getter
-    @Setter
-    private static int attemptCounter = 0;
-
-    public static void reset() {
-        blockedUntil = LocalDateTime.MIN;
-        attemptCounter = 0;
+    private AuthHolder(LoginRequestDto loginRequestDto) {
+        this.loginRequestDto = loginRequestDto;
     }
 
-    public static String print() {
-        return String.format("AuthHolder: Blocked Until - %s; Session Id - %s; Attempt Counter - %s", blockedUntil,
-            id, attemptCounter);
+    /**
+     * Abstract factory method for obtaining an empty authentication holder.
+     */
+    public static AuthHolder ofEmpty(String id) {
+        if (authHolder == null) {
+            authHolder = new AuthHolder(new LoginRequestDto(id, 0, LocalDateTime.now()));
+        }
+        return authHolder;
     }
+
+    public static AuthHolder of(LoginRequestDto loginRequestDto) {
+        authHolder = new AuthHolder(loginRequestDto);
+        return authHolder;
+    }
+
+    /**
+     * Method for incrementing the login attempt counter.
+     */
+    public void attemptLogin() {
+        if (authHolder == null) {
+            authHolder = AuthHolder.ofEmpty("");
+        }
+        loginRequestDto.setCounter(loginRequestDto.getCounter() + 1);
+        authHolder.setLoginRequestDto(loginRequestDto);
+    }
+
 }

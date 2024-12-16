@@ -11,7 +11,4 @@ public interface UserSuffixEntityRepository extends JpaRepository<UserSuffixEnti
 
     @Query("select u from UserSuffixEntity u where u.firstName = ?1 and u.lastName = ?2")
     Optional<UserSuffixEntity> findByFirstAndLastName(String firstName, String lastName);
-
-    @Query("update UserSuffixEntity u set u.suffix = u.suffix + 1")
-    UserSuffixEntity updateSuffix(String firstName, String lastName);
 }

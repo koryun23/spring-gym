@@ -8,12 +8,16 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.example.auth.AuthHolder;
+import org.example.dto.plain.LoginRequestDto;
+import org.example.entity.user.LoginAttemptEntity;
 import org.example.entity.user.UserEntity;
 import org.example.entity.user.UserRoleEntity;
 import org.example.entity.user.UserRoleType;
 import org.example.service.core.jwt.JwtService;
+import org.example.service.core.user.LoginAttemptService;
 import org.example.service.core.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -35,28 +39,50 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final JwtService jwtService;
+    private final LoginAttemptService loginAttemptService;
+
+    private AuthHolder authHolder;
 
     /**
      * Constructor.
      */
     public UsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager,
                                                 UserService userService,
-                                                JwtService jwtService) {
+                                                JwtService jwtService, LoginAttemptService loginAttemptService) {
         super(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/users/login"));
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.jwtService = jwtService;
+        this.loginAttemptService = loginAttemptService;
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
         throws AuthenticationException, IOException {
 
-        AuthHolder.setId(request.getRemoteAddr());
+        Optional<LoginAttemptEntity> optionalLoginAttempt = loginAttemptService.findByRemoteAddress(request.getRemoteAddr());
 
-        if (LocalDateTime.now().isBefore(AuthHolder.getBlockedUntil())) {
+        if (optionalLoginAttempt.isPresent()) {
+            LoginAttemptEntity loginAttemptEntity = optionalLoginAttempt.get();
+            authHolder = AuthHolder.of(new LoginRequestDto(
+                loginAttemptEntity.getRemoteAddress(),
+                loginAttemptEntity.getCounter(),
+                loginAttemptEntity.getBlockedUntil()
+            ));
+        } else {
+            authHolder = AuthHolder.ofEmpty(request.getRemoteAddr());
+            loginAttemptService.create(new LoginAttemptEntity(
+                request.getRemoteAddr(),
+                0,
+                LocalDateTime.now()
+            ));
+        }
+
+        authHolder.getLoginRequestDto().setId(request.getRemoteAddr());
+
+        if (LocalDateTime.now().isBefore(authHolder.getLoginRequestDto().getBlockedUntil())) {
             response.setStatus(401);
-            log.info("Cannot login until {}", AuthHolder.getBlockedUntil());
+            log.info("Cannot login until {}", authHolder.getLoginRequestDto().getBlockedUntil());
             return null;
         }
 
@@ -91,16 +117,33 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                               AuthenticationException failed) throws IOException, ServletException {
-        log.info("Auth Holder before - {}", AuthHolder.print());
+        log.info("Auth Holder before - {}", authHolder);
 
-        AuthHolder.setAttemptCounter(AuthHolder.getAttemptCounter() + 1);
+        authHolder.attemptLogin();
+        loginAttemptService.incrementCounter(authHolder.getLoginRequestDto().getId());
 
-        if (AuthHolder.getAttemptCounter() == 3) {
-            AuthHolder.setBlockedUntil(
+        if (authHolder.getLoginRequestDto().getCounter() == 3) {
+            authHolder.getLoginRequestDto().setBlockedUntil(
                 LocalDateTime.now().plusMinutes(5)); // TODO: Move the minutes to application.properties
-            AuthHolder.setAttemptCounter(0);
+            authHolder.getLoginRequestDto().setCounter(0);
+
+            // update in the database
+            loginAttemptService.update(new LoginAttemptEntity(
+                authHolder.getLoginRequestDto().getId(),
+                authHolder.getLoginRequestDto().getCounter(),
+                authHolder.getLoginRequestDto().getBlockedUntil()
+            ));
         }
-        log.info("Auth Holder after - {}", AuthHolder.print());
+
+        if (loginAttemptService.findByRemoteAddress(request.getRemoteAddr()).isEmpty()) {
+            loginAttemptService.create(new LoginAttemptEntity(
+                authHolder.getLoginRequestDto().getId(),
+                authHolder.getLoginRequestDto().getCounter(),
+                authHolder.getLoginRequestDto().getBlockedUntil()
+            ));
+        }
+
+        log.info("Auth Holder after - {}", authHolder);
 
         response.setStatus(401);
     }
