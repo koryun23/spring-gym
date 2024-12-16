@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("jwtDecoder")
 public class JwtDecoderImpl implements JwtDecoder {
 
     private final JwtService jwtService;
@@ -49,8 +49,7 @@ public class JwtDecoderImpl implements JwtDecoder {
         try {
             headers = jwtService.getHeadersAsMap(token);
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
+            throw new JwtException("Could not extract token headers");
         }
         System.out.println(headers);
         return headers;

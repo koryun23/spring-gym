@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtParser;
-import io.jsonwebtoken.SignatureAlgorithm;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.Date;
@@ -17,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.entity.user.UserRoleType;
 import org.example.service.core.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cglib.core.KeyFactory;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -34,27 +32,15 @@ public class JwtServiceImpl implements JwtService {
     @Value("${jwt.access.token.expiration}")
     private long accessTokenExpirationMillis;
 
-    private SignatureAlgorithm signatureAlgorithm;
-
-    private String secretKey;
-
-    private Base64.Encoder base64Encoder;
-
     /**
      * Constructor.
      */
     public JwtServiceImpl(JwtBuilder jwtBuilder,
                           JwtParser jwtParser,
-                          ObjectMapper objectMapper,
-                          SignatureAlgorithm signatureAlgorithm,
-                          String secretKey,
-                          Base64.Encoder base64Encoder) {
+                          ObjectMapper objectMapper) {
         this.jwtBuilder = jwtBuilder;
         this.jwtParser = jwtParser;
         this.objectMapper = objectMapper;
-        this.signatureAlgorithm = signatureAlgorithm;
-        this.secretKey = secretKey;
-        this.base64Encoder = base64Encoder;
     }
 
     @Override
@@ -66,7 +52,6 @@ public class JwtServiceImpl implements JwtService {
             .claim("tokenId", UUID.randomUUID().toString())
             .claim("username", username)
             .claim("roles", roles)
-            .signWith(signatureAlgorithm, base64Encoder.encode(secretKey.getBytes()))
             .compact();
 
     }
@@ -83,7 +68,6 @@ public class JwtServiceImpl implements JwtService {
             .claim("tokenId", UUID.randomUUID().toString())
             .claim("username", username)
             .claim("roles", roles)
-            .signWith(signatureAlgorithm, base64Encoder.encode(secretKey.getBytes()))
             .compact();
     }
 
