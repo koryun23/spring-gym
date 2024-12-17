@@ -19,12 +19,4 @@ public interface JwtService {
     String getUsernameFromJwt(String jwt);
 
     List<UserRoleType> getRolesFromJwt(String jwt);
-
-    String getTokenIdFromJwt(String jwt);
-
-    Date getIssuedAt(String jwt);
-
-    Date getExpiration(String jwt);
-
-    Map<String, Object> getHeadersAsMap(String jwt) throws IOException;
 }

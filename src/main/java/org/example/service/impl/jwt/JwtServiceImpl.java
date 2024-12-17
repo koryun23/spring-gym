@@ -6,11 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtParser;
-import java.io.IOException;
-import java.util.Base64;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.example.entity.user.UserRoleType;
@@ -89,33 +86,4 @@ public class JwtServiceImpl implements JwtService {
         Claims body = (Claims) jwtParser.parse(jwt).getBody();
         return (List<UserRoleType>) body.get("roles");
     }
-
-    @Override
-    public String getTokenIdFromJwt(String jwt) {
-        Claims body = (Claims) jwtParser.parse(jwt).getBody();
-        return (String) body.get("tokenId");
-    }
-
-    @Override
-    public Date getIssuedAt(String jwt) {
-        Claims body = (Claims) jwtParser.parse(jwt).getBody();
-        return body.getIssuedAt();
-    }
-
-    @Override
-    public Date getExpiration(String jwt) {
-        Claims body = (Claims) jwtParser.parse(jwt).getBody();
-        return body.getExpiration();
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public Map<String, Object> getHeadersAsMap(String jwt) throws IOException {
-        Base64.Decoder decoder = Base64.getUrlDecoder();
-        String[] splitJwt = jwt.split("\\.");
-        byte[] decode = decoder.decode(splitJwt[0]);
-        Map<String, Object> map = (Map<String, Object>) objectMapper.readValue(decode, Map.class);
-        return map;
-    }
-
 }
