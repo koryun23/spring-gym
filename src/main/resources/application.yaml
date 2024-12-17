@@ -1,5 +1,8 @@
 spring:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.data
   main:
+    allow-bean-definition-overriding: 'true'
     allow-circular-references: 'true'
   flyway:
     enabled: 'true'
