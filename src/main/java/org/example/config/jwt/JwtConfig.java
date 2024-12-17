@@ -6,10 +6,15 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import org.example.security.JwtDecoderImpl;
+import org.example.service.core.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 
 @Configuration
 public class JwtConfig {
@@ -37,5 +42,10 @@ public class JwtConfig {
     @Bean
     public Key secretKey(String jwtSecret, SignatureAlgorithm signatureAlgorithm) {
         return new SecretKeySpec(jwtSecret.getBytes(StandardCharsets.UTF_8), signatureAlgorithm.getJcaName());
+    }
+
+    @Bean
+    public JwtDecoder jwtDecoder(JwtService jwtService, Key secretKey) {
+        return new JwtDecoderImpl(jwtService, NimbusJwtDecoder.withSecretKey((SecretKey) secretKey).build());
     }
 }

@@ -30,6 +30,7 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
 
     private final LoginAttemptService loginAttemptService;
 
+    //TODO: Consider moving them to security config class
     @Value("${security.login.block.duration.minutes}")
     private int blockMinutes;
 
