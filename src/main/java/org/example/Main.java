@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
 
-@SpringBootApplication(exclude = { SpringDataWebAutoConfiguration.class })
+@SpringBootApplication(exclude = {SpringDataWebAutoConfiguration.class})
 public class Main {
     /**
      * Main method.
