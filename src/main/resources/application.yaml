@@ -69,3 +69,9 @@ server:
   port: '8888'
   servlet:
     context-path: /
+security:
+  login:
+    block:
+      attempts: '3'
+      duration:
+        minutes: '5'

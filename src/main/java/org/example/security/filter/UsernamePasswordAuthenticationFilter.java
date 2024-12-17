@@ -20,6 +20,7 @@ import org.example.service.core.jwt.JwtService;
 import org.example.service.core.user.LoginAttemptService;
 import org.example.service.core.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,6 +43,12 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
     private final LoginAttemptService loginAttemptService;
 
     private AuthHolder authHolder;
+
+    @Value("${security.login.block.duration.minutes}")
+    private int blockMinutes;
+
+    @Value("${security.login.block.attempts}")
+    private int attemptsBeforeBlock;
 
     /**
      * Constructor.
@@ -123,9 +130,9 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
         authHolder.attemptLogin();
         loginAttemptService.incrementCounter(authHolder.getLoginAttemptDto().getId());
 
-        if (authHolder.getLoginAttemptDto().getCounter() == 3) {
+        if (authHolder.getLoginAttemptDto().getCounter() == attemptsBeforeBlock) {
             authHolder.getLoginAttemptDto().setBlockedUntil(
-                LocalDateTime.now().plusMinutes(5)); // TODO: Move the minutes to application.yaml
+                LocalDateTime.now().plusMinutes(blockMinutes)); // TODO: Move the minutes to application.yaml
             authHolder.getLoginAttemptDto().setCounter(0);
 
             // update in the database
