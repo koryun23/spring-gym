@@ -1,7 +1,6 @@
 package org.example.validator;
 
 import java.util.Optional;
-import org.example.dto.RestResponse;
 import org.example.dto.request.UserChangePasswordRequestDto;
 import org.example.entity.user.UserEntity;
 import org.example.exception.CustomIllegalArgumentException;
@@ -23,7 +22,7 @@ public class UserValidator {
     /**
      * Validate User Change Password Request Dto.
      */
-    public RestResponse validateChangePassword(UserChangePasswordRequestDto requestDto) {
+    public void validateChangePassword(UserChangePasswordRequestDto requestDto) {
 
         if (requestDto == null) {
             throw new CustomIllegalArgumentException("Request body is missing");
@@ -52,8 +51,5 @@ public class UserValidator {
         if (!userEntity.getPassword().equals(oldPassword)) {
             throw new CustomIllegalArgumentException("User with the provided credentials does not exist");
         }
-
-        return null;
     }
-
 }

@@ -1,6 +1,5 @@
 package org.example.validator;
 
-import org.example.dto.RestResponse;
 import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TraineeDeletionByUsernameRequestDto;
 import org.example.dto.request.TraineeSwitchActivationStateRequestDto;
@@ -26,7 +25,7 @@ public class TraineeValidator {
     /**
      * Validate Trainee Creation Request Dto.
      */
-    public RestResponse validateCreateTrainee(TraineeCreationRequestDto requestDto) {
+    public void validateCreateTrainee(TraineeCreationRequestDto requestDto) {
 
         if (requestDto == null) {
             throw new CustomIllegalArgumentException("Request body is missing");
@@ -40,14 +39,12 @@ public class TraineeValidator {
         if (lastName == null || lastName.isEmpty()) {
             throw new CustomIllegalArgumentException("Last name is required");
         }
-
-        return null;
     }
 
     /**
      * Validate Trainee Update Request Dto.
      */
-    public RestResponse validateUpdateTrainee(TraineeUpdateRequestDto requestDto) {
+    public void validateUpdateTrainee(TraineeUpdateRequestDto requestDto) {
 
         if (requestDto == null) {
             throw new CustomIllegalArgumentException("Request body is missing");
@@ -76,14 +73,12 @@ public class TraineeValidator {
         if (traineeService.findByUsername(username).isEmpty()) {
             throw new TraineeNotFoundException(username);
         }
-
-        return null;
     }
 
     /**
      * Validate Trainee Retrieval by Username Request Dto.
      */
-    public RestResponse validateRetrieveTrainee(String username) {
+    public void validateRetrieveTrainee(String username) {
 
         if (username == null || username.isEmpty()) {
             throw new CustomIllegalArgumentException("Username is required");
@@ -92,14 +87,12 @@ public class TraineeValidator {
         if (traineeService.findByUsername(username).isEmpty()) {
             throw new TraineeNotFoundException(username);
         }
-
-        return null;
     }
 
     /**
      * Validate Trainee Deletion by Username Request Dto.
      */
-    public RestResponse validateDeleteTrainee(
+    public void validateDeleteTrainee(
         TraineeDeletionByUsernameRequestDto requestDto) {
 
         Assert.notNull(requestDto, "TraineeDeletionByUsernameRequestDto must not be null");
@@ -112,14 +105,12 @@ public class TraineeValidator {
         if (traineeService.findByUsername(username).isEmpty()) {
             throw new TraineeNotFoundException(username);
         }
-
-        return null;
     }
 
     /**
      * Validate Trainee Switch Activation State Request Dto.
      */
-    public RestResponse validateSwitchActivationState(
+    public void validateSwitchActivationState(
         TraineeSwitchActivationStateRequestDto requestDto) {
 
         String username = requestDto.getUsername();
@@ -134,7 +125,5 @@ public class TraineeValidator {
         if (traineeService.findByUsername(username).isEmpty()) {
             throw new TraineeNotFoundException(username);
         }
-
-        return null;
     }
 }

@@ -1,7 +1,6 @@
 package org.example.validator;
 
 import java.sql.Date;
-import org.example.dto.RestResponse;
 import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTraineeRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTrainerRequestDto;
@@ -30,7 +29,7 @@ public class TrainingValidator {
     /**
      * Validate Training Creation Response Dto.
      */
-    public RestResponse validateCreateTraining(TrainingCreationRequestDto requestDto) {
+    public void validateCreateTraining(TrainingCreationRequestDto requestDto) {
 
         String traineeUsername = requestDto.getTraineeUsername();
         if (traineeUsername == null || traineeUsername.isEmpty()) {
@@ -68,14 +67,12 @@ public class TrainingValidator {
         if (trainerService.findByUsername(trainerUsername).isEmpty()) {
             throw new CustomIllegalArgumentException("Trainer does not exist");
         }
-
-        return null;
     }
 
     /**
      * Validate Training List Retrieval By Trainer Request Dto.
      */
-    public RestResponse validateRetrieveTrainingListByTrainer(
+    public void validateRetrieveTrainingListByTrainer(
         TrainingListRetrievalByTrainerRequestDto requestDto) {
 
         String trainerUsername = requestDto.getTrainerUsername();
@@ -98,14 +95,12 @@ public class TrainingValidator {
                 throw new CustomIllegalArgumentException("Date format is wrong for the to argument");
             }
         }
-
-        return null;
     }
 
     /**
      * Validate Training List Retrieval By Trainee Request Dto.
      */
-    public RestResponse validateRetrieveTrainingListByTrainee(
+    public void validateRetrieveTrainingListByTrainee(
         TrainingListRetrievalByTraineeRequestDto requestDto) {
 
         String traineeUsername = requestDto.getTraineeUsername();
@@ -129,6 +124,5 @@ public class TrainingValidator {
                 throw new CustomIllegalArgumentException("Date format is wrong for the to argument");
             }
         }
-        return null;
     }
 }

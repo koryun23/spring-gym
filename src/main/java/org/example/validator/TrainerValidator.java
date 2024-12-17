@@ -1,6 +1,5 @@
 package org.example.validator;
 
-import org.example.dto.RestResponse;
 import org.example.dto.request.RetrieveAllTrainersNotAssignedToTraineeRequestDto;
 import org.example.dto.request.TrainerCreationRequestDto;
 import org.example.dto.request.TrainerRetrievalByUsernameRequestDto;
@@ -36,7 +35,7 @@ public class TrainerValidator {
     /**
      * Validate Trainer Creation Request Dto.
      */
-    public RestResponse validateCreateTrainer(TrainerCreationRequestDto requestDto) {
+    public void validateCreateTrainer(TrainerCreationRequestDto requestDto) {
 
         Assert.notNull(requestDto, "TrainerCreationRequestDto must not be null");
 
@@ -62,13 +61,12 @@ public class TrainerValidator {
         if (trainingTypeService.findById(trainingTypeId).isEmpty()) {
             throw new CustomIllegalArgumentException("Training Type Id does not exist");
         }
-        return null;
     }
 
     /**
      * Validate Trainer Update Request Dto.
      */
-    public RestResponse validateUpdateTrainer(TrainerUpdateRequestDto requestDto) {
+    public void validateUpdateTrainer(TrainerUpdateRequestDto requestDto) {
 
         Assert.notNull(requestDto, "TrainerUpdateRequestDto must not be null");
         String username = requestDto.getUsername();
@@ -102,14 +100,12 @@ public class TrainerValidator {
         if (trainerService.findByUsername(username).isEmpty()) {
             throw new TrainerNotFoundException(username);
         }
-
-        return null;
     }
 
     /**
      * Validate Trainer Retrieval by Username Request Dto.
      */
-    public RestResponse validateRetrieveTrainer(
+    public void validateRetrieveTrainer(
         TrainerRetrievalByUsernameRequestDto requestDto) {
 
         Assert.notNull(requestDto, "Trainer Retrieval by Username Request Dto must not be null");
@@ -121,14 +117,12 @@ public class TrainerValidator {
         if (trainerService.findByUsername(username).isEmpty()) {
             throw new TrainerNotFoundException(username);
         }
-
-        return null;
     }
 
     /**
      * Validate Trainer Switch Activation State Request Dto.
      */
-    public RestResponse validateSwitchActivationState(
+    public void validateSwitchActivationState(
         TrainerSwitchActivationStateRequestDto requestDto) {
 
         Assert.notNull(requestDto, "TrainerSwitchActivationStateRequestDto must not be null");
@@ -144,14 +138,12 @@ public class TrainerValidator {
         if (trainerService.findByUsername(username).isEmpty()) {
             throw new TrainerNotFoundException(username);
         }
-
-        return null;
     }
 
     /**
      * Validate Retrieve All Trainers Not Assigned To Trainee Request Dto.
      */
-    public RestResponse validateRetrieveAllTrainersNotAssignedToTrainee(
+    public void validateRetrieveAllTrainersNotAssignedToTrainee(
         RetrieveAllTrainersNotAssignedToTraineeRequestDto requestDto) {
 
         String traineeUsername = requestDto.getUsername();
@@ -162,6 +154,5 @@ public class TrainerValidator {
             throw new TraineeNotFoundException(traineeUsername);
         }
 
-        return null;
     }
 }
