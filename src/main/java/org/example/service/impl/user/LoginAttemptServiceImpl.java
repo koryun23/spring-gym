@@ -3,7 +3,7 @@ package org.example.service.impl.user;
 import jakarta.transaction.Transactional;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
-import org.example.entity.user.LoginAttemptEntity;
+import org.example.entity.auth.LoginAttemptEntity;
 import org.example.exception.LoginAttemptNotFoundException;
 import org.example.repository.LoginAttemptRepository;
 import org.example.service.core.user.LoginAttemptService;

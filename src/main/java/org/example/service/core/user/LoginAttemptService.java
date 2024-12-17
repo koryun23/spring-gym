@@ -1,7 +1,7 @@
 package org.example.service.core.user;
 
 import java.util.Optional;
-import org.example.entity.user.LoginAttemptEntity;
+import org.example.entity.auth.LoginAttemptEntity;
 
 public interface LoginAttemptService {
 

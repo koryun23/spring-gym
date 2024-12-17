@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
-import org.example.entity.user.LoginAttemptEntity;
+import org.example.entity.auth.LoginAttemptEntity;
 import org.example.service.core.user.LoginAttemptService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
