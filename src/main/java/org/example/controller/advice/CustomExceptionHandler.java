@@ -1,4 +1,4 @@
-package org.example.exception.handler;
+package org.example.controller.advice;
 
 import java.time.LocalDateTime;
 import java.util.List;
