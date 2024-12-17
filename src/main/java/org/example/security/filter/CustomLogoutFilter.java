@@ -11,6 +11,7 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import org.springframework.stereotype.Component;
 
 @Component
+// TODO Do you use this filter?
 public class CustomLogoutFilter extends LogoutFilter {
 
     public CustomLogoutFilter(LogoutSuccessHandler logoutSuccessHandler, LogoutHandler logoutHandler) {

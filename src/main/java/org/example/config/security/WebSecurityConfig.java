@@ -29,7 +29,7 @@ public class WebSecurityConfig {
     private final AccessDeniedHandler accessDeniedHandler;
     private final AuthenticationEntryPoint authenticationEntryPoint;
     private final MdcFilter mdcFilter;
-    private final LogoutFilter logoutFilter;
+    private final LogoutFilter logoutFilter; // TODO no usage
     private final LogoutSuccessHandler logoutSuccessHandler;
     private final LogoutHandler logoutHandler;
 
@@ -72,8 +72,13 @@ public class WebSecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.POST, "/trainees").permitAll()
                 .requestMatchers(HttpMethod.POST, "/trainers").permitAll()
+                // TODO I don't think you need to add this for login,
+                //  it will be added by spring security based on the filter class configuration.
                 .requestMatchers(HttpMethod.GET, "/users/login").permitAll()
+                // TODO Why do you give everyone access to the logout endpoint?
                 .requestMatchers(HttpMethod.GET, "/users/logout").permitAll()
+                // TODO I think setting authorities on controllers using annotations is better
+                //  and will make filter chain easier to read.
                 .requestMatchers("/trainees/*").hasAuthority("TRAINEE")
                 .requestMatchers("/trainings/trainee/*").hasAuthority("TRAINEE")
                 .requestMatchers("/trainers/*").hasAuthority("TRAINER")
@@ -82,6 +87,8 @@ public class WebSecurityConfig {
             .authenticationManager(authenticationManager)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .logout(logout -> logout
+                // TODO I think this will give access to the logout endpoint using all http methods.
+                //  It would be better to use one type of method.
                 .logoutUrl("/users/logout")
                 .logoutSuccessHandler(logoutSuccessHandler)
                 .addLogoutHandler(logoutHandler)

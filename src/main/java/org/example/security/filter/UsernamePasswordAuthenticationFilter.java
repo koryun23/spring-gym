@@ -34,6 +34,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
+// TODO I think it would be better to name custom class with a different name from spring's built-in classes.
 public class UsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
     private final AuthenticationManager authenticationManager;
@@ -61,7 +62,8 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
         throws AuthenticationException, IOException {
 
         Optional<LoginAttemptEntity> optionalLoginAttempt = loginAttemptService.findByRemoteAddress(request.getRemoteAddr());
-
+        // TODO I think this logic could be in a separate method.
+        //  It would make the attemptAuthentication method easier to read.
         if (optionalLoginAttempt.isPresent()) {
             LoginAttemptEntity loginAttemptEntity = optionalLoginAttempt.get();
             authHolder = AuthHolder.of(new LoginRequestDto(
@@ -82,6 +84,8 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
 
         if (LocalDateTime.now().isBefore(authHolder.getLoginRequestDto().getBlockedUntil())) {
             response.setStatus(401);
+            // TODO I dont think it is a good idea to send a concrete message about block time,
+            //  I think it's better to give some general message like "Try again later."
             log.info("Cannot login until {}", authHolder.getLoginRequestDto().getBlockedUntil());
             return null;
         }
@@ -103,7 +107,8 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
         String password = user.getPassword();
         List<UserRoleType> userRoles = user.getUserRoleEntityList().stream().map(
             UserRoleEntity::getRole).toList();
-
+        // TODO I think you can pass the authResult to the setAuthentication method.
+        //  It should already contain the authenticated user.
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
             user, password, userRoles.stream().map(UserRoleType::toString).map(SimpleGrantedAuthority::new).toList()
         ));
@@ -122,6 +127,8 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
         authHolder.attemptLogin();
         loginAttemptService.incrementCounter(authHolder.getLoginRequestDto().getId());
 
+        // TODO I think it would be better if the logic for failed login db update would be in another method.
+        //  It is not the main purpose of the unsuccessfulAuthentication method.
         if (authHolder.getLoginRequestDto().getCounter() == 3) {
             authHolder.getLoginRequestDto().setBlockedUntil(
                 LocalDateTime.now().plusMinutes(5)); // TODO: Move the minutes to application.properties

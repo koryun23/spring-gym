@@ -30,5 +30,7 @@ public class LogoutHandlerImpl implements LogoutHandler {
             throw new JwtException("Token is expired");
         }
 
+        // TODO I think you need to invalidate the given jwt token when logging out.
+
     }
 }

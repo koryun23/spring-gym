@@ -19,8 +19,11 @@ public class JwtDecoderImpl implements JwtDecoder {
         this.jwtService = jwtService;
     }
 
+    // TODO Do you use this method?
     @Override
     public Jwt decode(String token) throws JwtException {
+        // TODO Since you are extending from JwtDecoder interface,
+        //  you could use its decode method and not write your custom logic.
         if (jwtService.isExpired(token)) {
             throw new JwtException("Token is expired");
         }

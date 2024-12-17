@@ -13,7 +13,8 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
         throws IOException, ServletException {
-
+        // TODO I think it would be better to write more detailed response
+        //  and not just the response code. You could use the RestResponse class.
         response.setStatus(200);
 
     }
