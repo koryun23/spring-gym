@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.example.entity.user.LoginAttemptEntity;
+import org.example.exception.LoginAttemptNotFoundException;
 import org.example.repository.LoginAttemptRepository;
 import org.example.service.core.user.LoginAttemptService;
 import org.springframework.stereotype.Service;
@@ -30,12 +31,16 @@ public class LoginAttemptServiceImpl implements LoginAttemptService {
 
     @Transactional
     @Override
-    public void incrementCounter(String remoteAddress) {
+    public Integer incrementCounter(String remoteAddress) {
         Assert.notNull(remoteAddress, "Remote address must not be null");
         Assert.hasText(remoteAddress, "Remote address must not be empty");
         log.info("Incrementing the attempt counter for login attempts from {}", remoteAddress);
         loginAttemptRepository.incrementCounter(remoteAddress);
-        log.info("Successfully incremented the attempt counter for login attempts from {}", remoteAddress);
+        Integer updatedCounter = loginAttemptRepository.findByRemoteAddress(remoteAddress)
+            .orElseThrow(() -> new LoginAttemptNotFoundException(remoteAddress)).getCounter();
+        log.info("Successfully incremented the attempt counter for login attempts from {}, new counter - {}",
+            remoteAddress, updatedCounter);
+        return updatedCounter;
     }
 
     @Transactional

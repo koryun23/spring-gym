@@ -7,7 +7,7 @@ public interface LoginAttemptService {
 
     LoginAttemptEntity create(LoginAttemptEntity loginAttemptEntity);
 
-    void incrementCounter(String remoteAddress);
+    Integer incrementCounter(String remoteAddress);
 
     void reset(String remoteAddress);
 

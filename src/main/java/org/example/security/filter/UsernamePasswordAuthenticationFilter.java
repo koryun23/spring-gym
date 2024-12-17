@@ -9,8 +9,6 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
-import org.example.auth.AuthHolder;
-import org.example.dto.plain.LoginAttemptDto;
 import org.example.entity.user.LoginAttemptEntity;
 import org.example.service.core.user.LoginAttemptService;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,8 +29,6 @@ import org.springframework.stereotype.Component;
 public class UsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
     private final LoginAttemptService loginAttemptService;
-
-    private AuthHolder authHolder;
 
     @Value("${security.login.block.duration.minutes}")
     private int blockMinutes;
@@ -60,27 +56,12 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
         Optional<LoginAttemptEntity> optionalLoginAttempt =
             loginAttemptService.findByRemoteAddress(request.getRemoteAddr());
 
-        if (optionalLoginAttempt.isPresent()) {
-            LoginAttemptEntity loginAttemptEntity = optionalLoginAttempt.get();
-            authHolder = AuthHolder.of(new LoginAttemptDto(
-                loginAttemptEntity.getRemoteAddress(),
-                loginAttemptEntity.getCounter(),
-                loginAttemptEntity.getBlockedUntil()
-            ));
-        } else {
-            authHolder = AuthHolder.ofEmpty(request.getRemoteAddr());
-            loginAttemptService.create(new LoginAttemptEntity(
-                request.getRemoteAddr(),
-                0,
-                LocalDateTime.now()
-            ));
-        }
+        LoginAttemptEntity loginAttemptEntity = optionalLoginAttempt.orElseGet(
+            () -> loginAttemptService.create(new LoginAttemptEntity(request.getRemoteAddr(), 0, LocalDateTime.now())));
 
-        authHolder.getLoginAttemptDto().setId(request.getRemoteAddr());
-
-        if (LocalDateTime.now().isBefore(authHolder.getLoginAttemptDto().getBlockedUntil())) {
+        if (LocalDateTime.now().isBefore(loginAttemptEntity.getBlockedUntil())) {
             response.setStatus(401);
-            log.info("Cannot login until {}", authHolder.getLoginAttemptDto().getBlockedUntil());
+            log.info("Cannot login until {}", loginAttemptEntity.getBlockedUntil());
             return null;
         }
 
@@ -96,6 +77,7 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
 
+        loginAttemptService.reset(request.getRemoteAddr());
         super.successfulAuthentication(request, response, chain, authResult);
 
     }
@@ -105,32 +87,11 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
                                               AuthenticationException failed) throws IOException, ServletException {
         super.unsuccessfulAuthentication(request, response, failed);
 
-        log.info("Auth Holder before - {}", authHolder);
+        Integer counter = loginAttemptService.incrementCounter(request.getRemoteAddr());
 
-        authHolder.attemptLogin();
-        loginAttemptService.incrementCounter(authHolder.getLoginAttemptDto().getId());
-
-        if (authHolder.getLoginAttemptDto().getCounter() == attemptsBeforeBlock) {
-            authHolder.getLoginAttemptDto().setBlockedUntil(
-                LocalDateTime.now().plusMinutes(blockMinutes));
-            authHolder.getLoginAttemptDto().setCounter(0);
-
-            // update in the database
-            loginAttemptService.update(new LoginAttemptEntity(
-                authHolder.getLoginAttemptDto().getId(),
-                authHolder.getLoginAttemptDto().getCounter(),
-                authHolder.getLoginAttemptDto().getBlockedUntil()
-            ));
+        if (counter == attemptsBeforeBlock) {
+            loginAttemptService.update(
+                new LoginAttemptEntity(request.getRemoteAddr(), 0, LocalDateTime.now().plusMinutes(blockMinutes)));
         }
-
-        if (loginAttemptService.findByRemoteAddress(request.getRemoteAddr()).isEmpty()) {
-            loginAttemptService.create(new LoginAttemptEntity(
-                authHolder.getLoginAttemptDto().getId(),
-                authHolder.getLoginAttemptDto().getCounter(),
-                authHolder.getLoginAttemptDto().getBlockedUntil()
-            ));
-        }
-
-        log.info("Auth Holder after - {}", authHolder);
     }
 }
