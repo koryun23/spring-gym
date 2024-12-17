@@ -25,6 +25,6 @@ public interface TrainerEntityRepository extends JpaRepository<TrainerEntity, Lo
 
     @Modifying
     @Transactional
-    @Query("update Trainer t set t.specializationId = ?2 where t.user.username = ?1")
+    @Query("update TrainerEntity t set t.specialization = ?2 where t.user.username = ?1")
     void update(String username, Long specializationId);
 }

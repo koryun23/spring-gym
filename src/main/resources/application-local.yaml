@@ -1,0 +1,8 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        connection:
+          url: jdbc:postgresql://localhost:6432/gym_local
+  flyway:
+    url: jdbc:postgresql://localhost:6432/gym_local
