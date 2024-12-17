@@ -82,17 +82,18 @@ public class TrainerServiceImpl implements TrainerService {
         Assert.notNull(trainer, "TrainerUpdateParams must not be null");
         LOGGER.info("Updating a TrainerEntity based on TrainerUpdateParams - {}", trainer);
 
-        UserEntity updatedUserEntity = userService.update(new UserEntity(
+        String username = trainer.getUserDto().getUsername();
+
+        userService.update(new UserEntity(
             trainer.getUserDto().getFirstName(),
             trainer.getUserDto().getLastName(),
-            trainer.getUserDto().getUsername(),
+            username,
             null,
             trainer.getUserDto().getIsActive()
         ));
-        TrainerEntity persistedTrainer = this.selectByUsername(trainer.getUserDto().getUsername());
-        persistedTrainer.setUser(updatedUserEntity);
-        persistedTrainer.setSpecialization(trainingTypeService.get(trainer.getSpecializationId()));
-        TrainerEntity updatedTrainerEntity = trainerDao.save(persistedTrainer);
+        trainerDao.update(username, trainer.getSpecializationId());
+        TrainerEntity updatedTrainerEntity = this.selectByUsername(username);
+
         LOGGER.info("Successfully updated a Trainer based on TrainerUpdateParams - {}, result - {}",
             trainer,
             updatedTrainerEntity);

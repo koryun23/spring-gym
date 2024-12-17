@@ -1,9 +1,11 @@
 package org.example.repository;
 
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import org.example.entity.trainer.TrainerEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -20,4 +22,9 @@ public interface TrainerEntityRepository extends JpaRepository<TrainerEntity, Lo
         + "left join UserEntity user on trainee.user.id = user.id "
         + "where training.trainer.id = trainer.id and user.username = ?1)")
     List<TrainerEntity> findAllTrainersNotAssignedTo(String traineeUsername);
+
+    @Modifying
+    @Transactional
+    @Query("update Trainer t set t.specializationId = ?2 where t.user.username = ?1")
+    void update(String username, Long specializationId);
 }

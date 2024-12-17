@@ -11,8 +11,6 @@ public interface UserService {
 
     boolean delete(Long id);
 
-    UserEntity select(Long id);
-
     UserEntity changePassword(String username, String newPassword);
 
     UserEntity switchActivationState(String username, Boolean state);
@@ -20,8 +18,6 @@ public interface UserService {
     UserEntity getByUsername(String username);
 
     Optional<UserEntity> findByUsername(String username);
-
-    Optional<UserEntity> findByPassword(String password);
 
     Optional<UserEntity> findById(Long id);
 

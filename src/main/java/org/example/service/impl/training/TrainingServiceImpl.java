@@ -2,12 +2,10 @@ package org.example.service.impl.training;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Optional;
 import org.example.dto.plain.TrainingDto;
 import org.example.entity.trainee.TraineeEntity;
 import org.example.entity.trainer.TrainerEntity;
 import org.example.entity.training.TrainingEntity;
-import org.example.exception.TrainingNotFoundException;
 import org.example.repository.TrainingEntityRepository;
 import org.example.service.core.trainee.TraineeService;
 import org.example.service.core.trainer.TrainerService;
@@ -59,54 +57,6 @@ public class TrainingServiceImpl implements TrainingService {
             "Successfully created a TrainingEntity according to the TrainingEntity Create Params - {}, result - {}",
             training, createdTrainingEntity);
         return createdTrainingEntity;
-    }
-
-    @Transactional
-    @Override
-    public TrainingEntity select(Long id) {
-        Assert.notNull(id, "TrainingEntity Id must not be null");
-        LOGGER.info("Selecting a TrainingEntity with an id of {}", id);
-        TrainingEntity trainingEntity =
-            trainingEntityRepository.findById(id).orElseThrow(() -> new TrainingNotFoundException(id));
-        LOGGER.info("Successfully selected a TrainingEntity with an id of {}, result - {}", id, trainingEntity);
-        return trainingEntity;
-    }
-
-    @Transactional
-    @Override
-    public TrainingEntity update(TrainingEntity trainingEntity) {
-        Assert.notNull(trainingEntity, "Training Entity must not be null");
-        LOGGER.info("Updating a TrainingEntity with an id of {} according to {}", trainingEntity.getId(),
-            trainingEntity);
-
-        TrainingEntity updatedTrainingEntity = trainingEntityRepository.save(trainingEntity);
-
-        TraineeEntity trainee = trainingEntity.getTrainee();
-        List<TrainingEntity> traineeTrainings =
-            this.findAllByTraineeUsernameAndCriteria(trainee.getUser().getUsername(),
-                null, null, null, null);
-        trainee.setTrainingEntityList(traineeTrainings);
-
-        TrainerEntity trainer = trainingEntity.getTrainer();
-        List<TrainingEntity> trainerTrainings =
-            this.findAllByTrainerUsernameAndCriteria(trainer.getUser().getUsername(),
-                null, null, null);
-        trainer.setTrainingEntityList(trainerTrainings);
-        LOGGER.info("Successfully updated a TrainingEntity with an id of {}, result - {}", trainingEntity.getId(),
-            updatedTrainingEntity);
-
-        return updatedTrainingEntity;
-    }
-
-    @Transactional
-    @Override
-    public Optional<TrainingEntity> findById(Long id) {
-        Assert.notNull(id, "TrainingEntity id must not be null");
-        LOGGER.info("Retrieving an optional TrainingEntity with an id of {}", id);
-        Optional<TrainingEntity> optionalTraining = trainingEntityRepository.findById(id);
-        LOGGER.info("Successfully retrieved an optional TrainingEntity with an id of {}, result - {}", id,
-            optionalTraining);
-        return optionalTraining;
     }
 
     @Transactional

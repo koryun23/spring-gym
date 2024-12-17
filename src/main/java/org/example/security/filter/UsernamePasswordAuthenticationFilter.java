@@ -60,7 +60,8 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
         throws AuthenticationException, IOException {
 
-        Optional<LoginAttemptEntity> optionalLoginAttempt = loginAttemptService.findByRemoteAddress(request.getRemoteAddr());
+        Optional<LoginAttemptEntity> optionalLoginAttempt =
+            loginAttemptService.findByRemoteAddress(request.getRemoteAddr());
 
         if (optionalLoginAttempt.isPresent()) {
             LoginAttemptEntity loginAttemptEntity = optionalLoginAttempt.get();

@@ -1,7 +1,6 @@
 package org.example.repository;
 
 import jakarta.transaction.Transactional;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import org.example.entity.user.LoginAttemptEntity;

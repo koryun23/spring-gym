@@ -2,7 +2,6 @@ package org.example.config.security;
 
 import org.example.security.DatabaseUserDetailsService;
 import org.example.security.JwtConverter;
-import org.example.security.JwtDecoderImpl;
 import org.example.service.core.user.UserService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -46,7 +45,8 @@ public class SecurityConfig {
      * Jwt Authentication provider bean.
      */
     @Bean
-    public AuthenticationProvider jwtAuthenticationProvider(@Qualifier("jwtDecoder") JwtDecoder jwtDecoderImpl, JwtConverter jwtConverter) {
+    public AuthenticationProvider jwtAuthenticationProvider(@Qualifier("jwtDecoder") JwtDecoder jwtDecoderImpl,
+                                                            JwtConverter jwtConverter) {
         JwtAuthenticationProvider jwtAuthenticationProvider = new JwtAuthenticationProvider(jwtDecoderImpl);
         jwtAuthenticationProvider.setJwtAuthenticationConverter(jwtConverter);
         return jwtAuthenticationProvider;

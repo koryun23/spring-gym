@@ -81,12 +81,8 @@ public class TraineeServiceImpl implements TraineeService {
         LOGGER.info("Updating a TraineeEntity based on TraineeUpdateParams - {}", trainee);
 
         UserEntity persistedUser = userService.update(trainee.getUser());
-
+        traineeDao.update(trainee.getUser().getUsername(), trainee.getDateOfBirth(), trainee.getAddress());
         TraineeEntity updatedTrainee = this.selectByUsername(trainee.getUser().getUsername());
-        updatedTrainee.setUser(persistedUser);
-        updatedTrainee.setAddress(trainee.getAddress());
-        updatedTrainee.setDateOfBirth(trainee.getDateOfBirth());
-        traineeDao.save(updatedTrainee);
 
         LOGGER.info("Successfully updated a TraineeEntity based on TraineeUpdateParams - {}, result - {}", trainee,
             trainee);

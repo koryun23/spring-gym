@@ -42,11 +42,12 @@ public class UserServiceImpl implements UserService {
     public UserEntity update(UserEntity user) {
         Assert.notNull(user, "User Entity must not be null");
         LOGGER.info("Updating a User Entity with an id of {}", user.getId());
-        UserEntity persistedUserEntity = this.getByUsername(user.getUsername());
-        persistedUserEntity.setFirstName(user.getFirstName());
-        persistedUserEntity.setLastName(user.getLastName());
-        persistedUserEntity.setIsActive(user.getIsActive());
-        UserEntity updatedUserEntity = userEntityRepository.save(persistedUserEntity);
+
+        String username = user.getUsername();
+        userEntityRepository.update(username, user.getFirstName(), user.getLastName(), user.getIsActive());
+
+        UserEntity updatedUserEntity = this.getByUsername(username);
+
         LOGGER.info("Successfully updated a User Entity with an id of {}, result - {}",
             user.getId(), updatedUserEntity);
         return updatedUserEntity;
@@ -64,25 +65,16 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserEntity select(Long id) {
-        Assert.notNull(id, "Id must not be null");
-        LOGGER.info("Selecting a User Entity with an id of {}", id);
-        UserEntity userEntity = userEntityRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
-        LOGGER.info("Successfully selected a User Entity with an id of {}, result - {}", id, userEntity);
-        return userEntity;
-    }
-
-    @Transactional
-    @Override
     public UserEntity changePassword(String username, String newPassword) {
         Assert.notNull(username, "Username must not be null");
         Assert.hasText(username, "Username must not be empty");
         Assert.notNull(newPassword, "New password must not be null");
         Assert.hasText(newPassword, "New password must not be empty");
         LOGGER.info("Changing the password of the user {}", username);
+
+        userEntityRepository.updatePassword(username, passwordEncoder.encode(newPassword));
         UserEntity userEntity = this.getByUsername(username);
-        userEntity.setPassword(passwordEncoder.encode(newPassword));
-        userEntity = userEntityRepository.save(userEntity);
+
         LOGGER.info("Successfully changed the password of the user {}", username);
         return userEntity;
     }
@@ -93,11 +85,13 @@ public class UserServiceImpl implements UserService {
         Assert.notNull(username, "Username must not be null");
         Assert.hasText(username, "Username must not be empty");
         LOGGER.info("Switching the activation state of the user {}", username);
-        UserEntity userEntity = this.getByUsername(username);
-        userEntity.setIsActive(state);
-        userEntity = userEntityRepository.save(userEntity);
-        LOGGER.info("Successfully switched the activation state of the user {}", username);
-        return userEntity;
+
+        userEntityRepository.switchActivationState(username, state);
+        UserEntity updatedUserEntity = this.getByUsername(username);
+
+        LOGGER.info("Successfully switched the activation state of the user {}, result - {}", username,
+            updatedUserEntity);
+        return updatedUserEntity;
     }
 
     @Transactional
@@ -122,18 +116,6 @@ public class UserServiceImpl implements UserService {
         LOGGER.info("Successfully retrieved an optional User Entity with a username of {}, result - {}",
             username, optionalUserEntity);
         return optionalUserEntity;
-    }
-
-    @Transactional
-    @Override
-    public Optional<UserEntity> findByPassword(String password) {
-        Assert.notNull(password, "Password must not be null");
-        Assert.hasText(password, "Password must not be empty");
-        LOGGER.info("Retrieving an optional user with the provided password");
-        Optional<UserEntity> optionalUser = userEntityRepository.findByPassword(password);
-        LOGGER.info("Successfully retrieved an optional user entity with the provided password, result - {}",
-            optionalUser);
-        return optionalUser;
     }
 
     @Transactional

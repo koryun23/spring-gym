@@ -4,10 +4,8 @@ import jakarta.transaction.Transactional;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.example.entity.user.LoginAttemptEntity;
-import org.example.exception.LoginAttemptNotFoundException;
 import org.example.repository.LoginAttemptRepository;
 import org.example.service.core.user.LoginAttemptService;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 

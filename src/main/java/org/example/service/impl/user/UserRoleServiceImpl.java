@@ -1,14 +1,13 @@
 package org.example.service.impl.user;
 
-import java.util.List;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.example.entity.user.UserRoleEntity;
 import org.example.repository.UserRoleEntityRepository;
 import org.example.service.core.user.UserRoleService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-@Log4j2
+@Slf4j
 @Service
 public class UserRoleServiceImpl implements UserRoleService {
 
@@ -27,27 +26,5 @@ public class UserRoleServiceImpl implements UserRoleService {
 
         log.info("Successfully created a new UserRoleEntity - {}", savedUserRoleEntity);
         return savedUserRoleEntity;
-    }
-
-    @Override
-    public List<UserRoleEntity> findAllByUsername(String username) {
-        Assert.notNull(username, "Username must not be null");
-        Assert.hasText(username, "Username must not be empty");
-        log.info("Getting all UserRoleEntity of user with a username of {}", username);
-
-        List<UserRoleEntity> all = userRoleEntityRepository.findAllByUserUsername(username);
-
-        log.info("Successfully retrieved all UserRoleEntities of a user with a username of {}, result - {}", username,
-            all);
-        return all;
-    }
-
-    @Override
-    public void deleteByUsername(String username) {
-        Assert.notNull(username, "Username must not be null");
-        Assert.hasText(username, "Username must not be empty");
-        log.info("Deleting all UserRoleEntities of a user with a username of {}", username);
-        userRoleEntityRepository.deleteAllByUserUsername(username);
-        log.info("Successfully deleted all UserRoleEntities of a user with a username of {}", username);
     }
 }
