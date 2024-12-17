@@ -20,12 +20,12 @@ public interface LoginAttemptRepository extends JpaRepository<LoginAttemptEntity
     @Modifying
     @Transactional
     @Query("update LoginAttemptEntity l set l.counter = 0 where l.remoteAddress= ?1")
-    LoginAttemptEntity reset(String remoteAddress);
+    void reset(String remoteAddress);
 
     @Modifying
     @Transactional
     @Query("update LoginAttemptEntity l set l.counter = ?2, l.blockedUntil = ?3 where l.remoteAddress = ?1")
-    LoginAttemptEntity update(String remoteAddress, Integer counter, LocalDateTime blockedUntil);
+    void update(String remoteAddress, Integer counter, LocalDateTime blockedUntil);
 
     Optional<LoginAttemptEntity> findByRemoteAddress(String remoteAddress);
 }
