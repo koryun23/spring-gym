@@ -2,7 +2,6 @@ package org.example.service.impl.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtParser;
@@ -21,7 +20,6 @@ public class JwtServiceImpl implements JwtService {
 
     private final JwtBuilder jwtBuilder;
     private final JwtParser jwtParser;
-    private final ObjectMapper objectMapper;
 
     @Value("${jwt.refresh.token.expiration}")
     private long refreshTokenExpirationMillis;
@@ -33,11 +31,9 @@ public class JwtServiceImpl implements JwtService {
      * Constructor.
      */
     public JwtServiceImpl(JwtBuilder jwtBuilder,
-                          JwtParser jwtParser,
-                          ObjectMapper objectMapper) {
+                          JwtParser jwtParser) {
         this.jwtBuilder = jwtBuilder;
         this.jwtParser = jwtParser;
-        this.objectMapper = objectMapper;
     }
 
     @Override

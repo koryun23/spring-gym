@@ -9,7 +9,7 @@ import java.security.Key;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import org.example.security.JwtDecoderImpl;
-import org.example.service.core.jwt.JwtService;
+import org.example.validator.JwtValidator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,7 +45,7 @@ public class JwtConfig {
     }
 
     @Bean
-    public JwtDecoder jwtDecoder(JwtService jwtService, Key secretKey) {
-        return new JwtDecoderImpl(jwtService, NimbusJwtDecoder.withSecretKey((SecretKey) secretKey).build());
+    public JwtDecoder jwtDecoder(JwtValidator jwtValidator, Key secretKey) {
+        return new JwtDecoderImpl(jwtValidator, NimbusJwtDecoder.withSecretKey((SecretKey) secretKey).build());
     }
 }

@@ -1,9 +1,6 @@
 package org.example.service.core.jwt;
 
-import java.io.IOException;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import org.example.entity.user.UserRoleType;
 
 public interface JwtService {
