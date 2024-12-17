@@ -132,7 +132,7 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
 
         if (authHolder.getLoginAttemptDto().getCounter() == attemptsBeforeBlock) {
             authHolder.getLoginAttemptDto().setBlockedUntil(
-                LocalDateTime.now().plusMinutes(blockMinutes)); // TODO: Move the minutes to application.yaml
+                LocalDateTime.now().plusMinutes(blockMinutes));
             authHolder.getLoginAttemptDto().setCounter(0);
 
             // update in the database
