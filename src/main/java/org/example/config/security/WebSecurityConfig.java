@@ -29,7 +29,6 @@ public class WebSecurityConfig {
     private final AccessDeniedHandler accessDeniedHandler;
     private final AuthenticationEntryPoint authenticationEntryPoint;
     private final MdcFilter mdcFilter;
-    private final LogoutFilter logoutFilter;
     private final LogoutSuccessHandler logoutSuccessHandler;
     private final LogoutHandler logoutHandler;
 
@@ -41,7 +40,7 @@ public class WebSecurityConfig {
                              JwtConverter jwtConverter,
                              AccessDeniedHandler accessDeniedHandler,
                              AuthenticationEntryPoint authenticationEntryPoint, MdcFilter mdcFilter,
-                             LogoutFilter logoutFilter, LogoutSuccessHandler logoutSuccessHandler,
+                             LogoutSuccessHandler logoutSuccessHandler,
                              LogoutHandler logoutHandler) {
         this.authenticationManager = authenticationManager;
         this.usernamePasswordAuthenticationFilter = usernamePasswordAuthenticationFilter;
@@ -49,7 +48,6 @@ public class WebSecurityConfig {
         this.accessDeniedHandler = accessDeniedHandler;
         this.authenticationEntryPoint = authenticationEntryPoint;
         this.mdcFilter = mdcFilter;
-        this.logoutFilter = logoutFilter;
         this.logoutSuccessHandler = logoutSuccessHandler;
         this.logoutHandler = logoutHandler;
     }
