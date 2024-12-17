@@ -7,11 +7,11 @@ public interface LoginAttemptService {
 
     LoginAttemptEntity create(LoginAttemptEntity loginAttemptEntity);
 
-    LoginAttemptEntity incrementCounter(String remoteAddress);
+    void incrementCounter(String remoteAddress);
 
-    LoginAttemptEntity reset(String remoteAddress);
+    void reset(String remoteAddress);
 
     Optional<LoginAttemptEntity> findByRemoteAddress(String remoteAddress);
 
-    LoginAttemptEntity update(LoginAttemptEntity loginAttemptEntity);
+    void update(LoginAttemptEntity loginAttemptEntity);
 }

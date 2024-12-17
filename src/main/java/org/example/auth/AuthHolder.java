@@ -5,8 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.example.dto.plain.LoginRequestDto;
-import org.springframework.stereotype.Component;
+import org.example.dto.plain.LoginAttemptDto;
 
 @Getter
 @Setter
@@ -16,10 +15,10 @@ public class AuthHolder {
 
     private static AuthHolder authHolder;
 
-    private LoginRequestDto loginRequestDto;
+    private LoginAttemptDto loginAttemptDto;
 
-    private AuthHolder(LoginRequestDto loginRequestDto) {
-        this.loginRequestDto = loginRequestDto;
+    private AuthHolder(LoginAttemptDto loginAttemptDto) {
+        this.loginAttemptDto = loginAttemptDto;
     }
 
     /**
@@ -27,13 +26,13 @@ public class AuthHolder {
      */
     public static AuthHolder ofEmpty(String id) {
         if (authHolder == null) {
-            authHolder = new AuthHolder(new LoginRequestDto(id, 0, LocalDateTime.now()));
+            authHolder = new AuthHolder(new LoginAttemptDto(id, 0, LocalDateTime.now()));
         }
         return authHolder;
     }
 
-    public static AuthHolder of(LoginRequestDto loginRequestDto) {
-        authHolder = new AuthHolder(loginRequestDto);
+    public static AuthHolder of(LoginAttemptDto loginAttemptDto) {
+        authHolder = new AuthHolder(loginAttemptDto);
         return authHolder;
     }
 
@@ -44,8 +43,8 @@ public class AuthHolder {
         if (authHolder == null) {
             authHolder = AuthHolder.ofEmpty("");
         }
-        loginRequestDto.setCounter(loginRequestDto.getCounter() + 1);
-        authHolder.setLoginRequestDto(loginRequestDto);
+        loginAttemptDto.setCounter(loginAttemptDto.getCounter() + 1);
+        authHolder.setLoginAttemptDto(loginAttemptDto);
     }
 
 }

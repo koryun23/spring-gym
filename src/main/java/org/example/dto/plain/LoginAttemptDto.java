@@ -15,7 +15,7 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class LoginRequestDto {
+public class LoginAttemptDto {
 
     private String id;
     private Integer counter;

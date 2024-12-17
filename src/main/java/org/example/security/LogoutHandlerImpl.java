@@ -17,6 +17,7 @@ public class LogoutHandlerImpl implements LogoutHandler {
         this.jwtService = jwtService;
     }
 
+    // TODO: if token is invalid, the request won't reach this stage
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 

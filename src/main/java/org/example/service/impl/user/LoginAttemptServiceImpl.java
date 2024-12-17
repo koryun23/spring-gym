@@ -1,11 +1,13 @@
 package org.example.service.impl.user;
 
+import jakarta.transaction.Transactional;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.example.entity.user.LoginAttemptEntity;
 import org.example.exception.LoginAttemptNotFoundException;
 import org.example.repository.LoginAttemptRepository;
 import org.example.service.core.user.LoginAttemptService;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -28,29 +30,24 @@ public class LoginAttemptServiceImpl implements LoginAttemptService {
         return savedLoginAttemptEntity;
     }
 
+    @Transactional
     @Override
-    public LoginAttemptEntity incrementCounter(String remoteAddress) {
+    public void incrementCounter(String remoteAddress) {
         Assert.notNull(remoteAddress, "Remote address must not be null");
         Assert.hasText(remoteAddress, "Remote address must not be empty");
         log.info("Incrementing the attempt counter for login attempts from {}", remoteAddress);
-        LoginAttemptEntity loginAttemptEntity = loginAttemptRepository.findByRemoteAddress(remoteAddress)
-            .orElseThrow(() -> new LoginAttemptNotFoundException(remoteAddress));
-        loginAttemptEntity.setCounter(loginAttemptEntity.getCounter() + 1);
-        loginAttemptRepository.save(loginAttemptEntity); // TODO: USE AN UPDATE QUERY
-        log.info("Successfully incremented the attempt counter for login attempts from {}, result - {}", remoteAddress,
-            loginAttemptEntity);
-        return loginAttemptEntity;
+        loginAttemptRepository.incrementCounter(remoteAddress);
+        log.info("Successfully incremented the attempt counter for login attempts from {}", remoteAddress);
     }
 
+    @Transactional
     @Override
-    public LoginAttemptEntity reset(String remoteAddress) {
+    public void reset(String remoteAddress) {
         Assert.notNull(remoteAddress, "Remote address must not be null");
         Assert.hasText(remoteAddress, "Remote address must not be empty");
         log.info("Resetting login attempts from {}", remoteAddress);
-        LoginAttemptEntity loginAttemptEntity = loginAttemptRepository.reset(remoteAddress);
-        log.info("Successfully reset the attempt counter for login attempts from {}, result - {}", remoteAddress,
-            loginAttemptEntity);
-        return loginAttemptEntity;
+        loginAttemptRepository.reset(remoteAddress);
+        log.info("Successfully reset the attempt counter for login attempts from {}", remoteAddress);
     }
 
     @Override
@@ -63,14 +60,17 @@ public class LoginAttemptServiceImpl implements LoginAttemptService {
         return optionalLoginAttempt;
     }
 
+    @Transactional
     @Override
-    public LoginAttemptEntity update(LoginAttemptEntity loginAttemptEntity) {
-        LoginAttemptEntity persisted =
-            loginAttemptRepository.findByRemoteAddress(loginAttemptEntity.getRemoteAddress())
-                .orElseThrow(() -> new LoginAttemptNotFoundException(loginAttemptEntity.getRemoteAddress()));
-        persisted.setCounter(loginAttemptEntity.getCounter());
-        persisted.setBlockedUntil(loginAttemptEntity.getBlockedUntil());
-        return loginAttemptRepository.save(persisted); // TODO: USE AN UPDATE QUERY
+    public void update(LoginAttemptEntity loginAttemptEntity) {
+        Assert.notNull(loginAttemptEntity, "Login attempt entity must not be null");
+        log.info("Updating the login attempt to be {}", loginAttemptEntity);
+        loginAttemptRepository.update(
+            loginAttemptEntity.getRemoteAddress(),
+            loginAttemptEntity.getCounter(),
+            loginAttemptEntity.getBlockedUntil()
+        );
+        log.info("Successfully updated the login attempt to be {}", loginAttemptEntity);
     }
 
 
