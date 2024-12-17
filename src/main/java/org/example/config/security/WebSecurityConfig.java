@@ -22,20 +22,11 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-    private static final String[] AUTH_WHITELIST = {
-        "/swagger-resources",
-        "/swagger-resources/**",
-        "/configuration/ui",
-        "/configuration/security",
-        "/swagger-ui.html",
-        "/webjars/**",
-        "/v3/api-docs/**",
-        "/api/public/**",
-        "/api/public/authenticate",
-        "/actuator/*",
+    private static final String[] SWAGGER_URI_WHITELIST = {
         "/swagger-ui/**",
-        "/api-docs"
+        "/api-docs/**"
     };
+
     private final AuthenticationManager authenticationManager;
     private final UsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter;
     private final JwtConverter jwtConverter;
@@ -86,7 +77,7 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/trainers").permitAll()
                 .requestMatchers(HttpMethod.GET, "/users/login").permitAll()
                 .requestMatchers(HttpMethod.GET, "/users/logout").permitAll()
-                .requestMatchers(AUTH_WHITELIST).permitAll()
+                .requestMatchers(SWAGGER_URI_WHITELIST).permitAll()
                 .requestMatchers("/trainees/*").hasAuthority("TRAINEE")
                 .requestMatchers("/trainings/trainee/*").hasAuthority("TRAINEE")
                 .requestMatchers("/trainers/*").hasAuthority("TRAINER")
