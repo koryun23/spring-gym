@@ -7,29 +7,22 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.example.auth.AuthHolder;
 import org.example.dto.plain.LoginAttemptDto;
 import org.example.entity.user.LoginAttemptEntity;
-import org.example.entity.user.UserEntity;
-import org.example.entity.user.UserRoleEntity;
-import org.example.entity.user.UserRoleType;
-import org.example.service.core.jwt.JwtService;
 import org.example.service.core.user.LoginAttemptService;
-import org.example.service.core.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 
@@ -37,9 +30,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class UsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
-    private final AuthenticationManager authenticationManager;
-    private final UserService userService;
-    private final JwtService jwtService;
     private final LoginAttemptService loginAttemptService;
 
     private AuthHolder authHolder;
@@ -54,13 +44,13 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
      * Constructor.
      */
     public UsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager,
-                                                UserService userService,
-                                                JwtService jwtService, LoginAttemptService loginAttemptService) {
-        super(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/users/login"));
-        this.authenticationManager = authenticationManager;
-        this.userService = userService;
-        this.jwtService = jwtService;
+                                                LoginAttemptService loginAttemptService,
+                                                AuthenticationSuccessHandler authenticationSuccessHandler,
+                                                AuthenticationFailureHandler authenticationFailureHandler) {
+        super(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/users/login"), authenticationManager);
         this.loginAttemptService = loginAttemptService;
+        setAuthenticationSuccessHandler(authenticationSuccessHandler);
+        setAuthenticationFailureHandler(authenticationFailureHandler);
     }
 
     @Override
@@ -97,7 +87,7 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
         String username = request.getHeader("username");
         String password = request.getHeader("password");
 
-        return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+        return super.getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(
             new User(username, password, Collections.emptyList()), password
         ));
     }
@@ -106,25 +96,15 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
 
-        UserEntity user = userService.getByUsername(authResult.getName());
-        String username = user.getUsername();
-        String password = user.getPassword();
-        List<UserRoleType> userRoles = user.getUserRoleEntityList().stream().map(
-            UserRoleEntity::getRole).toList();
+        super.successfulAuthentication(request, response, chain, authResult);
 
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
-            user, password, userRoles.stream().map(UserRoleType::toString).map(SimpleGrantedAuthority::new).toList()
-        ));
-
-        response.setHeader("Access Token", jwtService.getAccessToken(username, userRoles));
-        response.setHeader("Refresh Token", jwtService.getRefreshToken(username, userRoles));
-        response.setStatus(200);
-        response.getWriter().flush();
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                               AuthenticationException failed) throws IOException, ServletException {
+        super.unsuccessfulAuthentication(request, response, failed);
+
         log.info("Auth Holder before - {}", authHolder);
 
         authHolder.attemptLogin();
@@ -152,13 +132,5 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
         }
 
         log.info("Auth Holder after - {}", authHolder);
-
-        response.setStatus(401);
-    }
-
-    @Override
-    @Autowired
-    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
-        super.setAuthenticationManager(authenticationManager);
     }
 }
