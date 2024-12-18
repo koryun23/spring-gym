@@ -11,9 +11,11 @@ import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.example.entity.auth.LoginAttemptEntity;
 import org.example.service.core.user.LoginAttemptService;
+import org.example.validator.JwtValidator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -28,6 +30,8 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
 
     private final LoginAttemptService loginAttemptService;
 
+    private final JwtValidator jwtValidator;
+
     @Value("${security.login.block.duration.minutes}")
     private int blockMinutes;
 
@@ -40,9 +44,11 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
     public UsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager,
                                                 LoginAttemptService loginAttemptService,
                                                 AuthenticationSuccessHandler authenticationSuccessHandler,
-                                                AuthenticationFailureHandler authenticationFailureHandler) {
+                                                AuthenticationFailureHandler authenticationFailureHandler,
+                                                JwtValidator jwtValidator) {
         super(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/users/login"), authenticationManager);
         this.loginAttemptService = loginAttemptService;
+        this.jwtValidator = jwtValidator;
         setAuthenticationSuccessHandler(authenticationSuccessHandler);
         setAuthenticationFailureHandler(authenticationFailureHandler);
     }
@@ -52,6 +58,12 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
         throws AuthenticationException, IOException {
 
         log.info("Attempting authentication");
+
+        String bearerToken = request.getHeader("Authorization");
+
+        if (jwtValidator.isValidBearerToken(bearerToken)) {
+            throw new AuthenticationServiceException("Cannot perform a login because the user is already logged in.");
+        }
 
         Optional<LoginAttemptEntity> optionalLoginAttempt =
             loginAttemptService.findByRemoteAddress(request.getRemoteAddr());

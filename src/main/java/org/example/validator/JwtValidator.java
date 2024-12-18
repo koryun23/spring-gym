@@ -19,21 +19,25 @@ public class JwtValidator {
      * A method for validating the given bearer token.
      */
     public void validateBearerToken(String bearerToken) {
-        if (bearerToken == null || !bearerToken.startsWith("Bearer ")) {
-            throw new JwtException("Token is invalid");
+        if (!isValidBearerToken(bearerToken)) {
+            throw new JwtException("Bearer token is invalid.");
         }
-        validateJwt(bearerToken.substring(7));
     }
 
     /**
      * A method for validating the given jwt token.
      */
     public void validateJwt(String jwt) {
-        log.info("Validating the given jwt token - {}", jwt);
-        if (jwtService.isExpired(jwt)) {
-            throw new JwtException("Token is expired");
+        if (!isValidJwtToken(jwt)) {
+            throw new JwtException("Jwt token is invalid");
         }
-        log.info("Successfully validated the given jwt token - {}", jwt);
+    }
 
+    public boolean isValidJwtToken(String jwt) {
+        return jwt != null && !jwtService.isExpired(jwt);
+    }
+
+    public boolean isValidBearerToken(String bearer) {
+        return bearer != null && bearer.startsWith("Bearer ") && isValidJwtToken(bearer.substring(7));
     }
 }

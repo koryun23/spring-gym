@@ -1,11 +1,10 @@
 package org.example.config.security;
 
-import lombok.RequiredArgsConstructor;
 import org.example.mdc.MdcFilter;
 import org.example.security.auth.UsernamePasswordAuthenticationFilter;
 import org.example.security.jwt.JwtConverter;
-import org.example.security.jwt.JwtDecoderImpl;
 import org.example.service.core.user.LoginAttemptService;
+import org.example.validator.JwtValidator;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,6 +46,7 @@ public class WebSecurityConfig {
     private final AuthenticationSuccessHandler authenticationSuccessHandler;
     private final AuthenticationFailureHandler authenticationFailureHandler;
     private final LoginAttemptService loginAttemptService;
+    private final JwtValidator jwtValidator;
 
     /**
      * Constructor.
@@ -61,7 +61,7 @@ public class WebSecurityConfig {
                              AuthenticationConfiguration authenticationConfiguration,
                              AuthenticationSuccessHandler authenticationSuccessHandler,
                              AuthenticationFailureHandler authenticationFailureHandler,
-                             LoginAttemptService loginAttemptService) {
+                             LoginAttemptService loginAttemptService, JwtValidator jwtValidator) {
         this.jwtConverter = jwtConverter;
         this.jwtDecoder = jwtDecoder;
         this.accessDeniedHandler = accessDeniedHandler;
@@ -73,6 +73,7 @@ public class WebSecurityConfig {
         this.authenticationSuccessHandler = authenticationSuccessHandler;
         this.authenticationFailureHandler = authenticationFailureHandler;
         this.loginAttemptService = loginAttemptService;
+        this.jwtValidator = jwtValidator;
     }
 
     /**
@@ -122,13 +123,17 @@ public class WebSecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
+    /**
+     * UsernamePasswordAuthenticationFilter bean.
+     */
     @Bean
     public UsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter() throws Exception {
         return new UsernamePasswordAuthenticationFilter(
             authenticationManager(authenticationConfiguration),
             loginAttemptService,
             authenticationSuccessHandler,
-            authenticationFailureHandler
+            authenticationFailureHandler,
+            jwtValidator
         );
     }
 }
