@@ -1,8 +1,8 @@
 package org.example.config.security;
 
 import org.example.mdc.MdcFilter;
-import org.example.security.authorization.JwtConverter;
-import org.example.security.authentication.UsernamePasswordAuthenticationFilter;
+import org.example.security.auth.UsernamePasswordAuthenticationFilter;
+import org.example.security.jwt.JwtConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

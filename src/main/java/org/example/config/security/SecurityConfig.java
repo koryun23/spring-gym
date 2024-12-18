@@ -1,7 +1,7 @@
 package org.example.config.security;
 
-import org.example.security.authentication.DatabaseUserDetailsService;
-import org.example.security.authorization.JwtConverter;
+import org.example.security.jwt.JwtConverter;
+import org.example.security.service.DatabaseUserDetailsService;
 import org.example.service.core.user.UserService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;

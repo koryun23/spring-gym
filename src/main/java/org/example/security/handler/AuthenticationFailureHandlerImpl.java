@@ -1,4 +1,4 @@
-package org.example.security.authentication;
+package org.example.security.handler;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

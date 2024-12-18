@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import org.example.security.authorization.JwtDecoderImpl;
+import org.example.security.jwt.JwtDecoderImpl;
 import org.example.validator.JwtValidator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
