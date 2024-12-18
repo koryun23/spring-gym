@@ -1,5 +1,5 @@
 package org.example.entity.user;
 
 public enum UserRoleType {
-    TRAINEE, TRAINER
+    TRAINEE, TRAINER, SUPER_USER
 }
