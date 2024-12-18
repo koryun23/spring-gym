@@ -77,6 +77,7 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/trainers").permitAll()
                 .requestMatchers(HttpMethod.GET, "/users/login").permitAll()
                 .requestMatchers(SWAGGER_URI_WHITELIST).permitAll()
+                .requestMatchers("/actuator/**").permitAll()
                 .requestMatchers("/trainees/*").hasAuthority("TRAINEE")
                 .requestMatchers("/trainings/trainee/*").hasAuthority("TRAINEE")
                 .requestMatchers("/trainers/*").hasAuthority("TRAINER")

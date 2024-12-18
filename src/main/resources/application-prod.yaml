@@ -6,3 +6,17 @@ spring:
           url: jdbc:postgresql://localhost:6432/gym_prod
   flyway:
     url: jdbc:postgresql://localhost:6432/gym_prod
+
+springdoc:
+  api-docs:
+    enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        exclude: '*'
+  metrics:
+    export:
+      prometheus:
+        enabled: false

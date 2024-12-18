@@ -141,11 +141,7 @@ public class TrainingController {
             );
 
         // validations
-        RestResponse restResponse =
-            trainingValidator.validateRetrieveTrainingListByTrainer(requestDto);
-        if (restResponse != null) {
-            return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
-        }
+        trainingValidator.validateRetrieveTrainingListByTrainer(requestDto);
 
         // service and mapper calls
         String trainerUsername = requestDto.getTrainerUsername();
@@ -159,7 +155,7 @@ public class TrainingController {
                 ));
 
         // response
-        restResponse = new RestResponse(trainings, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        RestResponse restResponse = new RestResponse(trainings, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Result of retrieving trainings of a trainer - {}", restResponse);
 
