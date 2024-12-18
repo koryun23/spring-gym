@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.example.mdc.MdcFilter;
 import org.example.security.auth.UsernamePasswordAuthenticationFilter;
 import org.example.security.jwt.JwtConverter;
+import org.example.security.jwt.JwtDecoderImpl;
 import org.example.service.core.user.LoginAttemptService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -25,7 +27,6 @@ import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
-@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
@@ -46,6 +47,33 @@ public class WebSecurityConfig {
     private final AuthenticationSuccessHandler authenticationSuccessHandler;
     private final AuthenticationFailureHandler authenticationFailureHandler;
     private final LoginAttemptService loginAttemptService;
+
+    /**
+     * Constructor.
+     */
+    public WebSecurityConfig(JwtConverter jwtConverter,
+                             @Qualifier("jwtDecoder") JwtDecoder jwtDecoder,
+                             AccessDeniedHandler accessDeniedHandler,
+                             AuthenticationEntryPoint authenticationEntryPoint,
+                             MdcFilter mdcFilter,
+                             LogoutSuccessHandler logoutSuccessHandler,
+                             LogoutHandler logoutHandler,
+                             AuthenticationConfiguration authenticationConfiguration,
+                             AuthenticationSuccessHandler authenticationSuccessHandler,
+                             AuthenticationFailureHandler authenticationFailureHandler,
+                             LoginAttemptService loginAttemptService) {
+        this.jwtConverter = jwtConverter;
+        this.jwtDecoder = jwtDecoder;
+        this.accessDeniedHandler = accessDeniedHandler;
+        this.authenticationEntryPoint = authenticationEntryPoint;
+        this.mdcFilter = mdcFilter;
+        this.logoutSuccessHandler = logoutSuccessHandler;
+        this.logoutHandler = logoutHandler;
+        this.authenticationConfiguration = authenticationConfiguration;
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
+        this.authenticationFailureHandler = authenticationFailureHandler;
+        this.loginAttemptService = loginAttemptService;
+    }
 
     /**
      * Security filter chain.
