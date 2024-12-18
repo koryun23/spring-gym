@@ -22,15 +22,12 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
 public class UsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
     private final LoginAttemptService loginAttemptService;
 
-    //TODO: Consider moving them to security config class
     @Value("${security.login.block.duration.minutes}")
     private int blockMinutes;
 
@@ -53,6 +50,8 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
         throws AuthenticationException, IOException {
+
+        log.info("Attempting authentication");
 
         Optional<LoginAttemptEntity> optionalLoginAttempt =
             loginAttemptService.findByRemoteAddress(request.getRemoteAddr());
@@ -80,7 +79,7 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
 
         loginAttemptService.reset(request.getRemoteAddr());
         super.successfulAuthentication(request, response, chain, authResult);
-
+        log.info("Successfully authenticated");
     }
 
     @Override
@@ -88,6 +87,7 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
                                               AuthenticationException failed) throws IOException, ServletException {
         super.unsuccessfulAuthentication(request, response, failed);
 
+        log.info("Authentication failed");
         Integer counter = loginAttemptService.incrementCounter(request.getRemoteAddr());
 
         if (counter == attemptsBeforeBlock) {

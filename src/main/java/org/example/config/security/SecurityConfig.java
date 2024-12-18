@@ -1,14 +1,10 @@
 package org.example.config.security;
 
-import org.example.security.jwt.JwtConverter;
 import org.example.security.service.DatabaseUserDetailsService;
 import org.example.service.core.user.UserService;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -42,20 +38,10 @@ public class SecurityConfig {
     }
 
     /**
-     * Jwt Authentication provider bean.
+     * Jwt Authentication Provider bean.
      */
     @Bean
-    public AuthenticationProvider jwtAuthenticationProvider(@Qualifier("jwtDecoder") JwtDecoder jwtDecoderImpl,
-                                                            JwtConverter jwtConverter) {
-        JwtAuthenticationProvider jwtAuthenticationProvider = new JwtAuthenticationProvider(jwtDecoderImpl);
-        jwtAuthenticationProvider.setJwtAuthenticationConverter(jwtConverter);
-        return jwtAuthenticationProvider;
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(
-        @Qualifier("authenticationProvider") AuthenticationProvider authenticationProvider,
-        @Qualifier("jwtAuthenticationProvider") AuthenticationProvider jwtAuthenticationProvider) {
-        return new ProviderManager(authenticationProvider, jwtAuthenticationProvider);
+    public AuthenticationProvider jwtAuthenticationProvider(JwtDecoder jwtDecoder) {
+        return new JwtAuthenticationProvider(jwtDecoder);
     }
 }

@@ -1,23 +1,31 @@
 package org.example.config.security;
 
+import lombok.RequiredArgsConstructor;
 import org.example.mdc.MdcFilter;
 import org.example.security.auth.UsernamePasswordAuthenticationFilter;
 import org.example.security.jwt.JwtConverter;
+import org.example.service.core.user.LoginAttemptService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
@@ -27,34 +35,17 @@ public class WebSecurityConfig {
         "/api-docs/**"
     };
 
-    private final AuthenticationManager authenticationManager;
-    private final UsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter;
     private final JwtConverter jwtConverter;
+    private final JwtDecoder jwtDecoder;
     private final AccessDeniedHandler accessDeniedHandler;
     private final AuthenticationEntryPoint authenticationEntryPoint;
     private final MdcFilter mdcFilter;
     private final LogoutSuccessHandler logoutSuccessHandler;
     private final LogoutHandler logoutHandler;
-
-    /**
-     * Constructor.
-     */
-    public WebSecurityConfig(AuthenticationManager authenticationManager,
-                             UsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter,
-                             JwtConverter jwtConverter,
-                             AccessDeniedHandler accessDeniedHandler,
-                             AuthenticationEntryPoint authenticationEntryPoint, MdcFilter mdcFilter,
-                             LogoutSuccessHandler logoutSuccessHandler,
-                             LogoutHandler logoutHandler) {
-        this.authenticationManager = authenticationManager;
-        this.usernamePasswordAuthenticationFilter = usernamePasswordAuthenticationFilter;
-        this.jwtConverter = jwtConverter;
-        this.accessDeniedHandler = accessDeniedHandler;
-        this.authenticationEntryPoint = authenticationEntryPoint;
-        this.mdcFilter = mdcFilter;
-        this.logoutSuccessHandler = logoutSuccessHandler;
-        this.logoutHandler = logoutHandler;
-    }
+    private final AuthenticationConfiguration authenticationConfiguration;
+    private final AuthenticationSuccessHandler authenticationSuccessHandler;
+    private final AuthenticationFailureHandler authenticationFailureHandler;
+    private final LoginAttemptService loginAttemptService;
 
     /**
      * Security filter chain.
@@ -65,12 +56,14 @@ public class WebSecurityConfig {
             .cors(Customizer.withDefaults())
             .csrf(AbstractHttpConfigurer::disable)
             .addFilterBefore(
-                usernamePasswordAuthenticationFilter,
+                usernamePasswordAuthenticationFilter(),
                 org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)
-            .addFilterBefore(mdcFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(mdcFilter, LogoutFilter.class)
             .oauth2ResourceServer(oauth2 -> oauth2
                 .jwt(jwt -> jwt
-                    .jwtAuthenticationConverter(jwtConverter))
+                    .jwtAuthenticationConverter(jwtConverter)
+                    .decoder(jwtDecoder)
+                )
             )
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.POST, "/trainees").permitAll()
@@ -83,7 +76,6 @@ public class WebSecurityConfig {
                 .requestMatchers("/trainers/*").hasAuthority("TRAINER")
                 .requestMatchers("/trainings/trainer/*").hasAuthority("TRAINER")
                 .anyRequest().authenticated())
-            .authenticationManager(authenticationManager)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .logout(logout -> logout
                 .logoutUrl("/users/logout")
@@ -94,5 +86,21 @@ public class WebSecurityConfig {
             .exceptionHandling(e ->
                 e.accessDeniedHandler(accessDeniedHandler).authenticationEntryPoint(authenticationEntryPoint))
             .build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+        throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+    public UsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter() throws Exception {
+        return new UsernamePasswordAuthenticationFilter(
+            authenticationManager(authenticationConfiguration),
+            loginAttemptService,
+            authenticationSuccessHandler,
+            authenticationFailureHandler
+        );
     }
 }

@@ -9,6 +9,7 @@ import java.security.Key;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import org.example.security.jwt.JwtDecoderImpl;
+import org.example.service.core.jwt.JwtService;
 import org.example.validator.JwtValidator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
