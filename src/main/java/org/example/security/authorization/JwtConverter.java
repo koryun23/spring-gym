@@ -1,4 +1,4 @@
-package org.example.security;
+package org.example.security.authorization;
 
 import java.util.List;
 import org.springframework.core.convert.converter.Converter;

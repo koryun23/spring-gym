@@ -1,4 +1,4 @@
-package org.example.security;
+package org.example.security.authorization;
 
 import org.example.validator.JwtValidator;
 import org.springframework.security.oauth2.jwt.Jwt;
