@@ -1,6 +1,5 @@
 package org.example.service.impl.user;
 
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.example.entity.user.UserRoleEntity;
 import org.example.entity.user.UserRoleType;

@@ -155,7 +155,8 @@ public class TrainingController {
                 ));
 
         // response
-        RestResponse restResponse = new RestResponse(trainings, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+        RestResponse restResponse =
+            new RestResponse(trainings, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
         log.info("Result of retrieving trainings of a trainer - {}", restResponse);
 
