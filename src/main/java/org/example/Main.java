@@ -2,10 +2,9 @@ package org.example;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
 
-@SpringBootApplication(exclude = {SpringDataWebAutoConfiguration.class})
+@SpringBootApplication
 public class Main {
     /**
      * Main method.

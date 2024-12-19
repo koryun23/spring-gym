@@ -88,7 +88,7 @@ public class TraineeController {
      * Trainee retrieval.
      */
     @GetMapping("/{username}")
-    @PreAuthorize("@permissionService.canViewTrainee(authentication, #username)")
+    @PreAuthorize("#username == authentication.name")
     public ResponseEntity<RestResponse> retrieve(@PathVariable("username") String username) {
 
         log.info("Attempting a retrieval of a trainee, username - {}", username);

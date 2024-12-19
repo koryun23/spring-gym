@@ -19,8 +19,6 @@ import org.springframework.stereotype.Component;
 public class PermissionService {
 
     private TraineeService traineeService;
-    private TrainerService trainerService;
-    private TrainingService trainingService;
 
     /**
      * Method for evaluating whether the authenticated user can view the given trainee's profile.
