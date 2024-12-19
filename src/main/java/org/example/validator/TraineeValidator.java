@@ -44,15 +44,23 @@ public class TraineeValidator {
     /**
      * Validate Trainee Update Request Dto.
      */
-    public void validateUpdateTrainee(TraineeUpdateRequestDto requestDto) {
+    public void validateUpdateTrainee(String pathUsername, TraineeUpdateRequestDto requestDto) {
+
+        if (pathUsername == null || pathUsername.isEmpty()) {
+            throw new CustomIllegalArgumentException("Username must be passed in the path");
+        }
 
         if (requestDto == null) {
             throw new CustomIllegalArgumentException("Request body is missing");
         }
 
-        String username = requestDto.getUsername();
-        if (username == null || username.isEmpty()) {
-            throw new CustomIllegalArgumentException("Username is required");
+        String bodyUsername = requestDto.getUsername();
+        if (bodyUsername == null || bodyUsername.isEmpty()) {
+            throw new CustomIllegalArgumentException("Username must be passed in the body");
+        }
+
+        if (!pathUsername.equals(bodyUsername)) {
+            throw new CustomIllegalArgumentException("Usernames passed in body and path must match");
         }
 
         String firstName = requestDto.getFirstName();
@@ -70,8 +78,8 @@ public class TraineeValidator {
             throw new CustomIllegalArgumentException("is-active field is required");
         }
 
-        if (traineeService.findByUsername(username).isEmpty()) {
-            throw new TraineeNotFoundException(username);
+        if (traineeService.findByUsername(bodyUsername).isEmpty()) {
+            throw new TraineeNotFoundException(bodyUsername);
         }
     }
 

@@ -1,5 +1,6 @@
 package org.example.controller.advice;
 
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import org.example.exception.TrainingTypeNotFoundException;
 import org.example.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -46,10 +48,21 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
+     * Method for handling access denied exception.
+     */
+    @ExceptionHandler({AuthorizationDeniedException.class})
+    public ResponseEntity<RestResponse> handleAccessDeniedException(AuthorizationDeniedException accessDeniedException) {
+        RestResponse restResponse =
+            new RestResponse(null, HttpStatus.FORBIDDEN, LocalDateTime.now(), List.of("Access Denied"));
+        return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
+    }
+
+    /**
      * Method for handling general exceptions.
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<RestResponse> handleGeneralException(Exception exception) {
+        log.error(exception.getClass().getName());
         log.error(exception.getMessage());
         RestResponse restResponse = new RestResponse(null, HttpStatus.SERVICE_UNAVAILABLE, LocalDateTime.now(),
             List.of("Something went wrong"));

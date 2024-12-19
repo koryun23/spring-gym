@@ -20,6 +20,8 @@ import org.example.validator.TraineeValidator;
 import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -85,7 +87,7 @@ public class TraineeController {
     public ResponseEntity<RestResponse> retrieve(@PathVariable(value = "username") String username) {
 
         log.info("Attempting a retrieval of a trainee, username - {}", username);
-
+        log.info("Currently logged in user - {}", SecurityContextHolder.getContext().getAuthentication().getName());
         traineeValidator.validateRetrieveTrainee(username);
 
         // service and mapper calls + response
@@ -103,6 +105,7 @@ public class TraineeController {
     /**
      * Trainee update.
      */
+    @PreAuthorize("#username == authentication.name")
     @PutMapping(value = "/{username}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse> update(@RequestBody TraineeUpdateRequestDto requestDto,
                                                @PathVariable(value = "username") String username) {
@@ -110,7 +113,7 @@ public class TraineeController {
         log.info("Attempting an update of a trainee, request - {}", requestDto);
 
         // validations
-        traineeValidator.validateUpdateTrainee(requestDto);
+        traineeValidator.validateUpdateTrainee(username, requestDto);
 
         // service and mapper calls
         TraineeEntity trainee = traineeMapper.mapTraineeUpdateRequestDtoToTraineeEntity(requestDto);
@@ -129,6 +132,7 @@ public class TraineeController {
     /**
      * Trainee deletion by username.
      */
+    @PreAuthorize("#username == authentication.name")
     @DeleteMapping("/{username}")
     public ResponseEntity<RestResponse> delete(@PathVariable(value = "username") String username) {
 
@@ -154,6 +158,7 @@ public class TraineeController {
     /**
      * Trainee switch activation state.
      */
+    @PreAuthorize("#username == authentication.name")
     @PatchMapping(value = "/{username}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse> switchActivationState(
         @RequestBody TraineeSwitchActivationStateRequestDto requestDto,
