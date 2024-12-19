@@ -1,13 +1,11 @@
 spring:
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.data
   main:
     allow-bean-definition-overriding: 'true'
     allow-circular-references: 'true'
   flyway:
-    enabled: 'true'
-    baseline-on-migrate: 'true'
-    locations: classpath:resources/db/migration
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
     user: postgres
     password: postgres
     driver: org.postgresql.Driver

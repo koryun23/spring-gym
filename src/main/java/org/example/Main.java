@@ -13,6 +13,5 @@ public class Main {
     public static void main(String[] args) {
 
         ConfigurableApplicationContext context = SpringApplication.run(Main.class, args);
-        //PasswordEncoder passwordEncoder = context.getBean(PasswordEncoder.class);
     }
 }
