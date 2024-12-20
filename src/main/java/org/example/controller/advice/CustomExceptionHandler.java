@@ -27,7 +27,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
      * Method for handling invalid request.
      */
     @ExceptionHandler({CustomIllegalArgumentException.class, InvalidIdException.class, IllegalArgumentException.class})
-    public ResponseEntity<RestResponse> handleInvalidRequest(CustomIllegalArgumentException e) {
+    public ResponseEntity<RestResponse> handleInvalidRequest(RuntimeException e) {
         log.info("Handling invalid request");
         RestResponse restResponse =
             new RestResponse(null, HttpStatus.NOT_ACCEPTABLE, LocalDateTime.now(), List.of(e.getMessage()));

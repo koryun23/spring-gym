@@ -1,7 +1,7 @@
 spring:
-  main:
-    allow-bean-definition-overriding: 'true'
-    allow-circular-references: 'true'
+#  main:
+#    allow-bean-definition-overriding: 'true'
+#    allow-circular-references: 'true'
   flyway:
     enabled: true
     baseline-on-migrate: true
@@ -65,8 +65,8 @@ jwt:
       expiration: '2880000'
 server:
   port: '8888'
-  servlet:
-    context-path: /
+#  servlet:
+#    context-path: /
 security:
   login:
     block:

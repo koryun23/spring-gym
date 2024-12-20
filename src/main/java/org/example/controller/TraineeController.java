@@ -14,10 +14,12 @@ import org.example.dto.response.TraineeDeletionResponseDto;
 import org.example.dto.response.TraineeSwitchActivationStateResponseDto;
 import org.example.entity.trainee.TraineeEntity;
 import org.example.mapper.trainee.TraineeMapper;
+import org.example.security.service.PermissionService;
 import org.example.service.core.trainee.TraineeService;
 import org.example.service.core.user.UserService;
 import org.example.validator.TraineeValidator;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,6 +43,8 @@ public class TraineeController {
     private final UserService userService;
     private final TraineeMapper traineeMapper;
     private final TraineeValidator traineeValidator;
+    @Autowired
+    private PermissionService permissionService;
 
     /**
      * Constructor.
@@ -84,7 +88,8 @@ public class TraineeController {
      * Trainee retrieval.
      */
     @GetMapping("/{username}")
-    public ResponseEntity<RestResponse> retrieve(@PathVariable(value = "username") String username) {
+    @PreAuthorize("@permissionService.canViewTrainee(authentication, #username)")
+    public ResponseEntity<RestResponse> retrieve(@PathVariable("username") String username) {
 
         log.info("Attempting a retrieval of a trainee, username - {}", username);
         log.info("Currently logged in user - {}", SecurityContextHolder.getContext().getAuthentication().getName());
