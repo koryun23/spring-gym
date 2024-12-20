@@ -6,7 +6,7 @@ import org.example.entity.user.UserRoleEntity;
 import org.example.entity.user.UserRoleType;
 import org.example.service.core.user.UserRoleService;
 import org.example.service.core.user.UserService;
-import org.example.service.core.user.UsernamePasswordService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -16,16 +16,19 @@ public class SuperUserLoaderImpl implements SuperUserLoader, CommandLineRunner {
 
     private final UserService userService;
     private final UserRoleService userRoleService;
-    private final UsernamePasswordService usernamePasswordService;
+
+    @Value("${security.login.superuser.username}")
+    private String superUserUsername;
+
+    @Value("${security.login.superuser.password}")
+    private String superUserPassword;
 
     /**
      * Constructor.
      */
-    public SuperUserLoaderImpl(UserService userService, UserRoleService userRoleService,
-                               UsernamePasswordService usernamePasswordService) {
+    public SuperUserLoaderImpl(UserService userService, UserRoleService userRoleService) {
         this.userService = userService;
         this.userRoleService = userRoleService;
-        this.usernamePasswordService = usernamePasswordService;
     }
 
     @Override
@@ -38,10 +41,8 @@ public class SuperUserLoaderImpl implements SuperUserLoader, CommandLineRunner {
             return;
         }
 
-        String username = usernamePasswordService.username("John", "Doe");
-        String password = usernamePasswordService.password();
-
-        UserEntity user = userService.create(new UserEntity("John", "Doe", username, password, true));
+        UserEntity user = userService.create(new UserEntity(
+            "John", "Doe", superUserUsername, superUserPassword, true));
         userRoleService.create(new UserRoleEntity(user, UserRoleType.SUPER_USER));
     }
 }

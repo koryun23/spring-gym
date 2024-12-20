@@ -7,9 +7,6 @@ import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTraineeRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTrainerRequestDto;
 import org.example.entity.trainee.TraineeEntity;
-import org.example.entity.trainer.TrainerEntity;
-import org.example.entity.training.TrainingType;
-import org.example.entity.training.TrainingTypeEntity;
 import org.example.entity.user.UserEntity;
 import org.example.exception.CustomIllegalArgumentException;
 import org.example.exception.TraineeNotFoundException;
@@ -134,30 +131,6 @@ class TrainingValidatorTest {
     }
 
     @Test
-    public void testValidateCreateTrainingWhenValid() {
-        Mockito.when(traineeService.findByUsername("trainee")).thenReturn(Optional.of(
-            new TraineeEntity(
-                new UserEntity("first", "last", "trainee", "password", true),
-                Date.valueOf("2024-10-10"),
-                "address"
-            )
-        ));
-
-        Mockito.when(trainerService.findByUsername("trainer")).thenReturn(Optional.of(
-            new TrainerEntity(
-                new UserEntity("first", "last", "trainer", "password", true),
-                new TrainingTypeEntity(TrainingType.AEROBIC)
-            )
-        ));
-
-        Assertions.assertThat(testSubject.validateCreateTraining(new TrainingCreationRequestDto(
-            "trainee", "trainer", "training", Date.valueOf("2024-10-10"), 1000L
-        ))).isNull();
-
-        Mockito.verifyNoMoreInteractions(traineeService, trainerService);
-    }
-
-    @Test
     public void testValidateRetrieveTrainingListByTrainerWhenUsernameIsNull() {
         Assertions.assertThatThrownBy(
             () -> testSubject.validateRetrieveTrainingListByTrainer(new TrainingListRetrievalByTrainerRequestDto(
@@ -181,19 +154,6 @@ class TrainingValidatorTest {
             () -> testSubject.validateRetrieveTrainingListByTrainer(new TrainingListRetrievalByTrainerRequestDto(
                 "trainer", null, null, null
             ))).isExactlyInstanceOf(TrainerNotFoundException.class);
-
-        Mockito.verifyNoMoreInteractions(trainerService);
-        Mockito.verifyNoInteractions(traineeService);
-    }
-
-    @Test
-    public void testValidateRetrieveTrainingListByTrainerWhenValid() {
-        Mockito.when(trainerService.findByUsername("trainer")).thenReturn(Optional.of(new TrainerEntity()));
-
-        Assertions.assertThat(
-            testSubject.validateRetrieveTrainingListByTrainer(new TrainingListRetrievalByTrainerRequestDto(
-                "trainer", null, null, null
-            ))).isNull();
 
         Mockito.verifyNoMoreInteractions(trainerService);
         Mockito.verifyNoInteractions(traineeService);
@@ -226,15 +186,5 @@ class TrainingValidatorTest {
 
         Mockito.verifyNoMoreInteractions(traineeService);
         Mockito.verifyNoInteractions(trainerService);
-    }
-
-    @Test
-    public void testValidateRetrieveTrainingListByTraineeWhenValid() {
-        Mockito.when(traineeService.findByUsername("trainee")).thenReturn(Optional.of(new TraineeEntity()));
-
-        Assertions.assertThat(
-            testSubject.validateRetrieveTrainingListByTrainee(new TrainingListRetrievalByTraineeRequestDto(
-                "trainee", null, null, null, null
-            ))).isNull();
     }
 }

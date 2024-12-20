@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import org.assertj.core.api.Assertions;
 import org.example.dto.RestResponse;
+import org.example.dto.plain.TraineeDto;
+import org.example.dto.plain.UserDto;
 import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TraineeDeletionByUsernameRequestDto;
 import org.example.dto.request.TraineeSwitchActivationStateRequestDto;
@@ -15,8 +17,8 @@ import org.example.dto.response.TraineeSwitchActivationStateResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
 import org.example.entity.trainee.TraineeEntity;
 import org.example.entity.user.UserEntity;
-import org.example.exception.CustomIllegalArgumentException;
 import org.example.mapper.trainee.TraineeMapper;
+import org.example.security.service.PermissionService;
 import org.example.service.core.trainee.TraineeService;
 import org.example.service.core.user.UserService;
 import org.example.validator.TraineeValidator;
@@ -46,26 +48,18 @@ class TraineeControllerTest {
     @Mock
     private TraineeValidator traineeValidator;
 
+    @Mock
+    private PermissionService permissionService;
+
     @BeforeEach
     public void init() {
-        testSubject = new TraineeController(traineeService, userService, traineeMapper, traineeValidator);
-    }
-
-    @Test
-    public void testRegisterWhenValidationsFail() {
-        Mockito.when(traineeValidator.validateCreateTrainee(new TraineeCreationRequestDto("first", "last", null, null)))
-            .thenThrow(CustomIllegalArgumentException.class);
-
-        Assertions.assertThatThrownBy(
-                () -> testSubject.register(new TraineeCreationRequestDto("first", "last", null, null)))
-            .isExactlyInstanceOf(CustomIllegalArgumentException.class);
+        testSubject =
+            new TraineeController(traineeService, userService, traineeMapper, traineeValidator, permissionService);
     }
 
     @Test
     public void testRegisterWhenValidationsPass() {
 
-        Mockito.when(traineeValidator.validateCreateTrainee(new TraineeCreationRequestDto("first", "last", null, null)))
-            .thenReturn(null);
         Mockito.when(traineeMapper.mapTraineeCreationRequestDtoToTraineeEntity(
                 new TraineeCreationRequestDto("first", "last", null, null)))
             .thenReturn(new TraineeEntity(
@@ -75,12 +69,12 @@ class TraineeControllerTest {
         Mockito.when(traineeService.create(new TraineeEntity(
             new UserEntity("first", "last", "username", "password", true),
             null, null
-        ))).thenReturn(new TraineeEntity(
-            new UserEntity("first", "last", "username", "password", true),
+        ))).thenReturn(new TraineeDto(
+            new UserDto("first", "last", "username", "password", true),
             null, null
         ));
-        Mockito.when(traineeMapper.mapTraineeEntityToTraineeCreationResponseDto(new TraineeEntity(
-            new UserEntity("first", "last", "username", "password", true),
+        Mockito.when(traineeMapper.mapTraineeDtoToTraineeCreationResponseDto(new TraineeDto(
+            new UserDto("first", "last", "username", "password", true),
             null, null
         ))).thenReturn(new TraineeCreationResponseDto("username", "password"));
 
@@ -94,17 +88,7 @@ class TraineeControllerTest {
     }
 
     @Test
-    public void testRetrieveWhenValidationsFail() {
-        Mockito.when(traineeValidator.validateRetrieveTrainee("username"))
-            .thenThrow(CustomIllegalArgumentException.class);
-
-        Assertions.assertThatThrownBy(() -> testSubject.retrieve("username")).isExactlyInstanceOf(
-            CustomIllegalArgumentException.class);
-    }
-
-    @Test
     public void testRetrieveWhenValidationsPass() {
-        Mockito.when(traineeValidator.validateRetrieveTrainee("username")).thenReturn(null);
 
         TraineeEntity trainee = new TraineeEntity(
             new UserEntity("first", "last", "username", "password", true),
@@ -128,15 +112,6 @@ class TraineeControllerTest {
     }
 
     @Test
-    public void testUpdateWhenValidationsFail() {
-        TraineeUpdateRequestDto requestDto = new TraineeUpdateRequestDto("first", "last", "username", true, null, null);
-        Mockito.when(traineeValidator.validateUpdateTrainee(requestDto))
-            .thenThrow(CustomIllegalArgumentException.class);
-        Assertions.assertThatThrownBy(() -> testSubject.update(requestDto, "username")).isExactlyInstanceOf(
-            CustomIllegalArgumentException.class);
-    }
-
-    @Test
     public void testUpdateWhenValidationsPass() {
         TraineeUpdateRequestDto requestDto = new TraineeUpdateRequestDto("first", "last", "username", true, null, null);
         TraineeEntity trainee =
@@ -144,7 +119,6 @@ class TraineeControllerTest {
         TraineeUpdateResponseDto responseDto =
             new TraineeUpdateResponseDto("username", "first", "last", null, null, true, Collections.emptyList());
 
-        Mockito.when(traineeValidator.validateUpdateTrainee(requestDto)).thenReturn(null);
         Mockito.when(traineeMapper.mapTraineeUpdateRequestDtoToTraineeEntity(requestDto)).thenReturn(trainee);
         Mockito.when(traineeService.update(trainee)).thenReturn(trainee);
         Mockito.when(traineeMapper.mapTraineeEntityToTraineeUpdateResponseDto(trainee)).thenReturn(responseDto);
@@ -156,21 +130,10 @@ class TraineeControllerTest {
     }
 
     @Test
-    public void testDeleteWhenValidationsFail() {
-        TraineeDeletionByUsernameRequestDto requestDto = new TraineeDeletionByUsernameRequestDto("username");
-        Mockito.when(traineeValidator.validateDeleteTrainee(requestDto))
-            .thenThrow(CustomIllegalArgumentException.class);
-
-        Assertions.assertThatThrownBy(() -> testSubject.delete("username"))
-            .isExactlyInstanceOf(CustomIllegalArgumentException.class);
-    }
-
-    @Test
     public void testDeleteWhenValidationsPass() {
         TraineeDeletionByUsernameRequestDto requestDto = new TraineeDeletionByUsernameRequestDto("username");
         TraineeDeletionResponseDto responseDto = new TraineeDeletionResponseDto(HttpStatus.OK);
 
-        Mockito.when(traineeValidator.validateDeleteTrainee(requestDto)).thenReturn(null);
         Mockito.when(traineeService.delete("username")).thenReturn(true);
 
         ResponseEntity<RestResponse> responseEntity = testSubject.delete("username");
@@ -181,24 +144,12 @@ class TraineeControllerTest {
     }
 
     @Test
-    public void testSwitchActivationStateWhenValidationsFail() {
-        TraineeSwitchActivationStateRequestDto requestDto =
-            new TraineeSwitchActivationStateRequestDto("username", true);
-        Mockito.when(traineeValidator.validateSwitchActivationState(requestDto)).thenThrow(
-            CustomIllegalArgumentException.class);
-
-        Assertions.assertThatThrownBy(() -> testSubject.switchActivationState(requestDto, "username"))
-            .isExactlyInstanceOf(CustomIllegalArgumentException.class);
-    }
-
-    @Test
     public void testSwitchActivationStateWhenValidationsPass() {
         TraineeSwitchActivationStateRequestDto requestDto =
             new TraineeSwitchActivationStateRequestDto("username", true);
         UserEntity user = new UserEntity("first", "last", "username", "password", true);
         TraineeSwitchActivationStateResponseDto responseDto =
             new TraineeSwitchActivationStateResponseDto(HttpStatus.OK);
-        Mockito.when(traineeValidator.validateSwitchActivationState(requestDto)).thenReturn(null);
         Mockito.when(userService.switchActivationState("username", true)).thenReturn(user);
 
         ResponseEntity<RestResponse> actual = testSubject.switchActivationState(requestDto, "username");

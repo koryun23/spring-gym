@@ -1,7 +1,6 @@
 package org.example.mapper.trainer;
 
 import org.assertj.core.api.Assertions;
-import org.example.dto.response.TrainerCreationResponseDto;
 import org.example.dto.response.TrainerRetrievalResponseDto;
 import org.example.entity.trainer.TrainerEntity;
 import org.example.entity.training.TrainingType;
@@ -17,14 +16,6 @@ class TrainerMapperImplTest {
     @BeforeEach
     public void init() {
         testSubject = new TrainerMapperImpl();
-    }
-
-    @Test
-    public void testMapTrainerDtoToTrainerCreationResponseDto() {
-        Assertions.assertThat(testSubject.mapTrainerDtoToTrainerCreationResponseDto(new TrainerEntity(
-            new UserEntity(null, null, "username", "password", true),
-            new TrainingTypeEntity(TrainingType.FLEXIBILITY_TRAINING)
-        ))).isEqualTo(new TrainerCreationResponseDto("username", "password"));
     }
 
     @Test

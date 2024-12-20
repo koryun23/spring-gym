@@ -3,7 +3,6 @@ package org.example.mapper.trainee;
 import org.assertj.core.api.Assertions;
 import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
-import org.example.dto.response.TraineeCreationResponseDto;
 import org.example.dto.response.TraineeRetrievalResponseDto;
 import org.example.dto.response.TraineeUpdateResponseDto;
 import org.example.entity.trainee.TraineeEntity;
@@ -33,16 +32,6 @@ class TraineeMapperImplTest {
             null,
             "address"
         ));
-    }
-
-    @Test
-    public void testMapTraineeEntityToTraineeCreationResponseDto() {
-        Assertions.assertThat(testSubject.mapTraineeEntityToTraineeCreationResponseDto(
-            new TraineeEntity(
-                new UserEntity("first", "last", "username", "password", true),
-                null, "address"
-            )
-        )).isEqualTo(new TraineeCreationResponseDto("username", "password"));
     }
 
     @Test

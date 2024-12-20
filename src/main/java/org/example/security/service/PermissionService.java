@@ -68,6 +68,9 @@ public class PermissionService {
         throw new AuthorizationDeniedException("Access Denied.");
     }
 
+    /**
+     * Permission evaluator.
+     */
     public void canViewTrainersNotAssignedOnTrainee(String traineeUsername) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         log.info("Trainee username passed via path - {}", traineeUsername);
@@ -79,6 +82,9 @@ public class PermissionService {
         throw new AuthorizationDeniedException("Access Denied.");
     }
 
+    /**
+     * Permission evaluator.
+     */
     public void canUpdateTrainer(String username) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         log.info("Trainer username passed via path - {}", username);
@@ -90,6 +96,9 @@ public class PermissionService {
         throw new AuthorizationDeniedException("Access Denied.");
     }
 
+    /**
+     * Permission evaluator.
+     */
     public void canViewTrainer(String username) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         log.info("Trainer username passed via path - {}", username);
@@ -101,6 +110,9 @@ public class PermissionService {
         throw new AuthorizationDeniedException("Access Denied.");
     }
 
+    /**
+     * Permission evaluator.
+     */
     public void canViewTrainingsOfTrainee(String traineeUsername) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -111,6 +123,9 @@ public class PermissionService {
         throw new AuthorizationDeniedException("Access Denied.");
     }
 
+    /**
+     * Permission evaluator.
+     */
     public void canViewTrainingsOfTrainer(String trainerUsername) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -121,6 +136,9 @@ public class PermissionService {
         throw new AuthorizationDeniedException("Access Denied.");
     }
 
+    /**
+     * Permission evaluator.
+     */
     public void canChangePassword(String username) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

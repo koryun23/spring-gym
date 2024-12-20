@@ -73,3 +73,6 @@ security:
       attempts: '3'
       duration:
         minutes: '5'
+    superuser:
+      username: 'John.Doe'
+      password: 'hfj2dka78z'

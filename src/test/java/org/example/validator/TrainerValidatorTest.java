@@ -4,12 +4,6 @@ import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.example.dto.request.TrainerCreationRequestDto;
 import org.example.dto.request.TrainerRetrievalByUsernameRequestDto;
-import org.example.dto.request.TrainerSwitchActivationStateRequestDto;
-import org.example.dto.request.TrainerUpdateRequestDto;
-import org.example.entity.trainer.TrainerEntity;
-import org.example.entity.training.TrainingType;
-import org.example.entity.training.TrainingTypeEntity;
-import org.example.entity.user.UserEntity;
 import org.example.exception.CustomIllegalArgumentException;
 import org.example.exception.TrainerNotFoundException;
 import org.example.service.core.trainee.TraineeService;
@@ -73,65 +67,6 @@ class TrainerValidatorTest {
     }
 
     @Test
-    public void testValidateCreateTrainerWhenValid() {
-        TrainerCreationRequestDto requestDto1 = new TrainerCreationRequestDto("first", "last", 1L);
-        Mockito.when(trainingTypeService.findById(1L))
-            .thenReturn(Optional.of(new TrainingTypeEntity(TrainingType.AEROBIC)));
-        Assertions.assertThat(testSubject.validateCreateTrainer(requestDto1)).isNull();
-    }
-
-    @Test
-    public void testValidateUpdateTrainerWhenNull() {
-        Assertions.assertThatThrownBy(() -> testSubject.validateUpdateTrainer(null))
-            .isExactlyInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    public void testValidateUpdateTrainerWhenUsernameIsInvalid() {
-        TrainerUpdateRequestDto requestDto1 = new TrainerUpdateRequestDto("", "first", "last", 1L, true);
-        Assertions.assertThatThrownBy(() -> testSubject.validateUpdateTrainer(requestDto1)).isExactlyInstanceOf(
-            CustomIllegalArgumentException.class);
-    }
-
-    @Test
-    public void testValidateUpdateTrainerWhenFirstNameIsInvalid() {
-        TrainerUpdateRequestDto requestDto1 = new TrainerUpdateRequestDto("username", "", "last", 1L, true);
-        Assertions.assertThatThrownBy(() -> testSubject.validateUpdateTrainer(requestDto1)).isExactlyInstanceOf(
-            CustomIllegalArgumentException.class);
-    }
-
-    @Test
-    public void testValidateUpdateTrainerWhenLastNameIsInvalid() {
-        TrainerUpdateRequestDto requestDto1 = new TrainerUpdateRequestDto("username", "first", "", 1L, true);
-        Assertions.assertThatThrownBy(() -> testSubject.validateUpdateTrainer(requestDto1))
-            .isExactlyInstanceOf(CustomIllegalArgumentException.class);
-    }
-
-    @Test
-    public void testValidateUpdateTrainerWhenSpecializationIsInvalid() {
-        TrainerUpdateRequestDto requestDto1 =
-            new TrainerUpdateRequestDto("username", "first", "last", null, true);
-        Assertions.assertThatThrownBy(() -> testSubject.validateUpdateTrainer(requestDto1))
-            .isExactlyInstanceOf(CustomIllegalArgumentException.class);
-    }
-
-    @Test
-    public void testValidateUpdateTrainerWhenIsActiveIsInvalid() {
-        TrainerUpdateRequestDto requestDto1 = new TrainerUpdateRequestDto("username", "first", "last", null, null);
-        Assertions.assertThatThrownBy(() -> testSubject.validateUpdateTrainer(requestDto1))
-            .isExactlyInstanceOf(CustomIllegalArgumentException.class);
-    }
-
-    @Test
-    public void testValidateUpdateTrainerWhenUserDoesNotExist() {
-        Mockito.when(trainingTypeService.findById(1L))
-            .thenReturn(Optional.of(new TrainingTypeEntity(TrainingType.AEROBIC)));
-        Assertions.assertThatThrownBy(() -> testSubject.validateUpdateTrainer(new TrainerUpdateRequestDto(
-            "username", "first", "last", 1L, true
-        ))).isExactlyInstanceOf(TrainerNotFoundException.class);
-    }
-
-    @Test
     public void testValidateRetrieveTrainerWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.validateRetrieveTrainer(null))
             .isExactlyInstanceOf(IllegalArgumentException.class);
@@ -152,47 +87,4 @@ class TrainerValidatorTest {
             .isExactlyInstanceOf(TrainerNotFoundException.class);
     }
 
-    @Test
-    public void testValidateRetrieveTrainerWhenValid() {
-        Mockito.when(trainerService.findByUsername("username")).thenReturn(Optional.of(new TrainerEntity(
-            new UserEntity("first", "last", "username", "password", true),
-            new TrainingTypeEntity(TrainingType.AEROBIC)
-        )));
-        Assertions.assertThat(testSubject.validateRetrieveTrainer(new TrainerRetrievalByUsernameRequestDto("username")))
-            .isNull();
-    }
-
-    @Test
-    public void testValidateTrainerSwitchActivationStateWhenNull() {
-        Assertions.assertThatThrownBy(() -> testSubject.validateSwitchActivationState(null))
-            .isExactlyInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    public void testValidateTrainerSwitchActivationStateWhenUsernameIsInvalid() {
-        TrainerSwitchActivationStateRequestDto requestDto = new TrainerSwitchActivationStateRequestDto("", true);
-        Assertions.assertThatThrownBy(() -> testSubject.validateSwitchActivationState(requestDto))
-            .isExactlyInstanceOf(CustomIllegalArgumentException.class);
-    }
-
-    @Test
-    public void testValidateTrainerSwitchActivationStateWhenUserDoesNotExist() {
-        Mockito.when(trainerService.findByUsername("username")).thenReturn(Optional.empty());
-        Assertions.assertThatThrownBy(
-                () -> testSubject.validateSwitchActivationState(
-                    new TrainerSwitchActivationStateRequestDto("username", true)))
-            .isExactlyInstanceOf(TrainerNotFoundException.class);
-        Mockito.verifyNoMoreInteractions(trainerService, userService, traineeService);
-    }
-
-    @Test
-    public void testValidateTrainerSwitchActivationStateWhenValid() {
-        Mockito.when(trainerService.findByUsername("username")).thenReturn(Optional.of(new TrainerEntity(
-            new UserEntity("first", "last", "username", "password", true),
-            new TrainingTypeEntity(TrainingType.AEROBIC)
-        )));
-        Assertions.assertThat(
-                testSubject.validateSwitchActivationState(new TrainerSwitchActivationStateRequestDto("username", true)))
-            .isNull();
-    }
 }

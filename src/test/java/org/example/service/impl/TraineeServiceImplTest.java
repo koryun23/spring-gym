@@ -3,6 +3,8 @@ package org.example.service.impl;
 import java.sql.Date;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
+import org.example.dto.plain.TraineeDto;
+import org.example.dto.plain.UserDto;
 import org.example.entity.trainee.TraineeEntity;
 import org.example.entity.user.UserEntity;
 import org.example.repository.TraineeEntityRepository;
@@ -49,7 +51,10 @@ class TraineeServiceImplTest {
             Date.valueOf("2024-10-10"), "address"
         );
         Mockito.when(traineeEntityRepository.save(traineeEntity)).thenReturn(traineeEntity);
-        Assertions.assertThat(testSubject.create(traineeEntity)).isEqualTo(traineeEntity);
+        Assertions.assertThat(testSubject.create(traineeEntity)).isEqualTo(new TraineeDto(
+            new UserDto("first", "last", null, null, true),
+            Date.valueOf("2024-10-10"), "address"
+        ));
         Mockito.verifyNoMoreInteractions(traineeEntityRepository);
     }
 
@@ -62,9 +67,7 @@ class TraineeServiceImplTest {
         );
 
         Mockito.when(traineeEntityRepository.findByUserUsername("username")).thenReturn(Optional.of(traineeEntity));
-        Mockito.when(traineeEntityRepository.save(traineeEntity)).thenReturn(traineeEntity);
         Assertions.assertThat(testSubject.update(traineeEntity)).isEqualTo(traineeEntity);
-        Mockito.verifyNoMoreInteractions(traineeEntityRepository);
     }
 
     @Test

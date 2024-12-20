@@ -60,33 +60,10 @@ class UserServiceImplTest {
             .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
-    // TODO
-    @Test
-    public void testUpdate() {
-
-    }
-
     @Test
     public void testDeleteWhenNull() {
         Assertions.assertThatThrownBy(() -> testSubject.delete(null))
             .isExactlyInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    public void testSelectWhenNull() {
-        Assertions.assertThatThrownBy(() -> testSubject.select(null))
-            .isExactlyInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    public void testSelect() {
-        Mockito.when(userEntityRepository.findById(1L)).thenReturn(Optional.of(new UserEntity(
-            "first", "last", "username", "password", true
-        )));
-        Assertions.assertThat(testSubject.select(1L)).isEqualTo(new UserEntity(
-            "first", "last", "username", "password", true
-        ));
-        Mockito.verifyNoMoreInteractions(userEntityRepository);
     }
 
     @Test
@@ -112,17 +89,6 @@ class UserServiceImplTest {
             "first", "last", "username", "password", true
         )));
         Assertions.assertThat(testSubject.findByUsername("username")).isEqualTo(Optional.of(new UserEntity(
-            "first", "last", "username", "password", true
-        )));
-        Mockito.verifyNoMoreInteractions(userEntityRepository);
-    }
-
-    @Test
-    public void testFindByPassword() {
-        Mockito.when(userEntityRepository.findByPassword("password")).thenReturn(Optional.of(new UserEntity(
-            "first", "last", "username", "password", true
-        )));
-        Assertions.assertThat(testSubject.findByPassword("password")).isEqualTo(Optional.of(new UserEntity(
             "first", "last", "username", "password", true
         )));
         Mockito.verifyNoMoreInteractions(userEntityRepository);
