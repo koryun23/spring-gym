@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
 import org.example.dto.request.UserChangePasswordRequestDto;
 import org.example.dto.response.UserChangePasswordResponseDto;
+import org.example.security.service.PermissionService;
 import org.example.service.core.user.UserService;
 import org.example.validator.UserValidator;
 import org.springframework.http.HttpStatus;
@@ -23,14 +24,16 @@ public class UserController {
 
     private final UserService userService;
     private final UserValidator userValidator;
+    private final PermissionService permissionService;
 
     /**
      * Constructor.
      */
     public UserController(UserService userService,
-                          UserValidator userValidator) {
+                          UserValidator userValidator, PermissionService permissionService) {
         this.userService = userService;
         this.userValidator = userValidator;
+        this.permissionService = permissionService;
     }
 
     /**
@@ -43,6 +46,7 @@ public class UserController {
 
         // validations
         userValidator.validateChangePassword(requestDto);
+        permissionService.canChangePassword(requestDto.getUsername());
 
         // service and mapper calls
         userService.changePassword(requestDto.getUsername(), requestDto.getNewPassword());

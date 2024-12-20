@@ -15,6 +15,7 @@ import org.example.dto.response.TrainerTrainingRetrievalResponseDto;
 import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.entity.training.TrainingEntity;
 import org.example.mapper.training.TrainingMapper;
+import org.example.security.service.PermissionService;
 import org.example.service.core.training.TrainingService;
 import org.example.validator.TrainingValidator;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -36,16 +37,18 @@ public class TrainingController {
     private final TrainingService trainingService;
     private final TrainingMapper trainingMapper;
     private final TrainingValidator trainingValidator;
+    private final PermissionService permissionService;
 
     /**
      * Constructor.
      */
     public TrainingController(TrainingService trainingService,
                               TrainingMapper trainingMapper,
-                              TrainingValidator trainingValidator) {
+                              TrainingValidator trainingValidator, PermissionService permissionService) {
         this.trainingService = trainingService;
         this.trainingMapper = trainingMapper;
         this.trainingValidator = trainingValidator;
+        this.permissionService = permissionService;
     }
 
     /**
@@ -98,6 +101,7 @@ public class TrainingController {
 
         // validation
         trainingValidator.validateRetrieveTrainingListByTrainee(requestDto);
+        permissionService.canViewTrainingsOfTrainee(username);
 
         // service and mapper calls
         List<TraineeTrainingRetrievalResponseDto> responseDtoList =
@@ -142,7 +146,7 @@ public class TrainingController {
 
         // validations
         trainingValidator.validateRetrieveTrainingListByTrainer(requestDto);
-
+        permissionService.canViewTrainingsOfTrainer(username);
         // service and mapper calls
         String trainerUsername = requestDto.getTrainerUsername();
         List<TrainerTrainingRetrievalResponseDto> trainings =

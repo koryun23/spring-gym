@@ -17,6 +17,7 @@ import org.example.dto.response.TrainerSwitchActivationStateResponseDto;
 import org.example.dto.response.TrainerUpdateResponseDto;
 import org.example.entity.trainer.TrainerEntity;
 import org.example.mapper.trainer.TrainerMapper;
+import org.example.security.service.PermissionService;
 import org.example.service.core.trainer.TrainerService;
 import org.example.service.core.user.UserService;
 import org.example.validator.TrainerValidator;
@@ -40,6 +41,7 @@ public class TrainerController {
     private final UserService userService;
     private final TrainerMapper trainerMapper;
     private final TrainerValidator trainerValidator;
+    private final PermissionService permissionService;
 
     /**
      * Constructor.
@@ -47,11 +49,12 @@ public class TrainerController {
     public TrainerController(TrainerService trainerService,
                              UserService userService,
                              TrainerMapper trainerMapper,
-                             TrainerValidator trainerValidator) {
+                             TrainerValidator trainerValidator, PermissionService permissionService) {
         this.trainerService = trainerService;
         this.userService = userService;
         this.trainerMapper = trainerMapper;
         this.trainerValidator = trainerValidator;
+        this.permissionService = permissionService;
     }
 
     /**
@@ -92,6 +95,7 @@ public class TrainerController {
         // validations
         trainerValidator.validateRetrieveAllTrainersNotAssignedToTrainee(
             new RetrieveAllTrainersNotAssignedToTraineeRequestDto(username));
+        permissionService.canViewTrainersNotAssignedOnTrainee(username);
 
         // service and mapper calls
         TrainerListRetrievalResponseDto responseDto = new TrainerListRetrievalResponseDto(
@@ -118,7 +122,8 @@ public class TrainerController {
         log.info("Attempting an update of a trainer, request - {}", requestDto);
 
         // validations
-        trainerValidator.validateUpdateTrainer(requestDto);
+        trainerValidator.validateUpdateTrainer(username, requestDto);
+        permissionService.canUpdateTrainer(username);
 
         // service and mapper calls
         TrainerEntity trainer = trainerMapper.mapTrainerUpdateRequestDtoToTrainerEntity(requestDto);
@@ -147,6 +152,7 @@ public class TrainerController {
 
         // validations
         trainerValidator.validateRetrieveTrainer(requestDto);
+        permissionService.canViewTrainer(username);
 
         // service and mapper calls
         TrainerEntity trainerEntity = trainerService.findByUsername(requestDto.getUsername()).get();
@@ -173,7 +179,8 @@ public class TrainerController {
         log.info("Attempting to switch the activation state of a trainer, username - {}", username);
 
         // validations
-        trainerValidator.validateSwitchActivationState(requestDto);
+        trainerValidator.validateSwitchActivationState(username, requestDto);
+        permissionService.canUpdateTrainer(username);
 
         // service and mapper calls
         userService.switchActivationState(username, requestDto.getState());

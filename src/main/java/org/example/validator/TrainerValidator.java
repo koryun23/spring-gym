@@ -66,12 +66,19 @@ public class TrainerValidator {
     /**
      * Validate Trainer Update Request Dto.
      */
-    public void validateUpdateTrainer(TrainerUpdateRequestDto requestDto) {
+    public void validateUpdateTrainer(String pathUsername, TrainerUpdateRequestDto requestDto) {
 
         Assert.notNull(requestDto, "TrainerUpdateRequestDto must not be null");
+        Assert.notNull(pathUsername, "Username must not be null");
+        Assert.hasText(pathUsername, "Username must not be empty");
+
         String username = requestDto.getUsername();
         if (username == null || username.isEmpty()) {
             throw new CustomIllegalArgumentException("Username is required");
+        }
+
+        if (!pathUsername.equals(username)) {
+            throw new CustomIllegalArgumentException("Path and Body usernames are not identical");
         }
 
         String firstName = requestDto.getFirstName();
@@ -123,12 +130,20 @@ public class TrainerValidator {
      * Validate Trainer Switch Activation State Request Dto.
      */
     public void validateSwitchActivationState(
+        String pathUsername,
         TrainerSwitchActivationStateRequestDto requestDto) {
 
         Assert.notNull(requestDto, "TrainerSwitchActivationStateRequestDto must not be null");
+        Assert.notNull(pathUsername, "Path username must not be null");
+        Assert.hasText(pathUsername, "Path username must not be empty");
+
         String username = requestDto.getUsername();
         if (username == null || username.isEmpty()) {
             throw new CustomIllegalArgumentException("Username is required");
+        }
+
+        if (!username.equals(pathUsername)) {
+            throw new CustomIllegalArgumentException("Body and Path usernames are not identical");
         }
 
         if (requestDto.getState() == null) {
