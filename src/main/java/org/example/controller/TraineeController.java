@@ -19,7 +19,6 @@ import org.example.service.core.trainee.TraineeService;
 import org.example.service.core.user.UserService;
 import org.example.validator.TraineeValidator;
 import org.slf4j.MDC;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -43,18 +42,18 @@ public class TraineeController {
     private final UserService userService;
     private final TraineeMapper traineeMapper;
     private final TraineeValidator traineeValidator;
-    @Autowired
-    private PermissionService permissionService;
+    private final PermissionService permissionService;
 
     /**
      * Constructor.
      */
     public TraineeController(TraineeService traineeService, UserService userService, TraineeMapper traineeMapper,
-                             TraineeValidator traineeValidator) {
+                             TraineeValidator traineeValidator, PermissionService permissionService) {
         this.traineeService = traineeService;
         this.userService = userService;
         this.traineeMapper = traineeMapper;
         this.traineeValidator = traineeValidator;
+        this.permissionService = permissionService;
     }
 
     /**
@@ -88,12 +87,13 @@ public class TraineeController {
      * Trainee retrieval.
      */
     @GetMapping("/{username}")
-    @PreAuthorize("#username == authentication.name")
     public ResponseEntity<RestResponse> retrieve(@PathVariable("username") String username) {
 
         log.info("Attempting a retrieval of a trainee, username - {}", username);
-        log.info("Currently logged in user - {}", SecurityContextHolder.getContext().getAuthentication().getName());
+
+        // validations
         traineeValidator.validateRetrieveTrainee(username);
+        permissionService.canViewTrainee(username);
 
         // service and mapper calls + response
 
@@ -110,7 +110,6 @@ public class TraineeController {
     /**
      * Trainee update.
      */
-    @PreAuthorize("#username == authentication.name")
     @PutMapping(value = "/{username}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse> update(@RequestBody TraineeUpdateRequestDto requestDto,
                                                @PathVariable(value = "username") String username) {
@@ -119,6 +118,7 @@ public class TraineeController {
 
         // validations
         traineeValidator.validateUpdateTrainee(username, requestDto);
+        permissionService.canUpdateTrainee(username);
 
         // service and mapper calls
         TraineeEntity trainee = traineeMapper.mapTraineeUpdateRequestDtoToTraineeEntity(requestDto);
@@ -137,7 +137,6 @@ public class TraineeController {
     /**
      * Trainee deletion by username.
      */
-    @PreAuthorize("#username == authentication.name")
     @DeleteMapping("/{username}")
     public ResponseEntity<RestResponse> delete(@PathVariable(value = "username") String username) {
 
@@ -146,6 +145,7 @@ public class TraineeController {
 
         // validations
         traineeValidator.validateDeleteTrainee(requestDto);
+        permissionService.canDeleteTrainee(username);
 
         // service calls
         traineeService.delete(requestDto.getUsername());
@@ -163,7 +163,6 @@ public class TraineeController {
     /**
      * Trainee switch activation state.
      */
-    @PreAuthorize("#username == authentication.name")
     @PatchMapping(value = "/{username}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse> switchActivationState(
         @RequestBody TraineeSwitchActivationStateRequestDto requestDto,
@@ -173,6 +172,7 @@ public class TraineeController {
 
         // validations
         traineeValidator.validateSwitchActivationState(requestDto);
+        permissionService.canUpdateTrainee(username);
 
         // service and mapper calls
         userService.switchActivationState(username, requestDto.getState());

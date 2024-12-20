@@ -1,6 +1,5 @@
 package org.example.controller.advice;
 
-import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +50,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
      * Method for handling access denied exception.
      */
     @ExceptionHandler({AuthorizationDeniedException.class})
-    public ResponseEntity<RestResponse> handleAccessDeniedException(AuthorizationDeniedException accessDeniedException) {
+    public ResponseEntity<RestResponse> handleAccessDeniedException(
+        AuthorizationDeniedException accessDeniedException) {
         RestResponse restResponse =
             new RestResponse(null, HttpStatus.FORBIDDEN, LocalDateTime.now(), List.of("Access Denied"));
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
