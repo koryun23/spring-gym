@@ -4,6 +4,8 @@ import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import org.example.entity.trainer.TrainerEntity;
+import org.example.entity.training.TrainingType;
+import org.example.entity.training.TrainingTypeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -26,5 +28,5 @@ public interface TrainerEntityRepository extends JpaRepository<TrainerEntity, Lo
     @Modifying
     @Transactional
     @Query("update TrainerEntity t set t.specialization = ?2 where t.user.username = ?1")
-    void update(String username, Long specializationId);
+    void update(String username, TrainingTypeEntity trainingTypeEntity);
 }

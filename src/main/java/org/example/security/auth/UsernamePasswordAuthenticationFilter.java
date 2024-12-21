@@ -1,5 +1,6 @@
 package org.example.security.auth;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,6 +11,8 @@ import java.util.Collections;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.example.entity.auth.LoginAttemptEntity;
+import org.example.exception.DoubleLoginException;
+import org.example.exception.LoginBlockedException;
 import org.example.service.core.user.LoginAttemptService;
 import org.example.validator.JwtValidator;
 import org.springframework.beans.factory.annotation.Value;
@@ -62,7 +65,7 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
         String bearerToken = request.getHeader("Authorization");
 
         if (jwtValidator.isValidBearerToken(bearerToken)) {
-            throw new AuthenticationServiceException("Cannot perform a login because the user is already logged in.");
+            throw new DoubleLoginException("Cannot perform a login because the user is already logged in.");
         }
 
         Optional<LoginAttemptEntity> optionalLoginAttempt =
@@ -72,9 +75,7 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
             () -> loginAttemptService.create(new LoginAttemptEntity(request.getRemoteAddr(), 0, LocalDateTime.now())));
 
         if (LocalDateTime.now().isBefore(loginAttemptEntity.getBlockedUntil())) {
-            response.setStatus(401);
-            log.info("Cannot login until {}", loginAttemptEntity.getBlockedUntil());
-            return null;
+            throw new LoginBlockedException("Too many unsuccessful login attempts: blocked by 5 minutes");
         }
 
         String username = request.getHeader("username");
@@ -99,7 +100,7 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
                                               AuthenticationException failed) throws IOException, ServletException {
         super.unsuccessfulAuthentication(request, response, failed);
 
-        log.info("Authentication failed");
+        log.error("Authentication failed");
         Integer counter = loginAttemptService.incrementCounter(request.getRemoteAddr());
 
         if (counter == attemptsBeforeBlock) {

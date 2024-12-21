@@ -91,7 +91,7 @@ public class TrainerServiceImpl implements TrainerService {
             null,
             trainer.getUserDto().getIsActive()
         ));
-        trainerDao.update(username, trainer.getSpecializationId());
+        trainerDao.update(username, trainingTypeService.get(trainer.getSpecializationId()));
         TrainerEntity updatedTrainerEntity = this.selectByUsername(username);
 
         LOGGER.info("Successfully updated a Trainer based on TrainerUpdateParams - {}, result - {}",
