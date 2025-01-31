@@ -43,7 +43,7 @@ public class TrainingController {
     private final TrainingMapper trainingMapper;
     private final TrainingValidator trainingValidator;
     private final PermissionService permissionService;
-    private final WebClient.Builder webClientBuilder;
+    private final WebClient webClient;
     private final ReactorLoadBalancerExchangeFilterFunction loadBalancer;
 
     /**
@@ -51,14 +51,15 @@ public class TrainingController {
      */
     public TrainingController(TrainingService trainingService,
                               TrainingMapper trainingMapper,
-                              TrainingValidator trainingValidator, PermissionService permissionService,
-                              WebClient.Builder webClientBuilder,
+                              TrainingValidator trainingValidator,
+                              PermissionService permissionService,
+                              WebClient webClient,
                               ReactorLoadBalancerExchangeFilterFunction loadBalancer) {
         this.trainingService = trainingService;
         this.trainingMapper = trainingMapper;
         this.trainingValidator = trainingValidator;
         this.permissionService = permissionService;
-        this.webClientBuilder = webClientBuilder;
+        this.webClient = webClient;
         this.loadBalancer = loadBalancer;
     }
 
@@ -91,11 +92,17 @@ public class TrainingController {
             trainingEntity.getDuration(),
             ActionType.ADD
         );
-        Mono<ResponseEntity> responseEntityMono =
-            webClientBuilder.build().get()
-                .uri("http://trainer-working-hour-service/trainer")
-                .retrieve().bodyToMono(ResponseEntity.class);
-        log.info("Response Entity Mono - {}", responseEntityMono);
+
+        Mono<ResponseEntity> responseEntityMono = webClient
+            .post()
+            .uri("/trainer-working-hours")
+            .body(Mono.just(body), TrainerWorkingHoursRequestDto.class)
+            .retrieve()
+            .bodyToMono(ResponseEntity.class)
+            .onErrorResume(e -> {
+                System.out.println("Error: " + e);
+                return Mono.empty();
+            });
 
         // response
         RestResponse restResponse =
