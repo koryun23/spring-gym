@@ -7,6 +7,8 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
 import org.example.dto.plain.TrainingDto;
+import org.example.dto.request.ActionType;
+import org.example.dto.request.TrainerWorkingHoursRequestDto;
 import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTraineeRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTrainerRequestDto;
@@ -18,6 +20,7 @@ import org.example.mapper.training.TrainingMapper;
 import org.example.security.service.PermissionService;
 import org.example.service.core.training.TrainingService;
 import org.example.validator.TrainingValidator;
+import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +31,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Slf4j
 @RestController
@@ -38,17 +43,23 @@ public class TrainingController {
     private final TrainingMapper trainingMapper;
     private final TrainingValidator trainingValidator;
     private final PermissionService permissionService;
+    private final WebClient.Builder webClientBuilder;
+    private final ReactorLoadBalancerExchangeFilterFunction loadBalancer;
 
     /**
      * Constructor.
      */
     public TrainingController(TrainingService trainingService,
                               TrainingMapper trainingMapper,
-                              TrainingValidator trainingValidator, PermissionService permissionService) {
+                              TrainingValidator trainingValidator, PermissionService permissionService,
+                              WebClient.Builder webClientBuilder,
+                              ReactorLoadBalancerExchangeFilterFunction loadBalancer) {
         this.trainingService = trainingService;
         this.trainingMapper = trainingMapper;
         this.trainingValidator = trainingValidator;
         this.permissionService = permissionService;
+        this.webClientBuilder = webClientBuilder;
+        this.loadBalancer = loadBalancer;
     }
 
     /**
@@ -64,10 +75,27 @@ public class TrainingController {
         trainingValidator.validateCreateTraining(requestDto);
 
         // service and mapper calls
+
         TrainingDto trainingDto = trainingMapper.mapTrainingCreationRequestDtoToTrainingDto(requestDto);
         TrainingEntity trainingEntity = trainingService.create(trainingDto);
         TrainingCreationResponseDto responseDto =
             trainingMapper.mapTrainingEntityToTrainingCreationResponseDto(trainingEntity);
+
+        // sending a request to the microservice
+        TrainerWorkingHoursRequestDto body = new TrainerWorkingHoursRequestDto(
+            trainingEntity.getTrainer().getUser().getUsername(),
+            trainingEntity.getTrainer().getUser().getFirstName(),
+            trainingEntity.getTrainer().getUser().getLastName(),
+            trainingEntity.getTrainer().getUser().getIsActive(),
+            trainingEntity.getDate(),
+            trainingEntity.getDuration(),
+            ActionType.ADD
+        );
+        Mono<ResponseEntity> responseEntityMono =
+            webClientBuilder.build().get()
+                .uri("http://trainer-working-hour-service/trainer")
+                .retrieve().bodyToMono(ResponseEntity.class);
+        log.info("Response Entity Mono - {}", responseEntityMono);
 
         // response
         RestResponse restResponse =

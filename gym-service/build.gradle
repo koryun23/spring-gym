@@ -65,6 +65,16 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    implementation 'org.springframework.boot:spring-boot-starter-webflux:3.4.2'
+    implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer:4.2.0'
+    testImplementation 'io.projectreactor:reactor-test:3.7.2'
+
+//    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.2.0'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server:4.2.0'
+
+    implementation project(":trainer-working-hours-service")
+
 }
 
 test {
