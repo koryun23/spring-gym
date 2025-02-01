@@ -2,11 +2,14 @@ package org.example.mapper.training;
 
 import java.util.List;
 import org.example.dto.plain.TrainingDto;
+import org.example.dto.request.ActionType;
+import org.example.dto.request.TrainerWorkingHoursRequestDto;
 import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.dto.response.TraineeTrainingRetrievalResponseDto;
 import org.example.dto.response.TrainerTrainingRetrievalResponseDto;
 import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.entity.training.TrainingEntity;
+import org.example.entity.user.UserEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -83,5 +86,21 @@ public class TrainingMapperImpl implements TrainingMapper {
         return trainings.stream()
             .map(this::mapTrainingEntityToTrainerTrainingRetrievalResponsedto)
             .toList();
+    }
+
+    @Override
+    public TrainerWorkingHoursRequestDto mapTrainingEntityToTrainerWorkingHoursRequestDto(
+        TrainingEntity trainingEntity) {
+
+        UserEntity trainerUserEntity = trainingEntity.getTrainer().getUser();
+        return new TrainerWorkingHoursRequestDto(
+            trainerUserEntity.getUsername(),
+            trainerUserEntity.getFirstName(),
+            trainerUserEntity.getLastName(),
+            trainerUserEntity.getIsActive(),
+            trainingEntity.getDate(),
+            trainingEntity.getDuration(),
+            ActionType.ADD
+        );
     }
 }

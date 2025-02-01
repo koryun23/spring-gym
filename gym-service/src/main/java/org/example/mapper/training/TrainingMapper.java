@@ -2,6 +2,7 @@ package org.example.mapper.training;
 
 import java.util.List;
 import org.example.dto.plain.TrainingDto;
+import org.example.dto.request.TrainerWorkingHoursRequestDto;
 import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.dto.response.TraineeTrainingRetrievalResponseDto;
 import org.example.dto.response.TrainerTrainingRetrievalResponseDto;
@@ -27,4 +28,6 @@ public interface TrainingMapper {
 
     List<TrainerTrainingRetrievalResponseDto> mapTrainingEntityListToTrainerTrainingRetrievalResponseDtoList(
         List<TrainingEntity> trainings);
+
+    TrainerWorkingHoursRequestDto mapTrainingEntityToTrainerWorkingHoursRequestDto(TrainingEntity trainingEntity);
 }

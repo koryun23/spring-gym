@@ -7,7 +7,6 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
 import org.example.dto.plain.TrainingDto;
-import org.example.dto.request.ActionType;
 import org.example.dto.request.TrainerWorkingHoursRequestDto;
 import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.dto.request.TrainingListRetrievalByTraineeRequestDto;
@@ -18,6 +17,7 @@ import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.entity.training.TrainingEntity;
 import org.example.mapper.training.TrainingMapper;
 import org.example.security.service.PermissionService;
+import org.example.service.core.trainer.TrainerWorkingHoursService;
 import org.example.service.core.training.TrainingService;
 import org.example.validator.TrainingValidator;
 import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
@@ -32,7 +32,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 @Slf4j
 @RestController
@@ -45,6 +44,7 @@ public class TrainingController {
     private final PermissionService permissionService;
     private final WebClient webClient;
     private final ReactorLoadBalancerExchangeFilterFunction loadBalancer;
+    private final TrainerWorkingHoursService trainerWorkingHoursService;
 
     /**
      * Constructor.
@@ -54,13 +54,15 @@ public class TrainingController {
                               TrainingValidator trainingValidator,
                               PermissionService permissionService,
                               WebClient webClient,
-                              ReactorLoadBalancerExchangeFilterFunction loadBalancer) {
+                              ReactorLoadBalancerExchangeFilterFunction loadBalancer,
+                              TrainerWorkingHoursService trainerWorkingHoursService) {
         this.trainingService = trainingService;
         this.trainingMapper = trainingMapper;
         this.trainingValidator = trainingValidator;
         this.permissionService = permissionService;
         this.webClient = webClient;
         this.loadBalancer = loadBalancer;
+        this.trainerWorkingHoursService = trainerWorkingHoursService;
     }
 
     /**
@@ -82,27 +84,10 @@ public class TrainingController {
         TrainingCreationResponseDto responseDto =
             trainingMapper.mapTrainingEntityToTrainingCreationResponseDto(trainingEntity);
 
-        // sending a request to the microservice
-        TrainerWorkingHoursRequestDto body = new TrainerWorkingHoursRequestDto(
-            trainingEntity.getTrainer().getUser().getUsername(),
-            trainingEntity.getTrainer().getUser().getFirstName(),
-            trainingEntity.getTrainer().getUser().getLastName(),
-            trainingEntity.getTrainer().getUser().getIsActive(),
-            trainingEntity.getDate(),
-            trainingEntity.getDuration(),
-            ActionType.ADD
-        );
+        TrainerWorkingHoursRequestDto trainerWorkingHoursRequestDto =
+            trainingMapper.mapTrainingEntityToTrainerWorkingHoursRequestDto(trainingEntity);
 
-        Mono<ResponseEntity> responseEntityMono = webClient
-            .post()
-            .uri("/trainer-working-hours")
-            .body(Mono.just(body), TrainerWorkingHoursRequestDto.class)
-            .retrieve()
-            .bodyToMono(ResponseEntity.class)
-            .onErrorResume(e -> {
-                System.out.println("Error: " + e);
-                return Mono.empty();
-            });
+        trainerWorkingHoursService.sendData(trainerWorkingHoursRequestDto);
 
         // response
         RestResponse restResponse =
