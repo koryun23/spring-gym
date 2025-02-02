@@ -1,9 +1,9 @@
 package org.example.mapper.training;
 
+import com.example.dto.ActionType;
+import com.example.dto.TrainerWorkingHoursRequestDto;
 import java.util.List;
 import org.example.dto.plain.TrainingDto;
-import org.example.dto.request.ActionType;
-import org.example.dto.request.TrainerWorkingHoursRequestDto;
 import org.example.dto.request.TrainingCreationRequestDto;
 import org.example.dto.response.TraineeTrainingRetrievalResponseDto;
 import org.example.dto.response.TrainerTrainingRetrievalResponseDto;
@@ -105,7 +105,8 @@ public class TrainingMapperImpl implements TrainingMapper {
     }
 
     @Override
-    public TrainerWorkingHoursRequestDto mapTrainingEntityToTrainerWorkingHoursRemoveRequestDto(TrainingEntity trainingEntity) {
+    public TrainerWorkingHoursRequestDto mapTrainingEntityToTrainerWorkingHoursRemoveRequestDto(
+        TrainingEntity trainingEntity) {
         UserEntity trainerUserEntity = trainingEntity.getTrainer().getUser();
         return new TrainerWorkingHoursRequestDto(
             trainerUserEntity.getUsername(),

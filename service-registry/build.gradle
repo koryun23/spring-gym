@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.example'
+version = 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server:4.2.0'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.3.5'
+    //implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.3.5'
+}
+
+test {
+    useJUnitPlatform()
+}

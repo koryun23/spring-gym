@@ -18,8 +18,10 @@ import org.example.dto.response.TraineeUpdateResponseDto;
 import org.example.entity.trainee.TraineeEntity;
 import org.example.entity.user.UserEntity;
 import org.example.mapper.trainee.TraineeMapper;
+import org.example.mapper.training.TrainingMapper;
 import org.example.security.service.PermissionService;
 import org.example.service.core.trainee.TraineeService;
+import org.example.service.core.training.TrainingService;
 import org.example.service.core.user.UserService;
 import org.example.validator.TraineeValidator;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,10 +53,27 @@ class TraineeControllerTest {
     @Mock
     private PermissionService permissionService;
 
+    @Mock
+    private TrainingService trainingService;
+
+    @Mock
+    private TrainingMapper trainingMapper;
+
+    @Mock
+    private TrainerWorkingHoursClient trainerWorkingHoursClient;
+
     @BeforeEach
     public void init() {
         testSubject =
-            new TraineeController(traineeService, userService, traineeMapper, traineeValidator, permissionService);
+            new TraineeController(
+                traineeService,
+                userService,
+                traineeMapper,
+                traineeValidator,
+                permissionService,
+                trainingService,
+                trainingMapper,
+                trainerWorkingHoursClient);
     }
 
     @Test

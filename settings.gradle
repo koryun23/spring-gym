@@ -1,4 +1,5 @@
 rootProject.name = "gym-spring"
 include 'trainer-working-hours-service'
 include 'gym-service'
+include 'service-registry'
 

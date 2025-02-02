@@ -10,12 +10,14 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
+@RequestMapping("/trainer-working-hours")
 public class TrainerController {
 
     private final TrainerService trainerService;
@@ -26,8 +28,12 @@ public class TrainerController {
         this.trainerMapper = trainerMapper;
     }
 
-    @PostMapping(value = "/trainer-working-hours", consumes = "application/json")
-    public ResponseEntity<TrainerWorkingHoursResponseDto> calculateWorkingHours(@RequestBody TrainerWorkingHoursRequestDto requestDto) {
+    /**
+     * A method for updating the working hours of a trainee on the given year and month. In case
+     * no record is found for the given trainer, a new record is created.
+     */
+    @PutMapping(consumes = "application/json")
+    public ResponseEntity<TrainerWorkingHoursResponseDto> updateWorkingHours(@RequestBody TrainerWorkingHoursRequestDto requestDto) {
         log.info("Calculating working hours of the given trainer - {}", requestDto);
 
         TrainerEntity trainerEntity = trainerMapper.mapTrainerWorkingHoursRequestDtoToTrainerEntity(requestDto);
@@ -42,7 +48,10 @@ public class TrainerController {
         return ResponseEntity.ok(new TrainerWorkingHoursResponseDto(requestDto.getTrainerUsername(), requestDto.getDuration().intValue()));
     }
 
-    @GetMapping(value = "/trainer-working-hours")
+    /**
+     * A method for retrieving the working hours for all trainers on all available years and months.
+     */
+    @GetMapping
     public ResponseEntity<List<TrainerEntity>> retrieveWorkingHours() {
         log.info("Retrieving all registered working hours of all trainers");
 

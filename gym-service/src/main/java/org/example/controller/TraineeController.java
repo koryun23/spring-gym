@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import com.example.dto.TrainerWorkingHoursRequestDto;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -10,17 +11,14 @@ import org.example.dto.request.TraineeCreationRequestDto;
 import org.example.dto.request.TraineeDeletionByUsernameRequestDto;
 import org.example.dto.request.TraineeSwitchActivationStateRequestDto;
 import org.example.dto.request.TraineeUpdateRequestDto;
-import org.example.dto.request.TrainerWorkingHoursRequestDto;
 import org.example.dto.response.TraineeCreationResponseDto;
 import org.example.dto.response.TraineeDeletionResponseDto;
 import org.example.dto.response.TraineeSwitchActivationStateResponseDto;
 import org.example.entity.trainee.TraineeEntity;
 import org.example.mapper.trainee.TraineeMapper;
-import org.example.mapper.trainer.TrainerMapper;
 import org.example.mapper.training.TrainingMapper;
 import org.example.security.service.PermissionService;
 import org.example.service.core.trainee.TraineeService;
-import org.example.service.core.trainer.TrainerWorkingHoursService;
 import org.example.service.core.training.TrainingService;
 import org.example.service.core.user.UserService;
 import org.example.validator.TraineeValidator;
@@ -48,9 +46,9 @@ public class TraineeController {
     private final TraineeMapper traineeMapper;
     private final TraineeValidator traineeValidator;
     private final PermissionService permissionService;
-    private final TrainerWorkingHoursService trainerWorkingHoursService;
     private final TrainingService trainingService;
     private final TrainingMapper trainingMapper;
+    private final TrainerWorkingHoursClient trainerWorkingHoursClient;
 
 
     /**
@@ -58,16 +56,16 @@ public class TraineeController {
      */
     public TraineeController(TraineeService traineeService, UserService userService, TraineeMapper traineeMapper,
                              TraineeValidator traineeValidator, PermissionService permissionService,
-                             TrainerWorkingHoursService trainerWorkingHoursService, TrainingService trainingService,
-                             TrainingMapper trainingMapper) {
+                             TrainingService trainingService,
+                             TrainingMapper trainingMapper, TrainerWorkingHoursClient trainerWorkingHoursClient) {
         this.traineeService = traineeService;
         this.userService = userService;
         this.traineeMapper = traineeMapper;
         this.traineeValidator = traineeValidator;
         this.permissionService = permissionService;
-        this.trainerWorkingHoursService = trainerWorkingHoursService;
         this.trainingService = trainingService;
         this.trainingMapper = trainingMapper;
+        this.trainerWorkingHoursClient = trainerWorkingHoursClient;
     }
 
     /**
@@ -169,7 +167,7 @@ public class TraineeController {
 
         traineeService.delete(requestDto.getUsername());
 
-        trainerWorkingHoursRequestDtoList.forEach(trainerWorkingHoursService::sendData);
+        trainerWorkingHoursRequestDtoList.forEach(trainerWorkingHoursClient::updateWorkingHours);
 
         // response
         RestResponse restResponse =
