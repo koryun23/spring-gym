@@ -5,3 +5,15 @@ server:
 spring:
   application:
     name: trainer-working-hours-service
+  datasource:
+    url: jdbc:h2:mem:db
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+  h2:
+    console:
+      enabled: true
