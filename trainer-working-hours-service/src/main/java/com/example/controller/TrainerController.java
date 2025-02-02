@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.dto.ActionType;
+import com.example.dto.TrainerDto;
 import com.example.dto.TrainerWorkingHoursRequestDto;
 import com.example.dto.TrainerWorkingHoursResponseDto;
 import com.example.entity.TrainerEntity;
@@ -54,10 +55,11 @@ public class TrainerController {
      * A method for retrieving the working hours for all trainers on all available years and months.
      */
     @GetMapping
-    public ResponseEntity<List<TrainerEntity>> retrieveWorkingHours() {
+    public ResponseEntity<List<TrainerDto>> retrieveWorkingHours() {
         log.info("Retrieving all registered working hours of all trainers");
 
-        List<TrainerEntity> all = trainerService.findAll();
+        List<TrainerDto> all =
+            trainerService.findAll().stream().map(trainerMapper::mapTrainerEntityToTrainerDto).toList();
 
         log.info("Successfully retrieved all registered working hours of all trainers, {}", all);
 
