@@ -40,7 +40,7 @@ public class TrainingEntity {
     @ManyToOne
     private TrainerEntity trainer;
 
-    @Column(name = "training_name", nullable = false, unique = true)
+    @Column(name = "training_name", nullable = false)
     private String name;
 
     @JoinColumn(name = "training_type_id", referencedColumnName = "id", nullable = false)
