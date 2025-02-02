@@ -33,7 +33,8 @@ public class TrainerController {
      * no record is found for the given trainer, a new record is created.
      */
     @PutMapping(consumes = "application/json")
-    public ResponseEntity<TrainerWorkingHoursResponseDto> updateWorkingHours(@RequestBody TrainerWorkingHoursRequestDto requestDto) {
+    public ResponseEntity<TrainerWorkingHoursResponseDto> updateWorkingHours(
+        @RequestBody TrainerWorkingHoursRequestDto requestDto) {
         log.info("Calculating working hours of the given trainer - {}", requestDto);
 
         TrainerEntity trainerEntity = trainerMapper.mapTrainerWorkingHoursRequestDtoToTrainerEntity(requestDto);
@@ -45,7 +46,8 @@ public class TrainerController {
         }
         log.info("Successfully registered working hours of trainer, {}", savedTrainerEntity);
 
-        return ResponseEntity.ok(new TrainerWorkingHoursResponseDto(requestDto.getTrainerUsername(), requestDto.getDuration().intValue()));
+        return ResponseEntity.ok(
+            new TrainerWorkingHoursResponseDto(requestDto.getTrainerUsername(), requestDto.getDuration().intValue()));
     }
 
     /**
