@@ -64,7 +64,7 @@ public class TrainerController {
     public ResponseEntity<RestResponse> register(
         @RequestBody TrainerCreationRequestDto requestDto) {
 
-        log.info("Attempting a registration of a trainer according to the {}", requestDto);
+        log.info("POST /trainers - {}", requestDto);
 
         // validations
         trainerValidator.validateCreateTrainer(requestDto);
@@ -78,7 +78,7 @@ public class TrainerController {
         RestResponse restResponse =
             new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
-        log.info("Response of attempted registration - {}", restResponse);
+        log.info("Response Status - {}, Response Body - {}", restResponse.getHttpStatus(), restResponse);
 
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
@@ -90,7 +90,7 @@ public class TrainerController {
     public ResponseEntity<RestResponse> retrieveAllTrainersNotAssignedToTrainee(
         @PathVariable(value = "username") String username) {
 
-        log.info("Attempting a retrieval of trainers not assigned to trainee with a username of {}", username);
+        log.info("GET /trainers/unassigned-to/{}", username);
 
         // validations
         trainerValidator.validateRetrieveAllTrainersNotAssignedToTrainee(
@@ -106,7 +106,7 @@ public class TrainerController {
         RestResponse restResponse =
             new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
-        log.info("Response of retrieval of trainers not assigned to a trainee - {}", restResponse);
+        log.info("Response Status - {}, Response Body - {}", restResponse.getHttpStatus(), restResponse);
 
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
@@ -119,7 +119,7 @@ public class TrainerController {
         @RequestBody TrainerUpdateRequestDto requestDto,
         @PathVariable(value = "username") String username) {
 
-        log.info("Attempting an update of a trainer, request - {}", requestDto);
+        log.info("PUT /trainers/{} - {}", username, requestDto);
 
         // validations
         trainerValidator.validateUpdateTrainer(username, requestDto);
@@ -135,7 +135,7 @@ public class TrainerController {
         RestResponse restResponse =
             new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
-        log.info("Response of update of trainers - {}", restResponse);
+        log.info("Response Status - {}, Response Body - {}", restResponse.getHttpStatus(), restResponse);
 
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
@@ -147,7 +147,7 @@ public class TrainerController {
     public ResponseEntity<RestResponse> retrieve(
         @PathVariable(value = "username") String username) {
 
-        log.info("Attempting a retrieval of a single trainer profile, username - {}", username);
+        log.info("GET /trainers/{}", username);
         TrainerRetrievalByUsernameRequestDto requestDto = new TrainerRetrievalByUsernameRequestDto(username);
 
         // validations
@@ -163,7 +163,7 @@ public class TrainerController {
         RestResponse restResponse =
             new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
-        log.info("Response of trainer retrieval - {}", restResponse);
+        log.info("Response Status - {}, Response Body - {}", restResponse.getHttpStatus(), restResponse);
 
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
@@ -176,7 +176,7 @@ public class TrainerController {
         @PathVariable(value = "username") String username,
         @RequestBody TrainerSwitchActivationStateRequestDto requestDto) {
 
-        log.info("Attempting to switch the activation state of a trainer, username - {}", username);
+        log.info("PATCH /trainers/{}", username);
 
         // validations
         trainerValidator.validateSwitchActivationState(username, requestDto);
@@ -191,7 +191,7 @@ public class TrainerController {
         RestResponse restResponse =
             new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
-        log.info("Response of switching the activation state of a trainer - {}", restResponse);
+        log.info("Response Status - {}, Response Body - {}", restResponse.getHttpStatus(), restResponse);
 
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
