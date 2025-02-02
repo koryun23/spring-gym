@@ -5,7 +5,9 @@ import java.util.List;
 
 public interface TrainerService {
 
-    TrainerEntity create(TrainerEntity trainerEntity);
+    TrainerEntity addWorkingHours(TrainerEntity trainerEntity);
+
+    TrainerEntity removeWorkingHours(TrainerEntity trainerEntity);
 
     List<TrainerEntity> findAllByUsername(String username);
 

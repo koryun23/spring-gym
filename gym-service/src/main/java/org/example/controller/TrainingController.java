@@ -85,7 +85,7 @@ public class TrainingController {
             trainingMapper.mapTrainingEntityToTrainingCreationResponseDto(trainingEntity);
 
         TrainerWorkingHoursRequestDto trainerWorkingHoursRequestDto =
-            trainingMapper.mapTrainingEntityToTrainerWorkingHoursRequestDto(trainingEntity);
+            trainingMapper.mapTrainingEntityToTrainerWorkingHoursAddRequestDto(trainingEntity);
 
         trainerWorkingHoursService.sendData(trainerWorkingHoursRequestDto);
 

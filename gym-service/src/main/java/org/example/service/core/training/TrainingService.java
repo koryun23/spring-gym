@@ -14,4 +14,8 @@ public interface TrainingService {
 
     List<TrainingEntity> findAllByTrainerUsernameAndCriteria(String trainerUsername, Date from, Date to,
                                                              String traineeUsername);
+
+    List<TrainingEntity> findAllByTrainerUsername(String trainerUsername);
+
+    List<TrainingEntity> findAllByTraineeUsername(String traineeUsername);
 }

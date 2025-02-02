@@ -29,5 +29,8 @@ public interface TrainingMapper {
     List<TrainerTrainingRetrievalResponseDto> mapTrainingEntityListToTrainerTrainingRetrievalResponseDtoList(
         List<TrainingEntity> trainings);
 
-    TrainerWorkingHoursRequestDto mapTrainingEntityToTrainerWorkingHoursRequestDto(TrainingEntity trainingEntity);
+    TrainerWorkingHoursRequestDto mapTrainingEntityToTrainerWorkingHoursAddRequestDto(TrainingEntity trainingEntity);
+
+    TrainerWorkingHoursRequestDto mapTrainingEntityToTrainerWorkingHoursRemoveRequestDto(TrainingEntity trainingEntity);
+
 }

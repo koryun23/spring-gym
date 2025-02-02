@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.dto.ActionType;
 import com.example.dto.TrainerWorkingHoursRequestDto;
 import com.example.dto.TrainerWorkingHoursResponseDto;
 import com.example.entity.TrainerEntity;
@@ -30,7 +31,12 @@ public class TrainerController {
         log.info("Calculating working hours of the given trainer - {}", requestDto);
 
         TrainerEntity trainerEntity = trainerMapper.mapTrainerWorkingHoursRequestDtoToTrainerEntity(requestDto);
-        TrainerEntity savedTrainerEntity = trainerService.create(trainerEntity);
+        TrainerEntity savedTrainerEntity = null;
+        if (requestDto.getActionType() == ActionType.ADD) {
+            savedTrainerEntity = trainerService.addWorkingHours(trainerEntity);
+        } else {
+            savedTrainerEntity = trainerService.removeWorkingHours(trainerEntity);
+        }
         log.info("Successfully registered working hours of trainer, {}", savedTrainerEntity);
 
         return ResponseEntity.ok(new TrainerWorkingHoursResponseDto(requestDto.getTrainerUsername(), requestDto.getDuration().intValue()));

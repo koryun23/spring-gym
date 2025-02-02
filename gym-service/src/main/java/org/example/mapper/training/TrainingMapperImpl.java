@@ -89,7 +89,7 @@ public class TrainingMapperImpl implements TrainingMapper {
     }
 
     @Override
-    public TrainerWorkingHoursRequestDto mapTrainingEntityToTrainerWorkingHoursRequestDto(
+    public TrainerWorkingHoursRequestDto mapTrainingEntityToTrainerWorkingHoursAddRequestDto(
         TrainingEntity trainingEntity) {
 
         UserEntity trainerUserEntity = trainingEntity.getTrainer().getUser();
@@ -101,6 +101,20 @@ public class TrainingMapperImpl implements TrainingMapper {
             trainingEntity.getDate(),
             trainingEntity.getDuration(),
             ActionType.ADD
+        );
+    }
+
+    @Override
+    public TrainerWorkingHoursRequestDto mapTrainingEntityToTrainerWorkingHoursRemoveRequestDto(TrainingEntity trainingEntity) {
+        UserEntity trainerUserEntity = trainingEntity.getTrainer().getUser();
+        return new TrainerWorkingHoursRequestDto(
+            trainerUserEntity.getUsername(),
+            trainerUserEntity.getFirstName(),
+            trainerUserEntity.getLastName(),
+            trainerUserEntity.getIsActive(),
+            trainingEntity.getDate(),
+            trainingEntity.getDuration(),
+            ActionType.DELETE
         );
     }
 }

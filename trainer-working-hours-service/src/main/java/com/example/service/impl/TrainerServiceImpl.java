@@ -21,9 +21,9 @@ public class TrainerServiceImpl implements TrainerService {
 
 
     @Override
-    public TrainerEntity create(TrainerEntity trainerEntity) {
+    public TrainerEntity addWorkingHours(TrainerEntity trainerEntity) {
         Assert.notNull(trainerEntity, "Trainer entity must not be null");
-        log.info("Creating a Trainer entity - {}", trainerEntity);
+        log.info("Adding working hours - {}", trainerEntity);
 
         Optional<TrainerEntity> optionalByCriteria =
             trainerRepository.findByUsernameAndMonthAndYear(trainerEntity.getTrainerUsername(),
@@ -39,7 +39,30 @@ public class TrainerServiceImpl implements TrainerService {
             savedTrainerEntity = trainerRepository.save(trainerEntity);
         }
 
-        log.info("Successfully created a Trainer entity - {}", savedTrainerEntity);
+        log.info("Successfully added working hours - {}", savedTrainerEntity);
+        return savedTrainerEntity;
+    }
+
+    @Override
+    public TrainerEntity removeWorkingHours(TrainerEntity trainerEntity) {
+        Assert.notNull(trainerEntity, "Trainer Entity must not be null");
+        log.info("Removing working hours - {}", trainerEntity);
+
+        Optional<TrainerEntity> optionalTrainerEntity =
+            trainerRepository.findByUsernameAndMonthAndYear(trainerEntity.getTrainerUsername(),
+                trainerEntity.getTrainingMonth(), trainerEntity.getTrainingYear());
+        TrainerEntity savedTrainerEntity;
+
+        // TODO: throw exception
+        if (optionalTrainerEntity.isEmpty()) {
+            log.warn("Given trainer - {}, has no working hours registered", trainerEntity);
+            return trainerEntity;
+        }
+
+        TrainerEntity trainerEntityByCriteria = optionalTrainerEntity.get();
+        trainerEntityByCriteria.setDuration(trainerEntityByCriteria.getDuration() - trainerEntity.getDuration());
+        savedTrainerEntity = trainerRepository.save(trainerEntityByCriteria);
+        log.info("Successfully removed working hours, {}", trainerEntity);
         return savedTrainerEntity;
     }
 

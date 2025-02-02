@@ -96,4 +96,14 @@ public class TrainingServiceImpl implements TrainingService {
             trainerUsername, from, to, traineeUsername, all);
         return all;
     }
+
+    @Override
+    public List<TrainingEntity> findAllByTraineeUsername(String traineeUsername) {
+        return this.findAllByTraineeUsernameAndCriteria(traineeUsername, null, null, null, null);
+    }
+
+    @Override
+    public List<TrainingEntity> findAllByTrainerUsername(String trainerUsername) {
+        return this.findAllByTrainerUsernameAndCriteria(trainerUsername, null, null, null);
+    }
 }
