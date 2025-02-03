@@ -36,7 +36,7 @@ public class TrainerController {
     @PutMapping(consumes = "application/json")
     public ResponseEntity<TrainerWorkingHoursResponseDto> updateWorkingHours(
         @RequestBody TrainerWorkingHoursRequestDto requestDto) {
-        log.info("Calculating working hours of the given trainer - {}", requestDto);
+        log.debug("Calculating working hours of the given trainer - {}", requestDto.getTrainerUsername());
 
         TrainerEntity trainerEntity = trainerMapper.mapTrainerWorkingHoursRequestDtoToTrainerEntity(requestDto);
         TrainerEntity savedTrainerEntity = null;
