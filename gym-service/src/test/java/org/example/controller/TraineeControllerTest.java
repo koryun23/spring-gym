@@ -21,6 +21,7 @@ import org.example.mapper.trainee.TraineeMapper;
 import org.example.mapper.training.TrainingMapper;
 import org.example.security.service.PermissionService;
 import org.example.service.core.trainee.TraineeService;
+import org.example.service.core.trainer.TrainerWorkingHoursService;
 import org.example.service.core.training.TrainingService;
 import org.example.service.core.user.UserService;
 import org.example.validator.TraineeValidator;
@@ -60,7 +61,7 @@ class TraineeControllerTest {
     private TrainingMapper trainingMapper;
 
     @Mock
-    private TrainerWorkingHoursClient trainerWorkingHoursClient;
+    private TrainerWorkingHoursService trainerWorkingHoursService;
 
     @BeforeEach
     public void init() {
@@ -73,7 +74,7 @@ class TraineeControllerTest {
                 permissionService,
                 trainingService,
                 trainingMapper,
-                trainerWorkingHoursClient);
+                trainerWorkingHoursService);
     }
 
     @Test

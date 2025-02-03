@@ -19,6 +19,7 @@ import org.example.mapper.trainee.TraineeMapper;
 import org.example.mapper.training.TrainingMapper;
 import org.example.security.service.PermissionService;
 import org.example.service.core.trainee.TraineeService;
+import org.example.service.core.trainer.TrainerWorkingHoursService;
 import org.example.service.core.training.TrainingService;
 import org.example.service.core.user.UserService;
 import org.example.validator.TraineeValidator;
@@ -47,8 +48,7 @@ public class TraineeController {
     private final PermissionService permissionService;
     private final TrainingService trainingService;
     private final TrainingMapper trainingMapper;
-    private final TrainerWorkingHoursClient trainerWorkingHoursClient;
-
+    private final TrainerWorkingHoursService trainerWorkingHoursService;
 
     /**
      * Constructor.
@@ -56,7 +56,7 @@ public class TraineeController {
     public TraineeController(TraineeService traineeService, UserService userService, TraineeMapper traineeMapper,
                              TraineeValidator traineeValidator, PermissionService permissionService,
                              TrainingService trainingService,
-                             TrainingMapper trainingMapper, TrainerWorkingHoursClient trainerWorkingHoursClient) {
+                             TrainingMapper trainingMapper, TrainerWorkingHoursService trainerWorkingHoursService) {
         this.traineeService = traineeService;
         this.userService = userService;
         this.traineeMapper = traineeMapper;
@@ -64,7 +64,7 @@ public class TraineeController {
         this.permissionService = permissionService;
         this.trainingService = trainingService;
         this.trainingMapper = trainingMapper;
-        this.trainerWorkingHoursClient = trainerWorkingHoursClient;
+        this.trainerWorkingHoursService = trainerWorkingHoursService;
     }
 
     /**
@@ -165,7 +165,7 @@ public class TraineeController {
 
         traineeService.delete(requestDto.getUsername());
 
-        trainerWorkingHoursRequestDtoList.forEach(trainerWorkingHoursClient::updateWorkingHours);
+        trainerWorkingHoursRequestDtoList.forEach(trainerWorkingHoursService::updateWorkingHours);
 
         // response
         RestResponse restResponse =

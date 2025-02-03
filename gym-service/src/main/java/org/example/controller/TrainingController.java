@@ -17,6 +17,7 @@ import org.example.dto.response.TrainingCreationResponseDto;
 import org.example.entity.training.TrainingEntity;
 import org.example.mapper.training.TrainingMapper;
 import org.example.security.service.PermissionService;
+import org.example.service.core.trainer.TrainerWorkingHoursService;
 import org.example.service.core.training.TrainingService;
 import org.example.validator.TrainingValidator;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -34,14 +35,13 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping(value = "/trainings")
-@EnableFeignClients
 public class TrainingController {
 
     private final TrainingService trainingService;
     private final TrainingMapper trainingMapper;
     private final TrainingValidator trainingValidator;
     private final PermissionService permissionService;
-    private final TrainerWorkingHoursClient trainerWorkingHoursClient;
+    private final TrainerWorkingHoursService trainerWorkingHoursService;
 
     /**
      * Constructor.
@@ -50,12 +50,12 @@ public class TrainingController {
                               TrainingMapper trainingMapper,
                               TrainingValidator trainingValidator,
                               PermissionService permissionService,
-                              TrainerWorkingHoursClient trainerWorkingHoursClient) {
+                              TrainerWorkingHoursService trainerWorkingHoursService) {
         this.trainingService = trainingService;
         this.trainingMapper = trainingMapper;
         this.trainingValidator = trainingValidator;
         this.permissionService = permissionService;
-        this.trainerWorkingHoursClient = trainerWorkingHoursClient;
+        this.trainerWorkingHoursService = trainerWorkingHoursService;
     }
 
     /**
@@ -80,7 +80,7 @@ public class TrainingController {
         TrainerWorkingHoursRequestDto trainerWorkingHoursRequestDto =
             trainingMapper.mapTrainingEntityToTrainerWorkingHoursAddRequestDto(trainingEntity);
 
-        trainerWorkingHoursClient.updateWorkingHours(trainerWorkingHoursRequestDto);
+        trainerWorkingHoursService.updateWorkingHours(trainerWorkingHoursRequestDto);
 
         // response
         RestResponse restResponse =
