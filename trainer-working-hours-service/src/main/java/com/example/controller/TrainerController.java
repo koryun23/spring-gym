@@ -42,16 +42,18 @@ public class TrainerController {
     @PutMapping(consumes = "application/json")
     public ResponseEntity<TrainerWorkingHoursResponseDto> updateWorkingHours(
         @RequestBody TrainerWorkingHoursRequestDto requestDto) {
-        log.debug("Calculating working hours of the given trainer - {}", requestDto.getTrainerUsername());
+        log.info("GET /trainers/hours - {}", requestDto.getTrainerUsername());
 
         TrainerEntity trainerEntity = trainerMapper.mapTrainerWorkingHoursRequestDtoToTrainerEntity(requestDto);
         TrainerEntity savedTrainerEntity =
             trainerService.updateWorkingHours(trainerEntity, strategyFactory.getStrategy(requestDto.getActionType()));
 
-        log.info("Successfully registered working hours of trainer, {}", savedTrainerEntity);
-
-        return ResponseEntity.ok(
+        ResponseEntity<TrainerWorkingHoursResponseDto> responseEntity = ResponseEntity.ok(
             new TrainerWorkingHoursResponseDto(requestDto.getTrainerUsername(), requestDto.getDuration().intValue()));
+
+        log.info("Response Status - {}, Response Body - {}", responseEntity.getStatusCode(), responseEntity.getBody());
+
+        return responseEntity;
     }
 
     /**

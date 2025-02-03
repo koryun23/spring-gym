@@ -1,9 +1,9 @@
 package com.example.service.impl;
 
-import com.example.strategy.TrainerWorkingHoursUpdateStrategy;
 import com.example.entity.TrainerEntity;
 import com.example.repository.TrainerRepository;
 import com.example.service.core.TrainerService;
+import com.example.strategy.TrainerWorkingHoursUpdateStrategy;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -19,7 +19,6 @@ public class TrainerServiceImpl implements TrainerService {
         this.trainerRepository = trainerRepository;
     }
 
-
     @Override
     public TrainerEntity updateWorkingHours(TrainerEntity trainerEntity, TrainerWorkingHoursUpdateStrategy strategy) {
         Assert.notNull(trainerEntity, "Trainer Entity must not be null");
@@ -34,12 +33,12 @@ public class TrainerServiceImpl implements TrainerService {
     public List<TrainerEntity> findAllByUsername(String username) {
         Assert.notNull(username, "Trainer username must not be null");
         Assert.hasText(username, "Trainer username must not be empty");
-        log.info("Retrieving all trainer entities with a username of {}", username);
+        log.info("Retrieving all trainers with a username of {} and their working hours", username);
 
         List<TrainerEntity> allByTrainerUsername = trainerRepository.findAllByTrainerUsername(username);
 
-        log.info("Successfully retrieved all trainer entities with a username of {}, result - {}", username,
-            allByTrainerUsername);
+        log.info("Successfully retrieved all trainers with a username of {} and their working hours, result - {}",
+            username, allByTrainerUsername);
 
         return allByTrainerUsername;
     }
