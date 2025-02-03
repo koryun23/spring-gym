@@ -20,7 +20,6 @@ import org.example.security.service.PermissionService;
 import org.example.service.core.trainer.TrainerWorkingHoursService;
 import org.example.service.core.training.TrainingService;
 import org.example.validator.TrainingValidator;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,7 +64,7 @@ public class TrainingController {
     public ResponseEntity<RestResponse> create(@RequestBody
                                                TrainingCreationRequestDto requestDto) {
 
-        log.info("Attempting to create a training, request - {}", requestDto);
+        log.info("POST /trainings - {}", requestDto);
 
         // validations
         trainingValidator.validateCreateTraining(requestDto);
@@ -86,7 +85,7 @@ public class TrainingController {
         RestResponse restResponse =
             new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
-        log.info("Response of training creation - {}", restResponse);
+        log.info("Response Status - {}, Response Body - {}", restResponse.getHttpStatus(), restResponse);
 
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
@@ -102,7 +101,7 @@ public class TrainingController {
         @RequestParam(value = "trainer", required = false) String trainerUsername,
         @RequestParam(value = "type", required = false) Long specializationId) {
 
-        log.info("Attempting to retrieve trainings of a trainee, username - {}", username);
+        log.info("GET /trainings/trainee/{}", username);
         TrainingListRetrievalByTraineeRequestDto requestDto =
             new TrainingListRetrievalByTraineeRequestDto(
                 username,
@@ -132,7 +131,7 @@ public class TrainingController {
         RestResponse restResponse =
             new RestResponse(responseDtoList, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
-        log.info("Result of retrieving trainings of a trainee - {}", restResponse);
+        log.info("Response Status - {}, Response Body - {}", restResponse.getHttpStatus(), restResponse);
 
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
@@ -147,7 +146,7 @@ public class TrainingController {
         @RequestParam(value = "to", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String to,
         @RequestParam(value = "trainee", required = false) String traineeUsername) {
 
-        log.info("Attempting to retrieve trainings of a trainer, username - {}", username);
+        log.info("GET /trainings/trainer/{}", username);
 
         TrainingListRetrievalByTrainerRequestDto requestDto =
             new TrainingListRetrievalByTrainerRequestDto(
@@ -175,7 +174,7 @@ public class TrainingController {
         RestResponse restResponse =
             new RestResponse(trainings, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
-        log.info("Result of retrieving trainings of a trainer - {}", restResponse);
+        log.info("Response Status - {}, Response Body - {}", restResponse.getHttpStatus(), restResponse);
 
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }

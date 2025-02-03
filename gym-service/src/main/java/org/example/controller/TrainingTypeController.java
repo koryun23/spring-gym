@@ -36,7 +36,7 @@ public class TrainingTypeController {
     @GetMapping
     public ResponseEntity<RestResponse> retrieveTrainingTypes() {
 
-        log.info("Attempting the retrieval of training types");
+        log.info("GET /training-types");
 
         // service and mapper calls
         TrainingTypeListRetrievalResponseDto responseDto =
@@ -47,7 +47,7 @@ public class TrainingTypeController {
         RestResponse restResponse =
             new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
-        log.info("Response of training types retrieval - {}", restResponse);
+        log.info("Response Status - {}, Response Body - {}", restResponse.getHttpStatus(), restResponse);
 
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }

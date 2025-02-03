@@ -42,7 +42,7 @@ public class UserController {
     @PutMapping(value = "/password", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RestResponse> changePassword(
         @RequestBody UserChangePasswordRequestDto requestDto, HttpServletRequest request) {
-        log.info("Attempting password change, request - {}", requestDto);
+        log.info("PUT /password - {}", requestDto);
 
         // validations
         userValidator.validateChangePassword(requestDto);
@@ -56,7 +56,7 @@ public class UserController {
         RestResponse restResponse =
             new RestResponse(responseDto, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
 
-        log.info("Password change response - {}", restResponse);
+        log.info("Response Status - {}, Response Body - {}", restResponse.getHttpStatus(), restResponse);
 
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
     }
