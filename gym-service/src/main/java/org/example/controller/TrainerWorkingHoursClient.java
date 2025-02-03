@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 @FeignClient("trainer-working-hours-service")
 public interface TrainerWorkingHoursClient {
 
-    @PutMapping("/trainer-working-hours")
+    @PutMapping("/trainer/hours")
     ResponseEntity<TrainerWorkingHoursResponseDto> updateWorkingHours(TrainerWorkingHoursRequestDto requestDto);
 
-    @GetMapping("/trainer-working-hours")
+    @GetMapping("/trainer/hours")
     ResponseEntity<List<TrainerEntity>> retrieveWorkingHours();
 }

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/trainer-working-hours")
+@RequestMapping("/trainer/hours")
 public class TrainerController {
 
     private final TrainerService trainerService;
