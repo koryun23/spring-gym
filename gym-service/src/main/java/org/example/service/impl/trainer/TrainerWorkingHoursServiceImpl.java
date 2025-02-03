@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TrainerWorkingHoursServiceImpl implements TrainerWorkingHoursService {
 
-    private TrainerWorkingHoursClient trainerWorkingHoursClient;
+    private final TrainerWorkingHoursClient trainerWorkingHoursClient;
 
     public TrainerWorkingHoursServiceImpl(TrainerWorkingHoursClient trainerWorkingHoursClient) {
         this.trainerWorkingHoursClient = trainerWorkingHoursClient;

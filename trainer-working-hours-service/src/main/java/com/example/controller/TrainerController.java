@@ -1,12 +1,12 @@
 package com.example.controller;
 
-import com.example.dto.ActionType;
 import com.example.dto.TrainerDto;
 import com.example.dto.TrainerWorkingHoursRequestDto;
 import com.example.dto.TrainerWorkingHoursResponseDto;
 import com.example.entity.TrainerEntity;
 import com.example.mapper.TrainerMapper;
 import com.example.service.core.TrainerService;
+import com.example.strategy.TrainerWorkingHoursUpdateStrategyFactory;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +23,16 @@ public class TrainerController {
 
     private final TrainerService trainerService;
     private final TrainerMapper trainerMapper;
+    private final TrainerWorkingHoursUpdateStrategyFactory strategyFactory;
 
-    public TrainerController(TrainerService trainerService, TrainerMapper trainerMapper) {
+    /**
+     * Constructor.
+     */
+    public TrainerController(TrainerService trainerService, TrainerMapper trainerMapper,
+                             TrainerWorkingHoursUpdateStrategyFactory strategyFactory) {
         this.trainerService = trainerService;
         this.trainerMapper = trainerMapper;
+        this.strategyFactory = strategyFactory;
     }
 
     /**
@@ -39,12 +45,9 @@ public class TrainerController {
         log.debug("Calculating working hours of the given trainer - {}", requestDto.getTrainerUsername());
 
         TrainerEntity trainerEntity = trainerMapper.mapTrainerWorkingHoursRequestDtoToTrainerEntity(requestDto);
-        TrainerEntity savedTrainerEntity = null;
-        if (requestDto.getActionType() == ActionType.ADD) {
-            savedTrainerEntity = trainerService.addWorkingHours(trainerEntity);
-        } else {
-            savedTrainerEntity = trainerService.removeWorkingHours(trainerEntity);
-        }
+        TrainerEntity savedTrainerEntity =
+            trainerService.updateWorkingHours(trainerEntity, strategyFactory.getStrategy(requestDto.getActionType()));
+
         log.info("Successfully registered working hours of trainer, {}", savedTrainerEntity);
 
         return ResponseEntity.ok(

@@ -1,10 +1,10 @@
 package com.example.service.impl;
 
+import com.example.strategy.TrainerWorkingHoursUpdateStrategy;
 import com.example.entity.TrainerEntity;
 import com.example.repository.TrainerRepository;
 import com.example.service.core.TrainerService;
 import java.util.List;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -21,49 +21,13 @@ public class TrainerServiceImpl implements TrainerService {
 
 
     @Override
-    public TrainerEntity addWorkingHours(TrainerEntity trainerEntity) {
-        Assert.notNull(trainerEntity, "Trainer entity must not be null");
-        log.info("Adding working hours - {}", trainerEntity);
-
-        Optional<TrainerEntity> optionalByCriteria =
-            trainerRepository.findByUsernameAndMonthAndYear(trainerEntity.getTrainerUsername(),
-                trainerEntity.getTrainingMonth(), trainerEntity.getTrainingYear());
-
-        TrainerEntity savedTrainerEntity;
-
-        if (optionalByCriteria.isPresent()) {
-            TrainerEntity trainerEntityByCriteria = optionalByCriteria.get();
-            trainerEntityByCriteria.setDuration(trainerEntityByCriteria.getDuration() + trainerEntity.getDuration());
-            savedTrainerEntity = trainerRepository.save(trainerEntityByCriteria);
-        } else {
-            savedTrainerEntity = trainerRepository.save(trainerEntity);
-        }
-
-        log.info("Successfully added working hours - {}", savedTrainerEntity);
-        return savedTrainerEntity;
-    }
-
-    @Override
-    public TrainerEntity removeWorkingHours(TrainerEntity trainerEntity) {
+    public TrainerEntity updateWorkingHours(TrainerEntity trainerEntity, TrainerWorkingHoursUpdateStrategy strategy) {
         Assert.notNull(trainerEntity, "Trainer Entity must not be null");
-        log.info("Removing working hours - {}", trainerEntity);
-
-        Optional<TrainerEntity> optionalTrainerEntity =
-            trainerRepository.findByUsernameAndMonthAndYear(trainerEntity.getTrainerUsername(),
-                trainerEntity.getTrainingMonth(), trainerEntity.getTrainingYear());
-        TrainerEntity savedTrainerEntity;
-
-        // TODO: throw exception
-        if (optionalTrainerEntity.isEmpty()) {
-            log.warn("Given trainer - {}, has no working hours registered", trainerEntity);
-            return trainerEntity;
-        }
-
-        TrainerEntity trainerEntityByCriteria = optionalTrainerEntity.get();
-        trainerEntityByCriteria.setDuration(trainerEntityByCriteria.getDuration() - trainerEntity.getDuration());
-        savedTrainerEntity = trainerRepository.save(trainerEntityByCriteria);
-        log.info("Successfully removed working hours, {}", trainerEntity);
-        return savedTrainerEntity;
+        log.info("Updating working hours of {}", trainerEntity.getTrainerUsername());
+        TrainerEntity updatedTrainerEntity = strategy.updateTrainerWorkingHours(trainerEntity);
+        log.info("Updated working hours of {}, new value - {}", trainerEntity.getTrainerUsername(),
+            updatedTrainerEntity.getDuration());
+        return updatedTrainerEntity;
     }
 
     @Override

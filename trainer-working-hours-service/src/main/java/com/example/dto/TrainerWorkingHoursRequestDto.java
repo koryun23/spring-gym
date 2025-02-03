@@ -34,7 +34,7 @@ public class TrainerWorkingHoursRequestDto {
         setTrainerUsername(trainerUsername);
         setTrainerFirstName(trainerFirstName);
         setTrainerLastName(trainerLastName);
-        setActive(isActive);
+        setIsActive(isActive);
         setDate(date);
         setDuration(duration);
         setActionType(actionType);
@@ -70,9 +70,9 @@ public class TrainerWorkingHoursRequestDto {
     /**
      * A setter for the is active field.
      */
-    public void setActive(Boolean active) {
+    public void setIsActive(Boolean isActive) {
         Assert.notNull(isActive, "Is Active field must not be null");
-        isActive = active;
+        this.isActive = isActive;
     }
 
     /**
