@@ -101,7 +101,7 @@ public class TrainingController {
         @RequestParam(value = "trainer", required = false) String trainerUsername,
         @RequestParam(value = "type", required = false) Long specializationId) {
 
-        log.info("GET /trainings/trainee/{}", username);
+        log.info("GET /trainings/trainee");
         TrainingListRetrievalByTraineeRequestDto requestDto =
             new TrainingListRetrievalByTraineeRequestDto(
                 username,
@@ -146,7 +146,7 @@ public class TrainingController {
         @RequestParam(value = "to", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String to,
         @RequestParam(value = "trainee", required = false) String traineeUsername) {
 
-        log.info("GET /trainings/trainer/{}", username);
+        log.info("GET /trainings/trainer");
 
         TrainingListRetrievalByTrainerRequestDto requestDto =
             new TrainingListRetrievalByTrainerRequestDto(

@@ -90,7 +90,7 @@ public class TrainerController {
     public ResponseEntity<RestResponse> retrieveAllTrainersNotAssignedToTrainee(
         @PathVariable(value = "username") String username) {
 
-        log.info("GET /trainers/unassigned-to/{}", username);
+        log.info("GET /trainers/unassigned-to");
 
         // validations
         trainerValidator.validateRetrieveAllTrainersNotAssignedToTrainee(
@@ -119,7 +119,7 @@ public class TrainerController {
         @RequestBody TrainerUpdateRequestDto requestDto,
         @PathVariable(value = "username") String username) {
 
-        log.info("PUT /trainers/{} - {}", username, requestDto);
+        log.info("PUT /trainers - {}", requestDto);
 
         // validations
         trainerValidator.validateUpdateTrainer(username, requestDto);
@@ -147,7 +147,7 @@ public class TrainerController {
     public ResponseEntity<RestResponse> retrieve(
         @PathVariable(value = "username") String username) {
 
-        log.info("GET /trainers/{}", username);
+        log.info("GET /trainers");
         TrainerRetrievalByUsernameRequestDto requestDto = new TrainerRetrievalByUsernameRequestDto(username);
 
         // validations
@@ -176,7 +176,7 @@ public class TrainerController {
         @PathVariable(value = "username") String username,
         @RequestBody TrainerSwitchActivationStateRequestDto requestDto) {
 
-        log.info("PATCH /trainers/{}", username);
+        log.info("PATCH /trainers");
 
         // validations
         trainerValidator.validateSwitchActivationState(username, requestDto);

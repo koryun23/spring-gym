@@ -100,7 +100,7 @@ public class TraineeController {
     @GetMapping("/{username}")
     public ResponseEntity<RestResponse> retrieve(@PathVariable("username") String username) {
 
-        log.info("GET /trainees/{}", username);
+        log.info("GET /trainees");
 
         // validations
         traineeValidator.validateRetrieveTrainee(username);
@@ -125,7 +125,7 @@ public class TraineeController {
     public ResponseEntity<RestResponse> update(@RequestBody TraineeUpdateRequestDto requestDto,
                                                @PathVariable(value = "username") String username) {
 
-        log.info("PUT /trainees/{} - {}", username, requestDto);
+        log.info("PUT /trainees - {}", requestDto);
 
         // validations
         traineeValidator.validateUpdateTrainee(username, requestDto);
@@ -151,7 +151,7 @@ public class TraineeController {
     @DeleteMapping("/{username}")
     public ResponseEntity<RestResponse> delete(@PathVariable(value = "username") String username) {
 
-        log.info("DELETE /trainees/{}", username);
+        log.info("DELETE /trainees");
         TraineeDeletionByUsernameRequestDto requestDto = new TraineeDeletionByUsernameRequestDto(username);
 
         // validations
@@ -185,7 +185,7 @@ public class TraineeController {
         @RequestBody TraineeSwitchActivationStateRequestDto requestDto,
         @PathVariable("username") String username) {
 
-        log.info("PATCH /trainees/{} - {}", username, requestDto);
+        log.info("PATCH /trainees - {}", requestDto);
 
         // validations
         traineeValidator.validateSwitchActivationState(requestDto);
