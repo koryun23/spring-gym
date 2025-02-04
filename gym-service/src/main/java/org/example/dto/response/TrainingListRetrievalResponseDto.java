@@ -17,6 +17,7 @@ import org.example.dto.plain.TrainingDto;
 @ToString
 public class TrainingListRetrievalResponseDto {
 
+    @ToString.Exclude
     private String username;
     private List<TrainingDto> trainingList;
 }

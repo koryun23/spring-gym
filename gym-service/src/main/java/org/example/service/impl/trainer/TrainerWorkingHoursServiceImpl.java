@@ -18,11 +18,22 @@ public class TrainerWorkingHoursServiceImpl implements TrainerWorkingHoursServic
         this.trainerWorkingHoursClient = trainerWorkingHoursClient;
     }
 
+    /**
+     * Method for updating the working hours of a trainee given by the parameter.
+     * Uses CircuitBreaker as a fault tolerance strategy.
+     *
+     * @param requestDto TrainerWorkingHoursRequestDto
+     */
     @CircuitBreaker(name = "update", fallbackMethod = "updateWorkingHoursFallback")
     public void updateWorkingHours(TrainerWorkingHoursRequestDto requestDto) {
         trainerWorkingHoursClient.updateWorkingHours(requestDto);
     }
 
+    /**
+     * Fallback method which is called when the updateWorkingHours method fails for some reason.
+     * @param requestDto TrainerWorkingHoursRequestDto
+     * @param throwable Throwable - the exception that was thrown in the updateWorkingHours() method.
+     */
     public void updateWorkingHoursFallback(TrainerWorkingHoursRequestDto requestDto, Throwable throwable) {
         log.error("Inside updateWorkingHoursFallback method, cause - {}, request - {}", throwable, requestDto);
     }

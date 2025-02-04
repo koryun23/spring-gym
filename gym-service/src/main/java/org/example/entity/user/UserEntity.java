@@ -40,9 +40,11 @@ public class UserEntity {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @ToString.Exclude
     @Column(name = "username", nullable = false)
     private String username;
 
+    @ToString.Exclude
     @Column(name = "password", nullable = false)
     private String password;
 

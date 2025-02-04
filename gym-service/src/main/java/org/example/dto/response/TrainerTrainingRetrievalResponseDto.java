@@ -24,5 +24,7 @@ public class TrainerTrainingRetrievalResponseDto {
 
     private Long trainingTypeId;
     private Long trainingDuration;
+
+    @ToString.Exclude
     private String traineeUsername;
 }

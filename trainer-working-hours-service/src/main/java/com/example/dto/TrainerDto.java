@@ -15,7 +15,11 @@ import lombok.ToString;
 @Setter
 public class TrainerDto {
 
+    private Long trainerId;
+
+    @ToString.Exclude
     private String trainerUsername;
+
     private String trainerFirstName;
     private String trainerLastName;
     private Boolean isActive;

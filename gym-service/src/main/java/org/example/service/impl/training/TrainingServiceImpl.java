@@ -64,17 +64,18 @@ public class TrainingServiceImpl implements TrainingService {
     public List<TrainingEntity> findAllByTraineeUsernameAndCriteria(String traineeUsername, Date from, Date to,
                                                                     String trainerUsername, Long trainingTypeId) {
         Assert.notNull(traineeUsername, "Trainee Username must not be null");
-        LOGGER.info("Retrieving all Training Entities of a trainee({}) based on the following criteria - "
-                + "from = {}, to = {}, trainerUsername = {}, trainingType = {}",
-            traineeUsername, from, to, trainerUsername, trainingTypeId);
+        LOGGER.info("Retrieving all Trainings of a trainee based on the trainer and the following criteria - "
+                + "from = {}, to = {}, trainingType = {}",
+            from, to, trainingTypeId);
 
         List<TrainingEntity> all =
             trainingEntityRepository.findAllByTraineeUsernameAndCriteria(traineeUsername, from, to,
                 trainerUsername, trainingTypeId);
 
-        LOGGER.info("Successfully retrieved all Training Entities of a trainee({}) based on the following criteria - "
-                + "from = {}, to = {}, trainerUsername = {}, trainingType = {}. Result of the query - {}",
-            traineeUsername, from, to, trainerUsername, trainingTypeId, all);
+        LOGGER.info(
+            "Successfully retrieved all Trainings of a trainee based on the trainer and the following criteria - "
+                + "from = {}, to = {}, trainingType = {}. Result of the query - {}",
+            from, to, trainingTypeId, all);
         return all;
     }
 
@@ -83,17 +84,16 @@ public class TrainingServiceImpl implements TrainingService {
     public List<TrainingEntity> findAllByTrainerUsernameAndCriteria(String trainerUsername, Date from, Date to,
                                                                     String traineeUsername) {
         Assert.notNull(trainerUsername, "Trainer Username must not be null");
-        LOGGER.info("Retrieving all Training Entities of a trainer({}) based on the following criteria - "
-                + "from = {}, to = {}, traineeUsername = {}",
-            trainerUsername, from, to, traineeUsername);
+        LOGGER.info("Retrieving all Trainings of a trainer based on the trainee and the following criteria - "
+                + "from = {}, to = {}", from, to);
 
         List<TrainingEntity> all =
             trainingEntityRepository.findAllByTrainerUsernameAndCriteria(trainerUsername, from, to,
                 traineeUsername);
 
-        LOGGER.info("Successfully retrieved all Training Entities of a trainer({}) based on the following criteria - "
-                + "from = {}, to = {}, traineeUsername = {}. Result of the query - {}",
-            trainerUsername, from, to, traineeUsername, all);
+        LOGGER.info(
+            "Successfully retrieved all Trainings of a trainer based on the trainee and the following criteria - "
+                + "from = {}, to = {}. Result of the query - {}", from, to, all);
         return all;
     }
 

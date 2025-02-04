@@ -13,7 +13,11 @@ import org.springframework.util.Assert;
 @ToString
 public class TrainerWorkingHoursRequestDto {
 
+    private Long trainerId;
+
+    @ToString.Exclude
     private String trainerUsername;
+
     private String trainerFirstName;
     private String trainerLastName;
     private Boolean isActive;
@@ -24,13 +28,15 @@ public class TrainerWorkingHoursRequestDto {
     /**
      * Constructor.
      */
-    public TrainerWorkingHoursRequestDto(String trainerUsername,
+    public TrainerWorkingHoursRequestDto(Long trainerId,
+                                         String trainerUsername,
                                          String trainerFirstName,
                                          String trainerLastName,
                                          Boolean isActive,
                                          Date date,
                                          Long duration,
                                          ActionType actionType) {
+        setTrainerId(trainerId);
         setTrainerUsername(trainerUsername);
         setTrainerFirstName(trainerFirstName);
         setTrainerLastName(trainerLastName);
@@ -38,6 +44,17 @@ public class TrainerWorkingHoursRequestDto {
         setDate(date);
         setDuration(duration);
         setActionType(actionType);
+    }
+
+    /**
+     * Trainer Id Setter.
+     */
+    public void setTrainerId(Long trainerId) {
+        Assert.notNull(trainerId, "Trainer id must not be null");
+        if (trainerId < 1) {
+            throw new IllegalArgumentException("Trainer id must be a positive integer");
+        }
+        this.trainerId = trainerId;
     }
 
     /**

@@ -3,14 +3,17 @@ package com.example.mapper;
 import com.example.dto.TrainerDto;
 import com.example.dto.TrainerWorkingHoursRequestDto;
 import com.example.entity.TrainerEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class TrainerMapperImpl implements TrainerMapper {
 
     @Override
     public TrainerEntity mapTrainerWorkingHoursRequestDtoToTrainerEntity(TrainerWorkingHoursRequestDto requestDto) {
-        return new TrainerEntity(
+        log.info("Mapping a TrainerWorkingHoursRequestDto to a TrainerEntity");
+        TrainerEntity trainerEntity = new TrainerEntity(
             requestDto.getTrainerUsername(),
             requestDto.getTrainerFirstName(),
             requestDto.getTrainerLastName(),
@@ -19,11 +22,15 @@ public class TrainerMapperImpl implements TrainerMapper {
             requestDto.getDate().toLocalDate().getMonthValue(),
             requestDto.getDuration()
         );
+        log.info("Successfully mapped a TrainerWorkingHoursRequestDto to a TrainerEntity");
+        return trainerEntity;
     }
 
     @Override
     public TrainerDto mapTrainerEntityToTrainerDto(TrainerEntity trainerEntity) {
-        return new TrainerDto(
+        log.info("Mapping a TrainerEntity to TrainerDto");
+        TrainerDto trainerDto = new TrainerDto(
+            trainerEntity.getTrainerId(),
             trainerEntity.getTrainerUsername(),
             trainerEntity.getTrainerFirstName(),
             trainerEntity.getTrainerLastName(),
@@ -32,5 +39,7 @@ public class TrainerMapperImpl implements TrainerMapper {
             trainerEntity.getTrainingMonth(),
             trainerEntity.getDuration()
         );
+        log.info("Successfully mapped a TrainerEntity to TrainerDto");
+        return trainerDto;
     }
 }

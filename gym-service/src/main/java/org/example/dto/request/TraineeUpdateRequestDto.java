@@ -18,7 +18,10 @@ public class TraineeUpdateRequestDto {
 
     private String firstName;
     private String lastName;
+
+    @ToString.Exclude
     private String username;
+
     private Boolean isActive;
     private Date dateOfBirth;
     private String address;

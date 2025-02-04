@@ -15,6 +15,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.example.entity.trainer.TrainerEntity;
 
 @NoArgsConstructor
@@ -34,9 +35,11 @@ public class TrainingTypeEntity {
     @Column(name = "training_type")
     private TrainingType trainingType;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "trainingType")
     private List<TrainingEntity> trainingEntityList;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "specialization")
     private List<TrainerEntity> trainerEntityList;
 

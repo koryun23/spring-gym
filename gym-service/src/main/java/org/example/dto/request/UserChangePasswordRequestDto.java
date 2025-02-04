@@ -15,7 +15,12 @@ import lombok.ToString;
 @ToString
 public class UserChangePasswordRequestDto {
 
+    @ToString.Exclude
     private String username;
+
+    @ToString.Exclude
     private String oldPassword;
+
+    @ToString.Exclude
     private String newPassword;
 }

@@ -116,11 +116,10 @@ public class TrainerServiceImpl implements TrainerService {
     public TrainerEntity selectByUsername(String username) {
         Assert.notNull(username, "TrainerEntity username must not be null");
         Assert.hasText(username, "TrainerEntity username must not be empty");
-        LOGGER.info("Selecting a TrainerEntity with a username of {}", username);
+        LOGGER.info("Selecting a TrainerEntity with the given username");
         TrainerEntity trainerEntity =
             trainerDao.findByUserUsername(username).orElseThrow(() -> new TrainerNotFoundException(username));
-        LOGGER.info("Successfully selected a TrainerEntity with a username of {}, result - {}", username,
-            trainerEntity);
+        LOGGER.info("Successfully selected a TrainerEntity with the given username, result - {}", trainerEntity);
         return trainerEntity;
     }
 
@@ -140,9 +139,9 @@ public class TrainerServiceImpl implements TrainerService {
     public Optional<TrainerEntity> findByUsername(String username) {
         Assert.notNull(username, "TrainerEntity username must not be null");
         Assert.hasText(username, "TrainerEntity username must not be empty");
-        LOGGER.info("Retrieving an optional TrainerEntity with a username of {}", username);
+        LOGGER.info("Retrieving an optional TrainerEntity with the given username");
         Optional<TrainerEntity> optionalTrainer = trainerDao.findByUserUsername(username);
-        LOGGER.info("Successfully retrieved an optional TrainerEntity with a username of {}, result - {}", username,
+        LOGGER.info("Successfully retrieved an optional TrainerEntity with the given username, result - {}",
             optionalTrainer);
         return optionalTrainer;
     }
@@ -152,11 +151,11 @@ public class TrainerServiceImpl implements TrainerService {
     public List<TrainerEntity> findAllNotAssignedTo(String traineeUsername) {
         Assert.notNull(traineeUsername, "Trainee username must not be null");
         Assert.hasText(traineeUsername, "Trainee username must not be empty");
-        LOGGER.info("Retrieving all trainers not assigned to trainee with a username of {}", traineeUsername);
+        LOGGER.info("Retrieving all trainers not assigned to trainee with the given username");
         List<TrainerEntity> all = trainerDao.findAllTrainersNotAssignedTo(traineeUsername);
 
-        LOGGER.info("Successfully retrieved all trainers not assigned to trainee with a username of {}, result - {}",
-            traineeUsername, all);
+        LOGGER.info("Successfully retrieved all trainers not assigned to trainee with the given username, result - {}",
+            all);
         return all;
     }
 }

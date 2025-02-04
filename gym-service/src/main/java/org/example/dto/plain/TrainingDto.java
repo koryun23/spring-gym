@@ -17,8 +17,12 @@ import lombok.ToString;
 @ToString
 public class TrainingDto {
 
+    @ToString.Exclude
     private String traineeUsername;
+
+    @ToString.Exclude
     private String trainerUsername;
+
     private String trainingName;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

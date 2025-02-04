@@ -18,7 +18,9 @@ import org.example.entity.training.TrainingType;
 @ToString
 public class TrainerUpdateResponseDto {
 
+    @ToString.Exclude
     private String username;
+
     private String firstName;
     private String lastName;
     private TrainingType specialization;

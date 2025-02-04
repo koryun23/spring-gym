@@ -15,6 +15,8 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class TraineeSwitchActivationStateRequestDto {
 
+    @ToString.Exclude
     private String username;
+
     private Boolean state;
 }

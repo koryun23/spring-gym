@@ -16,8 +16,12 @@ import lombok.ToString;
 @ToString
 public class TrainingCreationRequestDto {
 
+    @ToString.Exclude
     private String traineeUsername;
+
+    @ToString.Exclude
     private String trainerUsername;
+
     private String trainingName;
     private Date trainingDate;
     private Long trainingDuration;

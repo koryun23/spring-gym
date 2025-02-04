@@ -15,7 +15,9 @@ import lombok.ToString;
 @ToString
 public class TrainerUpdateRequestDto {
 
+    @ToString.Exclude
     private String username;
+
     private String firstName;
     private String lastName;
     private Long specializationId;

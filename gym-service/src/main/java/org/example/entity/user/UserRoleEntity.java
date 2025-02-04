@@ -33,7 +33,7 @@ public class UserRoleEntity {
     private Long id;
 
     @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id")
-    @ManyToOne(cascade = CascadeType.REMOVE) // TODO, consider removing cascading completely
+    @ManyToOne(cascade = CascadeType.REMOVE)
     private UserEntity user;
 
     @Column(name = "role", nullable = false)

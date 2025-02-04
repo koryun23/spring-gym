@@ -42,7 +42,7 @@ public class TrainerController {
     @PutMapping(consumes = "application/json")
     public ResponseEntity<TrainerWorkingHoursResponseDto> updateWorkingHours(
         @RequestBody TrainerWorkingHoursRequestDto requestDto) {
-        log.info("GET /trainers/hours - {}", requestDto.getTrainerUsername());
+        log.info("GET /trainers/hours, Trainer Id - {}", requestDto.getTrainerId());
 
         TrainerEntity trainerEntity = trainerMapper.mapTrainerWorkingHoursRequestDtoToTrainerEntity(requestDto);
         TrainerEntity savedTrainerEntity =
@@ -51,7 +51,7 @@ public class TrainerController {
         ResponseEntity<TrainerWorkingHoursResponseDto> responseEntity = ResponseEntity.ok(
             new TrainerWorkingHoursResponseDto(requestDto.getTrainerUsername(), requestDto.getDuration().intValue()));
 
-        log.info("Response Status - {}, Response Body - {}", responseEntity.getStatusCode(), responseEntity.getBody());
+        log.info("Response Status - {}, Trainer Id - {}", responseEntity.getStatusCode(), requestDto.getTrainerId());
 
         return responseEntity;
     }

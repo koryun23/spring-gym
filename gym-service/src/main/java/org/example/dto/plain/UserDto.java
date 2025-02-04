@@ -17,7 +17,12 @@ public class UserDto {
 
     private String firstName;
     private String lastName;
+
+    @ToString.Exclude
     private String username;
+
+    @ToString.Exclude
     private String password;
+
     private Boolean isActive;
 }

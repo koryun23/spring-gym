@@ -15,5 +15,6 @@ import lombok.ToString;
 @ToString
 public class RetrieveAllTrainersNotAssignedToTraineeRequestDto {
 
+    @ToString.Exclude
     private String username;
 }

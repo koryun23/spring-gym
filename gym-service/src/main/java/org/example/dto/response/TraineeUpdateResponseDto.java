@@ -19,7 +19,9 @@ import org.example.dto.plain.TrainerDto;
 @ToString
 public class TraineeUpdateResponseDto {
 
+    @ToString.Exclude
     private String username;
+
     private String firstName;
     private String lastName;
 

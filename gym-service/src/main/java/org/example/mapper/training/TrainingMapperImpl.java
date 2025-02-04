@@ -94,6 +94,7 @@ public class TrainingMapperImpl implements TrainingMapper {
 
         UserEntity trainerUserEntity = trainingEntity.getTrainer().getUser();
         return new TrainerWorkingHoursRequestDto(
+            trainingEntity.getTrainer().getId(),
             trainerUserEntity.getUsername(),
             trainerUserEntity.getFirstName(),
             trainerUserEntity.getLastName(),
@@ -109,6 +110,7 @@ public class TrainingMapperImpl implements TrainingMapper {
         TrainingEntity trainingEntity) {
         UserEntity trainerUserEntity = trainingEntity.getTrainer().getUser();
         return new TrainerWorkingHoursRequestDto(
+            trainingEntity.getTrainer().getId(),
             trainerUserEntity.getUsername(),
             trainerUserEntity.getFirstName(),
             trainerUserEntity.getLastName(),

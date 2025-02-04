@@ -94,11 +94,11 @@ public class TraineeServiceImpl implements TraineeService {
     public boolean delete(String username) {
         Assert.notNull(username, "Username must not be null");
         Assert.notNull(username, "Username must not be empty");
-        LOGGER.info("Deleting a Trainee with a username of {}", username);
+        LOGGER.info("Deleting a Trainee with the given username");
 
         traineeDao.deleteByUserUsername(username);
 
-        LOGGER.info("Successfully deleted a Trainee with a username of {}", username);
+        LOGGER.info("Successfully deleted a Trainee with the given username");
         return true;
     }
 
@@ -118,12 +118,12 @@ public class TraineeServiceImpl implements TraineeService {
     public TraineeEntity selectByUsername(String username) {
         Assert.notNull(username, "TraineeEntity username must not be null");
         Assert.hasText(username, "TraineeEntity username must not be empty");
-        LOGGER.info("Selecting a TraineeEntity with a username of {}", username);
+        LOGGER.info("Selecting a TraineeEntity with the given username");
 
         TraineeEntity trainee =
             traineeDao.findByUserUsername(username).orElseThrow(() -> new TraineeNotFoundException(username));
 
-        LOGGER.info("Successfully selected a trainee with a username of {}, result - {}", username, trainee);
+        LOGGER.info("Successfully selected a trainee with the given username, result - {}", trainee);
         return trainee;
     }
 
@@ -143,9 +143,9 @@ public class TraineeServiceImpl implements TraineeService {
     public Optional<TraineeEntity> findByUsername(String username) {
         Assert.notNull(username, "TraineeEntity username must not be null");
         Assert.hasText(username, "TraineeEntity username must not be empty");
-        LOGGER.info("Retrieving an optional TraineeEntity with a username of {}", username);
+        LOGGER.info("Retrieving an optional TraineeEntity with the given username");
         Optional<TraineeEntity> optionalTrainee = traineeDao.findByUserUsername(username);
-        LOGGER.info("Successfully retrieved an optional TraineeEntity with an username of {}, result - {}", username,
+        LOGGER.info("Successfully retrieved an optional TraineeEntity with the given username, result - {}",
             optionalTrainee);
         return optionalTrainee;
     }

@@ -15,5 +15,6 @@ import lombok.ToString;
 @ToString
 public class TraineeDeletionByUsernameRequestDto {
 
+    @ToString.Exclude
     private String username;
 }

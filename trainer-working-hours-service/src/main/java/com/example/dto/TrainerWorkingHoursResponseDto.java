@@ -15,6 +15,7 @@ import lombok.ToString;
 @ToString
 public class TrainerWorkingHoursResponseDto {
 
+    @ToString.Exclude
     private String trainerUsername;
     private int hours;
 }

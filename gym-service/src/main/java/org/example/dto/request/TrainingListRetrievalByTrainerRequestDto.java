@@ -15,8 +15,12 @@ import lombok.ToString;
 @ToString
 public class TrainingListRetrievalByTrainerRequestDto {
 
+    @ToString.Exclude
     private String trainerUsername;
+
     private String from;
     private String to;
+
+    @ToString.Exclude
     private String traineeUsername;
 }

@@ -15,6 +15,9 @@ import lombok.ToString;
 @ToString
 public class TrainerCreationResponseDto {
 
+    @ToString.Exclude
     private String username;
+
+    @ToString.Exclude
     private String password;
 }

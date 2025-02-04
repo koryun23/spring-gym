@@ -30,7 +30,6 @@ public class UserServiceImpl implements UserService {
     public UserEntity create(UserEntity user) {
         Assert.notNull(user, "User Entity must not be null");
         LOGGER.info("Creating a User Entity {}", user);
-        LOGGER.info("decoded password - {}", user.getPassword()); // TODO: DONT
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         UserEntity savedUserEntity = userEntityRepository.save(user);
         LOGGER.info("Successfully saved {}, result - {}", user, savedUserEntity);
@@ -70,12 +69,12 @@ public class UserServiceImpl implements UserService {
         Assert.hasText(username, "Username must not be empty");
         Assert.notNull(newPassword, "New password must not be null");
         Assert.hasText(newPassword, "New password must not be empty");
-        LOGGER.info("Changing the password of the user {}", username);
+        LOGGER.info("Changing the password of the user");
 
         userEntityRepository.updatePassword(username, passwordEncoder.encode(newPassword));
         UserEntity userEntity = this.getByUsername(username);
 
-        LOGGER.info("Successfully changed the password of the user {}", username);
+        LOGGER.info("Successfully changed the password of the user");
         return userEntity;
     }
 
@@ -84,13 +83,12 @@ public class UserServiceImpl implements UserService {
     public UserEntity switchActivationState(String username, Boolean state) {
         Assert.notNull(username, "Username must not be null");
         Assert.hasText(username, "Username must not be empty");
-        LOGGER.info("Switching the activation state of the user {}", username);
+        LOGGER.info("Switching the activation state of the user");
 
         userEntityRepository.switchActivationState(username, state);
         UserEntity updatedUserEntity = this.getByUsername(username);
 
-        LOGGER.info("Successfully switched the activation state of the user {}, result - {}", username,
-            updatedUserEntity);
+        LOGGER.info("Successfully switched the activation state of the user, result - {}", updatedUserEntity);
         return updatedUserEntity;
     }
 
@@ -99,10 +97,10 @@ public class UserServiceImpl implements UserService {
     public UserEntity getByUsername(String username) {
         Assert.notNull(username, "Username must not be null");
         Assert.hasText(username, "Username must not be empty");
-        LOGGER.info("Retrieving a User Entity with a username of {}", username);
+        LOGGER.info("Retrieving a User Entity with the given username");
         UserEntity userEntity =
             userEntityRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
-        LOGGER.info("Successfully retrieved a User Entity with a username of {}, result - {}", username, userEntity);
+        LOGGER.info("Successfully retrieved a User Entity with the given username, result - {}", userEntity);
         return userEntity;
     }
 
@@ -113,8 +111,8 @@ public class UserServiceImpl implements UserService {
         Assert.hasText(username, "Username must not be empty");
         LOGGER.info("Retrieving an optional User Entity with a username of {}", username);
         Optional<UserEntity> optionalUserEntity = userEntityRepository.findByUsername(username);
-        LOGGER.info("Successfully retrieved an optional User Entity with a username of {}, result - {}",
-            username, optionalUserEntity);
+        LOGGER.info("Successfully retrieved an optional User Entity with the given username, result - {}",
+            optionalUserEntity);
         return optionalUserEntity;
     }
 
@@ -132,7 +130,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public boolean usernamePasswordMatching(String username, String password) {
-        LOGGER.info("Checking if the given username - {}, matches the given password - {}.", username, password);
+        LOGGER.info("Checking if a user with the given username and password exists");
 
         Optional<UserEntity> optionalUser = userEntityRepository.findByUsername(username);
         if (optionalUser.isEmpty()) {
@@ -140,7 +138,13 @@ public class UserServiceImpl implements UserService {
         }
 
         UserEntity userEntity = optionalUser.get();
-        return userEntity.getPassword().equals(password);
+        boolean equals = userEntity.getPassword().equals(password);
+        if (equals) {
+            LOGGER.info("User with the given username and password exists");
+        } else {
+            LOGGER.error("User with the given username and password does not exist");
+        }
+        return equals;
     }
 }
 
