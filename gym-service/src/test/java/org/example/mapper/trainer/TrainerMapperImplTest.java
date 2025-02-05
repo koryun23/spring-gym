@@ -1,5 +1,6 @@
 package org.example.mapper.trainer;
 
+import java.util.Collections;
 import org.assertj.core.api.Assertions;
 import org.example.dto.response.TrainerRetrievalResponseDto;
 import org.example.entity.trainer.TrainerEntity;
@@ -24,7 +25,7 @@ class TrainerMapperImplTest {
             new UserEntity("first", "last", "username", "password", true),
             new TrainingTypeEntity(TrainingType.AEROBIC)
         ))).isEqualTo(new TrainerRetrievalResponseDto(
-            "username", "first", "last", TrainingType.AEROBIC, true, null
+            "username", "first", "last", TrainingType.AEROBIC, true, Collections.emptyList()
         ));
     }
 }
