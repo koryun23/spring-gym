@@ -30,6 +30,7 @@ public class TrainerWorkingHoursServiceImpl implements TrainerWorkingHoursServic
 
     /**
      * Fallback method which is called when the updateWorkingHours method fails for some reason.
+     *
      * @param requestDto TrainerWorkingHoursRequestDto
      * @param throwable Throwable - the exception that was thrown in the updateWorkingHours() method.
      */
