@@ -1,4 +1,4 @@
-package com.example.service.core;
+package com.example.service;
 
 import com.example.strategy.TrainerWorkingHoursUpdateStrategy;
 import com.example.entity.TrainerEntity;

@@ -1,8 +1,7 @@
-package com.example.service.impl;
+package com.example.service;
 
 import com.example.entity.TrainerEntity;
 import com.example.repository.TrainerRepository;
-import com.example.service.core.TrainerService;
 import com.example.strategy.TrainerWorkingHoursUpdateStrategy;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;

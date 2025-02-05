@@ -5,7 +5,6 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.extern.slf4j.Slf4j;
 import org.example.controller.TrainerWorkingHoursClient;
 import org.example.service.core.trainer.TrainerWorkingHoursService;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.stereotype.Component;
 
 @Slf4j

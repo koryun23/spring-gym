@@ -2,6 +2,7 @@ package com.example.mapper;
 
 import com.example.dto.TrainerDto;
 import com.example.dto.TrainerWorkingHoursRequestDto;
+import com.example.dto.TrainerWorkingHoursResponseDto;
 import com.example.entity.TrainerEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -41,5 +42,15 @@ public class TrainerMapperImpl implements TrainerMapper {
         );
         log.info("Successfully mapped a TrainerEntity to TrainerDto");
         return trainerDto;
+    }
+
+    @Override
+    public TrainerWorkingHoursResponseDto mapTrainerEntityToTrainerWorkingHoursResponseDto(TrainerEntity trainerEntity) {
+        log.info("Mapping a TrainerEntity to TrainerWorkingHoursResponseDto");
+        TrainerWorkingHoursResponseDto responseDto =
+            new TrainerWorkingHoursResponseDto(trainerEntity.getTrainerUsername(),
+                trainerEntity.getDuration());
+        log.info("Successfully mapped a TrainerEntity to TrainerWorkingHoursResponseDto");
+        return responseDto;
     }
 }
