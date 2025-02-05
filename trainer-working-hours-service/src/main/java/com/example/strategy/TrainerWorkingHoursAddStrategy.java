@@ -1,6 +1,7 @@
 package com.example.strategy;
 
 import com.example.entity.TrainerEntity;
+import com.example.exception.TrainerWorkingHoursUpdateException;
 import com.example.repository.TrainerRepository;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
@@ -41,11 +42,10 @@ public class TrainerWorkingHoursAddStrategy implements TrainerWorkingHoursUpdate
             log.info("Registering trainer's working hours in the month {} of year {}", trainerEntity.getTrainingMonth(),
                 trainerEntity.getTrainingYear());
             updatedTrainerEntity = trainerRepository.save(trainerEntity);
-            log.info("Successfully registered trainer's working hours in the month {} of year {}, result - {}", trainerEntity.getTrainingMonth(), trainerEntity.getTrainingYear(), updatedTrainerEntity);
+            log.info("Successfully registered trainer's working hours in the month {} of year {}, result - {}",
+                trainerEntity.getTrainingMonth(), trainerEntity.getTrainingYear(), updatedTrainerEntity);
         }
 
-        log.info("Successfully added to the working hours of {}, new value - {}", trainerEntity.getTrainerUsername(),
-            updatedTrainerEntity.getDuration());
         return updatedTrainerEntity;
     }
 }
