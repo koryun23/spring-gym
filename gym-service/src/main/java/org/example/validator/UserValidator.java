@@ -1,5 +1,6 @@
 package org.example.validator;
 
+import io.jsonwebtoken.lang.Assert;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.request.UserChangePasswordRequestDto;
@@ -29,9 +30,7 @@ public class UserValidator {
      */
     public void validateChangePassword(UserChangePasswordRequestDto requestDto) {
 
-        if (requestDto == null) {
-            throw new CustomIllegalArgumentException("Request body is missing");
-        }
+        Assert.notNull(requestDto, "Request body is missing");
         log.info("Validating the operation of changing password");
 
         String username = requestDto.getUsername();
