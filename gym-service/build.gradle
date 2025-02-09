@@ -78,6 +78,9 @@ dependencies {
 
     implementation project(":trainer-working-hours-service")
 
+    implementation 'org.springframework.boot:spring-boot-starter-activemq:2.0.0.RELEASE'
+    implementation 'org.apache.activemq:activemq-broker'
+
 }
 
 test {

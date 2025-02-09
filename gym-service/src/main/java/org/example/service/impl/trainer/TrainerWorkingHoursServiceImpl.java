@@ -5,10 +5,8 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.extern.slf4j.Slf4j;
 import org.example.controller.TrainerWorkingHoursClient;
 import org.example.service.core.trainer.TrainerWorkingHoursService;
-import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
 public class TrainerWorkingHoursServiceImpl implements TrainerWorkingHoursService {
 
     private final TrainerWorkingHoursClient trainerWorkingHoursClient;
@@ -32,7 +30,7 @@ public class TrainerWorkingHoursServiceImpl implements TrainerWorkingHoursServic
      * Fallback method which is called when the updateWorkingHours method fails for some reason.
      *
      * @param requestDto TrainerWorkingHoursRequestDto
-     * @param throwable Throwable - the exception that was thrown in the updateWorkingHours() method.
+     * @param throwable  Throwable - the exception that was thrown in the updateWorkingHours() method.
      */
     public void updateWorkingHoursFallback(TrainerWorkingHoursRequestDto requestDto, Throwable throwable) {
         log.error("Inside updateWorkingHoursFallback method, cause - {}, request - {}", throwable, requestDto);
