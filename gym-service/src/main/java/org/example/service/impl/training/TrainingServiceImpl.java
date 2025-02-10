@@ -85,7 +85,7 @@ public class TrainingServiceImpl implements TrainingService {
                                                                     String traineeUsername) {
         Assert.notNull(trainerUsername, "Trainer Username must not be null");
         LOGGER.info("Retrieving all Trainings of a trainer based on the trainee and the following criteria - "
-                + "from = {}, to = {}", from, to);
+            + "from = {}, to = {}", from, to);
 
         List<TrainingEntity> all =
             trainingEntityRepository.findAllByTrainerUsernameAndCriteria(trainerUsername, from, to,

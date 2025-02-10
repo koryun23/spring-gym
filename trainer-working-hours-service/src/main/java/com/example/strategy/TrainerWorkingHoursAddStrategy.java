@@ -1,7 +1,6 @@
 package com.example.strategy;
 
 import com.example.entity.TrainerEntity;
-import com.example.exception.TrainerWorkingHoursUpdateException;
 import com.example.repository.TrainerRepository;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;

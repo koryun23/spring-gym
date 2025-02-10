@@ -42,7 +42,8 @@ public class TrainerWorkingHoursRemoveStrategy implements TrainerWorkingHoursUpd
             log.info("Registering trainer's working hours in the month {} of year {}", trainerEntity.getTrainingMonth(),
                 trainerEntity.getTrainingYear());
             updatedTrainerEntity = trainerRepository.save(trainerEntity);
-            log.info("Successfully registered trainer's working hours in the month {} of year {}, result - {}", trainerEntity.getTrainingMonth(), trainerEntity.getTrainingYear(), updatedTrainerEntity);
+            log.info("Successfully registered trainer's working hours in the month {} of year {}, result - {}",
+                trainerEntity.getTrainingMonth(), trainerEntity.getTrainingYear(), updatedTrainerEntity);
         }
 
         log.info("Successfully added to the working hours of {}, new value - {}", trainerEntity.getTrainerUsername(),

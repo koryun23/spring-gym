@@ -23,7 +23,7 @@ public class UserSuffixServiceImpl implements UserSuffixService {
      * Since different users can have the same first and last names, the suffix will make every username unique.
      *
      * @param firstName String
-     * @param lastName String
+     * @param lastName  String
      * @return suffix Long
      */
     @Transactional

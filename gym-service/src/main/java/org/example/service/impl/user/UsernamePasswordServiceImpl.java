@@ -26,7 +26,7 @@ public class UsernamePasswordServiceImpl implements UsernamePasswordService {
      * an integer in case a user with the given firstName and lastName already exists.
      *
      * @param firstName String
-     * @param lastName String
+     * @param lastName  String
      * @return username String
      */
     @Override
