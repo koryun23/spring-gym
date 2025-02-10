@@ -33,6 +33,10 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.2.0'
     implementation 'org.springframework.boot:spring-boot-starter-activemq:2.0.0.RELEASE'
     implementation 'org.apache.activemq:activemq-broker'
+
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.17.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.2'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.0'
 }
 
 test {

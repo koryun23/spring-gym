@@ -12,8 +12,22 @@ public class TrainerWorkingHoursMessagingService implements TrainerWorkingHoursS
 
     private static final String TRAINER_WORKING_HOURS_QUEUE = "trainer.working.hours.queue";
 
-    private JmsTemplate jmsTemplate;
+    private final JmsTemplate jmsTemplate;
 
+    /**
+     * Constructor.
+     *
+     * @param jmsTemplate JmsTemplate
+     */
+    public TrainerWorkingHoursMessagingService(JmsTemplate jmsTemplate) {
+        this.jmsTemplate = jmsTemplate;
+    }
+
+    /**
+     * Method for sending a message to the specified message queue to update the working horus of a trainer.
+     *
+     * @param requestDto TrainerWorkingHoursRequestDto
+     */
     @Override
     public void updateWorkingHours(TrainerWorkingHoursRequestDto requestDto) {
         log.info("Sending a message - {}, to the queue - {}", requestDto, TRAINER_WORKING_HOURS_QUEUE);

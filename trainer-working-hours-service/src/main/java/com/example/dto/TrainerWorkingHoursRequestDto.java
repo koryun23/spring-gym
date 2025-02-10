@@ -1,5 +1,9 @@
 package com.example.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serial;
+import java.io.Serializable;
 import java.sql.Date;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,14 +32,15 @@ public class TrainerWorkingHoursRequestDto {
     /**
      * Constructor.
      */
-    public TrainerWorkingHoursRequestDto(Long trainerId,
-                                         String trainerUsername,
-                                         String trainerFirstName,
-                                         String trainerLastName,
-                                         Boolean isActive,
-                                         Date date,
-                                         Long duration,
-                                         ActionType actionType) {
+    @JsonCreator
+    public TrainerWorkingHoursRequestDto(@JsonProperty("trainerId") Long trainerId,
+                                         @JsonProperty("trainerUsername") String trainerUsername,
+                                         @JsonProperty("trainerFirstName") String trainerFirstName,
+                                         @JsonProperty("trainerLastName") String trainerLastName,
+                                         @JsonProperty("isActive") Boolean isActive,
+                                         @JsonProperty("date") Date date,
+                                         @JsonProperty("duration") Long duration,
+                                         @JsonProperty("actionType") ActionType actionType) {
         setTrainerId(trainerId);
         setTrainerUsername(trainerUsername);
         setTrainerFirstName(trainerFirstName);
