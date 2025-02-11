@@ -53,14 +53,4 @@ public class JmsConfig {
         mappingJackson2MessageConverter.setTypeIdPropertyName("_type");
         return mappingJackson2MessageConverter;
     }
-
-    /**
-     * Jms Template bean.
-     */
-    @Bean
-    public JmsTemplate jmsTemplate(ConnectionFactory connectionFactory) {
-        JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory);
-        jmsTemplate.setMessageConverter(jmsMessageConverter());
-        return jmsTemplate;
-    }
 }
