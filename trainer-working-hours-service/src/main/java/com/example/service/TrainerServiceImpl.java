@@ -44,6 +44,22 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Override
+    public List<TrainerEntity> findAllByUsernameAndMonthAndYear(String username, Long month, Long year) {
+        log.info("Retrieving all registered trainers and their working hours by username, month = {}, year = {}", month,
+            year);
+
+        // TODO: change parameter type from long to int to avoid the unnecessary conversions
+        List<TrainerEntity> all =
+            trainerRepository.findAllByUsernameAndMonthAndYear(username, Math.toIntExact(month), Math.toIntExact(year));
+
+        log.info(
+            "Successfully retrieved all registered trainers and their working hours by username, month = {}, year = {}",
+            month, year);
+
+        return all;
+    }
+
+    @Override
     public List<TrainerEntity> findAll() {
 
         log.info("Retrieving all registered trainers and their working hours");
