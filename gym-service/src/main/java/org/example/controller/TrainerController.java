@@ -1,10 +1,13 @@
 package org.example.controller;
 
+import com.example.dto.TrainerDto;
+import com.example.dto.TrainerWorkingHoursRetrievalRequestDto;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RestResponse;
-import org.example.dto.plain.TrainerDto;
 import org.example.dto.request.RetrieveAllTrainersNotAssignedToTraineeRequestDto;
 import org.example.dto.request.TrainerCreationRequestDto;
 import org.example.dto.request.TrainerRetrievalByUsernameRequestDto;
@@ -17,8 +20,10 @@ import org.example.dto.response.TrainerSwitchActivationStateResponseDto;
 import org.example.dto.response.TrainerUpdateResponseDto;
 import org.example.entity.trainer.TrainerEntity;
 import org.example.mapper.trainer.TrainerMapper;
+import org.example.messaging.MessageListenerImpl;
 import org.example.security.service.PermissionService;
 import org.example.service.core.trainer.TrainerService;
+import org.example.service.core.trainer.TrainerWorkingHoursService;
 import org.example.service.core.user.UserService;
 import org.example.validator.TrainerValidator;
 import org.springframework.http.HttpStatus;
@@ -30,6 +35,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -42,6 +48,8 @@ public class TrainerController {
     private final TrainerMapper trainerMapper;
     private final TrainerValidator trainerValidator;
     private final PermissionService permissionService;
+    private final TrainerWorkingHoursService trainerWorkingHoursService;
+    private final MessageListenerImpl messageListener;
 
     /**
      * Constructor.
@@ -49,12 +57,16 @@ public class TrainerController {
     public TrainerController(TrainerService trainerService,
                              UserService userService,
                              TrainerMapper trainerMapper,
-                             TrainerValidator trainerValidator, PermissionService permissionService) {
+                             TrainerValidator trainerValidator, PermissionService permissionService,
+                             TrainerWorkingHoursService trainerWorkingHoursService,
+                             MessageListenerImpl messageListener) {
         this.trainerService = trainerService;
         this.userService = userService;
         this.trainerMapper = trainerMapper;
         this.trainerValidator = trainerValidator;
         this.permissionService = permissionService;
+        this.trainerWorkingHoursService = trainerWorkingHoursService;
+        this.messageListener = messageListener;
     }
 
     /**
@@ -70,7 +82,8 @@ public class TrainerController {
         trainerValidator.validateCreateTrainer(requestDto);
 
         // service and mapper calls
-        TrainerDto trainerDto = trainerMapper.mapTrainerCreationRequestDtoToTrainerDto(requestDto);
+
+        org.example.dto.plain.TrainerDto trainerDto = trainerMapper.mapTrainerCreationRequestDtoToTrainerDto(requestDto);
         TrainerCreationResponseDto responseDto = trainerMapper.mapTrainerDtoToTrainerCreationResponseDto(
             trainerService.create(trainerDto));
 
@@ -194,5 +207,40 @@ public class TrainerController {
         log.info("Response Status - {}, Response Body - {}", restResponse.getHttpStatus(), restResponse);
 
         return new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
+    }
+
+    /**
+     * Get working hours of a trainer.
+     */
+    @GetMapping(value = "/hours/{username}", produces = "application/json")
+    public ResponseEntity<RestResponse> getWorkingHours(
+        @PathVariable(value = "username") String username,
+        @RequestParam(value = "month", required = false) Long month,
+        @RequestParam(value = "year", required = false) Long year) {
+        log.info("/GET /trainers/hours");
+
+        // no permissions
+
+        trainerWorkingHoursService.getWorkingHours(new TrainerWorkingHoursRetrievalRequestDto(username, month, year));
+        List<TrainerDto> trainerDtos = getTrainerWorkingHourDtosFromCompletableFuture();
+        RestResponse restResponse =
+            new RestResponse(trainerDtos, HttpStatus.OK, LocalDateTime.now(), Collections.emptyList());
+
+        ResponseEntity<RestResponse> responseEntity = new ResponseEntity<>(restResponse, restResponse.getHttpStatus());
+
+        log.info("Response Status - {}, Response Body - {}", responseEntity.getStatusCode(), responseEntity);
+        return responseEntity;
+    }
+
+    // TODO: fix this
+    private List<TrainerDto> getTrainerWorkingHourDtosFromCompletableFuture() {
+
+        try {
+            return messageListener.getCompletableFuture().get();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
