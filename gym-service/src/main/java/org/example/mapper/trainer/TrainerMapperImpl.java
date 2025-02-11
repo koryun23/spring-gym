@@ -76,7 +76,7 @@ public class TrainerMapperImpl implements TrainerMapper {
                 .map(traineeEntity -> new TraineeDto(
                     new UserDto(
                         traineeEntity.getUser().getFirstName(),
-                        trainerEntity.getUser().getLastName(),
+                        traineeEntity.getUser().getLastName(),
                         traineeEntity.getUser().getUsername(),
                         traineeEntity.getUser().getPassword(),
                         traineeEntity.getUser().getIsActive()
@@ -129,6 +129,7 @@ public class TrainerMapperImpl implements TrainerMapper {
 
     @Override
     public TrainerDto mapTrainerCreationRequestDtoToTrainerDto(TrainerCreationRequestDto requestDto) {
+        Assert.notNull(requestDto, "TrainerCreationRequestDto must not be null");
         return new TrainerDto(
             new UserDto(
                 requestDto.getFirstName(),
@@ -143,6 +144,7 @@ public class TrainerMapperImpl implements TrainerMapper {
 
     @Override
     public TrainerDto mapTrainerUpdateRequestDtoToTrainerDto(TrainerUpdateRequestDto requestDto) {
+        Assert.notNull(requestDto, "TrainerUpdateRequestDto must not be null");
         return new TrainerDto(
             new UserDto(
                 requestDto.getFirstName(),
