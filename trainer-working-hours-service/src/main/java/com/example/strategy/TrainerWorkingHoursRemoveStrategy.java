@@ -20,7 +20,7 @@ public class TrainerWorkingHoursRemoveStrategy implements TrainerWorkingHoursUpd
     @Override
     public TrainerEntity updateTrainerWorkingHours(TrainerEntity trainerEntity) {
         Assert.notNull(trainerEntity, "Trainer entity must not be null");
-        log.info("Adding to the working hours of {}", trainerEntity.getTrainerUsername());
+        log.info("Removing from the working hours of {}", trainerEntity.getTrainerUsername());
 
         Optional<TrainerEntity> optionalTrainerEntity = trainerRepository.findByUsernameAndMonthAndYear(
             trainerEntity.getTrainerUsername(),
