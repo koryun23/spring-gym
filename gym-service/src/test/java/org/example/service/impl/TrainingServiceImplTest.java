@@ -1,5 +1,7 @@
 package org.example.service.impl;
 
+import java.sql.Date;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.example.dto.plain.TrainingDto;
 import org.example.entity.trainee.TraineeEntity;
@@ -59,5 +61,60 @@ class TrainingServiceImplTest {
         Mockito.when(trainingEntityRepository.save(trainingEntity)).thenReturn(trainingEntity);
 
         Assertions.assertThat(testSubject.create(trainingDto)).isEqualTo(trainingEntity);
+    }
+
+    @Test
+    public void testFindAllByTraineeUsernameAndCriteriaWhenTraineeUsernameIsNull() {
+        Assertions.assertThatThrownBy(
+                () -> testSubject.findAllByTraineeUsernameAndCriteria(null, null, null, null, null))
+            .isExactlyInstanceOf(IllegalArgumentException.class);
+        Mockito.verifyNoInteractions(trainingEntityRepository, traineeService, trainerService);
+    }
+
+    @Test
+    public void testFindAllByTraineeUsernameAndCriteria() {
+        // given
+        TrainingEntity training = new TrainingEntity(
+            new TraineeEntity(), new TrainerEntity(), "training", new TrainingTypeEntity(), Date.valueOf("2024-10-10"),
+            1000L
+        );
+        List<TrainingEntity> trainings = List.of(training);
+
+        // when
+        Mockito.when(trainingEntityRepository.findAllByTraineeUsernameAndCriteria("trainee",
+            null, null, null, null)).thenReturn(trainings);
+
+        // then
+        Assertions.assertThat(testSubject.findAllByTraineeUsernameAndCriteria("trainee", null, null, null, null))
+            .isEqualTo(trainings);
+        Mockito.verifyNoMoreInteractions(trainingEntityRepository);
+        Mockito.verifyNoInteractions(traineeService, trainerService);
+    }
+
+    @Test
+    public void testFindAllByTrainerUsernameAndCriteriaWhenTrainerUsernameIsNull() {
+        Assertions.assertThatThrownBy(() -> testSubject.findAllByTrainerUsernameAndCriteria(null, null, null, null))
+            .isExactlyInstanceOf(IllegalArgumentException.class);
+        Mockito.verifyNoInteractions(traineeService, trainerService, trainingEntityRepository);
+    }
+
+    @Test
+    public void testFindAllByTrainerUsernameAndCriteria() {
+        // given
+        TrainingEntity training = new TrainingEntity(
+            new TraineeEntity(), new TrainerEntity(), "training", new TrainingTypeEntity(), Date.valueOf("2024-10-10"),
+            1000L
+        );
+        List<TrainingEntity> trainings = List.of(training);
+
+        // when
+        Mockito.when(trainingEntityRepository.findAllByTrainerUsernameAndCriteria("trainee",
+            null, null, null)).thenReturn(trainings);
+
+        // then
+        Assertions.assertThat(testSubject.findAllByTrainerUsernameAndCriteria("trainee", null, null, null))
+            .isEqualTo(trainings);
+        Mockito.verifyNoMoreInteractions(trainingEntityRepository);
+        Mockito.verifyNoInteractions(traineeService, trainerService);
     }
 }
