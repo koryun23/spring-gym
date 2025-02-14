@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.service.core.trainer.TrainerWorkingHoursService;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
@@ -28,6 +29,7 @@ public class TrainerWorkingHoursMessagingService implements TrainerWorkingHoursS
      *
      * @param requestDto TrainerWorkingHoursRequestDto
      */
+    @Transactional
     @Override
     public void updateWorkingHours(TrainerWorkingHoursRequestDto requestDto) {
         log.info("Sending a message - {}, to the queue - {}", requestDto, TRAINER_WORKING_HOURS_QUEUE);
