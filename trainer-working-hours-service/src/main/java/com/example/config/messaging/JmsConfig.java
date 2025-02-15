@@ -1,9 +1,11 @@
 package com.example.config.messaging;
 
 import com.example.exception.handler.MessageErrorHandler;
+import jakarta.persistence.EntityManagerFactory;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.connection.JmsTransactionManager;
@@ -12,6 +14,7 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.util.ErrorHandler;
@@ -51,7 +54,7 @@ public class JmsConfig {
         factory.setConnectionFactory(connectionFactory());
         factory.setMessageConverter(jmsMessageConverter());
         factory.setErrorHandler(errorHandler);
-        factory.setTransactionManager(transactionManager());
+        factory.setTransactionManager(jmsTransactionManager());
         return factory;
     }
 
@@ -72,8 +75,13 @@ public class JmsConfig {
      * Jms Transaction Manager bean.
      */
     @Bean
-    public PlatformTransactionManager transactionManager() {
+    public PlatformTransactionManager jmsTransactionManager() {
         return new JmsTransactionManager(connectionFactory());
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+        return new JpaTransactionManager(entityManagerFactory);
     }
 
     /**
