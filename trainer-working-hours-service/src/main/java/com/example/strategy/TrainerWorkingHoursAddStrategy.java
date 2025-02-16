@@ -35,7 +35,10 @@ public class TrainerWorkingHoursAddStrategy implements TrainerWorkingHoursUpdate
             TrainerEntity persistedTrainerEntity = optionalTrainerEntity.get();
             log.info("Adding {} to the current working hours({})", trainerEntity.getDuration(),
                 persistedTrainerEntity.getDuration());
-            trainerRepository.updateWorkingHours(persistedTrainerEntity.getTrainerUsername(),
+            trainerRepository.updateWorkingHours(
+                persistedTrainerEntity.getTrainerUsername(),
+                persistedTrainerEntity.getTrainingMonth(),
+                persistedTrainerEntity.getTrainingYear(),
                 persistedTrainerEntity.getDuration() + trainerEntity.getDuration());
             log.info("Successfully persisted trainer entity - {}", persistedTrainerEntity);
         } else {

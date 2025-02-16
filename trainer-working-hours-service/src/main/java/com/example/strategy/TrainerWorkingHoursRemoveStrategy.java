@@ -36,7 +36,10 @@ public class TrainerWorkingHoursRemoveStrategy implements TrainerWorkingHoursUpd
             TrainerEntity persistedTrainerEntity = optionalTrainerEntity.get();
             log.info("Removing {} from the current working hours({})", trainerEntity.getDuration(),
                 persistedTrainerEntity.getDuration());
-            trainerRepository.updateWorkingHours(trainerEntity.getTrainerUsername(),
+            trainerRepository.updateWorkingHours(
+                trainerEntity.getTrainerUsername(),
+                trainerEntity.getTrainingMonth(),
+                trainerEntity.getTrainingYear(),
                 persistedTrainerEntity.getDuration() - trainerEntity.getDuration());
             log.info("Successfully persisted trainer entity - {}", persistedTrainerEntity);
         } else {
