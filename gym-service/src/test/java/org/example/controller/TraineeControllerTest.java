@@ -73,7 +73,9 @@ class TraineeControllerTest {
                 traineeValidator,
                 permissionService,
                 trainingService,
-                trainingMapper);
+                trainingMapper,
+                trainerWorkingHoursService
+            );
     }
 
     @Test

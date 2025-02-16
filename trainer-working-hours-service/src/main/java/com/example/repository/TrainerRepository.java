@@ -1,10 +1,8 @@
 package com.example.repository;
 
 import com.example.entity.TrainerEntity;
-import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.Update;

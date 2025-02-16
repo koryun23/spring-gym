@@ -59,7 +59,8 @@ class TrainerWorkingHoursRemoveStrategyTest {
         TrainerEntity trainerEntity = new TrainerEntity("username", "first", "last", true, 2025, 8, 1000L);
 
         // when
-        Mockito.when(trainerRepository.findByTrainerUsernameAndTrainingMonthAndTrainingYear("username", 8, 2025)).thenReturn(Optional.empty());
+        Mockito.when(trainerRepository.findByTrainerUsernameAndTrainingMonthAndTrainingYear("username", 8, 2025))
+            .thenReturn(Optional.empty());
         Mockito.when(trainerRepository.save(trainerEntity)).thenReturn(trainerEntity);
 
         // then
