@@ -22,7 +22,7 @@ public interface TrainerRepository extends MongoRepository<TrainerEntity, Long> 
                                                                                  @NonNull Integer trainingMonth,
                                                                                  @NonNull Integer trainingYear);
 
-    @Query("{'trainerUsername' : ?0}")
-    @Update("{'$set': {'duration': ?1}}")
-    void updateWorkingHours(String trainerUsername, Long newWorkingHours);
+    @Query("{'trainerUsername' : ?0, 'trainingMonth' : ?1, 'trainingYear' : ?2}")
+    @Update("{'$set': {'duration': ?3}}")
+    void updateWorkingHours(String trainerUsername, Integer trainingMonth, Integer trainingYear, Long newWorkingHours);
 }
