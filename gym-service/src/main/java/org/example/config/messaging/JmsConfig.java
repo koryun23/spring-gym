@@ -2,6 +2,7 @@ package org.example.config.messaging;
 
 import javax.jms.ConnectionFactory;
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
@@ -17,6 +18,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class JmsConfig {
 
+    @Value("${username}")
+    private String username;
+
+    @Value("${password}")
+    private String password;
+
+    @Value("${url}")
+    private String url;
+
     /**
      * Single Connection Factory bean having ActiveMQ as its basis.
      *
@@ -26,7 +36,7 @@ public class JmsConfig {
     public SingleConnectionFactory connectionFactory() {
 
         ActiveMQConnectionFactory factory =
-            new ActiveMQConnectionFactory("admin", "admin", "tcp://localhost:61616");
+            new ActiveMQConnectionFactory(username, password, url);
         return new SingleConnectionFactory(factory);
     }
 

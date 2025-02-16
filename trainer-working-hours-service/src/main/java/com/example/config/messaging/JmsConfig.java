@@ -3,9 +3,9 @@ package com.example.config.messaging;
 import com.example.exception.handler.MessageErrorHandler;
 import jakarta.persistence.EntityManagerFactory;
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.connection.JmsTransactionManager;
@@ -23,6 +23,16 @@ import org.springframework.util.ErrorHandler;
 @EnableJms
 @Configuration
 public class JmsConfig {
+
+    @Value("${activemq.username}")
+    private String username;
+
+    @Value("${activemq.password}")
+    private String password;
+
+    @Value("${activemq.url}")
+    private String url;
+
     /**
      * Single Connection Factory bean having ActiveMQ as its basis.
      *
@@ -32,7 +42,7 @@ public class JmsConfig {
     public SingleConnectionFactory connectionFactory() {
 
         ActiveMQConnectionFactory factory =
-            new ActiveMQConnectionFactory("admin", "admin", "tcp://localhost:61616");
+            new ActiveMQConnectionFactory(username, password, url);
         return new SingleConnectionFactory(factory);
     }
 
@@ -43,6 +53,7 @@ public class JmsConfig {
     public ErrorHandler errorHandler() {
         return new MessageErrorHandler();
     }
+
     /**
      * Jms Listener Container Factory bean.
      *
