@@ -1,10 +1,13 @@
 package com.example.repository;
 
 import com.example.entity.TrainerEntity;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.data.mongodb.repository.Update;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +18,11 @@ public interface TrainerRepository extends MongoRepository<TrainerEntity, Long> 
     List<TrainerEntity> findAllByTrainerUsername(String trainerUsername);
 
     @Query(value = "{trainerUsername: '?0', trainingMonth: ?1, trainingYear: ?2}")
-    Optional<TrainerEntity> findByTrainerUsernameAndTrainingMonthAndTrainingYear(String trainerUsername, @NonNull Integer trainingMonth,
+    Optional<TrainerEntity> findByTrainerUsernameAndTrainingMonthAndTrainingYear(String trainerUsername,
+                                                                                 @NonNull Integer trainingMonth,
                                                                                  @NonNull Integer trainingYear);
 
+    @Query("{'trainerUsername' : ?0}")
+    @Update("{'$set': {'duration': ?1}}")
+    void updateWorkingHours(String trainerUsername, Long newWorkingHours);
 }

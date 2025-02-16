@@ -25,10 +25,10 @@ public class TrainerEntity {
     @Id
     private Long trainerId;
 
-    @Field(name = "trainer_username")
+    @Indexed(name = "trainer_username", unique = true)
     private String trainerUsername;
 
-    @Indexed(name = "trainer_first_name", unique = true)
+    @Field(name = "trainer_first_name")
     private String trainerFirstName;
 
     @Field(name = "trainer_last_name")

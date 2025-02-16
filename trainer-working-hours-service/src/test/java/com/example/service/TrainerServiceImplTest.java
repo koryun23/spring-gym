@@ -37,7 +37,7 @@ class TrainerServiceImplTest {
         );
 
         // when
-        Mockito.when(strategy.updateTrainerWorkingHours(trainerEntity)).thenReturn(trainerEntity);
+        Mockito.when(strategy.updateTrainerWorkingHoursAndGet(trainerEntity)).thenReturn(trainerEntity);
 
         // then
         Assertions.assertThat(testSubject.updateWorkingHours(trainerEntity, strategy))

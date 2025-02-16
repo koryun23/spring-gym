@@ -23,7 +23,7 @@ public class TrainerServiceImpl implements TrainerService {
         Assert.notNull(trainerEntity, "Trainer Entity must not be null");
         Assert.notNull(strategy, "Trainer Working Hours Update Strategy must not be null");
         log.info("Updating working hours of {}", trainerEntity.getTrainerUsername());
-        TrainerEntity updatedTrainerEntity = strategy.updateTrainerWorkingHours(trainerEntity);
+        TrainerEntity updatedTrainerEntity = strategy.updateTrainerWorkingHoursAndGet(trainerEntity);
         log.info("Updated working hours of {}, new value - {}", trainerEntity.getTrainerUsername(),
             updatedTrainerEntity.getDuration());
         return updatedTrainerEntity;
