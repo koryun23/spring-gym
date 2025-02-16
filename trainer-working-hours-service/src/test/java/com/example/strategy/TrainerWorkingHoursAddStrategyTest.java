@@ -39,7 +39,7 @@ class TrainerWorkingHoursAddStrategyTest {
         TrainerEntity updatedTrainerEntity = new TrainerEntity("username", "first", "last", true, 2025, 8, 3000L);
 
         // when
-        Mockito.when(trainerRepository.findByUsernameAndMonthAndYear("username", 8, 2025))
+        Mockito.when(trainerRepository.findByTrainerUsernameAndTrainingMonthAndTrainingYear("username", 8, 2025))
             .thenReturn(Optional.of(existingTrainerEntity));
 
         Mockito.when(trainerRepository.save(updatedTrainerEntity)).thenReturn(updatedTrainerEntity);
@@ -57,7 +57,7 @@ class TrainerWorkingHoursAddStrategyTest {
         TrainerEntity trainerEntity = new TrainerEntity("username", "first", "last", true, 2025, 8, 1000L);
 
         // when
-        Mockito.when(trainerRepository.findByUsernameAndMonthAndYear("username", 8, 2025)).thenReturn(Optional.empty());
+        Mockito.when(trainerRepository.findByTrainerUsernameAndTrainingMonthAndTrainingYear("username", 8, 2025)).thenReturn(Optional.empty());
         Mockito.when(trainerRepository.save(trainerEntity)).thenReturn(trainerEntity);
 
         // then

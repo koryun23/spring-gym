@@ -1,7 +1,6 @@
 package com.example.entity;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -11,8 +10,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-@Entity
+@Document(collection = "trainer_entity")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -21,29 +23,27 @@ import lombok.ToString;
 public class TrainerEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TRAINER_ENTITY_SEQUENCE")
-    @SequenceGenerator(name = "TRAINER_ENTITY_SEQUENCE", allocationSize = 1)
     private Long trainerId;
 
-    @Column(name = "trainer_username", nullable = false)
+    @Field(name = "trainer_username")
     private String trainerUsername;
 
-    @Column(name = "trainer_first_name", nullable = false)
+    @Indexed(name = "trainer_first_name", unique = true)
     private String trainerFirstName;
 
-    @Column(name = "trainer_last_name", nullable = false)
+    @Field(name = "trainer_last_name")
     private String trainerLastName;
 
-    @Column(name = "is_active", nullable = false)
+    @Field(name = "is_active")
     private Boolean isActive;
 
-    @Column(name = "training_year")
+    @Field(name = "training_year")
     private Integer trainingYear;
 
-    @Column(name = "training_month")
+    @Field(name = "training_month")
     private Integer trainingMonth;
 
-    @Column(name = "duration")
+    @Field(name = "duration")
     private Long duration;
 
     /**

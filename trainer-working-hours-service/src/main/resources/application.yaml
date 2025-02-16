@@ -5,15 +5,12 @@ server:
 spring:
   application:
     name: trainer-working-hours-service
-  datasource:
-    url: jdbc:h2:mem:db
-    username: sa
-    password: password
-    driverClassName: org.h2.Driver
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: create-drop
-  h2:
-    console:
-      enabled: true
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: gym_mongodb
+      username: admin
+      password: password
+      authentication-database: admin
+      uri: mongodb://localhost:27017/gym_mongodb
