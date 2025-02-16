@@ -48,7 +48,6 @@ public class TraineeController {
     private final PermissionService permissionService;
     private final TrainingService trainingService;
     private final TrainingMapper trainingMapper;
-    private final TrainerWorkingHoursService trainerWorkingHoursService;
 
     /**
      * Constructor.
@@ -56,7 +55,7 @@ public class TraineeController {
     public TraineeController(TraineeService traineeService, UserService userService, TraineeMapper traineeMapper,
                              TraineeValidator traineeValidator, PermissionService permissionService,
                              TrainingService trainingService,
-                             TrainingMapper trainingMapper, TrainerWorkingHoursService trainerWorkingHoursService) {
+                             TrainingMapper trainingMapper) {
         this.traineeService = traineeService;
         this.userService = userService;
         this.traineeMapper = traineeMapper;
@@ -64,7 +63,6 @@ public class TraineeController {
         this.permissionService = permissionService;
         this.trainingService = trainingService;
         this.trainingMapper = trainingMapper;
-        this.trainerWorkingHoursService = trainerWorkingHoursService;
     }
 
     /**
@@ -164,8 +162,6 @@ public class TraineeController {
                 .map(trainingMapper::mapTrainingEntityToTrainerWorkingHoursRemoveRequestDto).toList();
 
         traineeService.delete(requestDto.getUsername());
-
-        trainerWorkingHoursRequestDtoList.forEach(trainerWorkingHoursService::updateWorkingHours);
 
         // response
         RestResponse restResponse =

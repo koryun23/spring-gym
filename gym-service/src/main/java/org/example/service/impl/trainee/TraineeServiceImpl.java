@@ -1,5 +1,7 @@
 package org.example.service.impl.trainee;
 
+import com.example.dto.TrainerWorkingHoursRequestDto;
+import java.util.List;
 import java.util.Optional;
 import org.example.dto.plain.TraineeDto;
 import org.example.dto.plain.UserDto;
@@ -8,8 +10,12 @@ import org.example.entity.user.UserEntity;
 import org.example.entity.user.UserRoleEntity;
 import org.example.entity.user.UserRoleType;
 import org.example.exception.TraineeNotFoundException;
+import org.example.mapper.trainer.TrainerMapper;
+import org.example.mapper.training.TrainingMapper;
 import org.example.repository.TraineeEntityRepository;
 import org.example.service.core.trainee.TraineeService;
+import org.example.service.core.trainer.TrainerWorkingHoursService;
+import org.example.service.core.training.TrainingService;
 import org.example.service.core.user.UserRoleService;
 import org.example.service.core.user.UserService;
 import org.example.service.core.user.UsernamePasswordService;
@@ -28,17 +34,25 @@ public class TraineeServiceImpl implements TraineeService {
     private final UserService userService;
     private final UserRoleService userRoleService;
     private final UsernamePasswordService usernamePasswordService;
+    private final TrainerWorkingHoursService trainerWorkingHoursService;
+    private final TrainingMapper trainingMapper;
+    private final TrainingService trainingService;
 
     /**
      * Constructor.
      */
     public TraineeServiceImpl(TraineeEntityRepository traineeDao, UserService userService,
                               UserRoleService userRoleService,
-                              UsernamePasswordService usernamePasswordService) {
+                              UsernamePasswordService usernamePasswordService,
+                              TrainerWorkingHoursService trainerWorkingHoursService,
+                              TrainingMapper trainingMapper, TrainingService trainingService) {
         this.traineeDao = traineeDao;
         this.userService = userService;
         this.userRoleService = userRoleService;
         this.usernamePasswordService = usernamePasswordService;
+        this.trainerWorkingHoursService = trainerWorkingHoursService;
+        this.trainingMapper = trainingMapper;
+        this.trainingService = trainingService;
     }
 
     @Transactional
@@ -97,6 +111,12 @@ public class TraineeServiceImpl implements TraineeService {
         LOGGER.info("Deleting a Trainee with the given username");
 
         traineeDao.deleteByUserUsername(username);
+
+        List<TrainerWorkingHoursRequestDto> trainerWorkingHoursRequestDtoList =
+            trainingService.findAllByTraineeUsername(username).stream()
+                .map(trainingMapper::mapTrainingEntityToTrainerWorkingHoursRemoveRequestDto).toList();
+
+        trainerWorkingHoursRequestDtoList.forEach(trainerWorkingHoursService::updateWorkingHours);
 
         LOGGER.info("Successfully deleted a Trainee with the given username");
         return true;
