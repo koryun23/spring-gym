@@ -26,7 +26,7 @@ class TrainerWorkingHoursAddStrategyTest {
 
     @Test
     public void testUpdateTrainerWorkingHoursWhenTrainerEntityIsNull() {
-        Assertions.assertThatThrownBy(() -> testSubject.updateTrainerWorkingHours(null))
+        Assertions.assertThatThrownBy(() -> testSubject.updateTrainerWorkingHoursAndGet(null))
             .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
@@ -39,13 +39,13 @@ class TrainerWorkingHoursAddStrategyTest {
         TrainerEntity updatedTrainerEntity = new TrainerEntity("username", "first", "last", true, 2025, 8, 3000L);
 
         // when
-        Mockito.when(trainerRepository.findByUsernameAndMonthAndYear("username", 8, 2025))
+        Mockito.when(trainerRepository.findByTrainerUsernameAndTrainingMonthAndTrainingYear("username", 8, 2025))
             .thenReturn(Optional.of(existingTrainerEntity));
 
         Mockito.when(trainerRepository.save(updatedTrainerEntity)).thenReturn(updatedTrainerEntity);
 
         // then
-        Assertions.assertThat(testSubject.updateTrainerWorkingHours(addedTrainerEntity))
+        Assertions.assertThat(testSubject.updateTrainerWorkingHoursAndGet(addedTrainerEntity))
             .isEqualTo(updatedTrainerEntity);
         Mockito.verifyNoMoreInteractions(trainerRepository);
     }
@@ -57,11 +57,11 @@ class TrainerWorkingHoursAddStrategyTest {
         TrainerEntity trainerEntity = new TrainerEntity("username", "first", "last", true, 2025, 8, 1000L);
 
         // when
-        Mockito.when(trainerRepository.findByUsernameAndMonthAndYear("username", 8, 2025)).thenReturn(Optional.empty());
+        Mockito.when(trainerRepository.findByTrainerUsernameAndTrainingMonthAndTrainingYear("username", 8, 2025)).thenReturn(Optional.empty());
         Mockito.when(trainerRepository.save(trainerEntity)).thenReturn(trainerEntity);
 
         // then
-        Assertions.assertThat(testSubject.updateTrainerWorkingHours(trainerEntity)).isEqualTo(trainerEntity);
+        Assertions.assertThat(testSubject.updateTrainerWorkingHoursAndGet(trainerEntity)).isEqualTo(trainerEntity);
         Mockito.verifyNoMoreInteractions(trainerRepository);
     }
 }
