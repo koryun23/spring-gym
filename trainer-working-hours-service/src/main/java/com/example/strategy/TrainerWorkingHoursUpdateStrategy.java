@@ -4,5 +4,5 @@ import com.example.entity.TrainerEntity;
 
 public interface TrainerWorkingHoursUpdateStrategy {
 
-    TrainerEntity updateTrainerWorkingHoursAndGet(TrainerEntity trainerEntity);
+    Long updateTrainerWorkingHours(TrainerEntity trainerEntity);
 }

@@ -19,7 +19,7 @@ public class TrainerWorkingHoursRemoveStrategy implements TrainerWorkingHoursUpd
     }
 
     @Override
-    public TrainerEntity updateTrainerWorkingHoursAndGet(TrainerEntity trainerEntity) {
+    public Long updateTrainerWorkingHours(TrainerEntity trainerEntity) {
         Assert.notNull(trainerEntity, "Trainer entity must not be null");
         log.info("Removing from the working hours of {}", trainerEntity.getTrainerUsername());
 
@@ -30,31 +30,35 @@ public class TrainerWorkingHoursRemoveStrategy implements TrainerWorkingHoursUpd
                 trainerEntity.getTrainingYear()
             );
 
+        Long newDuration = null;
+
         if (optionalTrainerEntity.isPresent()) {
             log.info("Trainer's working hours are already registered in the month {} of year {}",
                 trainerEntity.getTrainingMonth(), trainerEntity.getTrainingYear());
             TrainerEntity persistedTrainerEntity = optionalTrainerEntity.get();
             log.info("Removing {} from the current working hours({})", trainerEntity.getDuration(),
                 persistedTrainerEntity.getDuration());
+
+            newDuration = persistedTrainerEntity.getDuration() - trainerEntity.getDuration();
+
             trainerRepository.updateWorkingHours(
                 trainerEntity.getTrainerUsername(),
                 trainerEntity.getTrainingMonth(),
                 trainerEntity.getTrainingYear(),
-                persistedTrainerEntity.getDuration() - trainerEntity.getDuration());
+                newDuration);
             log.info("Successfully persisted trainer entity - {}", persistedTrainerEntity);
         } else {
             log.info("Registering trainer's working hours in the month {} of year {}", trainerEntity.getTrainingMonth(),
                 trainerEntity.getTrainingYear());
+
+            newDuration = trainerEntity.getDuration();
             trainerRepository.save(trainerEntity);
+
             log.info("Successfully registered trainer's working hours in the month {} of year {}",
                 trainerEntity.getTrainingMonth(), trainerEntity.getTrainingYear());
         }
 
-        return trainerRepository.findByTrainerUsernameAndTrainingMonthAndTrainingYear(
-            trainerEntity.getTrainerUsername(),
-            trainerEntity.getTrainingMonth(),
-            trainerEntity.getTrainingYear()
-        ).orElseThrow(() -> new TrainerWorkingHoursUpdateException(
-            "Trainer working hours with the given username, month and year does not exist"));
+        log.info("New training duration summary of the given trainee is {}", newDuration);
+        return newDuration;
     }
 }

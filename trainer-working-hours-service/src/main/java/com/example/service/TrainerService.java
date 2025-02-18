@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface TrainerService {
 
-    TrainerEntity updateWorkingHours(TrainerEntity trainerEntity,
+    Long updateWorkingHours(TrainerEntity trainerEntity,
                                      TrainerWorkingHoursUpdateStrategy trainerWorkingHoursUpdateStrategy);
 
     List<TrainerEntity> findAllByUsername(String username);

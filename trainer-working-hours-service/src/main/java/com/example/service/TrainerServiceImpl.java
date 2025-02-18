@@ -19,14 +19,14 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Override
-    public TrainerEntity updateWorkingHours(TrainerEntity trainerEntity, TrainerWorkingHoursUpdateStrategy strategy) {
+    public Long updateWorkingHours(TrainerEntity trainerEntity, TrainerWorkingHoursUpdateStrategy strategy) {
         Assert.notNull(trainerEntity, "Trainer Entity must not be null");
         Assert.notNull(strategy, "Trainer Working Hours Update Strategy must not be null");
         log.info("Updating working hours of {}", trainerEntity.getTrainerUsername());
-        TrainerEntity updatedTrainerEntity = strategy.updateTrainerWorkingHoursAndGet(trainerEntity);
+        Long updatedDuration = strategy.updateTrainerWorkingHours(trainerEntity);
         log.info("Updated working hours of {}, new value - {}", trainerEntity.getTrainerUsername(),
-            updatedTrainerEntity.getDuration());
-        return updatedTrainerEntity;
+            updatedDuration);
+        return updatedDuration;
     }
 
     @Override

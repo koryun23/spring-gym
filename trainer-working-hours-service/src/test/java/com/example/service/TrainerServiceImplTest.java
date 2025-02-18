@@ -37,11 +37,11 @@ class TrainerServiceImplTest {
         );
 
         // when
-        Mockito.when(strategy.updateTrainerWorkingHoursAndGet(trainerEntity)).thenReturn(trainerEntity);
+        Mockito.when(strategy.updateTrainerWorkingHours(trainerEntity)).thenReturn(1000L);
 
         // then
         Assertions.assertThat(testSubject.updateWorkingHours(trainerEntity, strategy))
-            .isEqualTo(trainerEntity);
+            .isEqualTo(1000L);
     }
 
     @Test

@@ -27,7 +27,7 @@ class TrainerWorkingHoursRemoveStrategyTest {
     @Test
     public void testUpdateWorkingHoursWhenTrainerEntityIsNull() {
 
-        Assertions.assertThatThrownBy(() -> testSubject.updateTrainerWorkingHoursAndGet(null))
+        Assertions.assertThatThrownBy(() -> testSubject.updateTrainerWorkingHours(null))
             .isExactlyInstanceOf(IllegalArgumentException.class);
 
     }
@@ -44,12 +44,9 @@ class TrainerWorkingHoursRemoveStrategyTest {
         Mockito.when(trainerRepository.findByTrainerUsernameAndTrainingMonthAndTrainingYear("username", 8, 2025))
             .thenReturn(Optional.of(existingTrainerEntity));
 
-        Mockito.when(trainerRepository.save(updatedTrainerEntity)).thenReturn(updatedTrainerEntity);
-
         // then
-        Assertions.assertThat(testSubject.updateTrainerWorkingHoursAndGet(addedTrainerEntity))
-            .isEqualTo(updatedTrainerEntity);
-        Mockito.verifyNoMoreInteractions(trainerRepository);
+        Assertions.assertThat(testSubject.updateTrainerWorkingHours(addedTrainerEntity))
+            .isEqualTo(2000L);
     }
 
     @Test
@@ -64,7 +61,7 @@ class TrainerWorkingHoursRemoveStrategyTest {
         Mockito.when(trainerRepository.save(trainerEntity)).thenReturn(trainerEntity);
 
         // then
-        Assertions.assertThat(testSubject.updateTrainerWorkingHoursAndGet(trainerEntity)).isEqualTo(trainerEntity);
+        Assertions.assertThat(testSubject.updateTrainerWorkingHours(trainerEntity)).isEqualTo(1000L);
         Mockito.verifyNoMoreInteractions(trainerRepository);
     }
 }
