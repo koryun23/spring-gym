@@ -23,4 +23,7 @@ public interface TrainerRepository extends MongoRepository<TrainerEntity, Long> 
     @Query("{'trainerUsername' : ?0, 'trainingMonth' : ?1, 'trainingYear' : ?2}")
     @Update("{'$set': {'duration': ?3}}")
     void updateWorkingHours(String trainerUsername, Integer trainingMonth, Integer trainingYear, Long newWorkingHours);
+
+    @Query(value = "{trainerFirstName: '?0', trainerLastName: '?1'}")
+    void findByFirstNameAndLastName(String firstName, String lastName);
 }

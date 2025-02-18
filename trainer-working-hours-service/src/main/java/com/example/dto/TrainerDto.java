@@ -12,8 +12,6 @@ import org.springframework.util.Assert;
 @Getter
 public class TrainerDto {
 
-    private Long trainerId;
-
     @ToString.Exclude
     private String trainerUsername;
 
@@ -27,9 +25,8 @@ public class TrainerDto {
     /**
      * Constructor.
      */
-    public TrainerDto(Long trainerId, String trainerUsername, String trainerFirstName, String trainerLastName,
+    public TrainerDto(String trainerUsername, String trainerFirstName, String trainerLastName,
                       Boolean isActive, Integer trainingYear, Integer trainingMonth, Long duration) {
-        setTrainerId(trainerId);
         setTrainerUsername(trainerUsername);
         setTrainerFirstName(trainerFirstName);
         setTrainerLastName(trainerLastName);
@@ -37,19 +34,6 @@ public class TrainerDto {
         setTrainingYear(trainingYear);
         setTrainingMonth(trainingMonth);
         setDuration(duration);
-    }
-
-    /**
-     * Trainer id setter.
-     *
-     * @param trainerId Long
-     */
-    public void setTrainerId(Long trainerId) {
-        Assert.notNull(trainerId, "Trainer id must not be null");
-        if (trainerId < 1) {
-            throw new IllegalArgumentException("Trainer Id must be positive");
-        }
-        this.trainerId = trainerId;
     }
 
     /**

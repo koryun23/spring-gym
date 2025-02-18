@@ -34,7 +34,6 @@ public class TrainerMapperImpl implements TrainerMapper {
         Assert.notNull(trainerEntity, "Trainer Entity must not be null");
         log.info("Mapping a TrainerEntity to TrainerDto");
         TrainerDto trainerDto = new TrainerDto(
-            trainerEntity.getTrainerId(),
             trainerEntity.getTrainerUsername(),
             trainerEntity.getTrainerFirstName(),
             trainerEntity.getTrainerLastName(),

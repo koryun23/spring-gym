@@ -54,9 +54,8 @@ class TrainerMapperImplTest {
         TrainerEntity trainerEntity = new TrainerEntity(
             "username", "first", "last", true, 2025, 8, 1000L
         );
-        trainerEntity.setTrainerId(1L);
         TrainerDto trainerDto = new TrainerDto(
-            1L, "username", "first", "last", true, 2025, 8, 1000L
+            "username", "first", "last", true, 2025, 8, 1000L
         );
 
         // then

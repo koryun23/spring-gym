@@ -18,16 +18,13 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @ToString
 public class TrainerEntity {
 
-    @Id
-    private Long trainerId;
-
     @Indexed(name = "trainer_username", unique = true)
     private String trainerUsername;
 
-    @Field(name = "trainer_first_name")
+    @Indexed(name = "trainer_first_name")
     private String trainerFirstName;
 
-    @Field(name = "trainer_last_name")
+    @Indexed(name = "trainer_last_name")
     private String trainerLastName;
 
     @Field(name = "is_active")
