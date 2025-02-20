@@ -2,9 +2,13 @@ package org.example.validator;
 
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
+import org.example.dto.request.RetrieveAllTrainersNotAssignedToTraineeRequestDto;
 import org.example.dto.request.TrainerCreationRequestDto;
 import org.example.dto.request.TrainerRetrievalByUsernameRequestDto;
+import org.example.entity.trainee.TraineeEntity;
+import org.example.entity.user.UserEntity;
 import org.example.exception.CustomIllegalArgumentException;
+import org.example.exception.TraineeNotFoundException;
 import org.example.exception.TrainerNotFoundException;
 import org.example.service.core.trainee.TraineeService;
 import org.example.service.core.trainer.TrainerService;
@@ -85,6 +89,70 @@ class TrainerValidatorTest {
         Assertions.assertThatThrownBy(
                 () -> testSubject.validateRetrieveTrainer(new TrainerRetrievalByUsernameRequestDto("username")))
             .isExactlyInstanceOf(TrainerNotFoundException.class);
+    }
+
+    @Test
+    public void testValidateRetrieveAllTrainersNotAssignedToTraineeWhenRequestIsNull() {
+        Assertions.assertThatThrownBy(() -> testSubject.validateRetrieveAllTrainersNotAssignedToTrainee(null))
+            .isExactlyInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void testValidateRetrieveAllTrainersNotAssignedToTraineeWhenUsernameIsNull() {
+
+        // given
+        RetrieveAllTrainersNotAssignedToTraineeRequestDto requestDto =
+            new RetrieveAllTrainersNotAssignedToTraineeRequestDto(null);
+
+        // then
+        Assertions.assertThatThrownBy(() -> testSubject.validateRetrieveAllTrainersNotAssignedToTrainee(requestDto))
+            .isExactlyInstanceOf(CustomIllegalArgumentException.class);
+    }
+
+    @Test
+    public void testValidateRetrieveAllTrainersNotAssignedToTraineeWhenUsernameIsEmpty() {
+        // given
+        RetrieveAllTrainersNotAssignedToTraineeRequestDto requestDto =
+            new RetrieveAllTrainersNotAssignedToTraineeRequestDto("");
+
+        // then
+        Assertions.assertThatThrownBy(() -> testSubject.validateRetrieveAllTrainersNotAssignedToTrainee(requestDto))
+            .isExactlyInstanceOf(CustomIllegalArgumentException.class);
+    }
+
+    @Test
+    public void testValidateRetrieveAllTrainersNotAssignedToTraineeWhenUserDoesNotExist() {
+
+        // given
+        RetrieveAllTrainersNotAssignedToTraineeRequestDto requestDto =
+            new RetrieveAllTrainersNotAssignedToTraineeRequestDto("username");
+
+        // when
+        Mockito.when(traineeService.findByUsername("username")).thenReturn(Optional.empty());
+
+        // then
+        Assertions.assertThatThrownBy(() -> testSubject.validateRetrieveAllTrainersNotAssignedToTrainee(requestDto))
+            .isExactlyInstanceOf(TraineeNotFoundException.class);
+
+    }
+
+    @Test
+    public void testValidateRetrieveAllTrainersNotAssignedToTrainee() {
+        // given
+        RetrieveAllTrainersNotAssignedToTraineeRequestDto requestDto =
+            new RetrieveAllTrainersNotAssignedToTraineeRequestDto("username");
+
+        // when
+        Mockito.when(traineeService.findByUsername("username")).thenReturn(Optional.of(new TraineeEntity(
+            new UserEntity(),
+            null, null
+        )));
+
+        // then
+        Assertions.assertThatNoException()
+            .isThrownBy(() -> testSubject.validateRetrieveAllTrainersNotAssignedToTrainee(requestDto));
+
+
     }
 
 }
