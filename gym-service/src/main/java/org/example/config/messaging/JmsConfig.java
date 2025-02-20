@@ -18,13 +18,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class JmsConfig {
 
-    @Value("${username}")
+    @Value("${activemq.username}")
     private String username;
 
-    @Value("${password}")
+    @Value("${activemq.password}")
     private String password;
 
-    @Value("${url}")
+    @Value("${activemq.url}")
     private String url;
 
     /**

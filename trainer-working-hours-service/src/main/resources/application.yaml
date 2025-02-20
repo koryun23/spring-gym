@@ -9,8 +9,8 @@ spring:
     mongodb:
       host: localhost
       port: 27017
-      database: gym
-      username: admin
-      password: password
-      authentication-database: admin
-      uri: mongodb://localhost:27017/gym
+      database: ${mongodb.database}
+      username: ${mongodb.username}
+      password: ${mongodb.password}
+      authentication-database: ${mongodb.authentication_database}
+      uri: mongodb://localhost:27017/${mongodb.database}
