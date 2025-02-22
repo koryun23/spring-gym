@@ -55,8 +55,6 @@ logging:
   pattern:
     level: '%5p %mdc'
 jwt:
-  secret:
-    key: ${jwt.secret.key}
   access:
     token:
       expiration: '1800000'
