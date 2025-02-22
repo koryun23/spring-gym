@@ -20,6 +20,7 @@ out/
 gradlew
 gradlew.bat
 gradle/
+.env
 
 ### Eclipse ###
 .apt_generated
