@@ -11,7 +11,8 @@ import java.sql.Date;
 import org.assertj.core.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class MapTrainerWorkingHoursRequestDtoToTrainerEntityStepDefinition extends SpringIntegrationTest {
+public class MapTrainerWorkingHoursRequestDtoToTrainerEntityStepDefinition extends
+    TrainerWorkingHoursServiceSpringIntegrationTest {
 
     private TrainerEntity trainerEntity;
     private TrainerWorkingHoursRequestDto requestDto;

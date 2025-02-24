@@ -11,7 +11,7 @@ import io.cucumber.java.en.When;
 import org.assertj.core.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class PickStrategyStepDefinitions extends SpringIntegrationTest {
+public class PickStrategyStepDefinitions extends TrainerWorkingHoursServiceSpringIntegrationTest {
 
     private ActionType actionType;
     private TrainerWorkingHoursUpdateStrategy strategy;

@@ -9,7 +9,8 @@ import io.cucumber.java.en.When;
 import org.assertj.core.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class MapTrainerEntityToTrainerWorkingHoursResponseDtoStepDefinition extends SpringIntegrationTest {
+public class MapTrainerEntityToTrainerWorkingHoursResponseDtoStepDefinition extends
+    TrainerWorkingHoursServiceSpringIntegrationTest {
 
     private TrainerEntity trainerEntity;
     private TrainerWorkingHoursResponseDto responseDto;

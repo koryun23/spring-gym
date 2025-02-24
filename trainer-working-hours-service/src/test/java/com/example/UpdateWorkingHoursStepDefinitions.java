@@ -12,7 +12,7 @@ import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class UpdateWorkingHoursStepDefinitions extends SpringIntegrationTest {
+public class UpdateWorkingHoursStepDefinitions extends TrainerWorkingHoursServiceSpringIntegrationTest {
 
     private Long duration;
     private TrainerEntity trainerEntity;

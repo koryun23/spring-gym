@@ -9,7 +9,7 @@ import io.cucumber.java.en.When;
 import org.assertj.core.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class MapTrainerEntityToTrainerDtoStepDefinition extends SpringIntegrationTest {
+public class MapTrainerEntityToTrainerDtoStepDefinition extends TrainerWorkingHoursServiceSpringIntegrationTest {
 
     private TrainerEntity trainerEntity;
     private TrainerDto trainerDto;
