@@ -8,6 +8,7 @@ import com.example.strategy.TrainerWorkingHoursUpdateStrategyFactory;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -43,15 +44,27 @@ public class UpdateWorkingHoursStepDefinitions extends SpringIntegrationTest {
     @Then("Should return 2000")
     public void shouldReturn2000() {
         Assertions.assertThat(duration).isEqualTo(2000L);
+        Optional<TrainerEntity> optionalTrainerEntity =
+            trainerService.findByUsernameAndMonthAndYear("username", 10, 2025);
+        Assertions.assertThat(optionalTrainerEntity).isPresent();
+        Assertions.assertThat(optionalTrainerEntity.get().getDuration()).isEqualTo(2000L);
     }
 
     @Then("Should return 0")
     public void shouldReturn1000() {
         Assertions.assertThat(duration).isEqualTo(0L);
+        Optional<TrainerEntity> optionalTrainerEntity =
+            trainerService.findByUsernameAndMonthAndYear("username", 10, 2025);
+        Assertions.assertThat(optionalTrainerEntity).isPresent();
+        Assertions.assertThat(optionalTrainerEntity.get().getDuration()).isEqualTo(0L);
     }
 
     @Then("Should return 3000")
     public void shouldReturn3000() {
         Assertions.assertThat(duration).isEqualTo(3000L);
+        Optional<TrainerEntity> optionalTrainerEntity =
+            trainerService.findByUsernameAndMonthAndYear("username", 10, 2025);
+        Assertions.assertThat(optionalTrainerEntity).isPresent();
+        Assertions.assertThat(optionalTrainerEntity.get().getDuration()).isEqualTo(3000L);
     }
 }
