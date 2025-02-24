@@ -12,4 +12,4 @@ Feature: Strategy Pick
 
   Scenario: Action type is null
     Given Action type is null
-    Then Should throw IllegalArgumentExceptionA
+    Then Should throw IllegalArgumentException
