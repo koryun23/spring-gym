@@ -1,11 +1,14 @@
 package com.example.config.messaging;
 
 import com.example.exception.handler.MessageErrorHandler;
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManagerFactory;
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.connection.JmsTransactionManager;
@@ -24,14 +27,22 @@ import org.springframework.util.ErrorHandler;
 @Configuration
 public class JmsConfig {
 
-    @Value("${activemq.username}")
+    @Autowired
+    private Environment environment;
+
     private String username;
-
-    @Value("${activemq.password}")
     private String password;
-
-    @Value("${activemq.url}")
     private String url;
+
+    /**
+     * Method for setting up the username, password and url after the initialization of config class.
+     */
+    @PostConstruct
+    public void init() {
+        username = environment.getProperty("ACTIVEMQ_USERNAME");
+        password = environment.getProperty("ACTIVEMQ_PASSWORD");
+        url = environment.getProperty("ACTIVEMQ_URL");
+    }
 
     /**
      * Single Connection Factory bean having ActiveMQ as its basis.
@@ -40,7 +51,6 @@ public class JmsConfig {
      */
     @Bean
     public SingleConnectionFactory connectionFactory() {
-
         ActiveMQConnectionFactory factory =
             new ActiveMQConnectionFactory(username, password, url);
         return new SingleConnectionFactory(factory);
