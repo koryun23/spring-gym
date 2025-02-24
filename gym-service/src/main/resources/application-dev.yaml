@@ -6,3 +6,5 @@ spring:
           url: jdbc:postgresql://localhost:6432/gym_dev
   flyway:
     url: jdbc:postgresql://localhost:6432/gym_dev
+jms:
+  trainer-working-hours-queue: trainer.working.hours.queue.dev

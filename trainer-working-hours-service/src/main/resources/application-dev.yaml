@@ -2,3 +2,5 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/gym_dev
+jms:
+  trainer-working-hours-queue: trainer.working.hours.queue.dev

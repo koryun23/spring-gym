@@ -5,6 +5,3 @@ server:
 spring:
   application:
     name: trainer-working-hours-service
-#  data:
-#    mongodb:
-#      uri: mongodb://localhost:27017/gym
