@@ -49,7 +49,7 @@ public class TrainerMapperImpl implements TrainerMapper {
     @Override
     public TrainerWorkingHoursResponseDto mapTrainerEntityToTrainerWorkingHoursResponseDto(
         TrainerEntity trainerEntity) {
-        Assert.notNull(trainerEntity, "Trainer Entity must not be null");
+        Assert.notNull(trainerEntity, "TrainerEntity must not be null");
         log.info("Mapping a TrainerEntity to TrainerWorkingHoursResponseDto");
         TrainerWorkingHoursResponseDto responseDto =
             new TrainerWorkingHoursResponseDto(trainerEntity.getTrainerUsername(),
