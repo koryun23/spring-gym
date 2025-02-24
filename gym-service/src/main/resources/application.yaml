@@ -29,7 +29,7 @@ spring:
     driver: org.postgresql.Driver
     password: ${spring.datasource.password}
     username: ${spring.datasource.username}
-    url: jdbc:postgresql://localhost:6432/gym_stg
+    url: jdbc:postgresql://localhost:6432/gym_dev
     initialize: 'true'
 management:
   endpoints:
