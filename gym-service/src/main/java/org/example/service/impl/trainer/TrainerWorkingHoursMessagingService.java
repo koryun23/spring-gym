@@ -3,6 +3,7 @@ package org.example.service.impl.trainer;
 import com.example.dto.TrainerWorkingHoursRequestDto;
 import lombok.extern.slf4j.Slf4j;
 import org.example.service.core.trainer.TrainerWorkingHoursService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class TrainerWorkingHoursMessagingService implements TrainerWorkingHoursService {
 
-    private static final String TRAINER_WORKING_HOURS_QUEUE = "trainer.working.hours.queue";
+    @Value("${jms.trainer-working-hours-queue}")
+    private String trainerWorkingHoursQueue;
 
     private final JmsTemplate jmsTemplate;
 
@@ -32,8 +34,8 @@ public class TrainerWorkingHoursMessagingService implements TrainerWorkingHoursS
     @Transactional
     @Override
     public void updateWorkingHours(TrainerWorkingHoursRequestDto requestDto) {
-        log.info("Sending a message - {}, to the queue - {}", requestDto, TRAINER_WORKING_HOURS_QUEUE);
-        jmsTemplate.convertAndSend(TRAINER_WORKING_HOURS_QUEUE, requestDto);
-        log.info("Successfully sent a message - {}, to the queue - {}", requestDto, TRAINER_WORKING_HOURS_QUEUE);
+        log.info("Sending a message - {}, to the queue - {}", requestDto, trainerWorkingHoursQueue);
+        jmsTemplate.convertAndSend(trainerWorkingHoursQueue, requestDto);
+        log.info("Successfully sent a message - {}, to the queue - {}", requestDto, trainerWorkingHoursQueue);
     }
 }

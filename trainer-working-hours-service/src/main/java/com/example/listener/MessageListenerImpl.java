@@ -33,8 +33,7 @@ public class MessageListenerImpl {
      *
      * @param body Message
      */
-    //@Transactional
-    @JmsListener(destination = "trainer.working.hours.queue", containerFactory = "jmsListenerContainerFactory")
+    @JmsListener(destination = "${jms.trainer-working-hours-queue}", containerFactory = "jmsListenerContainerFactory")
     public void onUpdateTrainerWorkingHours(TrainerWorkingHoursRequestDto body) {
         log.info("Received a message - {}", body);
 

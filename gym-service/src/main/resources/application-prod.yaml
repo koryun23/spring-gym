@@ -7,6 +7,9 @@ spring:
   flyway:
     url: jdbc:postgresql://localhost:6432/gym_prod
 
+jms:
+  trainer-working-hours-queue: trainer.working.hours.queue.prod
+
 springdoc:
   api-docs:
     enabled: false

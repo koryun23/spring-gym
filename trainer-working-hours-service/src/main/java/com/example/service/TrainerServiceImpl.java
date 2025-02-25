@@ -4,6 +4,7 @@ import com.example.entity.TrainerEntity;
 import com.example.repository.TrainerRepository;
 import com.example.strategy.TrainerWorkingHoursUpdateStrategy;
 import java.util.List;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -53,5 +54,28 @@ public class TrainerServiceImpl implements TrainerService {
         log.info("Successfully retrieved all registered trainers and their working hours, {}", all);
 
         return all;
+    }
+
+    @Override
+    public Optional<TrainerEntity> findByUsernameAndMonthAndYear(String username, Integer month, Integer year) {
+        Assert.notNull(username, "Username must not be null");
+        Assert.hasText(username, "Username must not be empty");
+        if (month < 1 || month > 12) {
+            throw new IllegalArgumentException("Month must be in the range from 1 to 12");
+        }
+        if (year < 0) {
+            throw new IllegalArgumentException("Year must be a positive integer");
+        }
+        log.info("Retrieving an optional registered trainer and their working hours by username, month({}), year({})",
+            month,
+            year);
+
+        Optional<TrainerEntity> optionalTrainerEntity =
+            trainerRepository.findByTrainerUsernameAndTrainingMonthAndTrainingYear(username, month, year);
+
+        log.info(
+            "Successfully retrieved an optional registered trainer and their working hours by username, month({}), year({}), result - {}",
+            month, year, optionalTrainerEntity);
+        return optionalTrainerEntity;
     }
 }

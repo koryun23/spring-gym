@@ -96,7 +96,6 @@ public class TraineeController {
     /**
      * Trainee retrieval.
      */
-    @PreAuthorize("authentication.name == #username")
     @GetMapping("/{username}")
     public ResponseEntity<RestResponse> retrieve(@PathVariable("username") String username) {
 
