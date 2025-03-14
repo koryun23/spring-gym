@@ -10,7 +10,9 @@ import org.example.entity.user.UserEntity;
 import org.example.service.core.trainee.TraineeService;
 import org.example.service.core.trainer.TrainerService;
 import org.example.service.core.training.TrainingService;
+import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationDeniedException;
+import org.springframework.security.authorization.AuthorizationResult;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -19,6 +21,8 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @Component("permissionService")
 public class PermissionService {
+
+    private static final AuthorizationResult FAILED_AUTHORIZATION = new AuthorizationDecision(false);
 
     private TraineeService traineeService;
     private TrainerService trainerService;
@@ -37,7 +41,7 @@ public class PermissionService {
         if (username.equals(authentication.getName()) || assignedTrainers.contains(authentication.getName())) {
             return;
         }
-        throw new AuthorizationDeniedException("Access Denied.");
+        throw new AuthorizationDeniedException("Access Denied.", FAILED_AUTHORIZATION);
     }
 
     /**
@@ -51,7 +55,7 @@ public class PermissionService {
         if (username.equals(authentication.getName())) {
             return;
         }
-        throw new AuthorizationDeniedException("Access Denied.");
+        throw new AuthorizationDeniedException("Access Denied.", FAILED_AUTHORIZATION);
     }
 
     /**
@@ -65,7 +69,7 @@ public class PermissionService {
         if (username.equals(authentication.getName())) {
             return;
         }
-        throw new AuthorizationDeniedException("Access Denied.");
+        throw new AuthorizationDeniedException("Access Denied.", FAILED_AUTHORIZATION);
     }
 
     /**
@@ -79,7 +83,7 @@ public class PermissionService {
         if (traineeUsername.equals(authentication.getName())) {
             return;
         }
-        throw new AuthorizationDeniedException("Access Denied.");
+        throw new AuthorizationDeniedException("Access Denied.", FAILED_AUTHORIZATION);
     }
 
     /**
@@ -93,7 +97,7 @@ public class PermissionService {
         if (username.equals(authentication.getName())) {
             return;
         }
-        throw new AuthorizationDeniedException("Access Denied.");
+        throw new AuthorizationDeniedException("Access Denied.", FAILED_AUTHORIZATION);
     }
 
     /**
@@ -107,7 +111,7 @@ public class PermissionService {
         if (username.equals(authentication.getName())) {
             return;
         }
-        throw new AuthorizationDeniedException("Access Denied.");
+        throw new AuthorizationDeniedException("Access Denied.", FAILED_AUTHORIZATION);
     }
 
     /**
@@ -120,7 +124,7 @@ public class PermissionService {
             return;
         }
 
-        throw new AuthorizationDeniedException("Access Denied.");
+        throw new AuthorizationDeniedException("Access Denied.", FAILED_AUTHORIZATION);
     }
 
     /**
@@ -133,7 +137,7 @@ public class PermissionService {
             return;
         }
 
-        throw new AuthorizationDeniedException("Access Denied.");
+        throw new AuthorizationDeniedException("Access Denied.", FAILED_AUTHORIZATION);
     }
 
     /**
@@ -145,6 +149,6 @@ public class PermissionService {
         if (authentication.getName().equals(username)) {
             return;
         }
-        throw new AuthorizationDeniedException("Access Denied");
+        throw new AuthorizationDeniedException("Access Denied", FAILED_AUTHORIZATION);
     }
 }
