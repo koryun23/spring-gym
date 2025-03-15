@@ -1,6 +1,6 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://gym_mongo:27017/gym_dev
+      uri: mongodb://mongo:27017/gym_dev
 jms:
   trainer-working-hours-queue: trainer.working.hours.queue.dev
