@@ -17,9 +17,10 @@ build/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-gradlew
-gradlew.bat
+gym-service/gradlew
+gym-service/gradlew.bat
 gradle/
+.env
 
 ### Eclipse ###
 .apt_generated
