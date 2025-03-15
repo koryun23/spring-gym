@@ -5,3 +5,8 @@ server:
 spring:
   application:
     name: trainer-working-hours-service
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: "http://service-registry:8761/eureka/"

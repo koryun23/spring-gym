@@ -3,9 +3,9 @@ spring:
     properties:
       hibernate:
         connection:
-          url: jdbc:postgresql://localhost:6432/gym_prod
+          url: jdbc:postgresql://gym_postgres:6432/gym_prod
   flyway:
-    url: jdbc:postgresql://localhost:6432/gym_prod
+    url: jdbc:postgresql://gym_postgres:6432/gym_prod
 
 jms:
   trainer-working-hours-queue: trainer.working.hours.queue.prod

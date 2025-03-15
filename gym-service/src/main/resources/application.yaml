@@ -29,8 +29,12 @@ spring:
     driver: org.postgresql.Driver
     password: ${spring.datasource.password}
     username: ${spring.datasource.username}
-    url: jdbc:postgresql://localhost:6432/gym_dev
+    url: jdbc:postgresql://gym_postgres:6432/gym_dev
     initialize: 'true'
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: "http://service-registry:8761/eureka/"
 management:
   endpoints:
     web:
