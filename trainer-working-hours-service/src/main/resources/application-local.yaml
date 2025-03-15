@@ -1,6 +1,6 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/gym_local
+      uri: mongodb://mongo:27017/gym_local
 jms:
   trainer-working-hours-queue: trainer.working.hours.queue.local

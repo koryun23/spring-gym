@@ -1,9 +1,84 @@
 services:
-  database:
-    image: 'postgres:9.6.12'
+
+  postgres:
+    image: postgres:9.6.12
+    container_name: postgres
+    networks:
+      - gym-network
     ports:
-      - '6432:5432'
-    environment:
-      - 'POSTGRES_USER=postgres'
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD='
+      - "6432:5432"
+    env_file:
+      - .postgres_env
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    networks:
+      - gym-network
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_volume:/data/db/
+
+  activemq:
+    image: apache/activemq-classic:5.19.0
+    container_name: activemq
+    networks:
+      - gym-network
+    ports:
+      - "8161:8161"
+
+  service-registry:
+    container_name: service-registry
+    restart: always
+    build:
+      context: ./service-registry
+      dockerfile: ./Dockerfile
+    ports:
+      - "8761:8761"
+    networks:
+      - gym-network
+
+  gym-service:
+    container_name: gym-service
+    build:
+      context: ./gym-service
+      dockerfile: ./Dockerfile
+    ports:
+      - "8888:8888"
+    networks:
+      - gym-network
+    env_file:
+      - ./gym-service/.env
+    depends_on:
+      - service-registry
+      - postgres
+
+  trainer-working-hours-service:
+    container_name: trainer-working-hours-service
+    build:
+      context: ./trainer-working-hours-service
+      dockerfile: ./Dockerfile
+    ports:
+      - "8881:8881"
+    networks:
+      - gym-network
+    env_file:
+      - ./trainer-working-hours-service/.env
+    depends_on:
+      - service-registry
+      - mongo
+      - activemq
+
+networks:
+  gym-network:
+    driver: bridge
+
+volumes:
+  postgres_volume:
+    driver: local
+  mongo_volume:
+    driver: local
